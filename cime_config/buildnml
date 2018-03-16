@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+"""POP namelist creator
+"""
+
+# Typically ignore this.
+# pylint: disable=invalid-name
+
+# Disable these because this is our standard setup
+# pylint: disable=wildcard-import,unused-wildcard-import,wrong-import-position
+
+import os, shutil, sys, glob, stat, filecmp, imp
+
+CIMEROOT = os.environ.get("CIMEROOT")
+if CIMEROOT is None:
+    raise SystemExit("ERROR: must set CIMEROOT environment variable")
+sys.path.append(os.path.join(CIMEROOT, "scripts", "Tools"))
+
+from standard_script_setup import *
+from CIME.case import Case
+from CIME.nmlgen import NamelistGenerator
+from CIME.utils import expect
+from CIME.buildnml import create_namelist_infile, parse_input
+from CIME.utils import run_cmd
+
+logger = logging.getLogger(__name__)
+
+# pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
+###############################################################################
+def buildnml(case, caseroot, compname):
+###############################################################################
+    """Build the pop namelist """
+
+    # Build the component namelist 
+    if compname != "mom":
+        raise AttributeError
+
+    return
+
+###############################################################################
+def _main_func():
+
+    caseroot = parse_input(sys.argv)
+    with Case(caseroot) as case:
+        buildnml(case, caseroot, "mom")
+
+if __name__ == "__main__":
+    _main_func()
+

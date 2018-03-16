@@ -1,0 +1,111 @@
+#!/usr/bin/env python
+
+"""
+build mom library
+"""
+import sys, os, time, filecmp, shutil, imp, glob
+
+_CIMEROOT = os.environ.get("CIMEROOT")
+if _CIMEROOT is None:
+    raise SystemExit("ERROR: must set CIMEROOT environment variable")
+
+_LIBDIR = os.path.join(_CIMEROOT, "scripts", "Tools")
+sys.path.append(_LIBDIR)
+
+from standard_script_setup import *
+from CIME.buildlib import parse_input
+from CIME.case import Case
+from CIME.utils import run_cmd, expect
+
+logger = logging.getLogger(__name__)
+
+###############################################################################
+def buildlib(caseroot, libroot, bldroot):
+###############################################################################
+
+    with Case(caseroot) as case:
+
+        casetools = case.get_value("CASETOOLS")
+        srcroot = case.get_value("SRCROOT")
+        gmake_j = case.get_value("GMAKE_J")
+        gmake = case.get_value("GMAKE")
+        mach = case.get_value("MACH")
+
+        #-------------------------------------------------------
+        # create Filepath file for mom
+        #-------------------------------------------------------
+        sharedlibroot = case.get_value("SHAREDLIBROOT")
+        fms_builddir = os.path.join(sharedlibroot,"intel","shared","repro")
+
+        os.environ["INCROOT"] = " -I " + os.path.join(srcroot,"components","mom","src","FMS","include") + \
+                                " -I " + os.path.join(srcroot,"components","mom","src","FMS","mpp","include") + \
+                                " -I " + fms_builddir                                                         
+        filepath_file = os.path.join(bldroot,"Filepath")
+        if not os.path.isfile(filepath_file):
+            srcroot = case.get_value("SRCROOT")
+            caseroot = case.get_value("CASEROOT")
+            os.environ["CPPDEFS"] = " -Duse_libMPI -Duse_netCDF -DSPMD" 
+            paths = [os.path.join(caseroot,"SourceMods","src.mom"), 
+                     os.path.join(srcroot,"components","mom",,"MOM6","config_src","mct_driver"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","config_src","coupled_driver"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","config_src","dynamic"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","ALE"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","core"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","diagnostics"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","equation_of_state"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","equation_of_state","TEOS10"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","framework"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","ice_shelf"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","initialization"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","parameterizations","CVmix"), 
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","parameterizations","lateral"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","parameterizations","vertical"), 
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","tracer"),
+                     os.path.join(srcroot,"components","mom",,"MOM6","src","user")]
+            with open(filepath_file, "w") as filepath:
+                filepath.write("\n".join(paths))
+                filepath.write("\n")
+                
+        if not os.path.exists(fms_builddir):
+            os.makedirs(fms_builddir)
+        os.chdir(fms_builddir)
+        if os.path.exists("path_names"):
+            os.remove("path_names")
+
+        mkmf_dir = os.path.join(srcroot,"components","mom","src","mkmf","bin")
+        fms_dir = os.path.join(srcroot,"components","mom","src","FMS")
+        run_cmd( os.path.join(mkmf_dir,"list_paths") + " {}".format(fms_dir))
+        
+        run_cmd( os.path.join(mkmf_dir,"mkmf") + " -t " + \
+                 os.path.join(srcroot,"components","mom","src","mkmf","templates","cheyenne-intel.mk") + 
+                 " -p libfms.a -c \"-Duse_libMPI -Duse_netCDF -DSPMD\" path_names")
+
+        run_cmd ("make NETCDF=3 REPRO=1 libfms.a -j")
+
+        if os.path.exists("libfms.a"):
+            shutil.copy("libfms.a", os.path.join(libroot))
+            # filenames = glob.glob("*.mod")
+            # for filename in filenames:
+            #     shutil.copy(filename, os.path.join(libroot,"include"))
+
+        os.chdir(bldroot)
+
+        # build the library
+        makefile = os.path.join(casetools, "Makefile")
+        complib = os.path.join(libroot,"libocn.a")
+        cmd = "%s complib -j %d MODEL=mom COMPLIB=%s -f %s " % (gmake, gmake_j, complib, makefile)
+
+        rc, out, err = run_cmd(cmd)
+        logger.info("%s: \n\n output:\n %s \n\n err:\n\n%s\n"%(cmd,out,err))
+        expect(rc == 0, "Command %s failed with rc=%s" % (cmd, rc))
+
+
+def _main_func():
+    caseroot, libroot, bldroot = parse_input(sys.argv)
+    buildlib(caseroot, libroot, bldroot)
+
+###############################################################################
+
+if __name__ == "__main__":
+    _main_func()
+
