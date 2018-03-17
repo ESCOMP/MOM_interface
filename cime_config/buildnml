@@ -33,12 +33,14 @@ def prep_input(case):
     atm_gridname    = case.get_value("ATM_GRID")
     ocn_gridname    = case.get_value("OCN_GRID")
     srcroot         = case.get_value("SRCROOT")
+    din_loc_root    = case.get_value("DIN_LOC_ROOT")
+    input_files     = ["diag_table", "input.nml", "MOM_input", "MOM_override"]
 
-    # Make sure that rundir exists. If not,make it:
+    # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
         os.makedirs(rundir)
 
-    # check if input files are available for the given resolution:
+    # check if input file templates are available for the given resolution:
     resolution = None
     if (atm_gridname=="T62" and ocn_gridname=="gx1v6"):
         resolution = "T62_g16"
@@ -46,13 +48,13 @@ def prep_input(case):
         resolution = "T62_t061"
     expect(resolution != None, "Couldn't find input files for %s" % (gridname))
 
+    # copy template input files:
     logger.info("Copying input files for %s\n"%(resolution))
     input_templates_dir = os.path.join(srcroot,"components","mom","input_templates",resolution)
-    input_files = ["diag_table", "input.nml", "MOM_input", "MOM_override"]
     for input_file_name in input_files:
         input_file_path = os.path.join(input_templates_dir,input_file_name)
         if not os.path.exists(input_file_path):
-            expect(False, "Couldn't find "+input_file_path)
+            expect(False, "Couldn't find input files at "+input_file_path)
 
         run_cmd("cp "+input_file_path+" "+rundir)
 
@@ -61,12 +63,23 @@ def prep_input(case):
         diag_table_data = diag_table.read().replace('CASENAME',casename)
     with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
         diag_table.write(diag_table_data)
-    
+
     # symbolically link grid and forcing files:
     logger.info("Symbolically linking grid and forcing files for %s\n"%(resolution))
-    input_dir = os.path.join(rundir,"INPUT") 
-    os.makedirs(input_dir)
-  
+    src_input_dir = os.path.join(din_loc_root,"ocn","mom",ocn_gridname)
+    if not os.path.exists(src_input_dir):
+        expect(False, "Couldn't find grid and forcing files at "+src_input_dir)
+    dst_input_dir = os.path.join(rundir,"INPUT")
+    if not os.path.exists(dst_input_dir):
+        os.makedirs(dst_input_dir)
+    for filename in os.listdir(src_input_dir):
+        src = os.path.join(src_input_dir, filename)
+        dst = os.path.join(dst_input_dir, filename)
+        if os.path.exists(dst): # if there is, remove old link
+            os.unlink(dst)
+        os.symlink(src, dst)
+
+
 
 # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
 ###############################################################################
@@ -74,7 +87,7 @@ def buildnml(case, caseroot, compname):
 ###############################################################################
     """Build the pop namelist """
 
-    # Build the component namelist 
+    # Build the component namelist
     if compname != "mom":
         raise AttributeError
 
