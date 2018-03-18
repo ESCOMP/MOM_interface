@@ -1,0 +1,21 @@
+! Blank file in which we can put "overrides" for parameters
+NK = 60
+#override USE_REGRIDDING = True
+#override BULKMIXEDLAYER = False
+#override READ_TIDEAMP = False
+#override INT_TIDE_DISSIPATION = False
+#override VAR_PEN_SW = False
+#override USE_IDEAL_AGE_TRACER = False
+USE_STORED_SLOPES = True
+USE_NEUTRAL_DIFFUSION = True
+SIMPLE_TKE_TO_KD = True
+REGRIDDING_COORDINATE_MODE = "Z*"
+ALE_COORDINATE_CONFIG = "FILE:ocean_vgrid.nc,dz"
+HMIX_FIXED = 0.5
+CFL_TRUNCATE_RAMP_TIME = 7200.
+Z_INIT_ALE_REMAPPING = True
+ENERGETICS_SFC_PBL = True
+
+TOPO_FILE = "ocean_topog.nc"
+NIGLOBAL = 540                  !
+NJGLOBAL = 458
