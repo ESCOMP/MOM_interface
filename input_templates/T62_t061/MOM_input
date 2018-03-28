@@ -126,7 +126,7 @@ USE_IDEAL_AGE_TRACER = True     !   [Boolean] default = False
                                 ! If true, use the ideal_age_example tracer package.
 
 ! === module ideal_age_example ===
-INPUTDIR = "DIN_LOC_ROOT"       ! default = "."
+INPUTDIR = "INPUT"              ! default = "."
                                 ! The directory in which input files are found.
 COORD_CONFIG = "none"           !
                                 ! This specifies how layers are to be defined:
