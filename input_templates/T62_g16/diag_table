@@ -1,4 +1,4 @@
-"MOM6 tx0.66v1 Experiment"
+"MOM6 CASENAME Experiment"
 1 1 1 0 0 0
 "CASENAME.mom6.prog.%4yr-%3dy",           5,"days",1,"days","Time",365,"days"
 "CASENAME.mom6.sfc.day.%4yr-%3dy",      1,"days",1,"days","Time",365,"days"
