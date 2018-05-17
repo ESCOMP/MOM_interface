@@ -37,7 +37,7 @@ def buildlib(caseroot, libroot, bldroot):
 
         # todo:  Need to do the same with CVMix, for now I'm just pointing to the cvmix in pop
         momcvmix = os.path.join(srcroot,"components","mom","MOM6","pkg","CVMix-src")
-        popcvmix = os.path.join(srcroot,"components","pop","externals","CVMix")        
+        popcvmix = os.path.join(srcroot,"components","pop","externals","CVMix")
         if os.path.exists(popcvmix):
             cvmixdir = popcvmix
         else:
@@ -53,7 +53,16 @@ def buildlib(caseroot, libroot, bldroot):
                 logger.info("link {} to {}".format(_dir,dst))
                 if not os.path.exists(dst):
                     os.symlink(_dir,dst)
-                
+
+
+        # Now handle the da_hooks external
+        da_hooksdir = os.path.join(srcroot,"components","mom","pkg","MOM6_DA_hooks")
+        momda_hooks = os.path.join(srcroot,"components","mom","MOM6","pkg","MOM6_DA_hooks")
+        for _dir in glob.iglob(os.path.join(da_hooksdir,"*")):
+            dst = os.path.join(momda_hooks,os.path.basename(_dir))
+            logger.info("link {} to {}".format(_dir,dst))
+            if not os.path.exists(dst):
+                os.symlink(_dir,dst)
 
 
         casetools = case.get_value("CASETOOLS")
@@ -68,13 +77,13 @@ def buildlib(caseroot, libroot, bldroot):
 
         incroot = " -I " + os.path.join(srcroot,"libraries","FMS","src","include") + \
                   " -I " + os.path.join(srcroot,"libraries","FMS","src","mpp","include") + \
-                  " -I " + fmsbuilddir                                                         
+                  " -I " + fmsbuilddir
         filepath_file = os.path.join(bldroot,"Filepath")
         if not os.path.isfile(filepath_file):
 #todo: are these needed in mom or only for fms?
             driver = case.get_value("COMP_INTERFACE")+"_driver"
-            os.environ["CPPDEFS"] = " -Duse_libMPI -Duse_netCDF -DSPMD" 
-            paths = [os.path.join(caseroot,"SourceMods","src.mom"), 
+            os.environ["CPPDEFS"] = " -Duse_libMPI -Duse_netCDF -DSPMD"
+            paths = [os.path.join(caseroot,"SourceMods","src.mom"),
                      os.path.join(srcroot,"components","mom","MOM6","config_src",driver),
                      os.path.join(srcroot,"components","mom","MOM6","config_src","coupled_driver"),
                      os.path.join(srcroot,"components","mom","MOM6","config_src","dynamic"),
@@ -86,9 +95,9 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(srcroot,"components","mom","MOM6","src","framework"),
                      os.path.join(srcroot,"components","mom","MOM6","src","ice_shelf"),
                      os.path.join(srcroot,"components","mom","MOM6","src","initialization"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","CVmix"), 
+                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","CVmix"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","lateral"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"), 
+                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"),
                      os.path.join(srcroot,"components","mom","MOM6","src","tracer"),
                      os.path.join(srcroot,"components","mom","MOM6","src","user")]
             with open(filepath_file, "w") as filepath:
@@ -121,4 +130,3 @@ def _main_func():
 
 if __name__ == "__main__":
     _main_func()
-
