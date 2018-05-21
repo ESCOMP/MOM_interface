@@ -64,6 +64,15 @@ def buildlib(caseroot, libroot, bldroot):
             if not os.path.exists(dst):
                 os.symlink(_dir,dst)
 
+        # geoKdTree external
+        geoKdTreedir = os.path.join(srcroot,"components","mom","pkg","geoKdTree")
+        momgeoKdTree = os.path.join(srcroot,"components","mom","MOM6","pkg","geoKdTree")
+        for _dir in glob.iglob(os.path.join(geoKdTreedir,"*")):
+            dst = os.path.join(momgeoKdTree,os.path.basename(_dir))
+            logger.info("link {} to {}".format(_dir,dst))
+            if not os.path.exists(dst):
+                os.symlink(_dir,dst)
+
 
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
@@ -95,11 +104,15 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(srcroot,"components","mom","MOM6","src","framework"),
                      os.path.join(srcroot,"components","mom","MOM6","src","ice_shelf"),
                      os.path.join(srcroot,"components","mom","MOM6","src","initialization"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "core"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "geoKdTree"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","CVmix"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","lateral"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"),
                      os.path.join(srcroot,"components","mom","MOM6","src","tracer"),
                      os.path.join(srcroot,"components","mom","MOM6","src","user")]
+
             with open(filepath_file, "w") as filepath:
                 filepath.write("\n".join(paths))
                 filepath.write("\n")
