@@ -84,11 +84,15 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(srcroot,"components","mom","MOM6","src","framework"),
                      os.path.join(srcroot,"components","mom","MOM6","src","ice_shelf"),
                      os.path.join(srcroot,"components","mom","MOM6","src","initialization"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "core"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "geoKdTree"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","CVmix"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","lateral"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"),
                      os.path.join(srcroot,"components","mom","MOM6","src","tracer"),
                      os.path.join(srcroot,"components","mom","MOM6","src","user")]
+
             with open(filepath_file, "w") as filepath:
                 filepath.write("\n".join(paths))
                 filepath.write("\n")
