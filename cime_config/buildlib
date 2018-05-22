@@ -54,17 +54,6 @@ def buildlib(caseroot, libroot, bldroot):
                 if not os.path.exists(dst):
                     os.symlink(_dir,dst)
 
-
-        # Now handle the da_hooks external
-        da_hooksdir = os.path.join(srcroot,"components","mom","pkg","MOM6_DA_hooks")
-        momda_hooks = os.path.join(srcroot,"components","mom","MOM6","pkg","MOM6_DA_hooks")
-        for _dir in glob.iglob(os.path.join(da_hooksdir,"*")):
-            dst = os.path.join(momda_hooks,os.path.basename(_dir))
-            logger.info("link {} to {}".format(_dir,dst))
-            if not os.path.exists(dst):
-                os.symlink(_dir,dst)
-
-
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
         gmake = case.get_value("GMAKE")
