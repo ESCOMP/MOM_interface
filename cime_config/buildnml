@@ -47,6 +47,8 @@ def prep_input(case):
         resolution = "T62_g16"
     elif (atm_gridname=="T62" and ocn_gridname=="tx0.66v1"):
         resolution = "T62_t061"
+    elif (atm_gridname=="0.9x1.25" and ocn_gridname=="gx1v6"):
+        resolution = "f09_g16"
     expect(resolution != None, "Couldn't find input files for %s" % (gridname))
 
     # copy template input files:
