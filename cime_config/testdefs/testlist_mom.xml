@@ -1,18 +1,35 @@
 <?xml version="1.0"?>
 <testlist version="2.0">
-  <test name="SMS" grid="T62_g16" compset="CMOM">
+  <test name="SMS" grid="T62_g16" compset="CMOM_IAF">
     <machines>
-      <machine name="cheyenne" compiler="intel" category="prealpha">
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
         <options>
           <option name="wallclock">00:30:00</option>
         </options>
       </machine>
-      <machine name="hobart" compiler="intel" category="prealpha">
+      <machine name="hobart" compiler="intel" category="aux_mom">
         <options>
           <option name="wallclock">00:30:00</option>
         </options>
       </machine>
     </machines>
   </test>
-
+  <test name="SMS" grid="T62_t061" compset="CMOM_IAF">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
+    </machines>
+  </test>
+  <test name="ERS" grid="T62_g16" compset="GMOM">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
+    </machines>
+  </test>
 </testlist>
