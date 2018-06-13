@@ -35,7 +35,7 @@ def prep_input(case):
     ocn_gridname    = case.get_value("OCN_GRID")
     srcroot         = case.get_value("SRCROOT")
     din_loc_root    = case.get_value("DIN_LOC_ROOT")
-    input_files     = ["diag_table", "input.nml", "MOM_input", "MOM_override"]
+    input_files     = ["diag_table", "input.nml", "MOM_input"]
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
@@ -71,6 +71,10 @@ def prep_input(case):
          MOM_input_data = MOM_input.read().replace('DIN_LOC_ROOT',inputdir)
     with open(os.path.join(rundir,"MOM_input"), 'w') as MOM_input:
         MOM_input.write(MOM_input_data)
+
+    # create an empty MOM_override file
+    with open(os.path.join(rundir,"MOM_override"), 'w') as MOM_override:
+        MOM_override.write('! Blank file in which we can put "overrides" for parameters.\n')
 
     # generate input_data_list:
     with open(os.path.join(input_templates_dir,"mom.input_data_list"), 'r') as input_data_list:
