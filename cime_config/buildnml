@@ -50,7 +50,7 @@ def prep_input(case):
     expect(resolution != None, "Couldn't find input files for %s" % (gridname))
 
     # copy template input files:
-    logger.info("Copying input files for %s\n"%(resolution))
+    logger.info("\tCopying input files for %s"%(resolution))
     input_templates_dir = os.path.join(srcroot,"components","mom","input_templates",resolution)
     for input_file_name in input_files:
         input_file_path = os.path.join(input_templates_dir,input_file_name)
@@ -80,6 +80,21 @@ def prep_input(case):
         input_data_list.write(idl_data)
 
 
+def process_SourceMods(case):
+
+    caseroot = case.get_value("CASEROOT")
+    rundir   = case.get_value("RUNDIR")
+    replaceable = ["diag_table", "input.nml", "MOM_input", "MOM_override"]
+
+    # If an input file normally copied from the templates directory is also provided by the user
+    # in SourceMods/src.mom/, copy the version provided by the user in SourceMods.src.mom into
+    # RUNDIR and so overwrite the default file.
+    SourceMods_dir = os.path.join(caseroot,"SourceMods","src.mom")
+    for filename in os.listdir(SourceMods_dir):
+        if filename in replaceable:
+            run_cmd("cp "+os.path.join(SourceMods_dir,filename)+" "+rundir)
+
+
 
 # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
 ###############################################################################
@@ -93,6 +108,9 @@ def buildnml(case, caseroot, compname):
 
     # prepare all input files
     prep_input(case)
+
+    # process the SourceMods
+    process_SourceMods(case)
 
     return
 
