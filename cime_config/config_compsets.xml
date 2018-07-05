@@ -60,4 +60,11 @@
     <lname>2000_DATM%IAF_SLND_CICE_MOM6_DROF%IAF_SGLC_SWAV</lname>
   </compset>
 
+  <!-- Ocean-Only compsets -->
+
+  <compset>
+    <alias>OO</alias>
+    <lname>2000_SATM_SLND_SICE_MOM6_SROF_SGLC_SWAV</lname>
+  </compset>
+
 </compsets>
