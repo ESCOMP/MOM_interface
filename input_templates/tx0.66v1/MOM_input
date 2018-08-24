@@ -69,6 +69,9 @@ NK = 60                         !   [nondim]
                                 ! The number of model layers.
 
 ! === module MOM ===
+USE_LEGACY_DIABATIC_DRIVER = False !   [Boolean] default = True
+                                ! If true, use the a legacy version of the diabatic subroutine.
+                                ! This is temporary and is needed avoid change in answers.
 DIABATIC_FIRST = True           !   [Boolean] default = False
                                 ! If true, apply diabatic and thermodynamic processes,
                                 ! including buoyancy forcing and mass gain or loss,
@@ -235,17 +238,6 @@ Z_INIT_FILE_PTEMP_VAR = "PTEMP" ! default = "ptemp"
 Z_INIT_FILE_SALT_VAR = "SALT"   ! default = "salt"
                                 ! The name of the salinity variable in
                                 ! TEMP_SALT_Z_INIT_FILE.
-
-! === module MOM_MEKE ===
-USE_MEKE = True                 !   [Boolean] default = False
-                                ! If true, turns on the MEKE scheme which calculates
-                                ! a sub-grid mesoscale eddy kinetic energy budget.
-MEKE_GMCOEFF = 1.0              !   [nondim] default = -1.0
-                                ! The efficiency of the conversion of potential energy
-                                ! into MEKE by the thickness mixing parameterization.
-                                ! If MEKE_GMCOEFF is negative, this conversion is not
-                                ! used or calculated.
-
 ! === module MOM_lateral_mixing_coeffs ===
 USE_VARIABLE_MIXING = True      !   [Boolean] default = False
                                 ! If true, the variable mixing code will be called.  This
@@ -306,8 +298,6 @@ ALE_COORDINATE_CONFIG = "FILE:ocean_vgrid.nc,dz" ! default = "UNIFORM"
                                 !                HYBRID:vgrid.nc,sigma2,dz
 
 ! === module MOM_wave_speed ===
-TIDES = True                    !   [Boolean] default = False
-                                ! If true, apply tidal momentum forcing.
 ETA_TOLERANCE = 1.0E-06         !   [m] default = 3.15E-09
                                 ! The tolerance for the differences between the
                                 ! barotropic and baroclinic estimates of the sea surface
@@ -387,6 +377,12 @@ V_TRUNC_FILE = "V_velocity_truncations" ! default = ""
 KV = 1.0E-04                    !   [m2 s-1]
                                 ! The background kinematic viscosity in the interior.
                                 ! The molecular value, ~1e-6 m2 s-1, may be used.
+ADD_KV_SLOW = True              !   [Boolean] default = False
+                                ! If true, the background vertical viscosity in the interior
+                                ! (i.e., tidal + background + shear + convenction) is addded
+                                ! when computing the coupling coefficient. The purpose of this
+                                ! flag is to be able to recover previous answers and it will likely
+                                ! be removed in the future since this option should always be true.
 HBBL = 10.0                     !   [m]
                                 ! The thickness of a bottom boundary layer with a
                                 ! viscosity of KVBBL if BOTTOMDRAGLAW is not defined, or
@@ -477,9 +473,18 @@ DTBT = -0.95                    !   [s or nondim] default = -0.98
                                 ! Setting DTBT to 0 is the same as setting it to -0.98.
                                 ! The value of DTBT that will actually be used is an
                                 ! integer fraction of DT, rounding down.
-
+DYNAMIC_SURFACE_PRESSURE = True !   [Boolean] default = False
+                                ! If true, add a dynamic pressure due to a viscous ice
+                                ! shelf, for instance.
+DEPTH_MIN_DYN_PSURF = 1.0       !   [m] default = 1.0E-06
+                                ! The minimum depth to use in limiting the size of the
+                                ! dynamic surface pressure for stability, if
+                                ! DYNAMIC_SURFACE_PRESSURE is true.
+USE_RIGID_SEA_ICE = True        !   [Boolean] default = False
+                                ! If true, sea-ice is rigid enough to exert a
+                                ! nonhydrostatic pressure that resist vertical motion.
 ! === module MOM_thickness_diffuse ===
-KHTH = 600.0                    !   [m2 s-1] default = 0.0
+KHTH = 800.0                    !   [m2 s-1] default = 0.0
                                 ! The background horizontal thickness diffusivity.
 KHTH_MAX = 900.0                !   [m2 s-1] default = 0.0
                                 ! The maximum horizontal thickness diffusivity.
@@ -496,7 +501,7 @@ MIXEDLAYER_RESTRAT = True       !   [Boolean] default = False
                                 ! If true, a density-gradient dependent re-stratifying
                                 ! flow is imposed in the mixed layer.
                                 ! This is only used if BULKMIXEDLAYER is true.
-FOX_KEMPER_ML_RESTRAT_COEF = 20.0 !   [nondim] default = 0.0
+FOX_KEMPER_ML_RESTRAT_COEF = 1.0 !   [nondim] default = 0.0
                                 ! A nondimensional coefficient that is proportional to
                                 ! the ratio of the deformation radius to the dominant
                                 ! lengthscale of the submesoscale mixed layer
@@ -510,10 +515,20 @@ FOX_KEMPER_ML_RESTRAT_COEF = 20.0 !   [nondim] default = 0.0
                                 ! depth-space output.
                                 ! The number of depth-space levels.  This is determined
                                 ! from the size of the variable zw in the output grid file.
-
+MLE_FRONT_LENGTH = 200.0        !   [m] default = 0.0
+                                ! If non-zero, is the frontal-length scale used to calculate the
+                                ! upscaling of buoyancy gradients that is otherwise represented
+                                ! by the parameter FOX_KEMPER_ML_RESTRAT_COEF. If MLE_FRONT_LENGTH is
+                                ! non-zero, it is recommended to set FOX_KEMPER_ML_RESTRAT_COEF=1.
+MLE_MLD_DECAY_TIME = 2.592E+06  !   [s] default = 0.0
+                                ! The time-scale for a running-mean filter applied to the mixed-layer
+                                ! depth used in the MLE restratification parameterization. When
+                                ! the MLD deepens below the current running-mean the running-mean
+                                ! is instantaneously set to the current MLD.
 ! === module MOM_diabatic_driver ===
 ! The following parameters are used for diabatic processes.
-ENERGETICS_SFC_PBL = True       !   [Boolean] default = False
+USE_CVMix_CONVECTION = True     !
+ENERGETICS_SFC_PBL = False      !   [Boolean] default = False
                                 ! If true, use an implied energetics planetary boundary
                                 ! layer scheme to determine the diffusivity and viscosity
                                 ! in the surface boundary layer.
@@ -561,28 +576,61 @@ TKE_ITIDE_MAX = 0.1             !   [W m-2] default = 1000.0
                                 ! the tidal amplitude with INT_TIDE_DISSIPATION.
                                 ! The path to the file containing the sub-grid-scale
                                 ! topographic roughness amplitude with INT_TIDE_DISSIPATION.
+! === module MOM_KPP ===
+! This is the MOM wrapper to CVMix:KPP
+! See http://cvmix.github.io/
+USE_KPP = True                  !   [Boolean] default = False
+                                ! If true, turns on the [CVMix] KPP scheme of Large et al., 1994,
+                                ! to calculate diffusivities and non-local transport in the OBL.
+KPP%
+N_SMOOTH = 3                    ! default = 0
+                                ! The number of times the 1-1-4-1-1 Laplacian filter is applied on
+                                ! OBL depth.
+                                ! purely for diagnostic purposes.
+MATCH_TECHNIQUE = "MatchBoth"   ! default = "SimpleShapes"
+                                ! CVMix method to set profile function for diffusivity and NLT,
+                                ! as well as matching across OBL base. Allowed values are:
+                                !    SimpleShapes      = sigma*(1-sigma)^2 for both diffusivity and NLT
+                                !    MatchGradient     = sigma*(1-sigma)^2 for NLT; diffusivity profile from matching
+                                !    MatchBoth         = match gradient for both diffusivity and NLT
+                                !    ParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT
+INTERP_TYPE2 = "LMD94"          ! Type of interpolation to compute diff and visc at OBL_depth
+                                ! Allowed types are: linear, quadratic, cubic or LMD94.
+KPP_IS_ADDITIVE = False         !   [Boolean] default = True
+                                ! If true, adds KPP diffusivity to diffusivity from other schemes.If false, KPP is
+                                ! the only diffusivity wherever KPP is non-zero.
 
+%KPP
 ! === module MOM_tidal_mixing ===
 ! Vertical Tidal Mixing Parameterization
-USE_CVMix_TIDAL = False         !   [Boolean] default = False
+USE_CVMix_TIDAL = True          !   [Boolean] default = False
                                 ! If true, turns on tidal mixing via CVMix
-INT_TIDE_DISSIPATION = False    !   [Boolean] default = False
+INT_TIDE_DISSIPATION = True     !   [Boolean] default = False
                                 ! If true, use an internal tidal dissipation scheme to
                                 ! drive diapycnal mixing, along the lines of St. Laurent
                                 ! et al. (2002) and Simmons et al. (2004).
 READ_TIDEAMP = False            !   [Boolean] default = False
                                 ! If true, read a file (given by TIDEAMP_FILE) containing
                                 ! the tidal amplitude with INT_TIDE_DISSIPATION.
-
-! === module MOM_kappa_shear ===
-! Parameterization of shear-driven turbulence following Jackson, Hallberg and Legg, JPO 2008
-USE_JACKSON_PARAM = True        !   [Boolean] default = False
-                                ! If true, use the Jackson-Hallberg-Legg (JPO 2008)
+TIDAL_ENERGY_FILE = "energy_new_t0.66v1_conserve_180608.nc" !
+                                ! The path to the file containing tidal energy
+                                ! dissipation. Used with CVMix tidal mixing schemes.
+TIDAL_ENERGY_TYPE = "Jayne"     !
+                                ! The type of input tidal energy flux dataset. Valid values are   Jayne
+                                !    ER03
+! === module MOM_CVMix_shear ===
+! Parameterization of shear-driven turbulence via CVMix (various options)
+USE_LMD94 = True                !   [Boolean] default = False
+                                ! If true, use the Large-McWilliams-Doney (JGR 1994)
                                 ! shear mixing parameterization.
-MAX_RINO_IT = 25                !   [nondim] default = 50
-                                ! The maximum number of iterations that may be used to
-                                ! estimate the Richardson number driven mixing.
-
+SMOOTH_RI = True                !   [Boolean] default = False
+                                ! If true, vertically smooth the Richardsonnumber by applying a 1-2-1 filter once.
+! === module MOM_CVMix_ddiff ===
+! Parameterization of mixing due to double diffusion processes via CVMix
+USE_CVMIX_DDIFF = True          !   [Boolean] default = False
+                                ! If true, turns on double diffusive processes via CVMix.
+                                ! Note that double diffusive processes on viscosity are ignored
+                                ! in CVMix, see http://cvmix.github.io/ for justification.
 ! === module MOM_KPP ===
 ! This is the MOM wrapper to CVmix:KPP
 ! See http://code.google.com/p/cvmix/
@@ -622,6 +670,11 @@ VAR_PEN_SW = False              !   [Boolean] default = False
                                 ! the variable CHL_A. It is used when VAR_PEN_SW and
                                 ! CHL_FROM_FILE are true.
                                 ! The number of bands of penetrating shortwave radiation.
+! === module MOM_diabatic_aux ===
+PRESSURE_DEPENDENT_FRAZIL = True !   [Boolean] default = False
+                                ! If true, use a pressure dependent freezing temperature
+                                ! when making frazil. The default is false, which will be
+                                ! faster but is inappropriate with ice-shelf cavities.
 
 ! === module MOM_tracer_advect ===
 TRACER_ADVECTION_SCHEME = "PPM:H3" ! default = "PLM"
@@ -630,12 +683,17 @@ TRACER_ADVECTION_SCHEME = "PPM:H3" ! default = "PLM"
                                 !   PPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)
 
 ! === module MOM_tracer_hor_diff ===
-KHTR = 600.0                    !   [m2 s-1] default = 0.0
+KHTR = 75.0                     !   [m2 s-1] default = 0.0
                                 ! The background along-isopycnal tracer diffusivity.
 KHTR_MIN = 50.0                 !   [m2 s-1] default = 0.0
                                 ! The minimum along-isopycnal tracer diffusivity.
 KHTR_MAX = 900.0                !   [m2 s-1] default = 0.0
                                 ! The maximum along-isopycnal tracer diffusivity.
+CHECK_DIFFUSIVE_CFL = True      !   [Boolean] default = False
+                                ! If true, use enough iterations the diffusion to ensure
+                                ! that the diffusive equivalent of the CFL limit is not
+                                ! violated.  If false, always use the greater of 1 or
+                                ! MAX_TR_DIFFUSION_CFL iteration.
 
 ! === module MOM_surface_forcing ===
 BUOY_CONFIG = "file"            !
@@ -720,7 +778,22 @@ MAXCPU = 2.88E+04               !   [wall-clock seconds] default = -1.0
                                 ! value for MAXCPU.  MAXCPU has units of wall-clock
                                 ! seconds, so the actual CPU time used is larger by a
                                 ! factor of the number of processors used.
-
+! === module ocean_model_init ===
+RESTORE_SALINITY = True         !   [Boolean] default = False
+                                ! If true, the coupled driver will add a globally-balanced
+                                ! fresh-water flux that drives sea-surface salinity
+                                ! toward specified values.
+FLUXCONST = 0.1667              !   [m day-1]
+                                ! The constant that relates the restoring surface fluxes
+                                ! to the relative surface anomalies (akin to a piston
+                                ! velocity).  Note the non-MKS units.
+SALT_RESTORE_FILE = "salt_restore_tx0.66v1.nc" ! default = "salt_restore.nc"
+                                ! A file in which to find the surface salinity to use for restoring.
+ADJUST_NET_FRESH_WATER_TO_ZERO = True !   [Boolean] default = False
+                                ! If true, adjusts the net fresh-water forcing seen
+                                ! by the ocean (including restoring) to zero.
+MAX_DELTA_SRESTORE = 5.0        !   [PSU or g kg-1] default = 999.0
+                                ! The maximum salinity difference used in restoring terms.
 ! === module MOM_main (MOM_driver) ===
 DT_FORCING = 1800.0             !   [s] default = 3600.0
                                 ! The time step for changing forcing, coupling with other
@@ -736,6 +809,6 @@ RESTINT = 365.0                 !   [days] default = 0.0
                                 ! The interval between saves of the restart file in units
                                 ! of TIMEUNIT.  Use 0 (the default) to not save
                                 ! incremental restart files at all.
-ENERGYSAVEDAYS = 0.01            !   [days] default = 7200.0
+ENERGYSAVEDAYS = 5.0            !   [days] default = 7200.0
                                 ! The interval in units of TIMEUNIT between saves of the
                                 ! energies of the run and other globally summed diagnostics.
