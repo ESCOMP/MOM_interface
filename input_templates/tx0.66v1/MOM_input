@@ -755,19 +755,6 @@ WINDSTRESS_Y_VAR = "tauy"       ! default = "STRESS_Y"
 WINDSTRESS_STAGGER = "C"        ! default = "A"
                                 ! A character indicating how the wind stress components
                                 ! are staggered in WIND_FILE.  This may be A or C for now.
-RESTOREBUOY = True              !   [Boolean] default = False
-                                ! If true, the buoyancy fluxes drive the model back
-                                ! toward some specified surface state with a rate
-                                ! given by FLUXCONST.
-FLUXCONST = 0.5                 !   [m day-1]
-                                ! The constant that relates the restoring surface fluxes
-                                ! to the relative surface anomalies (akin to a piston
-                                ! velocity).  Note the non-MKS units.
-                                ! If true, use a 2-dimensional gustiness supplied from
-                                ! an input file
-                                ! The file in which the wind gustiness is found in
-                                ! variable gustiness.
-
 ! === module MOM_sum_output ===
 MAXTRUNC = 5000                 !   [truncations save_interval-1] default = 0
                                 ! The run will be stopped, and the day set to a very
