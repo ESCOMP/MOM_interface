@@ -382,7 +382,7 @@ V_TRUNC_FILE = "V_velocity_truncations" ! default = ""
 KV = 1.0E-04                    !   [m2 s-1]
                                 ! The background kinematic viscosity in the interior.
                                 ! The molecular value, ~1e-6 m2 s-1, may be used.
-ADD_KV_SLOW = True              !   [Boolean] default = False
+ADD_KV_SLOW = False             !   [Boolean] default = False
                                 ! If true, the background vertical viscosity in the interior
                                 ! (i.e., tidal + background + shear + convenction) is addded
                                 ! when computing the coupling coefficient. The purpose of this
