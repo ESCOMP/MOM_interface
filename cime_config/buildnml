@@ -21,7 +21,7 @@ from CIME.case import Case
 from CIME.nmlgen import NamelistGenerator
 from CIME.utils import expect
 from CIME.buildnml import create_namelist_infile, parse_input
-from CIME.utils import run_cmd
+from CIME.utils import safe_copy
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,10 @@ def prep_input(case):
     ocn_gridname    = case.get_value("OCN_GRID")
     srcroot         = case.get_value("SRCROOT")
     din_loc_root    = case.get_value("DIN_LOC_ROOT")
-    input_files     = ["diag_table", "input.nml", "MOM_input"]
+    if case.get_value("TEST"):
+        input_files     = ["diag_table.test", "input.nml", "MOM_input"]
+    else:
+        input_files     = ["diag_table", "input.nml", "MOM_input"]
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
@@ -49,11 +52,16 @@ def prep_input(case):
     logger.info("\tCopying input files for %s"%(ocn_gridname))
     input_templates_dir = os.path.join(srcroot,"components","mom","input_templates",ocn_gridname)
     for input_file_name in input_files:
+        if input_file_name.endswith('.test'):
+            output_file_name = input_file_name[:-5]
+        else:
+            output_file_name = input_file_name
         input_file_path = os.path.join(input_templates_dir,input_file_name)
+        output_file_path = os.path.join(rundir,output_file_name)
         if not os.path.exists(input_file_path):
             expect(False, "Couldn't find input files at "+input_file_path)
 
-        run_cmd("cp "+input_file_path+" "+rundir)
+        safe_copy(input_file_path, output_file_path)
 
     # process diag_table: (replace all the instances of "CASENAME" in data_table with the actual case name)
     with open(os.path.join(rundir,"diag_table"), 'r') as diag_table:
@@ -95,8 +103,7 @@ def process_SourceMods(case):
     SourceMods_dir = os.path.join(caseroot,"SourceMods","src.mom")
     for filename in os.listdir(SourceMods_dir):
         if filename in replaceable:
-            run_cmd("cp "+os.path.join(SourceMods_dir,filename)+" "+rundir)
-
+            safe_copy(os.path.join(SourceMods_dir,filename), os.path.join(rundir, filename))
 
 def process_user_nl_mom(case):
     caseroot = case.get_value("CASEROOT")
@@ -239,4 +246,3 @@ def _main_func():
 
 if __name__ == "__main__":
     _main_func()
-
