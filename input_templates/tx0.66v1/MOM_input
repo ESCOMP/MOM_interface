@@ -150,7 +150,7 @@ USE_IDEAL_AGE_TRACER = False    !   [Boolean] default = False
                                 ! If true, use the ideal_age_example tracer package.
 
 ! === module ideal_age_example ===
-INPUTDIR = "DIN_LOC_ROOT"       ! default = "."
+INPUTDIR = "$DIN_LOC_ROOT"      ! default = "."
                                 ! The directory in which input files are found.
 COORD_CONFIG = "none"           !
                                 ! This specifies how layers are to be defined:
@@ -177,7 +177,7 @@ GRID_CONFIG = "mosaic"          !
                                 !     cartesian - use a (flat) Cartesian grid.
                                 !     spherical - use a simple spherical grid.
                                 !     mercator - use a Mercator spherical grid.
-GRID_FILE = "ocean_hgrid.nc"    !
+GRID_FILE = "ocean_hgrid_180829.nc" !
                                 ! Name of the file from which to read horizontal grid data.
 TOPO_CONFIG = "file"            !
                                 ! This specifies how bathymetry is specified:
@@ -197,7 +197,7 @@ TOPO_CONFIG = "file"            !
                                 !       DOME2D gravity current/overflow test case.
                                 !     seamount - Gaussian bump for spontaneous motion test case.
                                 !     USER - call a user modified routine.
-TOPO_FILE = "ocean_topog.nc"    ! default = "topog.nc"
+TOPO_FILE = "ocean_topog_180829.nc" ! default = "topog.nc"
                                 ! The file from which the bathymetry is read.
 MAXIMUM_DEPTH = 6000.0          !   [m]
                                 ! The maximum depth of the ocean.
@@ -234,7 +234,7 @@ INIT_LAYERS_FROM_Z_FILE = True  !   [Boolean] default = False
                                 ! If true, intialize the layer thicknesses, temperatures,
                                 ! and salnities from a Z-space file on a latitude-
                                 ! longitude grid.
-TEMP_SALT_Z_INIT_FILE = "WOA05_pottemp_salt.nc" ! default = "temp_salt_z.nc"
+TEMP_SALT_Z_INIT_FILE = "WOA05_pottemp_salt_180829.nc" ! default = "temp_salt_z.nc"
                                 ! The name of the z-space input file used to initialize
                                 ! the layer thicknesses, temperatures and salinities.
 Z_INIT_FILE_PTEMP_VAR = "PTEMP" ! default = "ptemp"
@@ -286,7 +286,7 @@ REGRIDDING_COORDINATE_MODE = "Z*" ! default = "LAYER"
                                 !  HYCOM1 - HyCOM-like hybrid coordinate
                                 !  SLIGHT - stretched coordinates above continuous isopycnal
                                 !  ADAPTIVE - optimize for smooth neutral density surfaces
-ALE_COORDINATE_CONFIG = "FILE:ocean_vgrid.nc,dz" ! default = "UNIFORM"
+ALE_COORDINATE_CONFIG = "FILE:ocean_vgrid_180829.nc,dz" ! default = "UNIFORM"
                                 ! Determines how to specify the coordinate
                                 ! resolution. Valid options are:
                                 !  PARAM       - use the vector-parameter ALE_RESOLUTION
@@ -779,7 +779,7 @@ FLUXCONST = 0.1667              !   [m day-1]
                                 ! The constant that relates the restoring surface fluxes
                                 ! to the relative surface anomalies (akin to a piston
                                 ! velocity).  Note the non-MKS units.
-SALT_RESTORE_FILE = "salt_restore_tx0.66v1.nc" ! default = "salt_restore.nc"
+SALT_RESTORE_FILE = "salt_restore_tx0.66v1_180828.nc" ! default = "salt_restore.nc"
                                 ! A file in which to find the surface salinity to use for restoring.
 ADJUST_NET_FRESH_WATER_TO_ZERO = True !   [Boolean] default = False
                                 ! If true, adjusts the net fresh-water forcing seen

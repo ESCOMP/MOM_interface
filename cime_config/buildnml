@@ -57,14 +57,14 @@ def prep_input(case):
 
     # process diag_table: (replace all the instances of "CASENAME" in data_table with the actual case name)
     with open(os.path.join(rundir,"diag_table"), 'r') as diag_table:
-        diag_table_data = diag_table.read().replace('CASENAME',casename)
+        diag_table_data = diag_table.read().replace('$CASENAME',casename)
     with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
         diag_table.write(diag_table_data)
 
     # process MOM_input: (replace all the instances of "DIN_LOC_ROOT" with the local input directory)
     with open(os.path.join(rundir,"MOM_input"), 'r') as MOM_input:
          inputdir = os.path.join(din_loc_root,'ocn','mom',ocn_gridname)
-         MOM_input_data = MOM_input.read().replace('DIN_LOC_ROOT',inputdir)
+         MOM_input_data = MOM_input.read().replace('$DIN_LOC_ROOT',inputdir)
     with open(os.path.join(rundir,"MOM_input"), 'w') as MOM_input:
         MOM_input.write(MOM_input_data)
 
@@ -78,8 +78,8 @@ def prep_input(case):
 
     # generate input_data_list:
     with open(os.path.join(input_templates_dir,"mom.input_data_list"), 'r') as input_data_list:
-        idl_data = input_data_list.read().replace('DIN_LOC_ROOT',din_loc_root)\
-                                         .replace('OCN_GRID',ocn_gridname)
+        idl_data = input_data_list.read().replace('$DIN_LOC_ROOT',din_loc_root)\
+                                         .replace('$OCN_GRID',ocn_gridname)
     with open(os.path.join(Buildconf,"mom.input_data_list"), 'w') as input_data_list:
         input_data_list.write(idl_data)
 
