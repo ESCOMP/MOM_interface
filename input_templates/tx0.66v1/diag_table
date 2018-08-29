@@ -1,10 +1,10 @@
 "MOM6 CASENAME Experiment"
 1 1 1 0 0 0
-"CASENAME.mom6.prog.%4yr-%3dy",           5,"days",1,"days","Time",365,"days"
-"CASENAME.mom6.sfc.day.%4yr-%3dy",      1,"days",1,"days","Time",365,"days"
-"CASENAME.mom6.hm.%4yr-%3dy",    1,  "months", 1, "days", "time",365,"days"
-"CASENAME.mom6.hmz.%4yr-%3dy",  1,  "months", 1, "days", "time",365,"days"
-"CASENAME.mom6.frc.%4yr-%3dy",        1,"days",1,"days","Time",365,"days"
+"CASENAME.mom6.h%4yr-%2mo",          1,  "months", 1,  "days", "time", 1, "months"
+#"CASENAME.mom6.prog%4yr-%3dy",     5,"days",1,"days","time",365,"days"
+"CASENAME.mom6.sfc%4yr",  1,"days",1,"days","time",365,"days"
+"CASENAME.mom6.frc%4yr",  1,"days",1,"days","time",365,"days"
+#"CASENAME.mom6.hm%4yr-%3dy",       1,  "months", 1, "days", "time",365,"days"
 "CASENAME.mom6.static",            -1,"days",1,"days","time",
 
 #===============================================================================
@@ -19,76 +19,100 @@
 #   with the actual case name while building the case.
 #===============================================================================
 
+# history files
+# 3D fields remmaped to z-space
+"ocean_model_z","uhbt","uhbt","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","vhbt","vhbt","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","u","u","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","v","v","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","h","h","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","temp","temp","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","salt","salt","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","rhoinsitu","rhoinsitu","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","age","age","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+#"ocean_model_z","vintage","vintage","CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
+#"ocean_model_z","CFC11","CFC11","CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
+#"ocean_model_z","CFC12","CFC12","CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
+# 2D fluxes
+"ocean_model","taux","taux","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","tauy","tauy","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","friver","friver","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","prsn","prsn","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","precip","precip","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","evs","evs","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","hfsso","hfsso","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","rlntds","rlntds","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","hfsnthermds","hfsnthermds","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","sfdsi","sfdsi","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","rsntds","rsntds","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","hfds","hfds","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","ustar","ustar","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+# 2D surface fields
+"ocean_model","SSH","SSH","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","SST","SST","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","SSS","SSS","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","speed","speed","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","SSU","SSU","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","SSV","SSV","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","MLD_003","MLD_003","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","MLD_0125","MLD_0125","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","KPP_OBLdepth","KPP_OBLdepth","CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+# grid
+"ocean_model","geolon","geolon","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","geolat","geolat","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","geolon_u","geolon_u","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","geolat_u","geolat_u","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","geolon_v","geolon_v","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","geolat_v","geolat_v","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","area_t","area_t","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","depth_ocean","depth_ocean","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","wet","wet","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","wet_u","wet_u","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+"ocean_model","wet_v","wet_v","CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+
 #This is the field section of the diag_table.
 # ocean_month
 
-"ocean_model","u","u","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","v","v","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","h","h","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",1
-"ocean_model","e","e","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","temp","temp","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","salt","salt","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","age","age","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","MLD_003","MLD_003","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","MLD_0125","MLD_0125","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","u","u","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","v","v","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","h","h","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",1
+#"ocean_model","e","e","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","temp","temp","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","salt","salt","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","age","age","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","MLD_003","MLD_003","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","MLD_0125","MLD_0125","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
 
 # Tracer Fluxes:
-"ocean_model","T_adx",  "T_adx",  "CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","T_ady",  "T_ady",  "CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","T_diffx_2d","T_diffx_2d","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","T_diffy_2d","T_diffy_2d","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","S_adx",  "S_adx",  "CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","S_ady",  "S_ady",  "CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","S_diffx_2d","S_diffx_2d","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","S_diffy_2d","S_diffy_2d","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-
-# ocean_month_z
-# Z-space fields:
-#==================
-"ocean_model_z","u","u","CASENAME.mom6.hmz.%4yr-%3dy","all",.true.,"none",2
-"ocean_model_z","v","v","CASENAME.mom6.hmz.%4yr-%3dy","all",.true.,"none",2
-"ocean_model_z","temp","temp","CASENAME.mom6.hmz.%4yr-%3dy","all",.true.,"none",2
-"ocean_model_z","salt","salt","CASENAME.mom6.hmz.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model_z","vintage","vintage","CASENAME.mom6.hmz.%4yr-%3dy","all",.true.,"none",2
-"ocean_model_z","age","age","CASENAME.mom6.hmz.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model_z","CFC11","CFC11","CASENAME.mom6.hmz.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model_z","CFC12","CFC12","CASENAME.mom6.hmz.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","geolon","geolon","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","geolat","geolat","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","geolon_u","geolon_u","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","geolat_u","geolat_u","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","geolon_v","geolon_v","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","geolat_v","geolat_v","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","area_t","area_t","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","depth_ocean","depth_ocean","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","wet","wet","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","wet_u","wet_u","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","wet_v","wet_v","CASENAME.mom6.hmz.%4yr-%3dy","all",.false.,"none",2
+#"ocean_model","T_adx",  "T_adx",  "CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","T_ady",  "T_ady",  "CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","T_diffx_2d","T_diffx_2d","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","T_diffy_2d","T_diffy_2d","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","S_adx",  "S_adx",  "CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","S_ady",  "S_ady",  "CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","S_diffx_2d","S_diffx_2d","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","S_diffy_2d","S_diffy_2d","CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
 
 # Prognostic Ocean fields:
 #=========================
-
-"ocean_model","u","u","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","v","v","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","h","h","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",1
-"ocean_model","e","e","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","temp","temp","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","salt","salt","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
+#"ocean_model","u","u","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
+#"ocean_model","v","v","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
+#"ocean_model","h","h","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",1
+#"ocean_model","e","e","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
+#"ocean_model","temp","temp","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
+#"ocean_model","salt","salt","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
 #"ocean_model","Rml","Rml","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","RV","RV","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
-"ocean_model","PV","PV","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
+#"ocean_model","RV","RV","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
+#"ocean_model","PV","PV","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
 #"ocean_model","e_D","e_D","CASENAME.mom6.prog.%4yr-%3dy","all",.false.,"none",2
 
 # surface daily ave
-"ocean_model","SSH","SSH","CASENAME.mom6.sfc.day.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","SST","SST","CASENAME.mom6.sfc.day.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","SSS","SSS","CASENAME.mom6.sfc.day.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","speed","speed","CASENAME.mom6.sfc.day.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","SSU","SSU","CASENAME.mom6.sfc.day.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","SSV","SSV","CASENAME.mom6.sfc.day.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","MLD_003","MLD_003","CASENAME.mom6.sfc.day.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","MLD_0125","MLD_0125","CASENAME.mom6.sfc.day.%4yr-%3dy","all",.true.,"none",2
-
+"ocean_model","SSH","SSH","CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","SST","SST","CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","SSS","SSS","CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","SSU","SSU","CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","SSV","SSV","CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","KPP_OBLdepth","KPP_OBLdepth","CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 
 # Momentum Balance Terms:
 #=======================
@@ -142,23 +166,22 @@
 
 # Surface Forcing:
 #=================
-"ocean_model","taux","taux","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","tauy","tauy","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","ustar","ustar","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","PRCmE","PRCmE","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","precip","precip","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","evap","evap","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","sensible","sensible","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","latent","latent","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","SW","SW","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","LwLatSens","LwLatSens","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","hfds","hfds","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","p_surf","p_surf","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","salt_flux","salt_flux","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","total_lrunoff","total_lrunoff","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
-"ocean_model","net_fresh_water_global_scaling","net_fresh_water_global_scaling","CASENAME.mom6.frc.%4yr-%3dy","all",.true.,"none",2
+"ocean_model","taux","taux","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","tauy","tauy","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","ustar","ustar","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","PRCmE","PRCmE","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","precip","precip","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","evap","evap","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","sensible","sensible","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","latent","latent","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","SW","SW","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","LwLatSens","LwLatSens","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","hfds","hfds","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","p_surf","p_surf","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","salt_flux","salt_flux","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","total_lrunoff","total_lrunoff","CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","net_fresh_water_global_scaling","net_fresh_water_global_scaling","CASENAME.mom6.frc%4yr","all",.true.,"none",2
 #
-
 # Static ocean fields:
 #=====================
 "ocean_model", "geolon",      "geolon",      "CASENAME.mom6.static", "all", .false., "none", 2
