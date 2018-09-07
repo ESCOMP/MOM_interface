@@ -32,12 +32,14 @@ def prep_input(case):
     rundir          = case.get_value("RUNDIR")
     gridname        = case.get_value("GRID")
     ocn_gridname    = case.get_value("OCN_GRID")
+    ocn_ncpl       = case.get_value("OCN_NCPL")
     srcroot         = case.get_value("SRCROOT")
     din_loc_root    = case.get_value("DIN_LOC_ROOT")
-    if case.get_value("TEST"):
-        input_files     = ["diag_table.test", "input.nml", "MOM_input"]
-    else:
-        input_files     = ["diag_table", "input.nml", "MOM_input"]
+    testcase = case.get_value("TEST")
+    hist_n = case.get_value("HIST_N")
+    hist_option = case.get_value("HIST_OPTION")
+    # diag_table handled below
+    input_files     = ["input.nml", "MOM_input"]
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
@@ -52,10 +54,7 @@ def prep_input(case):
     logger.info("\tCopying input files for %s"%(ocn_gridname))
     input_templates_dir = os.path.join(srcroot,"components","mom","input_templates",ocn_gridname)
     for input_file_name in input_files:
-        if input_file_name.endswith('.test'):
-            output_file_name = input_file_name[:-5]
-        else:
-            output_file_name = input_file_name
+        output_file_name = input_file_name
         input_file_path = os.path.join(input_templates_dir,input_file_name)
         output_file_path = os.path.join(rundir,output_file_name)
         if not os.path.exists(input_file_path):
@@ -64,10 +63,36 @@ def prep_input(case):
         safe_copy(input_file_path, output_file_path)
 
     # process diag_table: (replace all the instances of "CASENAME" in data_table with the actual case name)
-    with open(os.path.join(rundir,"diag_table"), 'r') as diag_table:
-        diag_table_data = diag_table.read().replace('CASENAME',casename)
-    with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
-        diag_table.write(diag_table_data)
+    if hist_option == "ndays":
+        hist_option = "minutes"
+        hist_n = int(hist_n * 1440 - 24 * 60/ ocn_ncpl)
+    elif hist_option == "nsteps":
+        hist_option = "seconds"
+        hist_n = int(86400/ocn_ncpl)
+
+    with open(os.path.join(input_templates_dir,"diag_table"), 'r') as diag_table_in:
+        with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
+            for line in diag_table_in:
+                line = line.replace('CASENAME', casename)
+                # Use cesm style file names
+                line = line.replace("%4yr-%3dy", "%4yr-%2mo-%2dy-%5sc")
+                if testcase:
+                    # this makes all real fields double precision
+                    if line.endswith('2\n'):
+                        line = line[:-2] + "1\n"
+                    # this changes output frequency and number of records per file
+                    if line.startswith("\""+casename):
+                        parts = line.split(',')
+                        parts[1] = "{}".format(hist_n)
+
+                        parts[2] = "\""+hist_option+"\""
+                        if len(parts) > 7:
+                            parts[6] = parts[1]
+                            parts[7] = parts[2]
+                        line = ','.join(parts)+"\n"
+                diag_table.writelines(line)
+
+
 
     # process MOM_input: (replace all the instances of "DIN_LOC_ROOT" with the local input directory)
     with open(os.path.join(rundir,"MOM_input"), 'r') as MOM_input:
