@@ -592,7 +592,7 @@ N_SMOOTH = 3                    ! default = 0
                                 ! The number of times the 1-1-4-1-1 Laplacian filter is applied on
                                 ! OBL depth.
                                 ! purely for diagnostic purposes.
-MATCH_TECHNIQUE = "MatchBoth"   ! default = "SimpleShapes"
+MATCH_TECHNIQUE = "MatchGradient"! default = "SimpleShapes"
                                 ! CVMix method to set profile function for diffusivity and NLT,
                                 ! as well as matching across OBL base. Allowed values are:
                                 !    SimpleShapes      = sigma*(1-sigma)^2 for both diffusivity and NLT
