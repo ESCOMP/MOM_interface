@@ -1,0 +1,16 @@
+<components version="2.0">
+  <comp_archive_spec compname="mom" compclass="ocn">
+    <rest_file_extension>r</rest_file_extension>
+    <hist_file_extension>frc\.[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>sfc.day\.[_\d+]+\.nc</hist_file_extension>
+    <hist_file_extension>hm\.[_\d+]+\.nc</hist_file_extension>
+    <hist_file_extension>hmz\.[_\d+]+\.nc</hist_file_extension>
+    <hist_file_extension>prog\.[_\d+]+\.nc</hist_file_extension> -->
+    <rpointer>
+      <rpointer_file>rpointer.ocn$NINST_STRING</rpointer_file>
+    </rpointer>
+    <test_file_names>
+      <tfile disposition="move">casename.mom6.prog._0001_01_06_00000.nc</tfile>
+    </test_file_names>
+  </comp_archive_spec>
+</components>
