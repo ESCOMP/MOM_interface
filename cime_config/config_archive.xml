@@ -5,7 +5,7 @@
     <hist_file_extension>sfc.day\.[_\d+]+\.nc</hist_file_extension>
     <hist_file_extension>hm\.[_\d+]+\.nc</hist_file_extension>
     <hist_file_extension>hmz\.[_\d+]+\.nc</hist_file_extension>
-    <hist_file_extension>prog\.[_\d+]+\.nc</hist_file_extension> -->
+    <hist_file_extension>prog\.[_\d+]+\.nc</hist_file_extension>
     <rpointer>
       <rpointer_file>rpointer.ocn$NINST_STRING</rpointer_file>
     </rpointer>
