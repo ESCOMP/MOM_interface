@@ -82,11 +82,11 @@ def prep_input(case):
                         line = line[:-2] + "1\n"
                 # this changes output frequency and number of records per file
                 # using HIST_N and HIST_OPTION from case
-                if line.startswith("\""+casename):
+                if line.startswith("\""+casename) and testcase:
                     parts = line.split(',')
-                    parts[1] = "{}".format(hist_n)
-                    parts[2] = "\""+hist_option+"\""
                     if len(parts) > 7:
+                        parts[1] = "1"
+                        parts[2] = "days"
                         parts[6] = parts[1]
                         parts[7] = parts[2]
                     line = ','.join(parts)+"\n"
