@@ -30,7 +30,6 @@ def prep_input(case):
     casename        = case.get_value("CASE")
     Buildconf       = case.get_value("CASEBUILD")
     rundir          = case.get_value("RUNDIR")
-    gridname        = case.get_value("GRID")
     ocn_gridname    = case.get_value("OCN_GRID")
     srcroot         = case.get_value("SRCROOT")
     din_loc_root    = case.get_value("DIN_LOC_ROOT")
@@ -41,15 +40,17 @@ def prep_input(case):
         os.makedirs(rundir)
 
     # check if input file templates are available for the given ocn grid:
-    available_grids = ["gx1v6","tx0.66v1"]
+    input_templates_dir = os.path.join(srcroot,"components","mom","input_templates")
+    available_grids = [filename for filename in os.listdir(input_templates_dir) \
+                       if os.path.isdir(os.path.join(input_templates_dir,filename))]
     if not (ocn_gridname in available_grids):
-        expect(False, "Couldn't find input files for %s" % (gridname))
+        expect(False, "Couldn't find input files for the ocean grid %s" % (ocn_gridname))
 
     # copy template input files:
     logger.info("\tCopying input files for %s"%(ocn_gridname))
-    input_templates_dir = os.path.join(srcroot,"components","mom","input_templates",ocn_gridname)
+    template_files_dir = os.path.join(input_templates_dir,ocn_gridname)
     for input_file_name in input_files:
-        input_file_path = os.path.join(input_templates_dir,input_file_name)
+        input_file_path = os.path.join(template_files_dir,input_file_name)
         if not os.path.exists(input_file_path):
             expect(False, "Couldn't find input files at "+input_file_path)
 
@@ -77,7 +78,7 @@ def prep_input(case):
 
 
     # generate input_data_list:
-    with open(os.path.join(input_templates_dir,"mom.input_data_list"), 'r') as input_data_list:
+    with open(os.path.join(template_files_dir,"mom.input_data_list"), 'r') as input_data_list:
         idl_data = input_data_list.read().replace('$DIN_LOC_ROOT',din_loc_root)\
                                          .replace('$OCN_GRID',ocn_gridname)
     with open(os.path.join(Buildconf,"mom.input_data_list"), 'w') as input_data_list:
