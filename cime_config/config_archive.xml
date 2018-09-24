@@ -9,8 +9,8 @@
     <rpointer>
       <rpointer_file>rpointer.ocn$NINST_STRING</rpointer_file>
     </rpointer>
-    <test_file_names>
+<!--    <test_file_names>
       <tfile disposition="move">casename.mom6.prog._0001_01_06_00000.nc</tfile>
-    </test_file_names>
+    </test_file_names> -->
   </comp_archive_spec>
 </components>
