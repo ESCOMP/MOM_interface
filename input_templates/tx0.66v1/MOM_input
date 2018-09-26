@@ -755,9 +755,6 @@ WINDSTRESS_X_VAR = "taux"       ! default = "STRESS_X"
                                 ! The name of the x-wind stress variable in WIND_FILE.
 WINDSTRESS_Y_VAR = "tauy"       ! default = "STRESS_Y"
                                 ! The name of the y-wind stress variable in WIND_FILE.
-WINDSTRESS_STAGGER = "C"        ! default = "A"
-                                ! A character indicating how the wind stress components
-                                ! are staggered in WIND_FILE.  This may be A or C for now.
 ! === module MOM_sum_output ===
 MAXTRUNC = 5000                 !   [truncations save_interval-1] default = 0
                                 ! The run will be stopped, and the day set to a very
