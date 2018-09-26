@@ -144,7 +144,10 @@ TFREEZE_DP = -7.75E-08         !   [deg C Pa-1] default = 0.0
                                 ! When TFREEZE_FORM=LINEAR,
                                 ! this is the derivative of the freezing potential
                                 ! temperature with pressure.
-
+DTFREEZE_DP = -7.75E-08         !   [deg C Pa-1] default = 0.0
+                                ! When TFREEZE_FORM=LINEAR,
+                                ! this is the derivative of the freezing potential
+                                ! temperature with pressure.
 ! === module MOM_tracer_flow_control ===
 USE_IDEAL_AGE_TRACER = False    !   [Boolean] default = False
                                 ! If true, use the ideal_age_example tracer package.
