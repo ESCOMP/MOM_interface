@@ -771,6 +771,11 @@ MAXCPU = 2.88E+04               !   [wall-clock seconds] default = -1.0
                                 ! seconds, so the actual CPU time used is larger by a
                                 ! factor of the number of processors used.
 ! === module ocean_model_init ===
+OCEAN_SURFACE_STAGGER = "A"     ! default = "C"
+                                ! A case-insensitive character string to indicate the
+                                ! staggering of the surface velocity field that is
+                                ! returned to the coupler.  Valid values include
+                                ! 'A', 'B', or 'C'.
 RESTORE_SALINITY = True         !   [Boolean] default = False
                                 ! If true, the coupled driver will add a globally-balanced
                                 ! fresh-water flux that drives sea-surface salinity
