@@ -4,7 +4,7 @@
 #"$CASENAME.mom6.prog%4yr-%3dy",     5,"days",1,"days","time",365,"days"
 "$CASENAME.mom6.sfc%4yr",  1,"days",1,"days","time",365,"days"
 "$CASENAME.mom6.frc%4yr",  1,"days",1,"days","time",365,"days"
-#"$CASENAME.mom6.hm%4yr-%3dy",       1,  "months", 1, "days", "time",365,"days"
+"$CASENAME.mom6.hm%4yr-%2mo",  1,  "months", 1, "days", "time",1,"months"
 "$CASENAME.mom6.static",            -1,"days",1,"days","time",
 
 #===============================================================================
@@ -21,8 +21,7 @@
 
 # history files
 # 3D fields remmaped to z-space
-"ocean_model_z","uhbt","uhbt","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
-"ocean_model_z","vhbt","vhbt","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z","KE","KE","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model_z","u","u","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model_z","v","v","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model_z","h","h","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
@@ -44,9 +43,11 @@
 "ocean_model","rlntds","rlntds","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","hfsnthermds","hfsnthermds","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","sfdsi","sfdsi","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","salt_flux_added","salt_flux_added","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","rsntds","rsntds","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","hfds","hfds","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","ustar","ustar","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","frazil","frazil","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 # 2D surface fields
 "ocean_model","SSH","SSH","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","SST","SST","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
@@ -57,31 +58,22 @@
 "ocean_model","MLD_003","MLD_003","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","MLD_0125","MLD_0125","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","KPP_OBLdepth","KPP_OBLdepth","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
-# grid
-"ocean_model","geolon","geolon","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","geolat","geolat","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","geolon_u","geolon_u","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","geolat_u","geolat_u","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","geolon_v","geolon_v","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","geolat_v","geolat_v","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","area_t","area_t","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","depth_ocean","depth_ocean","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","wet","wet","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","wet_u","wet_u","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
-"ocean_model","wet_v","wet_v","$CASENAME.mom6.h%4yr-%2mo","all",.false.,"none",1
+# time series
+"ocean_model","thetaoga","thetaoga","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model","soga","soga","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 
 #This is the field section of the diag_table.
-# ocean_month
-
-#"ocean_model","u","u","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","v","v","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","h","h","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",1
-#"ocean_model","e","e","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","temp","temp","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","salt","salt","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","age","age","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","MLD_003","MLD_003","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","MLD_0125","MLD_0125","$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
+# ocean_month, native grid
+"ocean_model","uh","uh","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","vh","vh","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","vhbt","vhbt","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","uhbt","uhbt","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","u","u","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","v","v","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","h","h","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",1
+"ocean_model","e","e","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","temp","temp","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","salt","salt","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
 
 # Tracer Fluxes:
 #"ocean_model","T_adx",  "T_adx",  "$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
