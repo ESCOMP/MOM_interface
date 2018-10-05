@@ -832,6 +832,9 @@ ADJUST_NET_FRESH_WATER_TO_ZERO = True !   [Boolean] default = False
                                 ! by the ocean (including restoring) to zero.
 MAX_DELTA_SRESTORE = 5.0        !   [PSU or g kg-1] default = 999.0
                                 ! The maximum salinity difference used in restoring terms.
+SRESTORE_AS_SFLUX = True        !   [Boolean] default = False
+                                ! If true, the restoring of salinity is applied as a salt
+                                ! flux instead of as a freshwater flux.
 ! === module MOM_main (MOM_driver) ===
 RESTART_CONTROL = 3             ! default = 1
                                 ! An integer whose bits encode which restart files are
