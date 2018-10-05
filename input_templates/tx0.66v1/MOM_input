@@ -715,6 +715,12 @@ VAR_PEN_SW = False              !   [Boolean] default = False
                                 ! the variable CHL_A. It is used when VAR_PEN_SW and
                                 ! CHL_FROM_FILE are true.
                                 ! The number of bands of penetrating shortwave radiation.
+PEN_SW_SCALE = 15.0             !   [m] default = 0.0
+                                ! The vertical absorption e-folding depth of the
+                                ! penetrating shortwave radiation.
+PEN_SW_FRAC = 0.42              !   [nondim] default = 0.0
+                                ! The fraction of the shortwave radiation that penetrates
+                                ! below the surface.
 ! === module MOM_diabatic_aux ===
 PRESSURE_DEPENDENT_FRAZIL = True !   [Boolean] default = False
                                 ! If true, use a pressure dependent freezing temperature
