@@ -23,6 +23,15 @@
       </machine>
     </machines>
   </test>
+  <test name="SMS_D_Ld2" grid="mip1" compset="OO">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
+    </machines>
+  </test>
   <test name="ERS" grid="T62_g16" compset="GMOM">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom">
