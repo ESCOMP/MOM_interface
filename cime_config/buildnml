@@ -33,6 +33,9 @@ def prep_input(case):
     ocn_gridname    = case.get_value("OCN_GRID")
     srcroot         = case.get_value("SRCROOT")
     din_loc_root    = case.get_value("DIN_LOC_ROOT")
+    testcase = case.get_value("TEST")
+    hist_n = case.get_value("HIST_N")
+    hist_option = case.get_value("HIST_OPTION")
     input_files     = ["diag_table", "input.nml", "MOM_input"]
 
     # Make sure that rundir exists. If not, make it:
@@ -57,10 +60,30 @@ def prep_input(case):
         run_cmd("cp "+input_file_path+" "+rundir)
 
     # process diag_table: (replace all the instances of "CASENAME" in data_table with the actual case name)
-    with open(os.path.join(rundir,"diag_table"), 'r') as diag_table:
-        diag_table_data = diag_table.read().replace('$CASENAME',casename)
-    with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
-        diag_table.write(diag_table_data)
+
+    if hist_option == "ndays":
+        hist_option = "days"
+    elif hist_option == "nsteps":
+        hist_option = "seconds"
+        hist_n = int(86400/ocn_ncpl)
+
+    with open(os.path.join(template_files_dir,"diag_table"), 'r') as diag_table_in:
+        with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
+            for line in diag_table_in:
+                line = line.replace('$CASENAME', casename)
+                if testcase:
+                    # this makes all real fields double precision
+                    if line.endswith('2\n'):
+                        line = line[:-2] + "1\n"
+                    # this changes output frequency and number of records per file
+                    # using HIST_N and HIST_OPTION from case
+                    if line.startswith("\""+casename):
+                        parts = line.split(',')
+                        if len(parts) > 7:
+                            parts[1] = parts[6] = "1"
+                            parts[2] = parts[7] = "days"
+                        line = ','.join(parts)+"\n"
+                diag_table.writelines(line)
 
     # process MOM_input: (replace all the instances of "DIN_LOC_ROOT" with the local input directory)
     with open(os.path.join(rundir,"MOM_input"), 'r') as MOM_input:
@@ -97,7 +120,6 @@ def process_SourceMods(case):
     for filename in os.listdir(SourceMods_dir):
         if filename in replaceable:
             run_cmd("cp "+os.path.join(SourceMods_dir,filename)+" "+rundir)
-
 
 def process_user_nl_mom(case):
     caseroot = case.get_value("CASEROOT")
@@ -240,4 +262,3 @@ def _main_func():
 
 if __name__ == "__main__":
     _main_func()
-
