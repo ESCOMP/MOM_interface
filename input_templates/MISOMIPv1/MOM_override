@@ -1,0 +1,38 @@
+! Blank file in which we can put "overrides" for parameters
+
+! ALE
+#override IGNORE_FLUXES_OVER_LAND = True
+#override USE_REGRIDDING = True
+#override REGRIDDING_COORDINATE_MODE = "SIGMA_SHELF_ZSTAR"
+#override INTERPOLATION_SCHEME = "PPM_H4"
+#override REMAPPING_SCHEME = "PPM_H4"
+#override TRIMMING_USES_REMAPPING = True
+
+!WARM IC
+#override ISOMIP_T_SUR = -1.9
+#override ISOMIP_S_SUR = 33.8
+#override ISOMIP_T_BOT = 1.0
+#override ISOMIP_S_BOT = 34.7
+
+! ice shelf
+#override SHELF_3EQ_GAMMA_T = 0.087
+#override TRIM_IC_FOR_P_SURF = True
+
+! MIXED LAYER
+#override MIXEDLAYER_RESTRAT = False
+#override ENERGETICS_SFC_PBL = True
+#override MLE_USE_PBL_MLD = True
+
+! SPONGE
+!#override SPONGE = False
+#override ISOMIP_S_SUR_SPONGE = 33.8
+#override ISOMIP_S_BOT_SPONGE = 34.7
+#override ISOMIP_T_SUR_SPONGE = -1.9
+#override ISOMIP_T_BOT_SPONGE = 1.0
+
+! PASSIVE TRACERS
+#override USE_ISOMIP_TRACER = True
+
+! Simulation time
+#override DAYMAX = 2
+
