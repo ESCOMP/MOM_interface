@@ -1,4 +1,5 @@
 ! Blank file in which we can put "overrides" for parameters
+! Parametes for IceOcean1
 
 ! ALE
 #override IGNORE_FLUXES_OVER_LAND = True
@@ -8,11 +9,11 @@
 #override REMAPPING_SCHEME = "PPM_H4"
 #override TRIMMING_USES_REMAPPING = True
 
-!WARM IC
+!COLD IC
 #override ISOMIP_T_SUR = -1.9
 #override ISOMIP_S_SUR = 33.8
-#override ISOMIP_T_BOT = 1.0
-#override ISOMIP_S_BOT = 34.7
+#override ISOMIP_T_BOT = -1.9
+#override ISOMIP_S_BOT = 34.55
 
 ! ice shelf
 #override SHELF_3EQ_GAMMA_T = 0.087
@@ -23,14 +24,19 @@
 #override ENERGETICS_SFC_PBL = True
 #override MLE_USE_PBL_MLD = True
 
-! SPONGE
-!#override SPONGE = False
+! WARM SPONGE
 #override ISOMIP_S_SUR_SPONGE = 33.8
 #override ISOMIP_S_BOT_SPONGE = 34.7
 #override ISOMIP_T_SUR_SPONGE = -1.9
 #override ISOMIP_T_BOT_SPONGE = 1.0
 
-! PASSIVE TRACERS
+!COLD SPONGE
+!#override ISOMIP_S_SUR_SPONGE = 33.8
+!#override ISOMIP_S_BOT_SPONGE = 34.55
+!#override ISOMIP_T_SUR_SPONGE = -1.9
+!#override ISOMIP_T_BOT_SPONGE = -1.9
+
+! PASSIVE TRACERS, OPTIONAL
 #override USE_ISOMIP_TRACER = True
 
 ! Simulation time
