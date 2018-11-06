@@ -268,7 +268,7 @@ TRIM_IC_FOR_P_SURF = True       !   [Boolean] default = False
                                 ! If true, cuts way the top of the column for initial conditions
                                 ! at the depth where the hydrostatic presure matches the imposed
                                 ! surface pressure which is read from file.
-SURFACE_PRESSURE_FILE = "MISOMIP.nc" !
+SURFACE_PRESSURE_FILE = "MISOMIP_181106.nc" !
                                 ! The initial condition file for the surface height.
 SURFACE_PRESSURE_VAR = "thick"  !   [kg m-2] default = ""
                                 ! The initial condition variable for the surface height.
@@ -279,7 +279,7 @@ SPONGE = True                   !   [Boolean] default = False
                                 ! If true, sponges may be applied anywhere in the domain.
                                 ! The exact location and properties of those sponges are
                                 ! specified via SPONGE_CONFIG.
-Z_OUTPUT_GRID_FILE = "MISOMIP_zgrid.nc" ! default = ""
+Z_OUTPUT_GRID_FILE = "MISOMIP_zgrid_181106.nc" ! default = ""
                                 ! The file that specifies the vertical grid for
                                 ! depth-space diagnostics, or blank to disable
                                 ! depth-space output.
