@@ -67,4 +67,11 @@
     <lname>2000_SATM_SLND_SICE_MOM6_SROF_SGLC_SWAV</lname>
   </compset>
 
+  <!-- MOM6+CISM compsets -->
+
+  <compset>
+    <alias>CMOMG</alias>
+    <lname>2000_SATM_SLND_SICE_MOM6_SROF_CISM2%EVOLVE_SWAV</lname>
+  </compset>
+
 </compsets>
