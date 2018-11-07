@@ -123,9 +123,9 @@ ISOMIP_T_SUR = -1.9             !   [not defined] default = -1.9
                                 ! Temperature at the surface (interface)
 ISOMIP_S_SUR = 33.8             !   [not defined] default = 33.8
                                 ! Salinity at the surface (interface)
-ISOMIP_T_BOT = 1.0              !   [not defined] default = -1.9
+ISOMIP_T_BOT = -1.9             !   [not defined] default = -1.9
                                 ! Temperature at the bottom (interface)
-ISOMIP_S_BOT = 34.7             !   [not defined] default = 34.55
+ISOMIP_S_BOT = 34.55            !   [not defined] default = 34.55
                                 ! Salinity at the bottom (interface)
 ISOMIP_S_SUR_SPONGE = 33.8      !   [not defined] default = 35.0
                                 ! Surface salinity in sponge layer.
