@@ -736,3 +736,6 @@ RESTINT = 0.0                   !   [days] default = 0.0
 ENERGYSAVEDAYS = 1.0            !   [days] default = 0.0034722222222222
                                 ! The interval in units of TIMEUNIT between saves of the
                                 ! energies of the run and other globally summed diagnostics.
+
+INTERPOLATION_SCHEME = "PPM_H4"
+MLE_USE_PBL_MLD = True
