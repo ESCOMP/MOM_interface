@@ -668,7 +668,7 @@ TRACER_ADVECTION_SCHEME = "PPM:H3" ! default = "PLM"
                                 !   PPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)
 
 ! === module MOM_tracer_hor_diff ===
-KHTR = 75.0                     !   [m2 s-1] default = 0.0
+KHTR = 800.0                     !   [m2 s-1] default = 0.0
                                 ! The background along-isopycnal tracer diffusivity.
 KHTR_MIN = 50.0                 !   [m2 s-1] default = 0.0
                                 ! The minimum along-isopycnal tracer diffusivity.
