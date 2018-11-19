@@ -247,9 +247,6 @@ RESOLN_SCALED_KH = True         !   [Boolean] default = False
 KHTH_USE_EBT_STRUCT = True      !   [Boolean] default = False
                                 ! If true, uses the equivalent barotropic structure
                                 ! as the vertical structure of thickness diffusivity.
-KHTR_SLOPE_CFF = 0.25           !   [nondim] default = 0.0
-                                ! The nondimensional coefficient in the Visbeck formula
-                                ! for the epipycnal tracer diffusivity
 RESOLN_SCALED_KHTH = True       !   [Boolean] default = False
                                 ! If true, the interface depth diffusivity is scaled away
                                 ! when the first baroclinic deformation radius is well
