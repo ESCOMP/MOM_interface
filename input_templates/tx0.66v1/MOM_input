@@ -471,9 +471,6 @@ DEPTH_MIN_DYN_PSURF = 1.0       !   [m] default = 1.0E-06
                                 ! The minimum depth to use in limiting the size of the
                                 ! dynamic surface pressure for stability, if
                                 ! DYNAMIC_SURFACE_PRESSURE is true.
-USE_RIGID_SEA_ICE = True        !   [Boolean] default = False
-                                ! If true, sea-ice is rigid enough to exert a
-                                ! nonhydrostatic pressure that resist vertical motion.
 ! === module MOM_thickness_diffuse ===
 KHTH = 800.0                    !   [m2 s-1] default = 0.0
                                 ! The background horizontal thickness diffusivity.
