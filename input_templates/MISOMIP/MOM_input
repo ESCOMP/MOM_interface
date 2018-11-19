@@ -2,8 +2,6 @@
    the Modular Ocean Model (MOM6), a numerical ocean model developed at NOAA-GFDL.
    Where appropriate, parameters use usually given in MKS units.
 
-   This particular file is for the "quiet" layer ISOMIP test case.
-
    This MOM_input file typically contains only the non-default values that are
    needed to reproduce this example.  A full list of parameters for this example
    can be found in the corresponding MOM_parameter_doc.all file which is
@@ -21,7 +19,7 @@ NJHALO = 4                      ! default = 2
                                 ! y-direction.  With STATIC_MEMORY_ this is set as NJHALO_
                                 ! in MOM_memory.h at compile time; without STATIC_MEMORY_
                                 ! the default is NJHALO_ in MOM_memory.h (if defined) or 2.
-NIGLOBAL = 240                  !
+NIGLOBAL = 402                  !
                                 ! The total number of thickness grid points in the
                                 ! x-direction in the physical domain. With STATIC_MEMORY_
                                 ! this is set in MOM_memory.h at compile time.
@@ -90,7 +88,7 @@ C_P = 3974.0                    !   [J kg-1 K-1] default = 3991.86795711963
 SAVE_INITIAL_CONDS = True       !   [Boolean] default = False
                                 ! If true, write the initial conditions to a file given
                                 ! by IC_OUTPUT_FILE.
-IC_OUTPUT_FILE = "ISOMIP_IC"    ! default = "MOM_IC"
+IC_OUTPUT_FILE = "MISOMIP_IC"    ! default = "MOM_IC"
                                 ! The file into which to write the initial conditions.
 
 ! === module MOM_coord_initialization ===
@@ -123,9 +121,9 @@ ISOMIP_T_SUR = -1.9             !   [not defined] default = -1.9
                                 ! Temperature at the surface (interface)
 ISOMIP_S_SUR = 33.8             !   [not defined] default = 33.8
                                 ! Salinity at the surface (interface)
-ISOMIP_T_BOT = 1.0              !   [not defined] default = -1.9
+ISOMIP_T_BOT = -1.9             !   [not defined] default = -1.9
                                 ! Temperature at the bottom (interface)
-ISOMIP_S_BOT = 34.7             !   [not defined] default = 34.55
+ISOMIP_S_BOT = 34.55            !   [not defined] default = 34.55
                                 ! Salinity at the bottom (interface)
 ISOMIP_S_SUR_SPONGE = 33.8      !   [not defined] default = 35.0
                                 ! Surface salinity in sponge layer.
@@ -135,7 +133,6 @@ ISOMIP_T_SUR_SPONGE = -1.9      !   [not defined] default = -1.9
                                 ! Surface temperature in sponge layer.
 ISOMIP_T_BOT_SPONGE = 1.0       !   [not defined] default = -1.9
                                 ! Bottom temperature in sponge layer.
-
 
 ! === module MOM_tracer_registry ===
 EQN_OF_STATE = "LINEAR"         ! default = "WRIGHT"
@@ -163,10 +160,16 @@ DTFREEZE_DS = -0.0573
 DTFREEZE_DP = -7.53E-08
 
 ! === module MOM_tracer_flow_control ===
-INPUTDIR = "$DIN_LOC_ROOT"              ! default = "."
+INPUTDIR = "$DIN_LOC_ROOT"      ! default = "."
                                 ! The directory in which input files are found.
 USE_ISOMIP_TRACER = True        !   [Boolean] default = False
                                 ! If true, use the ISOMIP_tracer tracer package.
+
+! === module ISOMIP_tracer ===
+ISOMIP_TRACER_IC_FILE = ""      ! default = ""
+                                ! The name of a file from which to read the initial
+                                ! conditions for the ISOMIP tracers, or blank to initialize                             
+                                ! them internally.
 
 ! === module MOM_grid_init ===
 GRID_CONFIG = "cartesian"       !
@@ -187,10 +190,10 @@ SOUTHLAT = 0.0                  !   [k]
                                 ! starting value for the y-axis.
 LENLAT = 80.0                   !   [k]
                                 ! The latitudinal or y-direction length of the domain.
-WESTLON = 320.0                 !   [k] default = 0.0
+WESTLON = -2.0                 !   [k] default = 0.0
                                 ! The western longitude of the domain or the equivalent
                                 ! starting value for the x-axis.
-LENLON = 480.0                  !   [k]
+LENLON = 802.0                  !   [k]
                                 ! The longitudinal or x-direction length of the domain.
 TOPO_CONFIG = "ISOMIP"          !
                                 ! This specifies how bathymetry is specified:
@@ -319,7 +322,7 @@ TRIM_IC_FOR_P_SURF = True       !   [Boolean] default = False
                                 ! If true, cuts way the top of the column for initial conditions
                                 ! at the depth where the hydrostatic presure matches the imposed
                                 ! surface pressure which is read from file.
-SURFACE_PRESSURE_FILE = "Ocean1_3D.nc" !
+SURFACE_PRESSURE_FILE = "MISOMIP_181108.nc" !
                                 ! The initial condition file for the surface height.
 SURFACE_PRESSURE_VAR = "thick"  !   [kg m-2] default = ""
                                 ! The initial condition variable for the surface height.
@@ -330,7 +333,7 @@ SPONGE = True                   !   [Boolean] default = False
                                 ! If true, sponges may be applied anywhere in the domain.
                                 ! The exact location and properties of those sponges are
                                 ! specified via SPONGE_CONFIG.
-Z_OUTPUT_GRID_FILE = "ISOMIP_zgrid.nc" ! default = ""
+Z_OUTPUT_GRID_FILE = "MISOMIP_zgrid_181106.nc" ! default = ""
                                 ! The file that specifies the vertical grid for
                                 ! depth-space diagnostics, or blank to disable
                                 ! depth-space output.
@@ -540,7 +543,7 @@ KHTH = 0.0                      !   [m2 s-1] default = 0.0
                                 ! The background horizontal thickness diffusivity.
 ! === module MOM_diabatic_driver ===
 ! The following parameters are used for diabatic processes.
-ENERGETICS_SFC_PBL = True      !   [Boolean] default = False
+ENERGETICS_SFC_PBL = True       !   [Boolean] default = False
                                 ! If true, use an implied energetics planetary boundary
                                 ! layer scheme to determine the diffusivity and viscosity
                                 ! in the surface boundary layer.
@@ -591,6 +594,7 @@ IGNORE_FLUXES_OVER_LAND = True  !   [Boolean] default = False
                                 ! with ice shelves and sea ice, since the sea ice mask needs to
                                 ! be different than the ocean mask to avoid sea ice formation
                                 ! under ice shelves. This flag only works when use_ePBL = True.
+
 
 ! === module MOM_regularize_layers ===
 
@@ -681,7 +685,7 @@ UTIDE = 0.01                   !   [m s-1] default = 0.0
 ICE_PROFILE_CONFIG = "FILE"     !
                                 ! This specifies how the initial ice profile is specified.
                                 ! Valid values are: CHANNEL, FILE, and USER.
-ICE_THICKNESS_FILE = "Ocean1_3D.nc" ! default = "ice_shelf_h.nc"
+ICE_THICKNESS_FILE = "MISOMIP_181108.nc" ! default = "ice_shelf_h.nc"
                                 ! The file from which the bathymetry is read.
 ICE_THICKNESS_VARNAME = "thick" ! default = "h_shelf"
                                 ! The name of the thickness variable in ICE_THICKNESS_FILE.
@@ -732,3 +736,6 @@ RESTINT = 0.0                   !   [days] default = 0.0
 ENERGYSAVEDAYS = 1.0            !   [days] default = 0.0034722222222222
                                 ! The interval in units of TIMEUNIT between saves of the
                                 ! energies of the run and other globally summed diagnostics.
+
+INTERPOLATION_SCHEME = "PPM_H4"
+MLE_USE_PBL_MLD = True

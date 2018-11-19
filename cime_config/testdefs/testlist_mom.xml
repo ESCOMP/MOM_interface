@@ -23,7 +23,7 @@
       </machine>
     </machines>
   </test>
-  <test name="SMS_D_Ld2" grid="mip1" compset="OO">
+  <test name="SMS_D_Ld2" grid="mip1" compset="CMOMu">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom">
         <options>
