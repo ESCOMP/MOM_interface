@@ -470,9 +470,6 @@ DTBT = -0.95                    !   [s or nondim] default = -0.98
                                 ! Setting DTBT to 0 is the same as setting it to -0.98.
                                 ! The value of DTBT that will actually be used is an
                                 ! integer fraction of DT, rounding down.
-DYNAMIC_SURFACE_PRESSURE = True !   [Boolean] default = False
-                                ! If true, add a dynamic pressure due to a viscous ice
-                                ! shelf, for instance.
 DEPTH_MIN_DYN_PSURF = 1.0       !   [m] default = 1.0E-06
                                 ! The minimum depth to use in limiting the size of the
                                 ! dynamic surface pressure for stability, if
