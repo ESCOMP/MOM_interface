@@ -102,7 +102,7 @@ def prep_input(case):
 
     # process MOM_input: (replace all the instances of "DIN_LOC_ROOT" with the local input directory)
     with open(os.path.join(rundir,"MOM_input"), 'r') as MOM_input:
-         inputdir = os.path.join(din_loc_root,'ocn','mom',ocn_gridname,input_cat)
+         inputdir = os.path.join(din_loc_root,'ocn','mom',ocn_gridname)
          MOM_input_data = MOM_input.read().replace('$DIN_LOC_ROOT',inputdir)
     with open(os.path.join(rundir,"MOM_input"), 'w') as MOM_input:
         MOM_input.write(MOM_input_data)
