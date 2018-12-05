@@ -168,7 +168,7 @@ USE_ISOMIP_TRACER = True        !   [Boolean] default = False
 ! === module ISOMIP_tracer ===
 ISOMIP_TRACER_IC_FILE = ""      ! default = ""
                                 ! The name of a file from which to read the initial
-                                ! conditions for the ISOMIP tracers, or blank to initialize                             
+                                ! conditions for the ISOMIP tracers, or blank to initialize
                                 ! them internally.
 
 ! === module MOM_grid_init ===
@@ -322,7 +322,7 @@ TRIM_IC_FOR_P_SURF = True       !   [Boolean] default = False
                                 ! If true, cuts way the top of the column for initial conditions
                                 ! at the depth where the hydrostatic presure matches the imposed
                                 ! surface pressure which is read from file.
-SURFACE_PRESSURE_FILE = "MISOMIP_181108.nc" !
+SURFACE_PRESSURE_FILE = "MISOMIP_181205.nc" !
                                 ! The initial condition file for the surface height.
 SURFACE_PRESSURE_VAR = "thick"  !   [kg m-2] default = ""
                                 ! The initial condition variable for the surface height.
@@ -685,7 +685,7 @@ UTIDE = 0.01                   !   [m s-1] default = 0.0
 ICE_PROFILE_CONFIG = "FILE"     !
                                 ! This specifies how the initial ice profile is specified.
                                 ! Valid values are: CHANNEL, FILE, and USER.
-ICE_THICKNESS_FILE = "MISOMIP_181108.nc" ! default = "ice_shelf_h.nc"
+ICE_THICKNESS_FILE = "MISOMIP_181205.nc" ! default = "ice_shelf_h.nc"
                                 ! The file from which the bathymetry is read.
 ICE_THICKNESS_VARNAME = "thick" ! default = "h_shelf"
                                 ! The name of the thickness variable in ICE_THICKNESS_FILE.
