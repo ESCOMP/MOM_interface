@@ -38,8 +38,9 @@ def prep_input(case):
     testcase = case.get_value("TEST")
     hist_n = case.get_value("HIST_N")
     hist_option = case.get_value("HIST_OPTION")
+    compset = case.get_value("COMPSET")
     # diag_table handled below
-    input_files     = ["input.nml", "MOM_input"]
+    input_files     = ["input.nml", "MOM_input", "diag_table"]
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
@@ -59,6 +60,14 @@ def prep_input(case):
         output_file_path = os.path.join(rundir,output_file_name)
         if not os.path.exists(input_file_path):
             expect(False, "Couldn't find input files at "+input_file_path)
+        
+        # when running coupled with FV3, input.nml and diag_table
+        # are shared between FV3 and MOM6 - we need a solution for
+        # how to unify these namelists and still handle standalone cases
+        if "FV3" in compset:
+            if input_file_name == "input.nml" or input_file_name == "diag_table":
+                logger.info("\tNot copying %s when coupled to FV3" % (input_file_name))
+                continue
 
         safe_copy(input_file_path, output_file_path)
 
@@ -70,28 +79,30 @@ def prep_input(case):
         hist_option = "seconds"
         hist_n = int(86400/ocn_ncpl)
 
-    with open(os.path.join(input_templates_dir,"diag_table"), 'r') as diag_table_in:
-        with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
-            for line in diag_table_in:
-                line = line.replace('CASENAME', casename)
-                # Use cesm style file names
-                line = line.replace("%4yr-%3dy", "%4yr-%2mo-%2dy-%5sc")
-                if testcase:
-                    # this makes all real fields double precision
-                    if line.endswith('2\n'):
-                        line = line[:-2] + "1\n"
-                    # this changes output frequency and number of records per file
-                    # using HIST_N and HIST_OPTION from case
-                    if line.startswith("\""+casename):
-                        parts = line.split(',')
-                        if len(parts) > 7:
-                            parts[1] = "1"
-                            parts[2] = "days"
-                            parts[6] = parts[1]
-                            parts[7] = parts[2]
-                        line = ','.join(parts)+"\n"
-                diag_table.writelines(line)
+    if os.path.exists(os.path.join(rundir, "diag_table")):
+        with open(os.path.join(rundir,"diag_table"), 'r') as diag_table_in:
+            with open(os.path.join(rundir,"diag_table.tmp"), 'w') as diag_table:
+                for line in diag_table_in:
+                    line = line.replace('CASENAME', casename)
+                    # Use cesm style file names
+                    line = line.replace("%4yr-%3dy", "%4yr-%2mo-%2dy-%5sc")
+                    if testcase:
+                        # this makes all real fields double precision
+                        if line.endswith('2\n'):
+                            line = line[:-2] + "1\n"
+                            # this changes output frequency and number of records per file
+                            # using HIST_N and HIST_OPTION from case
+                            if line.startswith("\""+casename):
+                                parts = line.split(',')
+                                if len(parts) > 7:
+                                    parts[1] = "1"
+                                    parts[2] = "days"
+                                    parts[6] = parts[1]
+                                    parts[7] = parts[2]
+                                    line = ','.join(parts)+"\n"
+                    diag_table.writelines(line)
 
+        os.rename(os.path.join(rundir,"diag_table.tmp"), os.path.join(rundir,"diag_table"))
 
 
     # process MOM_input: (replace all the instances of "DIN_LOC_ROOT" with the local input directory)
