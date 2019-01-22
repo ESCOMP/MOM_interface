@@ -142,6 +142,10 @@ CHECK_BAD_SURFACE_VALS = True   !   [Boolean] default = False
 SAVE_INITIAL_CONDS = True       !   [Boolean] default = False
                                 ! If true, write the initial conditions to a file given
                                 ! by IC_OUTPUT_FILE.
+GRID_ROTATION_ANGLE_BUGS = False !   [Boolean] default = True
+                                ! If true, use an older algorithm to calculate the sine and
+                                ! cosines needed rotate between grid-oriented directions and
+                                ! true north and east.  Differences arise at the tripolar fold.
 ! === module MOM_tracer_registry ===
 DTFREEZE_DP = -7.75E-08         !   [deg C Pa-1] default = 0.0
                                 ! When TFREEZE_FORM=LINEAR,
@@ -180,6 +184,9 @@ GRID_CONFIG = "mosaic"          !
                                 !     mercator - use a Mercator spherical grid.
 GRID_FILE = "ocean_hgrid_180829.nc" !
                                 ! Name of the file from which to read horizontal grid data.
+USE_TRIPOLAR_GEOLONB_BUG = False !   [Boolean] default = True
+                                ! If true, use older code that incorrectly sets the longitude
+                                ! in some points along the tripolar fold to be off by 360 degrees
 TOPO_CONFIG = "file"            !
                                 ! This specifies how bathymetry is specified:
                                 !     file - read bathymetric information from the file
