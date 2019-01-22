@@ -247,14 +247,14 @@ USE_VARIABLE_MIXING = True      !   [Boolean] default = False
                                 ! not used.  If KHTR_SLOPE_CFF>0 or  KhTh_Slope_Cff>0,
                                 ! this is set to true regardless of what is in the
                                 ! parameter file.
-RESOLN_SCALED_KH = True         !   [Boolean] default = False
+RESOLN_SCALED_KH = False        !   [Boolean] default = False
                                 ! If true, the Laplacian lateral viscosity is scaled away
                                 ! when the first baroclinic deformation radius is well
                                 ! resolved.
 KHTH_USE_EBT_STRUCT = True      !   [Boolean] default = False
                                 ! If true, uses the equivalent barotropic structure
                                 ! as the vertical structure of thickness diffusivity.
-RESOLN_SCALED_KHTH = True       !   [Boolean] default = False
+RESOLN_SCALED_KHTH = False      !   [Boolean] default = False
                                 ! If true, the interface depth diffusivity is scaled away
                                 ! when the first baroclinic deformation radius is well
                                 ! resolved.
@@ -345,7 +345,7 @@ KH_VEL_SCALE = 0.01             !   [m s-1] default = 0.0
                                 ! spacing to calculate the Laplacian viscosity.
                                 ! The final viscosity is the largest of this scaled
                                 ! viscosity, the Smagorinsky viscosity and KH.
-KH_SIN_LAT = 2000.0             !   [m2 s-1] default = 0.0
+KH_SIN_LAT = 0.0                !   [m2 s-1] default = 0.0
                                 ! The amplitude of a latidutinally-dependent background
                                 ! viscosity of the form KH_SIN_LAT*(SIN(LAT)**KH_PWR_OF_SINE).
 KH_PWR_OF_SINE = 4.0            !   [nondim] default = 4.0
