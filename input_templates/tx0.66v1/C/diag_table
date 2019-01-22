@@ -4,6 +4,7 @@
 #"$CASENAME.mom6.prog%4yr-%3dy",     5,"days",1,"days","time",365,"days"
 "$CASENAME.mom6.sfc%4yr",  1,"days",1,"days","time",365,"days"
 "$CASENAME.mom6.frc%4yr",  1,"days",1,"days","time",365,"days"
+"$CASENAME.mom6.visc%4yr", 1,"days",1,"days","time",365,"days"
 "$CASENAME.mom6.hm%4yr-%2mo",  1,  "months", 1, "days", "time",1,"months"
 "$CASENAME.mom6.static",            -1,"days",1,"days","time",
 
@@ -49,6 +50,7 @@
 "ocean_model","ustar","ustar","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","frazil","frazil","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 # 2D surface fields
+"ocean_model","Rd_dx","Rd_dx","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","SSH","SSH","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","SST","SST","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model","SSS","SSS","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
@@ -142,18 +144,20 @@
 #
 # Viscosities and diffusivities:
 #===============================
-#"ocean_model","Kd_effective","Kd_effective","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","Ahh","Ahh","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","Ahq","Ahq","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","Khh","Khh","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","Khq","Khq","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","bbl_thick_u","bbl_thick_u","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","kv_bbl_u","kv_bbl_u","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","bbl_thick_v","bbl_thick_v","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","kv_bbl_v","kv_bbl_v","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","av_visc","av_visc","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","au_visc","au_visc","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
-#"ocean_model","FrictWork","FrictWork","$CASENAME.mom6.visc.%4yr-%3dy","all",.true.,"none",2
+#"ocean_model","Kd_effective","Kd_effective","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+"ocean_model","KHTR_h","KHTR_h","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+"ocean_model","KHTH_t","KHTH_t","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+"ocean_model","Ahh","Ahh","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","Ahq","Ahq","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+"ocean_model","Khh","Khh","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","Khq","Khq","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","bbl_thick_u","bbl_thick_u","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","kv_bbl_u","kv_bbl_u","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","bbl_thick_v","bbl_thick_v","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","kv_bbl_v","kv_bbl_v","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","av_visc","av_visc","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","au_visc","au_visc","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
+#"ocean_model","FrictWork","FrictWork","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
 #
 
 # Surface Forcing:
