@@ -142,6 +142,10 @@ CHECK_BAD_SURFACE_VALS = True   !   [Boolean] default = False
 SAVE_INITIAL_CONDS = True       !   [Boolean] default = False
                                 ! If true, write the initial conditions to a file given
                                 ! by IC_OUTPUT_FILE.
+GRID_ROTATION_ANGLE_BUGS = False !   [Boolean] default = True
+                                ! If true, use an older algorithm to calculate the sine and
+                                ! cosines needed rotate between grid-oriented directions and
+                                ! true north and east.  Differences arise at the tripolar fold.
 ! === module MOM_tracer_registry ===
 DTFREEZE_DP = -7.75E-08         !   [deg C Pa-1] default = 0.0
                                 ! When TFREEZE_FORM=LINEAR,
@@ -180,6 +184,9 @@ GRID_CONFIG = "mosaic"          !
                                 !     mercator - use a Mercator spherical grid.
 GRID_FILE = "ocean_hgrid_180829.nc" !
                                 ! Name of the file from which to read horizontal grid data.
+USE_TRIPOLAR_GEOLONB_BUG = False !   [Boolean] default = True
+                                ! If true, use older code that incorrectly sets the longitude
+                                ! in some points along the tripolar fold to be off by 360 degrees.
 TOPO_CONFIG = "file"            !
                                 ! This specifies how bathymetry is specified:
                                 !     file - read bathymetric information from the file
@@ -240,14 +247,14 @@ USE_VARIABLE_MIXING = True      !   [Boolean] default = False
                                 ! not used.  If KHTR_SLOPE_CFF>0 or  KhTh_Slope_Cff>0,
                                 ! this is set to true regardless of what is in the
                                 ! parameter file.
-RESOLN_SCALED_KH = True         !   [Boolean] default = False
+RESOLN_SCALED_KH = False        !   [Boolean] default = False
                                 ! If true, the Laplacian lateral viscosity is scaled away
                                 ! when the first baroclinic deformation radius is well
                                 ! resolved.
 KHTH_USE_EBT_STRUCT = True      !   [Boolean] default = False
                                 ! If true, uses the equivalent barotropic structure
                                 ! as the vertical structure of thickness diffusivity.
-RESOLN_SCALED_KHTH = True       !   [Boolean] default = False
+RESOLN_SCALED_KHTH = False      !   [Boolean] default = False
                                 ! If true, the interface depth diffusivity is scaled away
                                 ! when the first baroclinic deformation radius is well
                                 ! resolved.
@@ -338,15 +345,26 @@ KH_VEL_SCALE = 0.01             !   [m s-1] default = 0.0
                                 ! spacing to calculate the Laplacian viscosity.
                                 ! The final viscosity is the largest of this scaled
                                 ! viscosity, the Smagorinsky viscosity and KH.
-KH_SIN_LAT = 2000.0             !   [m2 s-1] default = 0.0
+KH_SIN_LAT = 0.0                !   [m2 s-1] default = 0.0
                                 ! The amplitude of a latidutinally-dependent background
                                 ! viscosity of the form KH_SIN_LAT*(SIN(LAT)**KH_PWR_OF_SINE).
 KH_PWR_OF_SINE = 4.0            !   [nondim] default = 4.0
                                 ! The power used to raise SIN(LAT) when using a latidutinally-
                                 ! dependent background viscosity.
-BIHARMONIC = False              !   [Boolean] default = True
+BIHARMONIC = True               !   [Boolean] default = True
                                 ! If true, use a biharmonic horizontal viscosity.
                                 ! BIHARMONIC may be used with LAPLACIAN.
+AH_VEL_SCALE = 0.1              !   [m s-1] default = 0.0
+                                ! The velocity scale which is multiplied by the cube of
+                                ! the grid spacing to calculate the biharmonic viscosity.
+                                ! The final viscosity is the largest of this scaled
+                                ! viscosity, the Smagorinsky and Leith viscosities, and AH.
+USE_LAND_MASK_FOR_HVISC = True  !   [Boolean] default = False
+                                ! If true, use Use the land mask for the computation of thicknesses
+                                ! at velocity locations. This eliminates the dependence on arbitrary
+                                ! values over land or outside of the domain. Default is False in order to
+                                ! maintain answers with legacy experiments but should be changed to True
+                                ! for new experiments.
 ! === module MOM_vert_friction ===
 HMIX_FIXED = 0.5                !   [m]
                                 ! The prescribed depth over which the near-surface
