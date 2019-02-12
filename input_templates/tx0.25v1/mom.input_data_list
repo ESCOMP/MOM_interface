@@ -1,0 +1,12 @@
+ocean_channel = DIN_LOC_ROOT/ocn/mom/OCN_GRID/MOM_channels_global_025
+ocean_geothermal= DIN_LOC_ROOT/ocn/mom/OCN_GRID/geothermal_davies2013_v1.nc
+ocean_vgrid1 = DIN_LOC_ROOT/ocn/mom/OCN_GRID/hycom1_75_800m.nc
+ocean_vgrid2 = DIN_LOC_ROOT/ocn/mom/OCN_GRID/interpolate_zgrid_40L.nc
+ocean_vgrid3 = DIN_LOC_ROOT/ocn/mom/OCN_GRID/layer_coord.nc
+ocean_hgrid = DIN_LOC_ROOT/ocn/mom/OCN_GRID/ocean_hgrid.nc
+ocean_topo = DIN_LOC_ROOT/ocn/mom/OCN_GRID/ocean_topog.nc
+ocean_seaw = DIN_LOC_ROOT/ocn/mom/OCN_GRID/seawifs-clim-1997-2010.1440x1080.v20180328.nc
+ocean_tidal = DIN_LOC_ROOT/ocn/mom/OCN_GRID/tidal_amplitude.v20140616.nc
+tempsalt = DIN_LOC_ROOT/ocn/mom/OCN_GRID/WOA05_pottemp_salt.nc
+ocean_ic = DIN_LOC_ROOT/ocn/mom/OCN_GRID/MOM6_IC_TS.nc
+ocean_topo_edits = DIN_LOC_ROOT/ocn/mom/OCN_GRID/All_edits.nc
