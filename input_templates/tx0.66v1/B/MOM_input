@@ -615,7 +615,7 @@ INT_TIDE_DISSIPATION = True     !   [Boolean] default = False
                                 ! If true, use an internal tidal dissipation scheme to
                                 ! drive diapycnal mixing, along the lines of St. Laurent
                                 ! et al. (2002) and Simmons et al. (2004).
-TIDAL_ENERGY_FILE = "energy_new_t0.66v1_conserve_180608.nc" !
+TIDAL_ENERGY_FILE = "energy_new_t0.66v1_conserve_190315.nc" !
                                 ! The path to the file containing tidal energy
                                 ! dissipation. Used with CVMix tidal mixing schemes.
 TIDAL_ENERGY_TYPE = "Jayne"     !
