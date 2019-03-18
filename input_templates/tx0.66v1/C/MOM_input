@@ -205,7 +205,7 @@ TOPO_CONFIG = "file"            !
                                 !       DOME2D gravity current/overflow test case.
                                 !     seamount - Gaussian bump for spontaneous motion test case.
                                 !     USER - call a user modified routine.
-TOPO_FILE = "ocean_topog_180829.nc" ! default = "topog.nc"
+TOPO_FILE = "ocean_topog_190314.nc" ! default = "topog.nc"
                                 ! The file from which the bathymetry is read.
 MAXIMUM_DEPTH = 6000.0          !   [m]
                                 ! The maximum depth of the ocean.
@@ -615,7 +615,7 @@ INT_TIDE_DISSIPATION = True     !   [Boolean] default = False
                                 ! If true, use an internal tidal dissipation scheme to
                                 ! drive diapycnal mixing, along the lines of St. Laurent
                                 ! et al. (2002) and Simmons et al. (2004).
-TIDAL_ENERGY_FILE = "energy_new_t0.66v1_conserve_180608.nc" !
+TIDAL_ENERGY_FILE = "energy_new_t0.66v1_conserve_190315.nc" !
                                 ! The path to the file containing tidal energy
                                 ! dissipation. Used with CVMix tidal mixing schemes.
 TIDAL_ENERGY_TYPE = "Jayne"     !
