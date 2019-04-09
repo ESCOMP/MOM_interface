@@ -66,9 +66,9 @@ def buildlib(caseroot, libroot, bldroot):
         #-------------------------------------------------------
         sharedlibroot = case.get_value("SHAREDLIBROOT")
 
-        incroot = " -I " + os.path.join(srcroot,"libraries","FMS","src","include") + \
-                  " -I " + os.path.join(srcroot,"libraries","FMS","src","mpp","include") + \
-                  " -I " + fmsbuilddir
+        incroot = " -I" + os.path.join(srcroot,"libraries","FMS","src","include") + \
+                  " -I" + os.path.join(srcroot,"libraries","FMS","src","mpp","include") + \
+                  " -I" + fmsbuilddir
         filepath_file = os.path.join(bldroot,"Filepath")
         if not os.path.isfile(filepath_file):
             driver = case.get_value("COMP_INTERFACE")+"_driver"
@@ -109,7 +109,7 @@ def buildlib(caseroot, libroot, bldroot):
         makefile = os.path.join(casetools, "Makefile")
         complib = os.path.join(libroot,"libocn.a")
         os.environ["USER_CPPDEFS"] = "-DMOM6_CAP -DCESMCOUPLED"
-        cmd = "{} complib -j {} MODEL=mom COMPLIB={} -f {} INCROOT=\"{}\" {}" .format(gmake, gmake_j, complib, makefile, incroot, gmake_args)
+        cmd = "{} complib -j {} MODEL=mom COMPLIB={} -f {} USER_INCLDIR=\"{}\" {}" .format(gmake, gmake_j, complib, makefile, incroot, gmake_args)
 
         rc, out, err = run_cmd(cmd)
         logger.info("%s: \n\n output:\n %s \n\n err:\n\n%s\n"%(cmd,out,err))
