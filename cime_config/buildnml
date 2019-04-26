@@ -27,27 +27,28 @@ logger = logging.getLogger(__name__)
 
 # prepares the input files of a case and places in rundir:
 def prep_input(case):
-    casename        = case.get_value("CASE")
-    Buildconf       = case.get_value("CASEBUILD")
-    rundir          = case.get_value("RUNDIR")
-    gridname        = case.get_value("GRID")
-    ocn_gridname    = case.get_value("OCN_GRID")
-    ocn_ncpl       = case.get_value("OCN_NCPL")
-    srcroot         = case.get_value("SRCROOT")
-    din_loc_root    = case.get_value("DIN_LOC_ROOT")
-    testcase = case.get_value("TEST")
-    hist_n = case.get_value("HIST_N")
-    hist_option = case.get_value("HIST_OPTION")
-    compset = case.get_value("COMPSET")
+    casename     = case.get_value("CASE")
+    Buildconf    = case.get_value("CASEBUILD")
+    rundir       = case.get_value("RUNDIR")
+    gridname     = case.get_value("GRID")
+    ocn_gridname = case.get_value("OCN_GRID")
+    ocn_ncpl     = case.get_value("OCN_NCPL")
+    srcroot      = case.get_value("SRCROOT")
+    din_loc_root = case.get_value("DIN_LOC_ROOT")
+    testcase     = case.get_value("TEST")
+    hist_n       = case.get_value("HIST_N")
+    hist_option  = case.get_value("HIST_OPTION")
+    compset      = case.get_value("COMPSET")
+
     # diag_table handled below
-    input_files     = ["input.nml", "MOM_input", "diag_table"]
+    input_files  = ["input.nml", "MOM_input", "diag_table"]
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
         os.makedirs(rundir)
 
     # check if input file templates are available for the given ocn grid:
-    available_grids = ["gx1v6","tx0.66v1"]
+    available_grids = ["gx1v6","tx0.66v1","tx0.25v1"]
     if not (ocn_gridname in available_grids):
         expect(False, "Couldn't find input files for %s" % (gridname))
 
