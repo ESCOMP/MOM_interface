@@ -14,6 +14,15 @@
       </machine>
     </machines>
   </test>
+  <test name="SMS_D_Ld2" grid="T62_g16" compset="CMOM">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
+    </machines>
+  </test>
   <test name="SMS" grid="T62_t061" compset="CMOM_IAF">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom">
@@ -23,7 +32,7 @@
       </machine>
     </machines>
   </test>
-  <test name="SMS_D_Ld2" grid="iso2k" compset="CMOMu">
+  <test name="SMS" grid="T62_t061" compset="GMOM">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom">
         <options>
@@ -32,7 +41,16 @@
       </machine>
     </machines>
   </test>
-  <test name="ERS" grid="T62_g16" compset="GMOM">
+  <test name="ERS" grid="TL319_t061" compset="CMOM_JRA">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
+    </machines>
+  </test>
+  <test name="SMS_Ld2" grid="f09_t061" compset="BMOM" testmods="mom/bmom">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom">
         <options>
