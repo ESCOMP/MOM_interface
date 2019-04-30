@@ -39,10 +39,10 @@ def buildlib(caseroot, libroot, bldroot):
         # todo:  Need to do the same with CVMix, for now I'm just pointing to the cvmix in pop
         momcvmix = os.path.join(srcroot,"components","mom","MOM6","pkg","CVMix-src")
         popcvmix = os.path.join(srcroot,"components","pop","externals","CVMix")
+        tlcvmix = os.path.join(srcroot,"libraries","CVMix")
         if os.path.exists(popcvmix):
             cvmixdir = popcvmix
         else:
-            tlcvmix = os.path.join(srcroot,"libraries","CVMix")
             cvmixdir = tlcvmix
 
         if not os.path.exists(os.path.join(momcvmix,"bin")):
