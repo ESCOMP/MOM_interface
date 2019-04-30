@@ -84,4 +84,10 @@
     <lname>2000_SATM_SLND_SICE_MOM6_SROF_CISM2%EVOLVE_SWAV</lname>
   </compset>
 
+  <!-- fully coupled MOM6 runs -->
+  <compset>
+    <alias>BMOM</alias>
+    <lname>1850_CAM60_CLM50%BGC-CROP_CICE_MOM6_MOSART_CISM2%NOEVOLVE_SWAV_BGC%BDRD</lname>
+  </compset>
+
 </compsets>
