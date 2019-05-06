@@ -71,11 +71,11 @@
 "ocean_model_z", "vo",   "vo",           "$CASENAME_Barents_opening%4yr",    "all", .true., "-5.2 18.8  78.93 78.93 -1 -1",2
 
 # Bering Strait (east-west section)
-"ocean_model_z", "volcello", "volcello", "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
-"ocean_model_z", "thetao","thetao",      "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
-"ocean_model_z", "so",   "so",           "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
-"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
-"ocean_model_z", "vo",   "vo",           "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
 
 # Davis Strait (east-west section)
 # GMM, needs to be confirmed
@@ -188,6 +188,9 @@
 "ocean_model_z","salt","salt","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model_z","rhoinsitu","rhoinsitu","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model_z","age","age","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z", "volcello","volcello","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",2 # Cell measure for 3d data
+"ocean_model_z", "thetao","thetao","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",2  # if use pre-TEOS10
+"ocean_model_z", "so","so","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",2
 #"ocean_model_z","vintage","vintage","$CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
 #"ocean_model_z","CFC11","CFC11","$CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
 #"ocean_model_z","CFC12","CFC12","$CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
