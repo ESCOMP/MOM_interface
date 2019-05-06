@@ -268,9 +268,9 @@
 "ocean_model","SSU","SSU","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 "ocean_model","SSV","SSV","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 "ocean_model","KPP_OBLdepth","KPP_OBLdepth","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
-"ocean_model","mass_wt","mass_wt","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
-"ocean_model","temp_int","temp_int","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
-"ocean_model","salt_int","salt_int","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
+"ocean_model","mass_wt","mass_wt","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","temp_int","temp_int","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","salt_int","salt_int","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 
 # Momentum Balance Terms:
 #=======================
@@ -324,8 +324,6 @@
 #"ocean_model","FrictWork","FrictWork","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
 #
 
-# Surface Forcing:
-#=================
 # Surface Forcing:
 #=================
 "ocean_model","taux","taux","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
