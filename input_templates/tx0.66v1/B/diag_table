@@ -107,6 +107,9 @@
 "ocean_model","SSU","SSU","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 "ocean_model","SSV","SSV","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 "ocean_model","KPP_OBLdepth","KPP_OBLdepth","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","mass_wt","mass_wt","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
+"ocean_model","temp_int","temp_int","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
+"ocean_model","salt_int","salt_int","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
 
 # Momentum Balance Terms:
 #=======================
@@ -162,21 +165,53 @@
 
 # Surface Forcing:
 #=================
+# Surface Forcing:
+#=================
 "ocean_model","taux","taux","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 "ocean_model","tauy","tauy","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 "ocean_model","ustar","ustar","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+# mass/vol
 "ocean_model","PRCmE","PRCmE","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
-"ocean_model","precip","precip","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","lprec","lprec","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","fprec","fprec","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 "ocean_model","evap","evap","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","vprec","vprec","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","lrunoff","lrunoff","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","frunoff","frunoff","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","seaice_melt","seaice_melt","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+# heat
+"ocean_model","net_heat_coupler","net_heat_coupler","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","net_heat_surface","net_heat_surface","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","frazil","frazil","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 "ocean_model","sensible","sensible","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 "ocean_model","latent","latent","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
-"ocean_model","SW","SW","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","seaice_melt_heat","seaice_melt_heat","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 "ocean_model","LwLatSens","LwLatSens","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","SW","SW","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","LW","LW","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","Heat_PmE","Heat_PmE","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_lrunoff","heat_content_lrunoff","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_frunoff","heat_content_frunoff","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_icemelt","heat_content_icemelt","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_lprec","heat_content_lprec","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_fprec","heat_content_fprec","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_vprec","heat_content_vprec","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_cond","heat_content_cond","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_massout","heat_content_massout","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_massin","heat_content_massin","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_content_surfwater","heat_content_surfwater","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","internal_heat","internal_heat","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","heat_added","heat_added","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+# others
 "ocean_model","hfds","hfds","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 "ocean_model","p_surf","p_surf","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 "ocean_model","salt_flux","salt_flux","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
-"ocean_model","total_lrunoff","total_lrunoff","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
-"ocean_model","net_fresh_water_global_scaling","net_fresh_water_global_scaling","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","salt_flux_in","salt_flux_in","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","vprec_global_adjustment","vprec_global_adjustment","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","net_fresh_water_global_adjustment","net_fresh_water_global_adjustment","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","salt_flux_global_restoring_adjustment","salt_flux_global_restoring_adjustment","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","net_massout","net_massout","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
+"ocean_model","net_massin","net_massin","$CASENAME.mom6.frc%4yr","all",.true.,"none",2
 #
 # Static ocean fields:
 #=====================
