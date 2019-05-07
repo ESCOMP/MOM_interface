@@ -38,6 +38,11 @@ def prep_input(case):
     hist_option     = case.get_value("HIST_OPTION")
     input_files     = ["diag_table", "input.nml", "MOM_input"]
 
+    # The scope of the following path expansion is limited to this script only,
+    # and is needed to import MOM_params class:
+    sys.path.append(os.path.join(srcroot,"components","mom","cime_config"))
+    from MOM_params import MOM_params
+
     # determine input category (B,C, or G):
     # this is needed to determine which input templates are to be copied for a given grid.
     input_cat  = None
