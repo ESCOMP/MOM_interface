@@ -1,13 +1,40 @@
 
 class MOM_params(object,):
-    """ Encapsulates data and methods for MOM6 case parameters """
+    """ Encapsulates data and methods for MOM6 case parameter files with the following formats:
+        MOM_input, user_nl, json.
+    """
 
-    def __init__(self, path, file_format, grid, compset):
+    supported_formats = ["MOM_input", "user_nl", "json"]
 
-        # 2. Read default_params.json file:
+    def __init__(self, path, file_format):
+
+        self.path = path
+        self.file_format = file_format
+
+        if file_format not in MOM_params.supported_formats:
+            raise RuntimeError("MOM parameter file format "+file_format+\
+                                " not supported")
+
+        if self.file_format == "MOM_input":
+            self._read_MOM_input()
+        elif self.file_format == "user_nl":
+            self._read_user_nl()
+        elif self.file_format == "json":
+            self._read_json()
+
+
+    def _read_MOM_input(self):
+        #TODO
+        pass
+
+    def _read_user_nl(self):
+        #TODO
+        pass
+
+    def _read_json(self):
         import json
-        with open(default_params_path) as default_params:
-            self._params = json.load(default_params)
+        with open(self.path) as json_file:
+            self._params = json.load(json_file)
 
         # 3. Check consistency
         self._check_json_consistency()
@@ -16,53 +43,61 @@ class MOM_params(object,):
         #TODO
         pass
 
+
+
+
     def write_MOM_input(self, rundir, grid, compset):
 
-        self._config = {"GRID": grid.strip(),
-                        "COMPSET": compset.strip()}
+        assert self.file_format=="json", "MOM_input file can only be generated from a json file."
+
+        self.constraints = {"GRID": grid.strip(),
+                            "COMPSET": compset.strip()}
+
+        # 1. First, determine parameter values for the given constraints of the case
+
+        def _constraint_satisfied(constr_pair):
+            " Checks if a given value constraint agrees with the constraints of the case"
+            constr_key = constr_pair.split('==')[0].strip()\
+                .replace('"','').replace("'","")
+            constr_val = constr_pair.split('==')[1].strip()\
+                .replace('"','').replace("'","")
+            return self.constraints[constr_key] == constr_val
+
         for module in self._params:
             for var in self._params[module]:
                 print("Variable: ", var)
 
-                # list of configurations for this variable.
-                config_list = self._params[module][var]["value"]
+                # list of potential values for this variable.
+                value_list = self._params[module][var]["value"]
 
-                # the value determined by how the keys match self._config
                 val = None
 
-                for config in config_list:
-                    print("\t", config)
-                    if config == "common":
-                        val = config_list[config] 
+                for value_constraints in value_list:
+                    print("\t", value_constraints)
+                    if value_constraints == "common":
+                        val = value_list[value_constraints]
 
-                    # multiple constraints in config
-                    elif ',' in config:
+                    # multiple constraint pairs in value_constraints
+                    elif ',' in value_constraints:
                         agrees = True
-                        for constraint in config.split(','):
-                            constr_key = constraint.split('==')[0].strip()
-                            constr_val = constraint.split('==')[1].strip()
-                            agrees = agrees and self._config[constr_key] == constr_val
-                            print ("\t\t\t\t\t\t",constr_key,constr_val, self._config[constr_key])
+                        for constr_pair in value_constraints.split(','):
+                            agrees = agrees and _constraint_satisfied(constr_pair)
                         if agrees:
-                            val = config_list[config] 
+                            val = value_list[value_constraints]
 
-                    # a single constraint in config:
-                    elif '==' in config:
-                        constr_key = config.split('==')[0].strip()
-                        constr_val = config.split('==')[1].strip()
-                        if self._config[constr_key] == constr_val:
-                            val = config_list[config]
-                    
+                    # a single constraint pair in value_constraints:
+                    elif '==' in value_constraints:
+                        if _constraint_satisfied(value_constraints):
+                            val = value_list[value_constraints]
+
 
                     else:
                         raise RuntimeError("Cannot parse configurations for variable "+var)
 
+                assert (val != None), "Cannot determine the value of "+var
+                self._params[module][var]['final_value'] = val
                 print("\t\t\t ", val)
-                        
-                             
+
+            # 2. Now, write the MOM_input file
 
 
-    #def _get_param()
-        
-test = MOM_Params("json/default_params.json", "tx0.66v1", "C")
-test.write_MOM_input("")
