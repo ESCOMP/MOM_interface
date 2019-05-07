@@ -67,7 +67,7 @@ def yaml_to_json(workdir):
         json_fullname = os.path.abspath(os.path.join(output_dir, json_filename))
         with open(json_fullname, "w") as file_out:
             logger.info('Writing %s' % json_fullname)
-            json.dump(yaml_in, file_out, separators=(',', ': '), sort_keys=True, indent=3)
+            json.dump(yaml_in, file_out, separators=(',', ': '), sort_keys=False, indent=3)
 
 #######################################
 
