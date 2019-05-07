@@ -1,0 +1,79 @@
+Global:
+
+    TRIPOLAR_N :
+        description: |
+            "Use tripolar connectivity at the northern edge of the
+            domain.  With TRIPOLAR_N, NIGLOBAL must be even."
+        datatype: logical
+        units: unitless
+        value:
+            common: False
+            GRID == "tx0.66v1": True
+
+    NIHALO:
+        description: |
+            "The number of halo points on each side in the
+            x-direction.  With STATIC_MEMORY_ this is set as NIHALO_
+            in MOM_memory.h at compile time; without STATIC_MEMORY_
+            the default is NIHALO_ in MOM_memory.h (if defined) or 2."
+        datatype: integer
+        units: unitless
+        value:
+            common: 4
+
+    NJHALO:
+        description: |
+            "The number of halo points on each side in the
+            y-direction.  With STATIC_MEMORY_ this is set as NJHALO_
+            in MOM_memory.h at compile time; without STATIC_MEMORY_
+            the default is NJHALO_ in MOM_memory.h (if defined) or 2."
+        datatype: integer
+        units: unitless
+        value:
+            common: 4
+
+    NI_GLOBAL:
+        description: |
+            "The total number of thickness grid points in the
+            x-direction in the physical domain. With STATIC_MEMORY_
+            this is set in MOM_memory.h at compile time."
+        datatype: integer
+        units: unitless
+        value:
+            GRID == "gx1v6": 320
+            GRID == "tx0.66v1": 540
+
+    NJ_GLOBAL:
+        description: |
+            "The total number of thickness grid points in the
+            y-direction in the physical domain. With STATIC_MEMORY_
+            this is set in MOM_memory.h at compile time."
+        datatype: integer
+        units: unitless
+        value:
+            GRID == "gx1v6": 384
+            GRID == "tx0.66v1": 458
+
+    IO_LAYOUT:
+        description: |
+            "The processor layout to be used, or 0,0 to automatically
+            set the io_layout to be the same as the layout."
+        datatype: list
+        units: string
+        value:
+            common: "1, 1"
+
+MOM_coord_initialization:
+
+    RHO_0:
+        description: |
+            "The mean ocean density used with BOUSSINESQ true to
+            calculate accelerations and the mass for conservation
+            properties, or with BOUSSINSEQ false to convert some
+            parameters from vertical units of m to kg m-2."
+        datatype: real
+        units: "kg m-3"
+        value:
+            common: &DEFVAL
+                1028.0
+        test: *DEFVAL
