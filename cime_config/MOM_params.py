@@ -1,3 +1,5 @@
+from __future__ import print_function
+from collections import OrderedDict
 
 class MOM_params(object,):
     """ Encapsulates data and methods for MOM6 case parameter files with the following formats:
@@ -34,7 +36,7 @@ class MOM_params(object,):
     def _read_json(self):
         import json
         with open(self.path) as json_file:
-            self._params = json.load(json_file)
+            self._params = json.load(json_file, object_pairs_hook=OrderedDict)
 
         # 3. Check consistency
         self._check_json_consistency()
@@ -46,7 +48,7 @@ class MOM_params(object,):
 
 
 
-    def write_MOM_input(self, rundir, grid, compset):
+    def write_MOM_input(self, outfile_path, grid, compset):
 
         assert self.file_format=="json", "MOM_input file can only be generated from a json file."
 
