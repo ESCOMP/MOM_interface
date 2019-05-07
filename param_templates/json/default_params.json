@@ -45,11 +45,17 @@
       },
       "IO_LAYOUT": {
          "description": "\"The processor layout to be used, or 0,0 to automatically\nset the io_layout to be the same as the layout.\"\n",
-         "datatype": "list",
-         "units": "string",
+         "datatype": "string",
+         "units": "unitless",
          "value": {
             "common": "1, 1"
          }
+      },
+      "INPUTDIR": {
+         "description": "\"The path to MOM6 input files, e.g., grid, topography,\ntidal forcing, etc.\"\n",
+         "datatype": "string",
+         "units": "unitless",
+         "value": "None"
       }
    },
    "MOM_coord_initialization": {

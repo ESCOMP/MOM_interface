@@ -36,7 +36,7 @@ def prep_input(case):
     testcase        = case.get_value("TEST")
     hist_n          = case.get_value("HIST_N")
     hist_option     = case.get_value("HIST_OPTION")
-    input_files     = ["diag_table", "input.nml", "MOM_input"]
+    input_files     = ["diag_table", "input.nml"]
 
     # The scope of the following path expansion is limited to this script only,
     # and is needed to import MOM_params class:
@@ -105,12 +105,17 @@ def prep_input(case):
                         line = ','.join(parts)+"\n"
                 diag_table.writelines(line)
 
-    # process MOM_input: (replace all the instances of "DIN_LOC_ROOT" with the local input directory)
-    with open(os.path.join(rundir,"MOM_input"), 'r') as MOM_input:
-         inputdir = os.path.join(din_loc_root,'ocn','mom',ocn_gridname)
-         MOM_input_data = MOM_input.read().replace('$DIN_LOC_ROOT',inputdir)
-    with open(os.path.join(rundir,"MOM_input"), 'w') as MOM_input:
-        MOM_input.write(MOM_input_data)
+    # Create MOM_input from default_params.json:
+    default_params_path = os.path.join(srcroot,"components","mom","param_templates",
+                                "json", "default_params.json")
+    case_constraints = dict({"GRID": ocn_gridname.strip(),
+                             "COMPSET": input_cat.strip()})
+    case_params = dict({"INPUTDIR": os.path.join(din_loc_root,'ocn','mom',ocn_gridname),
+                        "OCN_GRID": ocn_gridname })
+    MOM_input_path = os.path.join(rundir,"MOM_input")
+
+    params = MOM_params(default_params_path, "json")
+    params.write_MOM_input(MOM_input_path, case_constraints, case_params)
 
     # create an empty MOM_override file
     with open(os.path.join(rundir,"MOM_override"), 'w') as MOM_override:

@@ -1,5 +1,6 @@
 from __future__ import print_function
 from collections import OrderedDict
+import os
 
 class MOM_params(object,):
     """ Encapsulates data and methods for MOM6 case parameter files with the following formats:
@@ -45,15 +46,11 @@ class MOM_params(object,):
         #TODO
         pass
 
-
-
-
-    def write_MOM_input(self, outfile_path, grid, compset):
+    def write_MOM_input(self, outfile_path, constraints=dict(), add_params=dict()):
 
         assert self.file_format=="json", "MOM_input file can only be generated from a json file."
 
-        self.constraints = {"GRID": grid.strip(),
-                            "COMPSET": compset.strip()}
+        self.constraints = constraints
 
         # 1. First, determine parameter values for the given constraints of the case
 
@@ -67,15 +64,14 @@ class MOM_params(object,):
 
         for module in self._params:
             for var in self._params[module]:
-                print("Variable: ", var)
 
                 # list of potential values for this variable.
                 value_list = self._params[module][var]["value"]
 
+                # current value for this variable:
                 val = None
 
                 for value_constraints in value_list:
-                    print("\t", value_constraints)
                     if value_constraints == "common":
                         val = value_list[value_constraints]
 
@@ -92,14 +88,37 @@ class MOM_params(object,):
                         if _constraint_satisfied(value_constraints):
                             val = value_list[value_constraints]
 
+                    # value is to be received from add_params filled by buildnml:
+                    elif self._params[module][var]["value"] == "None" and var in add_params:
+                         val = add_params[var]
 
                     else:
+                        print(self._params[module][var])
+                        print("-----------------")
+                        print(add_params)
                         raise RuntimeError("Cannot parse configurations for variable "+var)
 
                 assert (val != None), "Cannot determine the value of "+var
-                self._params[module][var]['final_value'] = val
-                print("\t\t\t ", val)
+                self._params[module][var]['final_val'] = val
 
-            # 2. Now, write the MOM_input file
+        # 2. Now, write MOM_input
+        with open(os.path.join(outfile_path), 'w') as MOM_input:
+            tab = " "*32
+            for module in self._params:
+    
+                # Begin module block:
+                if module != "Global":
+                    MOM_input.write("%"+module+"\n")
 
+                for var in self._params[module]:
+                    MOM_input.write(var+" = "+str(self._params[module][var]["final_val"])+"\n")
+                    var_comments = self._params[module][var]["description"].split('\n')
+                    var_comments[-1] += " Units: "+self._params[module][var]["units"]
+                    for line in var_comments:
+                         MOM_input.write(tab+"!"+line+"\n")
+                    MOM_input.write("\n")
+
+                # End module block:
+                if module != "Global":
+                    MOM_input.write(module+"%\n")
 
