@@ -5,6 +5,7 @@ git:
 
 install:
   - chmod ugo+x ./tests/check_default_params.py
+  - pip install pyyaml
 
 jobs:
   include:
