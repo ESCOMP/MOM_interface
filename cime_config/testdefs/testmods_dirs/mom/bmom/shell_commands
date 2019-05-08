@@ -1,0 +1,6 @@
+./xmlchange CLM_BLDNML_OPTS="-bgc bgc -crop -no-chk_res"
+./xmlchange NTASKS_ATM=360
+./xmlchange NTASKS_CPL=360
+./xmlchange NTASKS_LND=234
+./xmlchange NTASKS_ICE=126
+./xmlchange ROOTPE_OCN=360 

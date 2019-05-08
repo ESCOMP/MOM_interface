@@ -1,2 +1,6 @@
 # MOM_interface
-CESM interface to MOM Ocean Model
+
+MOM6 is the future ocean component of CESM, NCAR's global climate model. This repository establishes CIME compatibility for MOM6 and is used within CESM framework to interface with the core MOM6 repository.
+
+### Quick Start: 
+see https://github.com/ESCOMP/MOM_interface/wiki/Quick-Start

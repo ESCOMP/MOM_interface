@@ -16,6 +16,7 @@ from standard_script_setup import *
 from CIME.buildlib import parse_input
 from CIME.case import Case
 from CIME.utils import run_cmd, expect
+from CIME.build import get_standard_makefile_args
 
 logger = logging.getLogger(__name__)
 
@@ -38,15 +39,21 @@ def buildlib(caseroot, libroot, bldroot):
         # todo:  Need to do the same with CVMix, for now I'm just pointing to the cvmix in pop
         momcvmix = os.path.join(srcroot,"components","mom","MOM6","pkg","CVMix-src")
         popcvmix = os.path.join(srcroot,"components","pop","externals","CVMix")
+        tlcvmix = os.path.join(srcroot,"libraries","CVMix")
+        if os.path.exists(popcvmix):
+            cvmixdir = popcvmix
+        else:
+            cvmixdir = tlcvmix
+
         if not os.path.exists(os.path.join(momcvmix,"bin")):
-            expect(os.path.exists(popcvmix), "Could not find CVMix in {}".format(popcvmix))
-            for _dir in glob.iglob(os.path.join(popcvmix,"*")):
+            expect(os.path.exists(cvmixdir) or os.path.exists(tlcvmix), "Could not find CVMix in {} or {}"
+                   .format(cvmixdir, tlcvmix))
+
+            for _dir in glob.iglob(os.path.join(cvmixdir,"*")):
                 dst = os.path.join(momcvmix,os.path.basename(_dir))
                 logger.info("link {} to {}".format(_dir,dst))
                 if not os.path.exists(dst):
                     os.symlink(_dir,dst)
-                
-
 
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
@@ -58,16 +65,17 @@ def buildlib(caseroot, libroot, bldroot):
         #-------------------------------------------------------
         sharedlibroot = case.get_value("SHAREDLIBROOT")
 
-        incroot = " -I " + os.path.join(srcroot,"libraries","FMS","src","include") + \
-                  " -I " + os.path.join(srcroot,"libraries","FMS","src","mpp","include") + \
-                  " -I " + fmsbuilddir                                                         
+        user_incldir = "\"-I{} -I{} -I{}\"".\
+                        format(os.path.join(srcroot,"libraries","FMS","src","include"),
+                               os.path.join(srcroot,"libraries","FMS","src","mpp","include"),
+                               fmsbuilddir)
         filepath_file = os.path.join(bldroot,"Filepath")
         if not os.path.isfile(filepath_file):
 #todo: are these needed in mom or only for fms?
-            os.environ["CPPDEFS"] = " -Duse_libMPI -Duse_netCDF -DSPMD" 
-            paths = [os.path.join(caseroot,"SourceMods","src.mom"), 
-                     os.path.join(srcroot,"components","mom","MOM6","config_src","mct_driver"),
-                     os.path.join(srcroot,"components","mom","MOM6","config_src","coupled_driver"),
+            driver = case.get_value("COMP_INTERFACE")+"_driver"
+            os.environ["CPPDEFS"] = " -Duse_libMPI -Duse_netCDF -DSPMD"
+            paths = [os.path.join(caseroot,"SourceMods","src.mom"),
+                     os.path.join(srcroot,"components","mom","MOM6","config_src",driver),
                      os.path.join(srcroot,"components","mom","MOM6","config_src","dynamic"),
                      os.path.join(srcroot,"components","mom","MOM6","src","ALE"),
                      os.path.join(srcroot,"components","mom","MOM6","src","core"),
@@ -77,11 +85,15 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(srcroot,"components","mom","MOM6","src","framework"),
                      os.path.join(srcroot,"components","mom","MOM6","src","ice_shelf"),
                      os.path.join(srcroot,"components","mom","MOM6","src","initialization"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","CVmix"), 
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "core"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "geoKdTree"),
+                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","CVmix"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","lateral"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"), 
+                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"),
                      os.path.join(srcroot,"components","mom","MOM6","src","tracer"),
                      os.path.join(srcroot,"components","mom","MOM6","src","user")]
+
             with open(filepath_file, "w") as filepath:
                 filepath.write("\n".join(paths))
                 filepath.write("\n")
@@ -97,7 +109,8 @@ def buildlib(caseroot, libroot, bldroot):
         # build the library
         makefile = os.path.join(casetools, "Makefile")
         complib = os.path.join(libroot,"libocn.a")
-        cmd = "{} complib -j {} MODEL=mom COMPLIB={} -f {} INCROOT=\"{}\"" .format(gmake, gmake_j, complib, makefile, incroot)
+        cmd = "{} complib -j {} MODEL=mom COMPLIB={} -f {} USER_INCLDIR={} {}"\
+                .format(gmake, gmake_j, complib, makefile, user_incldir, get_standard_makefile_args(case))
 
         rc, out, err = run_cmd(cmd)
         logger.info("%s: \n\n output:\n %s \n\n err:\n\n%s\n"%(cmd,out,err))
@@ -112,4 +125,3 @@ def _main_func():
 
 if __name__ == "__main__":
     _main_func()
-
