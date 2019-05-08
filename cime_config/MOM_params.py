@@ -47,6 +47,8 @@ class MOM_params(object,):
         pass
 
     def write_MOM_input(self, outfile_path, constraints=dict(), add_params=dict()):
+        """ writes a MOM_input file from a given json parameter file in accordance with
+            the constraints and additional parameters that are passed. """
 
         assert self.file_format=="json", "MOM_input file can only be generated from a json file."
 
@@ -98,7 +100,6 @@ class MOM_params(object,):
                         print(add_params)
                         raise RuntimeError("Cannot parse configurations for variable "+var)
 
-                assert (val != None), "Cannot determine the value of "+var
                 self._params[module][var]['final_val'] = val
 
         # 2. Now, write MOM_input
@@ -111,9 +112,13 @@ class MOM_params(object,):
                     MOM_input.write("%"+module+"\n")
 
                 for var in self._params[module]:
+                    val = self._params[module][var]["final_val"]
+                    if val==None:
+                        continue
+
                     MOM_input.write(var+" = "+str(self._params[module][var]["final_val"])+"\n")
                     var_comments = self._params[module][var]["description"].split('\n')
-                    var_comments[-1] += " Units: "+self._params[module][var]["units"]
+                    #var_comments[-1] += " Units: "+self._params[module][var]["units"]
                     for line in var_comments:
                          MOM_input.write(tab+"!"+line+"\n")
                     MOM_input.write("\n")
