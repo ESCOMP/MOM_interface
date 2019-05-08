@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+import json
+import yaml
 
-print("travis CI initial test")
+# Check if yaml and json files are equivalent
+yaml_params = yaml.safe_load(open('./param_templates/default_params.yaml', 'r'))
+json_params = json.load(open('./param_templates/json/default_params.json', 'r'))
+assert (yaml_params==json_params), "default_params.yaml and .json files appear to have different "+\
+                                   "information. If you have updated yaml file but not json file, "+\
+                                   "update it by running param_templates/yaml_to_json.py and then "+\
+                                   "push the updated json file."
 
-try:
-    import yaml
-    print("yaml module exists")
-except:
-    print("no yaml module")
+
+print("check_default_params: PASSED")
