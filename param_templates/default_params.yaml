@@ -1124,43 +1124,6 @@ Global:
         units: Boolean
         value:
             GRID == "tx0.66v1": True
-    N_SMOOTH:
-        description: |
-            "default = 0
-            The number of times the 1-1-4-1-1 Laplacian filter is applied on
-            OBL depth.
-            purely for diagnostic purposes."
-        datatype: integer
-        value:
-            GRID == "tx0.66v1": 3
-    MATCH_TECHNIQUE:
-        description: |
-            "default = 'SimpleShapes'
-            CVMix method to set profile function for diffusivity and NLT,
-            as well as matching across OBL base. Allowed values are:
-            SimpleShapes      = sigma*(1-sigma)^2 for both diffusivity and NLT
-            MatchGradient     = sigma*(1-sigma)^2 for NLT; diffusivity profile from matching
-            MatchBoth         = match gradient for both diffusivity and NLT
-            ParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT"
-        datatype: string
-        value:
-            GRID == "tx0.66v1": "MatchGradient"
-    INTERP_TYPE2:
-        description: |
-            "Type of interpolation to compute diff and visc at OBL_depth
-            Allowed types are: linear, quadratic, cubic or LMD94."
-        datatype: string
-        value:
-            GRID == "tx0.66v1": "LMD94"
-    KPP_IS_ADDITIVE:
-        description: |
-            "[Boolean] default = True
-            If true, adds KPP diffusivity to diffusivity from other schemes.If false, KPP is
-            the only diffusivity wherever KPP is non-zero."
-        datatype: logical
-        units: Boolean
-        value:
-            GRID == "tx0.66v1": False
     USE_CVMix_TIDAL:
         description: |
             "[Boolean] default = False
@@ -1592,3 +1555,41 @@ Global:
         units: Boolean
         value:
             GRID == "gx1v6": True
+KPP:
+    N_SMOOTH:
+        description: |
+            "default = 0
+            The number of times the 1-1-4-1-1 Laplacian filter is applied on
+            OBL depth.
+            purely for diagnostic purposes."
+        datatype: integer
+        value:
+            GRID == "tx0.66v1": 3
+    MATCH_TECHNIQUE:
+        description: |
+            "default = 'SimpleShapes'
+            CVMix method to set profile function for diffusivity and NLT,
+            as well as matching across OBL base. Allowed values are:
+            SimpleShapes      = sigma*(1-sigma)^2 for both diffusivity and NLT
+            MatchGradient     = sigma*(1-sigma)^2 for NLT; diffusivity profile from matching
+            MatchBoth         = match gradient for both diffusivity and NLT
+            ParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT"
+        datatype: string
+        value:
+            GRID == "tx0.66v1": "MatchGradient"
+    INTERP_TYPE2:
+        description: |
+            "Type of interpolation to compute diff and visc at OBL_depth
+            Allowed types are: linear, quadratic, cubic or LMD94."
+        datatype: string
+        value:
+            GRID == "tx0.66v1": "LMD94"
+    KPP_IS_ADDITIVE:
+        description: |
+            "[Boolean] default = True
+            If true, adds KPP diffusivity to diffusivity from other schemes.If false, KPP is
+            the only diffusivity wherever KPP is non-zero."
+        datatype: logical
+        units: Boolean
+        value:
+            GRID == "tx0.66v1": False
