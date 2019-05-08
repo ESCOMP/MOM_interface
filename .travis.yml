@@ -1,0 +1,12 @@
+language: python
+
+git:
+  submodules: false # no need to check out MOM6 for now
+
+install:
+  - chmod ugo+x ./tests/check_default_params.py
+
+jobs:
+  include:
+    - script: ./tests/check_default_params.py
+
