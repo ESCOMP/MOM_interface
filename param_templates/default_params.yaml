@@ -1582,7 +1582,7 @@ Global:
         datatype: real
         units: m s-1
         value:
-            GRID == "gx1v6": 1.0E-04
+            GRID == "gx1v6": 1905.0
     SMAGORINSKY_AH:
         description: |
           "[Boolean] default = False
