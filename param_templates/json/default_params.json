@@ -12,14 +12,14 @@
          "description": "\"default = 2\nThe number of halo points on each side in the\nx-direction.  With STATIC_MEMORY_ this is set as NIHALO_\nin MOM_memory.h at compile time; without STATIC_MEMORY_\nthe default is NIHALO_ in MOM_memory.h (if defined) or 2.\"\n",
          "datatype": "integer",
          "value": {
-            "GRID == \"tx0.66v1\"": 4
+            "common": 4
          }
       },
       "NJHALO": {
          "description": "\"default = 2\nThe number of halo points on each side in the\ny-direction.  With STATIC_MEMORY_ this is set as NJHALO_\nin MOM_memory.h at compile time; without STATIC_MEMORY_\nthe default is NJHALO_ in MOM_memory.h (if defined) or 2.\"\n",
          "datatype": "integer",
          "value": {
-            "GRID == \"tx0.66v1\"": 4
+            "common": 4
          }
       },
       "NIGLOBAL": {
@@ -40,7 +40,7 @@
          "description": "\"default = 0\nThe processor layout to be used, or 0,0 to automatically\nset the io_layout to be the same as the layout.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "1, 1"
+            "common": "1, 1"
          }
       },
       "NK": {
@@ -48,7 +48,7 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "GRID == \"tx0.66v1\"": 60
+            "common": 60
          }
       },
       "USE_LEGACY_DIABATIC_DRIVER": {
@@ -64,7 +64,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "USE_REGRIDDING": {
@@ -72,7 +72,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "BULKMIXEDLAYER": {
@@ -80,7 +80,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": false
+            "common": false
          }
       },
       "THICKNESSDIFFUSE": {
@@ -88,7 +88,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "THICKNESSDIFFUSE_FIRST": {
@@ -96,7 +96,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "DT": {
@@ -144,7 +144,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "BOUND_SALINITY": {
@@ -152,7 +152,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "C_P": {
@@ -168,7 +168,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "SAVE_INITIAL_CONDS": {
@@ -176,7 +176,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "GRID_ROTATION_ANGLE_BUGS": {
@@ -200,28 +200,28 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "INPUTDIR": {
          "description": "\"default = '.'\nThe directory in which input files are found.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "$DIN_LOC_ROOT"
+            "common": "$DIN_LOC_ROOT"
          }
       },
       "COORD_CONFIG": {
          "description": "\"This specifies how layers are to be defined:\nfile - read coordinate information from the file\nspecified by (COORD_FILE).\nlinear - linear based on interfaces not layesrs.\nts_ref - use reference temperature and salinity\nts_range - use range of temperature and salinity\n(T_REF and S_REF) to determine surface density\nand GINT calculate internal densities.\ngprime - use reference density (RHO_0) for surface\ndensity and GINT calculate internal densities.\nts_profile - use temperature and salinity profiles\n(read from COORD_FILE) to set layer densities.\nUSER - call a user modified routine.\nThe file from which the coordinate densities are read.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "none"
+            "common": "none"
          }
       },
       "GRID_CONFIG": {
          "description": "\"A character string that determines the method for\ndefining the horizontal grid.  Current options are:\nmosaic - read the grid from a mosaic (supergrid)\nfile set by GRID_FILE.\ncartesian - use a (flat) Cartesian grid.\nspherical - use a simple spherical grid.\nmercator - use a Mercator spherical grid.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "mosaic"
+            "common": "mosaic"
          }
       },
       "GRID_FILE": {
@@ -243,7 +243,7 @@
          "description": "\"This specifies how bathymetry is specified:\nfile - read bathymetric information from the file\nspecified by (TOPO_FILE).\nflat - flat bottom set to MAXIMUM_DEPTH.\nbowl - an analytically specified bowl-shaped basin\nranging between MAXIMUM_DEPTH and MINIMUM_DEPTH.\nspoon - a similar shape to 'bowl', but with an vertical\nwall at the southern face.\nhalfpipe - a zonally uniform channel with a half-sine\nprofile in the meridional direction.\nbenchmark - use the benchmark test case topography.\nDOME - use a slope and channel configuration for the\nDOME sill-overflow test case.\nDOME2D - use a shelf and slope configuration for the\nDOME2D gravity current/overflow test case.\nseamount - Gaussian bump for spontaneous motion test case.\nUSER - call a user modified routine.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "file"
+            "common": "file"
          }
       },
       "TOPO_FILE": {
@@ -258,7 +258,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "GRID == \"tx0.66v1\"": 6000.0
+            "common": 6000.0
          }
       },
       "MINIMUM_DEPTH": {
@@ -281,7 +281,7 @@
          "description": "\"default = 'PLM'\nThis sets the reconstruction scheme used\nfor vertical remapping for all variables.\nIt can be one of the following schemes:\nPCM         (1st-order accurate)\nPLM         (2nd-order accurate)\nPPM_H4      (3rd-order accurate)\nPPM_IH4     (3rd-order accurate)\nPQM_IH4IH3  (4th-order accurate)\nPQM_IH6IH5  (5th-order accurate)\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "PPM_H4"
+            "common": "PPM_H4"
          }
       },
       "INIT_LAYERS_FROM_Z_FILE": {
@@ -289,7 +289,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "TEMP_SALT_Z_INIT_FILE": {
@@ -303,14 +303,14 @@
          "description": "\"default = 'ptemp'\nThe name of the potential temperature variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "PTEMP"
+            "common": "PTEMP"
          }
       },
       "Z_INIT_FILE_SALT_VAR": {
          "description": "\"default = 'salt'\nThe name of the salinity variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "SALT"
+            "common": "SALT"
          }
       },
       "USE_VARIABLE_MIXING": {
@@ -318,7 +318,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "RESOLN_SCALED_KH": {
@@ -350,7 +350,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "ETA_TOLERANCE": {
@@ -358,7 +358,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "GRID == \"tx0.66v1\"": 1e-06
+            "common": 1e-06
          }
       },
       "USE_NEUTRAL_DIFFUSION": {
@@ -366,7 +366,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "SIMPLE_TKE_TO_KD": {
@@ -374,14 +374,14 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "REGRIDDING_COORDINATE_MODE": {
          "description": "\"default = 'LAYER'\nCoordinate mode for vertical regridding.\nChoose among the following possibilities:\nLAYER - Isopycnal or stacked shallow water layers\nZSTAR, Z* - stetched geopotential z*\nSIGMA_SHELF_ZSTAR - stetched geopotential z* ignoring shelf\nSIGMA - terrain following coordinates\nRHO   - continuous isopycnal\nHYCOM1 - HyCOM-like hybrid coordinate\nSLIGHT - stretched coordinates above continuous isopycnal\nADAPTIVE - optimize for smooth neutral density surfaces\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "Z*"
+            "common": "Z*"
          }
       },
       "ALE_COORDINATE_CONFIG": {
@@ -396,7 +396,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "TIDE_M2": {
@@ -404,7 +404,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "TIDE_SAL_SCALAR_VALUE": {
@@ -412,7 +412,7 @@
          "datatype": "real",
          "units": "m m-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.094
+            "common": 0.094
          }
       },
       "MASS_WEIGHT_IN_PRESSURE_GRADIENT": {
@@ -420,7 +420,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "LAPLACIAN": {
@@ -428,7 +428,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "KH": {
@@ -444,7 +444,7 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.01
+            "common": 0.01
          }
       },
       "KH_SIN_LAT": {
@@ -492,7 +492,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.5
+            "common": 0.5
          }
       },
       "CHANNEL_DRAG": {
@@ -500,7 +500,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "PRANDTL_TURB": {
@@ -508,21 +508,21 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "GRID == \"tx0.66v1\"": 1.0
+            "common": 1.0
          }
       },
       "U_TRUNC_FILE": {
          "description": "\"default = ''\nThe absolute path to a file into which the accelerations\nleading to zonal velocity truncations are written.\nUndefine this for efficiency if this diagnostic is not\nneeded.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "U_velocity_truncations"
+            "common": "U_velocity_truncations"
          }
       },
       "V_TRUNC_FILE": {
          "description": "\"default = ''\nThe absolute path to a file into which the accelerations\nleading to meridional velocity truncations are written.\nUndefine this for efficiency if this diagnostic is not\nneeded.\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "V_velocity_truncations"
+            "common": "V_velocity_truncations"
          }
       },
       "KV": {
@@ -530,7 +530,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.0001
+            "common": 0.0001
          }
       },
       "HBBL": {
@@ -538,7 +538,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "GRID == \"tx0.66v1\"": 10.0
+            "common": 10.0
          }
       },
       "MAXVEL": {
@@ -546,7 +546,7 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 6.0
+            "common": 6.0
          }
       },
       "CFL_TRUNCATE_RAMP_TIME": {
@@ -554,7 +554,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "GRID == \"tx0.66v1\"": 7200.0
+            "common": 7200.0
          }
       },
       "Z_INIT_ALE_REMAPPING": {
@@ -562,7 +562,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "INTERPOLATE_RES_FN": {
@@ -570,7 +570,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": false
+            "common": false
          }
       },
       "GILL_EQUATORIAL_LD": {
@@ -578,7 +578,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "DRAG_BG_VEL": {
@@ -586,7 +586,7 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.1
+            "common": 0.1
          }
       },
       "BBL_USE_EOS": {
@@ -594,7 +594,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "BBL_THICK_MIN": {
@@ -602,7 +602,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.1
+            "common": 0.1
          }
       },
       "BOUND_BT_CORRECTION": {
@@ -610,7 +610,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "BT_PROJECT_VELOCITY": {
@@ -618,14 +618,14 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "BT_THICK_SCHEME": {
          "description": "\"default = 'HYBRID'\nA string describing the scheme that is used to set the\nopen face areas used for barotropic transport and the\nrelative weights of the accelerations. Valid values are:\nARITHMETIC - arithmetic mean layer thicknesses\nHARMONIC - harmonic mean layer thicknesses\nHYBRID (the default) - use arithmetic means for\nlayers above the shallowest bottom, the harmonic\nmean for layers below, and a weighted average for\nlayers that straddle that depth\nFROM_BT_CONT - use the average thicknesses kept\nin the h_u and h_v fields of the BT_cont_type\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "FROM_BT_CONT"
+            "common": "FROM_BT_CONT"
          }
       },
       "BEBT": {
@@ -633,7 +633,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.2
+            "common": 0.2
          }
       },
       "DTBT": {
@@ -641,7 +641,7 @@
          "datatype": "real",
          "units": "s or nondim",
          "value": {
-            "GRID == \"tx0.66v1\"": -0.95
+            "common": -0.95
          }
       },
       "DEPTH_MIN_DYN_PSURF": {
@@ -665,7 +665,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 900.0
+            "common": 900.0
          }
       },
       "KHTH_USE_FGNV_STREAMFUNCTION": {
@@ -673,7 +673,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "FGNV_C_MIN": {
@@ -681,7 +681,7 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.01
+            "common": 0.01
          }
       },
       "MIXEDLAYER_RESTRAT": {
@@ -689,7 +689,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "FOX_KEMPER_ML_RESTRAT_COEF": {
@@ -729,7 +729,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": false
+            "common": false
          }
       },
       "USE_LOTW_BBL_DIFFUSIVITY": {
@@ -737,7 +737,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "KD_MAX": {
@@ -745,7 +745,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.1
+            "common": 0.1
          }
       },
       "HENYEY_IGW_BACKGROUND": {
@@ -753,7 +753,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": true
          }
       },
       "N2_FLOOR_IOMEGA2": {
@@ -761,7 +761,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.0
+            "common": 0.0
          }
       },
       "KD": {
@@ -769,7 +769,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 2e-05
+            "common": 2e-05
          }
       },
       "KD_MIN": {
@@ -777,7 +777,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 2e-06
+            "common": 2e-06
          }
       },
       "INT_TIDE_DECAY_SCALE": {
@@ -785,7 +785,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "GRID == \"tx0.66v1\"": 300.3003003003003
+            "common": 300.3003003003003
          }
       },
       "KAPPA_ITIDES": {
@@ -793,7 +793,7 @@
          "datatype": "real",
          "units": "m-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.000628319
+            "common": 0.000628319
          }
       },
       "KAPPA_H2_FACTOR": {
@@ -801,7 +801,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.75
+            "common": 0.75
          }
       },
       "TKE_ITIDE_MAX": {
@@ -809,7 +809,7 @@
          "datatype": "real",
          "units": "W m-2",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.1
+            "common": 0.1
          }
       },
       "USE_KPP": {
@@ -907,7 +907,7 @@
          "description": "\"default = 5\nThe maximum number of iterations that may be used to\ncalculate the interior diapycnal entrainment.\"\n",
          "datatype": "integer",
          "value": {
-            "GRID == \"tx0.66v1\"": 20
+            "common": 20
          }
       },
       "TOLERANCE_ENT": {
@@ -915,7 +915,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "GRID == \"tx0.66v1\"": 1e-05
+            "common": 1e-05
          }
       },
       "BULK_RI_ML": {
@@ -923,7 +923,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "GRID == \"tx0.66v1\"": 0.05
+            "common": 0.05
          }
       },
       "HMIX_MIN": {
@@ -931,7 +931,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "GRID == \"tx0.66v1\"": 2.0
+            "common": 2.0
          }
       },
       "PEN_SW_SCALE": {
@@ -962,7 +962,7 @@
          "description": "\"default = 'PLM'\nThe horizontal transport scheme for tracers:\nPLM    - Piecewise Linear Method\nPPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)\"\n",
          "datatype": "string",
          "value": {
-            "GRID == \"tx0.66v1\"": "PPM:H3"
+            "common": "PPM:H3"
          }
       },
       "KHTR": {
@@ -978,7 +978,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 50.0
+            "common": 50.0
          }
       },
       "KHTR_MAX": {
@@ -986,7 +986,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 900.0
+            "common": 900.0
          }
       },
       "CHECK_DIFFUSIVE_CFL": {
@@ -1010,7 +1010,7 @@
          "datatype": "integer",
          "units": "truncations save_interval-1",
          "value": {
-            "GRID == \"tx0.66v1\"": 5000
+            "common": 5000
          }
       },
       "MAXCPU": {
@@ -1018,7 +1018,7 @@
          "datatype": "real",
          "units": "wall-clock seconds",
          "value": {
-            "GRID == \"tx0.66v1\"": 28800.0
+            "common": 28800.0
          }
       },
       "OCEAN_SURFACE_STAGGER": {
@@ -1079,7 +1079,7 @@
          "description": "\"default = 1\nAn integer whose bits encode which restart files are\nwritten. Add 2 (bit 1) for a time-stamped file, and odd\n(bit 0) for a non-time-stamped file. A non-time-stamped\nrestart file is saved at the end of the run segment\nfor any non-negative value.\"\n",
          "datatype": "integer",
          "value": {
-            "GRID == \"tx0.66v1\"": 3
+            "common": 3
          }
       },
       "RESTINT": {
@@ -1087,7 +1087,7 @@
          "datatype": "real",
          "units": "days",
          "value": {
-            "GRID == \"tx0.66v1\"": 365.0
+            "common": 365.0
          }
       },
       "ENERGYSAVEDAYS": {

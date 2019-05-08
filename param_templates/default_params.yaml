@@ -7,7 +7,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     NIHALO:
         description: |
             "default = 2
@@ -35,7 +35,7 @@ Global:
             this is set in MOM_memory.h at compile time."
         datatype: integer
         value:
-            common: 540
+            GRID == "tx0.66v1": 540
     NJGLOBAL:
         description: |
             "The total number of thickness grid points in the
@@ -48,7 +48,7 @@ Global:
             The processor layout that was acutally used."
         datatype: integer
         value:
-            common: 458
+            GRID == "tx0.66v1": 458
     IO_LAYOUT:
         description: |
             "default = 0
@@ -73,7 +73,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
+            GRID == "tx0.66v1": False
     DIABATIC_FIRST:
         description: |
             "[Boolean] default = False
@@ -134,7 +134,7 @@ Global:
         datatype: real
         units: s
         value:
-            common: 1200.0
+            GRID == "tx0.66v1": 1200.0
     DT_THERM:
         description: |
             "[s] default = 3600.0
@@ -149,7 +149,7 @@ Global:
         datatype: real
         units: s
         value:
-            common: 3600.0
+            GRID == "tx0.66v1": 3600.0
     HFREEZE:
         description: |
             "[m] default = -1.0
@@ -160,7 +160,7 @@ Global:
         datatype: real
         units: m
         value:
-            common: 10.0
+            GRID == "tx0.66v1": 10.0
     MIN_Z_DIAG_INTERVAL:
         description: |
             "[s] default = 0.0
@@ -171,7 +171,7 @@ Global:
         datatype: real
         units: s
         value:
-            common: 2.16E+04
+            GRID == "tx0.66v1": 2.16E+04
     DTBT_RESET_PERIOD:
         description: |
             "[s] default = 7200.0
@@ -183,7 +183,7 @@ Global:
         datatype: real
         units: s
         value:
-            common: 7200.0
+            GRID == "tx0.66v1": 7200.0
     FRAZIL:
         description: |
             "[Boolean] default = False
@@ -216,7 +216,7 @@ Global:
         datatype: real
         units: J kg-1 K-1
         value:
-            common: 3992.0
+            GRID == "tx0.66v1": 3992.0
     CHECK_BAD_SURFACE_VALS:
         description: |
             "[Boolean] default = False
@@ -243,7 +243,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
+            GRID == "tx0.66v1": False
     DTFREEZE_DP:
         description: |
             "[deg C Pa-1] default = 0.0
@@ -253,7 +253,7 @@ Global:
         datatype: real
         units: deg C Pa-1
         value:
-            common: -7.75E-08
+            GRID == "tx0.66v1": -7.75E-08
     USE_IDEAL_AGE_TRACER:
         description: |
             "[Boolean] default = False
@@ -305,7 +305,7 @@ Global:
             "Name of the file from which to read horizontal grid data."
         datatype: string
         value:
-            common: "ocean_hgrid_180829.nc"
+            GRID == "tx0.66v1": "ocean_hgrid_180829.nc"
     USE_TRIPOLAR_GEOLONB_BUG:
         description: |
             "[Boolean] default = True
@@ -314,7 +314,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
+            GRID == "tx0.66v1": False
     TOPO_CONFIG:
         description: |
             "This specifies how bathymetry is specified:
@@ -343,7 +343,7 @@ Global:
             The file from which the bathymetry is read."
         datatype: string
         value:
-            common: "ocean_topog_190314.nc"
+            GRID == "tx0.66v1": "ocean_topog_190314.nc"
     MAXIMUM_DEPTH:
         description: |
             "[m]
@@ -362,7 +362,7 @@ Global:
         datatype: real
         units: m
         value:
-            common: 9.5
+            GRID == "tx0.66v1": 9.5
     MASKING_DEPTH:
         description: |
             "[m] default = -9999.0
@@ -371,7 +371,7 @@ Global:
         datatype: real
         units: m
         value:
-            common: 0.0
+            GRID == "tx0.66v1": 0.0
     REMAPPING_SCHEME:
         description: |
             "default = 'PLM'
@@ -404,7 +404,7 @@ Global:
             the layer thicknesses, temperatures and salinities."
         datatype: string
         value:
-            common: "WOA05_pottemp_salt_180829.nc"
+            GRID == "tx0.66v1": "WOA05_pottemp_salt_180829.nc"
     Z_INIT_FILE_PTEMP_VAR:
         description: |
             "default = 'ptemp'
@@ -442,7 +442,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
+            GRID == "tx0.66v1": False
     KHTH_USE_EBT_STRUCT:
         description: |
             "[Boolean] default = False
@@ -451,7 +451,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     RESOLN_SCALED_KHTH:
         description: |
             "[Boolean] default = False
@@ -461,7 +461,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
+            GRID == "tx0.66v1": False
     USE_STORED_SLOPES:
         description: |
             "[Boolean] default = False
@@ -538,7 +538,7 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
-            common: "FILE:ocean_vgrid_180829.nc,dz"
+            GRID == "tx0.66v1": "FILE:ocean_vgrid_180829.nc,dz"
     BOUND_CORIOLIS:
         description: |
             "[Boolean] default = False
@@ -595,7 +595,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 1000.0
+            GRID == "tx0.66v1": 1000.0
     KH_VEL_SCALE:
         description: |
             "[m s-1] default = 0.0
@@ -615,7 +615,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 0.0
+            GRID == "tx0.66v1": 0.0
     KH_PWR_OF_SINE:
         description: |
             "[nondim] default = 4.0
@@ -624,7 +624,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            common: 4.0
+            GRID == "tx0.66v1": 4.0
     BIHARMONIC:
         description: |
             "[Boolean] default = True
@@ -633,7 +633,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     AH_VEL_SCALE:
         description: |
             "[m s-1] default = 0.0
@@ -644,7 +644,7 @@ Global:
         datatype: real
         units: m s-1
         value:
-            common: 0.1
+            GRID == "tx0.66v1": 0.1
     USE_LAND_MASK_FOR_HVISC:
         description: |
             "[Boolean] default = False
@@ -656,7 +656,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     HMIX_FIXED:
         description: |
             "[m]
@@ -889,7 +889,7 @@ Global:
         datatype: real
         units: m
         value:
-            common: 1.0
+            GRID == "tx0.66v1": 1.0
     KHTH:
         description: |
             "[m2 s-1] default = 0.0
@@ -897,7 +897,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 800.0
+            GRID == "tx0.66v1": 800.0
     KHTH_MAX:
         description: |
             "[m2 s-1] default = 0.0
@@ -954,7 +954,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            common: 1.0
+            GRID == "tx0.66v1": 1.0
     MLE_FRONT_LENGTH:
         description: |
             "[m] default = 0.0
@@ -965,7 +965,7 @@ Global:
         datatype: real
         units: m
         value:
-            common: 200.0
+            GRID == "tx0.66v1": 200.0
     MLE_MLD_DECAY_TIME:
         description: |
             "[s] default = 0.0
@@ -976,7 +976,7 @@ Global:
         datatype: real
         units: s
         value:
-            common: 2.592E+06
+            GRID == "tx0.66v1": 2.592E+06
     USE_CVMix_CONVECTION:
         description: |
             "[Boolean] default = False
@@ -987,7 +987,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     BBL_MIXING_AS_MAX:
         description: |
             "[Boolean] default = True
@@ -1106,7 +1106,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     N_SMOOTH:
         description: |
             "default = 0
@@ -1115,7 +1115,7 @@ Global:
             purely for diagnostic purposes."
         datatype: integer
         value:
-            common: 3
+            GRID == "tx0.66v1": 3
     MATCH_TECHNIQUE:
         description: |
             "default = 'SimpleShapes'
@@ -1127,14 +1127,14 @@ Global:
             ParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT"
         datatype: string
         value:
-            common: "MatchGradient"
+            GRID == "tx0.66v1": "MatchGradient"
     INTERP_TYPE2:
         description: |
             "Type of interpolation to compute diff and visc at OBL_depth
             Allowed types are: linear, quadratic, cubic or LMD94."
         datatype: string
         value:
-            common: "LMD94"
+            GRID == "tx0.66v1": "LMD94"
     KPP_IS_ADDITIVE:
         description: |
             "[Boolean] default = True
@@ -1143,7 +1143,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
+            GRID == "tx0.66v1": False
     USE_CVMix_TIDAL:
         description: |
             "[Boolean] default = False
@@ -1151,7 +1151,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     INT_TIDE_DISSIPATION:
         description: |
             "[Boolean] default = False
@@ -1161,21 +1161,21 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     TIDAL_ENERGY_FILE:
         description: |
             "The path to the file containing tidal energy
             dissipation. Used with CVMix tidal mixing schemes."
         datatype: string
         value:
-            common: "energy_new_t0.66v1_conserve_190315.nc"
+            GRID == "tx0.66v1": "energy_new_t0.66v1_conserve_190315.nc"
     TIDAL_ENERGY_TYPE:
         description: |
             "The type of input tidal energy flux dataset. Valid values are   Jayne
             ER03"
         datatype: string
         value:
-            common: "Jayne"
+            GRID == "tx0.66v1": "Jayne"
     USE_LMD94:
         description: |
             "[Boolean] default = False
@@ -1184,7 +1184,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     SMOOTH_RI:
         description: |
             "[Boolean] default = False
@@ -1192,7 +1192,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     USE_CVMIX_DDIFF:
         description: |
             "[Boolean] default = False
@@ -1202,7 +1202,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     MAX_ENT_IT:
         description: |
             "default = 5
@@ -1246,7 +1246,7 @@ Global:
         datatype: real
         units: m
         value:
-            common: 15.0
+            GRID == "tx0.66v1": 15.0
     PEN_SW_FRAC:
         description: |
             "[nondim] default = 0.0
@@ -1255,7 +1255,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            common: 0.42
+            GRID == "tx0.66v1": 0.42
     PRESSURE_DEPENDENT_FRAZIL:
         description: |
             "[Boolean] default = False
@@ -1265,7 +1265,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     TRACER_ADVECTION_SCHEME:
         description: |
             "default = 'PLM'
@@ -1282,7 +1282,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 800.0
+            GRID == "tx0.66v1": 800.0
     KHTR_MIN:
         description: |
             "[m2 s-1] default = 0.0
@@ -1309,7 +1309,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     MAX_TR_DIFFUSION_CFL:
         description: |
             "[nondim] default = -1.0
@@ -1320,7 +1320,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            common: 2.0
+            GRID == "tx0.66v1": 2.0
     MAXTRUNC:
         description: |
             "[truncations save_interval-1] default = 0
@@ -1356,7 +1356,7 @@ Global:
             'A', 'B', or 'C'."
         datatype: string
         value:
-            common: "A"
+            GRID == "tx0.66v1": "A"
     RESTORE_SALINITY:
         description: |
             "[Boolean] default = False
@@ -1366,7 +1366,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     FLUXCONST:
         description: |
             "[m day-1]
@@ -1376,14 +1376,14 @@ Global:
         datatype: real
         units: m day-1
         value:
-            common: 0.1667
+            GRID == "tx0.66v1": 0.1667
     SALT_RESTORE_FILE:
         description: |
             "default = 'salt_restore.nc'
             A file in which to find the surface salinity to use for restoring."
         datatype: string
         value:
-            common: "salt_restore_tx0.66v1_180828.nc"
+            GRID == "tx0.66v1": "salt_restore_tx0.66v1_180828.nc"
     ADJUST_NET_FRESH_WATER_TO_ZERO:
         description: |
             "[Boolean] default = False
@@ -1392,7 +1392,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     MAX_DELTA_SRESTORE:
         description: |
             "[PSU or g kg-1] default = 999.0
@@ -1400,7 +1400,7 @@ Global:
         datatype: real
         units: PSU or g kg-1
         value:
-            common: 5.0
+            GRID == "tx0.66v1": 5.0
     SRESTORE_AS_SFLUX:
         description: |
             "[Boolean] default = False
@@ -1409,7 +1409,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "tx0.66v1": True
     RESTART_CONTROL:
         description: |
             "default = 1
@@ -1439,7 +1439,7 @@ Global:
         datatype: real
         units: days
         value:
-            common: 0.5
+            GRID == "tx0.66v1": 0.5
     ENERGYSAVEDAYS_GEOMETRIC:
         description: |
             "[days] default = 0.0
@@ -1449,4 +1449,4 @@ Global:
         datatype: real
         units: days
         value:
-            common: 0.25
+            GRID == "tx0.66v1": 0.25
