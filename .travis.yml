@@ -10,7 +10,6 @@ install:
   - chmod ugo+x ./tests/check_default_params.py
   - pip install pyyaml
 
-jobs:
-  include:
-    - script: ./tests/check_default_params.py
+script: 
+  - ./tests/check_default_params.py
 
