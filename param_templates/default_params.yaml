@@ -7,6 +7,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            common: False
             GRID == "tx0.66v1": True
     NIHALO:
         description: |
@@ -35,6 +36,7 @@ Global:
             this is set in MOM_memory.h at compile time."
         datatype: integer
         value:
+            GRID == "gx1v6": 320
             GRID == "tx0.66v1": 540
     NJGLOBAL:
         description: |
@@ -48,6 +50,7 @@ Global:
             The processor layout that was acutally used."
         datatype: integer
         value:
+            GRID == "gx1v6": 384
             GRID == "tx0.66v1": 458
     IO_LAYOUT:
         description: |
@@ -134,6 +137,7 @@ Global:
         datatype: real
         units: s
         value:
+            GRID == "gx1v6": 1800.0
             GRID == "tx0.66v1": 1200.0
     DT_THERM:
         description: |
@@ -149,6 +153,7 @@ Global:
         datatype: real
         units: s
         value:
+            GRID == "gx1v6": 1800.0
             GRID == "tx0.66v1": 3600.0
     HFREEZE:
         description: |
@@ -183,6 +188,7 @@ Global:
         datatype: real
         units: s
         value:
+            GRID == "gx1v6": 0.0
             GRID == "tx0.66v1": 7200.0
     FRAZIL:
         description: |
@@ -216,6 +222,7 @@ Global:
         datatype: real
         units: J kg-1 K-1
         value:
+            GRID == "C_P": 3925.0
             GRID == "tx0.66v1": 3992.0
     CHECK_BAD_SURFACE_VALS:
         description: |
@@ -305,6 +312,7 @@ Global:
             "Name of the file from which to read horizontal grid data."
         datatype: string
         value:
+            GRID == "gx1v6": "ocean_hgrid.nc"
             GRID == "tx0.66v1": "ocean_hgrid_180829.nc"
     USE_TRIPOLAR_GEOLONB_BUG:
         description: |
@@ -343,6 +351,7 @@ Global:
             The file from which the bathymetry is read."
         datatype: string
         value:
+            GRID == "gx1v6": "ocean_topog.nc"
             GRID == "tx0.66v1": "ocean_topog_190314.nc"
     MAXIMUM_DEPTH:
         description: |
@@ -362,6 +371,7 @@ Global:
         datatype: real
         units: m
         value:
+            GRID == "tx0.66v1": 0.5
             GRID == "tx0.66v1": 9.5
     MASKING_DEPTH:
         description: |
@@ -404,6 +414,7 @@ Global:
             the layer thicknesses, temperatures and salinities."
         datatype: string
         value:
+            GRID == "gx1v6": "WOA05_pottemp_salt.nc"
             GRID == "tx0.66v1": "WOA05_pottemp_salt_180829.nc"
     Z_INIT_FILE_PTEMP_VAR:
         description: |
@@ -442,6 +453,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            GRID == "gx1v6": True
             GRID == "tx0.66v1": False
     KHTH_USE_EBT_STRUCT:
         description: |
@@ -461,6 +473,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            GRID == "gx1v6": True
             GRID == "tx0.66v1": False
     USE_STORED_SLOPES:
         description: |
@@ -538,6 +551,7 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
+            GRID == "gx1v6": "FILE:ocean_vgrid.nc,dz"
             GRID == "tx0.66v1": "FILE:ocean_vgrid_180829.nc,dz"
     BOUND_CORIOLIS:
         description: |
@@ -644,6 +658,7 @@ Global:
         datatype: real
         units: m s-1
         value:
+            GRID == "gx1v6": 0.05
             GRID == "tx0.66v1": 0.1
     USE_LAND_MASK_FOR_HVISC:
         description: |
@@ -897,6 +912,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
+            GRID == "gx1v6": 600.0
             GRID == "tx0.66v1": 800.0
     KHTH_MAX:
         description: |
@@ -954,6 +970,7 @@ Global:
         datatype: real
         units: nondim
         value:
+            GRID == "gx1v6": 20.0
             GRID == "tx0.66v1": 1.0
     MLE_FRONT_LENGTH:
         description: |
@@ -1282,6 +1299,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
+            GRID == "gx1v6": 600.0
             GRID == "tx0.66v1": 800.0
     KHTR_MIN:
         description: |
@@ -1376,6 +1394,7 @@ Global:
         datatype: real
         units: m day-1
         value:
+            GRID == "gx1v6": 0.5
             GRID == "tx0.66v1": 0.1667
     SALT_RESTORE_FILE:
         description: |
@@ -1439,6 +1458,7 @@ Global:
         datatype: real
         units: days
         value:
+            GRID == "gx1v6": 0.01
             GRID == "tx0.66v1": 0.5
     ENERGYSAVEDAYS_GEOMETRIC:
         description: |
@@ -1450,3 +1470,123 @@ Global:
         units: days
         value:
             GRID == "tx0.66v1": 0.25
+    ENERGETICS_SFC_PBL:
+        description: |
+          "[Boolean] default = False
+          If true, use an implied energetics planetary boundary
+          layer scheme to determine the diffusivity and viscosity
+          in the surface boundary layer."
+        datatype: logical
+        units: Boolean
+        value:
+            GRID == "gx1v6": True
+    TIDES:
+        description: |
+          "[Boolean] default = False
+          If true, apply tidal momentum forcing."
+        datatype: logical
+        units: Boolean
+        value:
+            GRID == "gx1v6": True
+    USE_MEKE:
+        description: |
+          "[Boolean] default = False
+          If true, turns on the MEKE scheme which calculates
+          a sub-grid mesoscale eddy kinetic energy budget."
+        datatype: logical
+        units: Boolean
+        value:
+            GRID == "gx1v6": True
+    MEKE_GMCOEFF:
+        description: |
+          "[nondim] default = -1.0
+          The efficiency of the conversion of potential energy
+          into MEKE by the thickness mixing parameterization.
+          If MEKE_GMCOEFF is negative, this conversion is not
+          used or calculated."
+        datatype: real
+        units: nondim
+        value:
+            GRID == "gx1v6": 1.0
+    DIAG_COORD_DEF_Z:
+        description: |
+          "default = 'WOA09'
+          Determines how to specify the coordinate
+          resolution. Valid options are:
+          PARAM       - use the vector-parameter DIAG_COORD_RES_Z
+          UNIFORM[:N] - uniformly distributed
+          FILE:string - read from a file. The string specifies
+          the filename and variable name, separated
+          by a comma or space, e.g. FILE:lev.nc,dz
+          or FILE:lev.nc,interfaces=zw
+          WOA09[:N]   - the WOA09 vertical grid (approximately)
+          FNC1:string - FNC1:dz_min,H_total,power,precision
+          HYBRID:string - read from a file. The string specifies
+          the filename and two variable names, separated
+          by a comma or space, for sigma-2 and dz. e.g.
+          HYBRID:vgrid.nc,sigma2,dz"
+        datatype: string
+        value:
+            GRID == "gx1v6": "WOA09"
+    MAX_RINO_IT:
+        description: |
+          "[nondim] default = 50
+          The maximum number of iterations that may be used to
+          estimate the Richardson number driven mixing."
+        datatype: integer
+        units: nondim
+        value:
+            GRID == "gx1v6": 25
+    CHANNEL_CONFIG:
+        description: |
+          "default = 'none'
+          A parameter that determines which set of channels are
+          restricted to specific  widths.  Options are:
+          none - All channels have the grid width.
+          global_1deg - Sets 16 specific channels appropriate
+          for a 1-degree model, as used in CM2G.
+          list - Read the channel locations and widths from a
+          text file, like MOM_channel_list in the MOM_SIS
+          test case.
+          file - Read open face widths everywhere from a
+          NetCDF file on the model grid."
+        datatype: string
+        value:
+            GRID == "gx1v6": "global_1deg"
+    SMAG_BI_CONST:
+        description: |
+          "[nondim] default = 0.0
+          The nondimensional biharmonic Smagorinsky constant,
+          typically 0.015 - 0.06."
+        datatype: real
+        units: nondim
+        value:
+            GRID == "gx1v6": 0.06
+    USE_JACKSON_PARAM:
+        description: |
+          "[Boolean] default = False
+          If true, use the Jackson-Hallberg-Legg (JPO 2008)
+          shear mixing parameterization."
+        datatype: logical
+        units: Boolean
+        value:
+            GRID == "gx1v6": True
+    VELOCITY_TOLERANCE:
+        description: |
+          "[m s-1] default = 3.0E+08
+          The tolerance for barotropic velocity discrepancies
+          between the barotropic solution and  the sum of the
+          layer thicknesses."
+        datatype: real
+        units: m s-1
+        value:
+            GRID == "gx1v6": 1.0E-04
+    SMAGORINSKY_AH:
+        description: |
+          "[Boolean] default = False
+          If true, use a biharmonic Smagorinsky nonlinear eddy
+          viscosity."
+        datatype: logical
+        units: Boolean
+        value:
+            GRID == "gx1v6": True

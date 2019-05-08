@@ -5,6 +5,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "common": false,
             "GRID == \"tx0.66v1\"": true
          }
       },
@@ -26,6 +27,7 @@
          "description": "\"The total number of thickness grid points in the\nx-direction in the physical domain. With STATIC_MEMORY_\nthis is set in MOM_memory.h at compile time.\"\n",
          "datatype": "integer",
          "value": {
+            "GRID == \"gx1v6\"": 320,
             "GRID == \"tx0.66v1\"": 540
          }
       },
@@ -33,6 +35,7 @@
          "description": "\"The total number of thickness grid points in the\ny-direction in the physical domain. With STATIC_MEMORY_\nthis is set in MOM_memory.h at compile time.\nThe number of processors in the x-direction. With\nSTATIC_MEMORY_ this is set in MOM_memory.h at compile time.\nThe number of processors in the x-direction. With\nSTATIC_MEMORY_ this is set in MOM_memory.h at compile time.\nThe processor layout that was acutally used.\"\n",
          "datatype": "integer",
          "value": {
+            "GRID == \"gx1v6\"": 384,
             "GRID == \"tx0.66v1\"": 458
          }
       },
@@ -104,6 +107,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
+            "GRID == \"gx1v6\"": 1800.0,
             "GRID == \"tx0.66v1\"": 1200.0
          }
       },
@@ -112,6 +116,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
+            "GRID == \"gx1v6\"": 1800.0,
             "GRID == \"tx0.66v1\"": 3600.0
          }
       },
@@ -136,6 +141,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
+            "GRID == \"gx1v6\"": 0.0,
             "GRID == \"tx0.66v1\"": 7200.0
          }
       },
@@ -160,6 +166,7 @@
          "datatype": "real",
          "units": "J kg-1 K-1",
          "value": {
+            "GRID == \"C_P\"": 3925.0,
             "GRID == \"tx0.66v1\"": 3992.0
          }
       },
@@ -228,6 +235,7 @@
          "description": "\"Name of the file from which to read horizontal grid data.\"\n",
          "datatype": "string",
          "value": {
+            "GRID == \"gx1v6\"": "ocean_hgrid.nc",
             "GRID == \"tx0.66v1\"": "ocean_hgrid_180829.nc"
          }
       },
@@ -250,6 +258,7 @@
          "description": "\"default = 'topog.nc'\nThe file from which the bathymetry is read.\"\n",
          "datatype": "string",
          "value": {
+            "GRID == \"gx1v6\"": "ocean_topog.nc",
             "GRID == \"tx0.66v1\"": "ocean_topog_190314.nc"
          }
       },
@@ -296,6 +305,7 @@
          "description": "\"default = 'temp_salt_z.nc'\nThe name of the z-space input file used to initialize\nthe layer thicknesses, temperatures and salinities.\"\n",
          "datatype": "string",
          "value": {
+            "GRID == \"gx1v6\"": "WOA05_pottemp_salt.nc",
             "GRID == \"tx0.66v1\"": "WOA05_pottemp_salt_180829.nc"
          }
       },
@@ -326,6 +336,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "GRID == \"gx1v6\"": true,
             "GRID == \"tx0.66v1\"": false
          }
       },
@@ -342,6 +353,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "GRID == \"gx1v6\"": true,
             "GRID == \"tx0.66v1\"": false
          }
       },
@@ -388,6 +400,7 @@
          "description": "\"default = 'UNIFORM'\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter ALE_RESOLUTION\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
+            "GRID == \"gx1v6\"": "FILE:ocean_vgrid.nc,dz",
             "GRID == \"tx0.66v1\"": "FILE:ocean_vgrid_180829.nc,dz"
          }
       },
@@ -476,6 +489,7 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
+            "GRID == \"gx1v6\"": 0.05,
             "GRID == \"tx0.66v1\"": 0.1
          }
       },
@@ -657,6 +671,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
+            "GRID == \"gx1v6\"": 600.0,
             "GRID == \"tx0.66v1\"": 800.0
          }
       },
@@ -697,6 +712,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
+            "GRID == \"gx1v6\"": 20.0,
             "GRID == \"tx0.66v1\"": 1.0
          }
       },
@@ -970,6 +986,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
+            "GRID == \"gx1v6\"": 600.0,
             "GRID == \"tx0.66v1\"": 800.0
          }
       },
@@ -1041,6 +1058,7 @@
          "datatype": "real",
          "units": "m day-1",
          "value": {
+            "GRID == \"gx1v6\"": 0.5,
             "GRID == \"tx0.66v1\"": 0.1667
          }
       },
@@ -1095,6 +1113,7 @@
          "datatype": "real",
          "units": "days",
          "value": {
+            "GRID == \"gx1v6\"": 0.01,
             "GRID == \"tx0.66v1\"": 0.5
          }
       },
@@ -1104,6 +1123,92 @@
          "units": "days",
          "value": {
             "GRID == \"tx0.66v1\"": 0.25
+         }
+      },
+      "ENERGETICS_SFC_PBL": {
+         "description": "\"[Boolean] default = False\nIf true, use an implied energetics planetary boundary\nlayer scheme to determine the diffusivity and viscosity\nin the surface boundary layer.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"gx1v6\"": true
+         }
+      },
+      "TIDES": {
+         "description": "\"[Boolean] default = False\nIf true, apply tidal momentum forcing.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"gx1v6\"": true
+         }
+      },
+      "USE_MEKE": {
+         "description": "\"[Boolean] default = False\nIf true, turns on the MEKE scheme which calculates\na sub-grid mesoscale eddy kinetic energy budget.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"gx1v6\"": true
+         }
+      },
+      "MEKE_GMCOEFF": {
+         "description": "\"[nondim] default = -1.0\nThe efficiency of the conversion of potential energy\ninto MEKE by the thickness mixing parameterization.\nIf MEKE_GMCOEFF is negative, this conversion is not\nused or calculated.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "GRID == \"gx1v6\"": 1.0
+         }
+      },
+      "DIAG_COORD_DEF_Z": {
+         "description": "\"default = 'WOA09'\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_Z\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"gx1v6\"": "WOA09"
+         }
+      },
+      "MAX_RINO_IT": {
+         "description": "\"[nondim] default = 50\nThe maximum number of iterations that may be used to\nestimate the Richardson number driven mixing.\"\n",
+         "datatype": "integer",
+         "units": "nondim",
+         "value": {
+            "GRID == \"gx1v6\"": 25
+         }
+      },
+      "CHANNEL_CONFIG": {
+         "description": "\"default = 'none'\nA parameter that determines which set of channels are\nrestricted to specific  widths.  Options are:\nnone - All channels have the grid width.\nglobal_1deg - Sets 16 specific channels appropriate\nfor a 1-degree model, as used in CM2G.\nlist - Read the channel locations and widths from a\ntext file, like MOM_channel_list in the MOM_SIS\ntest case.\nfile - Read open face widths everywhere from a\nNetCDF file on the model grid.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"gx1v6\"": "global_1deg"
+         }
+      },
+      "SMAG_BI_CONST": {
+         "description": "\"[nondim] default = 0.0\nThe nondimensional biharmonic Smagorinsky constant,\ntypically 0.015 - 0.06.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "GRID == \"gx1v6\"": 0.06
+         }
+      },
+      "USE_JACKSON_PARAM": {
+         "description": "\"[Boolean] default = False\nIf true, use the Jackson-Hallberg-Legg (JPO 2008)\nshear mixing parameterization.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"gx1v6\"": true
+         }
+      },
+      "VELOCITY_TOLERANCE": {
+         "description": "\"[m s-1] default = 3.0E+08\nThe tolerance for barotropic velocity discrepancies\nbetween the barotropic solution and  the sum of the\nlayer thicknesses.\"\n",
+         "datatype": "real",
+         "units": "m s-1",
+         "value": {
+            "GRID == \"gx1v6\"": 0.0001
+         }
+      },
+      "SMAGORINSKY_AH": {
+         "description": "\"[Boolean] default = False\nIf true, use a biharmonic Smagorinsky nonlinear eddy\nviscosity.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"gx1v6\"": true
          }
       }
    }
