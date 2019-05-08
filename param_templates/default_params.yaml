@@ -1384,7 +1384,9 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            GRID == "tx0.66v1": True
+            common: False   # for all B compsets and gx1v6
+            GRID == "tx0.66v1", COMPSET == "C": True
+            GRID == "tx0.66v1", COMPSET == "G": True
     FLUXCONST:
         description: |
             "[m day-1]

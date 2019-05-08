@@ -1050,7 +1050,9 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"tx0.66v1\"": true
+            "common": false,
+            "GRID == \"tx0.66v1\", COMPSET == \"C\"": true,
+            "GRID == \"tx0.66v1\", COMPSET == \"G\"": true
          }
       },
       "FLUXCONST": {
