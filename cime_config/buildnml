@@ -39,9 +39,9 @@ def prep_input(case):
     input_files     = ["diag_table", "input.nml"]
 
     # The scope of the following path expansion is limited to this script only,
-    # and is needed to import MOM_params class:
+    # and is needed to import MOM_Params class:
     sys.path.append(os.path.join(srcroot,"components","mom","cime_config"))
-    from MOM_params import MOM_params
+    from MOM_RPS import MOM_Params
 
     # determine input category (B,C, or G):
     # this is needed to determine which input templates are to be copied for a given grid.
@@ -114,7 +114,7 @@ def prep_input(case):
                         "OCN_GRID": ocn_gridname })
     MOM_input_path = os.path.join(rundir,"MOM_input")
 
-    params = MOM_params(default_params_path, "json")
+    params = MOM_Params(default_params_path, "json")
     params.write_MOM_input(MOM_input_path, case_constraints, case_params)
 
     # create an empty MOM_override file
