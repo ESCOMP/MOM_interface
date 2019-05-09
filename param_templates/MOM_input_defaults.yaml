@@ -89,7 +89,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     USE_REGRIDDING:
         description: |
             "[Boolean] default = False
@@ -120,7 +121,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     THICKNESSDIFFUSE_FIRST:
         description: |
             "[Boolean] default = False
@@ -129,7 +131,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     DT:
         description: |
             "[s]
@@ -234,7 +237,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     SAVE_INITIAL_CONDS:
         description: |
             "[Boolean] default = False
@@ -271,7 +275,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     INPUTDIR:
         description: |
             "default = '.'
@@ -374,7 +379,7 @@ Global:
         datatype: real
         units: m
         value:
-            GRID == "tx0.66v1": 0.5
+            GRID == "gx1v6": 0.5
             GRID == "tx0.66v1": 9.5
     MASKING_DEPTH:
         description: |
@@ -409,7 +414,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     TEMP_SALT_Z_INIT_FILE:
         description: |
             "default = 'temp_salt_z.nc'
@@ -426,7 +432,8 @@ Global:
             TEMP_SALT_Z_INIT_FILE."
         datatype: string
         value:
-            common: "PTEMP"
+            GRID == "gx1v6": "PTEMP"
+            GRID == "tx0.66v1": "PTEMP"
     Z_INIT_FILE_SALT_VAR:
         description: |
             "default = 'salt'
@@ -434,7 +441,8 @@ Global:
             TEMP_SALT_Z_INIT_FILE."
         datatype: string
         value:
-            common: "SALT"
+            GRID == "gx1v6": "SALT"
+            GRID == "tx0.66v1": "SALT"
     USE_VARIABLE_MIXING:
         description: |
             "[Boolean] default = False
@@ -446,7 +454,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     RESOLN_SCALED_KH:
         description: |
             "[Boolean] default = False
@@ -487,7 +496,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     ETA_TOLERANCE:
         description: |
             "[m] default = 3.15E-09
@@ -508,7 +518,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     SIMPLE_TKE_TO_KD:
         description: |
             "[Boolean] default = False
@@ -518,7 +529,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     REGRIDDING_COORDINATE_MODE:
         description: |
             "default = 'LAYER'
@@ -576,7 +588,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
     TIDE_SAL_SCALAR_VALUE:
         description: |
             "[m m-1]
@@ -587,7 +599,8 @@ Global:
         datatype: real
         units: m m-1
         value:
-            common: 0.094
+            GRID == "gx1v6": 0.094
+            GRID == "tx0.66v1": 0.094
     MASS_WEIGHT_IN_PRESSURE_GRADIENT:
         description: |
             "[Boolean] default = False
@@ -705,7 +718,8 @@ Global:
         datatype: real
         units: nondim
         value:
-            common: 1.0
+            GRID == "gx1v6": 1.0
+            GRID == "tx0.66v1": 1.0
     U_TRUNC_FILE:
         description: |
             "default = ''
@@ -764,7 +778,8 @@ Global:
         datatype: real
         units: s
         value:
-            common: 7200.0
+            GRID == "gx1v6": 7200.0
+            GRID == "tx0.66v1": 7200.0
     Z_INIT_ALE_REMAPPING:
         description: |
             "[Boolean] default = False
@@ -772,7 +787,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     INTERPOLATE_RES_FN:
         description: |
             "[Boolean] default = True
@@ -783,7 +799,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
+            GRID == "gx1v6": False
+            GRID == "tx0.66v1": False
     GILL_EQUATORIAL_LD:
         description: |
             "[Boolean] default = False
@@ -794,7 +811,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     DRAG_BG_VEL:
         description: |
             "[m s-1] default = 0.0
@@ -806,7 +824,8 @@ Global:
         datatype: real
         units: m s-1
         value:
-            common: 0.1
+            GRID == "gx1v6": 0.1
+            GRID == "tx0.66v1": 0.1
     BBL_USE_EOS:
         description: |
             "[Boolean] default = False
@@ -853,7 +872,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     BT_THICK_SCHEME:
         description: |
             "default = 'HYBRID'
@@ -924,7 +944,8 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 900.0
+            GRID == "gx1v6": 900.0
+            GRID == "tx0.66v1": 900.0
     KHTH_USE_FGNV_STREAMFUNCTION:
         description: |
             "[Boolean] default = False
@@ -934,7 +955,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     FGNV_C_MIN:
         description: |
             "[m s-1] default = 0.0
@@ -943,7 +965,8 @@ Global:
         datatype: real
         units: m s-1
         value:
-            common: 0.01
+            GRID == "gx1v6": 0.01
+            GRID == "tx0.66v1": 0.01
     MIXEDLAYER_RESTRAT:
         description: |
             "[Boolean] default = False
@@ -1017,7 +1040,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
+            GRID == "gx1v6": False
+            GRID == "tx0.66v1": False
     USE_LOTW_BBL_DIFFUSIVITY:
         description: |
             "[Boolean] default = False
@@ -1027,7 +1051,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     KD_MAX:
         description: |
             "[m2 s-1] default = -1.0
@@ -1037,7 +1062,8 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 0.1
+            GRID == "gx1v6": 0.1
+            GRID == "tx0.66v1": 0.1
     HENYEY_IGW_BACKGROUND:
         description: |
             "[Boolean] default = False
@@ -1047,7 +1073,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
+            GRID == "gx1v6": True
+            GRID == "tx0.66v1": True
     N2_FLOOR_IOMEGA2:
         description: |
             "[nondim] default = 1.0
@@ -1057,7 +1084,8 @@ Global:
         datatype: real
         units: nondim
         value:
-            common: 0.0
+            GRID == "gx1v6": 0.0
+            GRID == "tx0.66v1": 0.0
     KD:
         description: |
             "[m2 s-1]
@@ -1078,7 +1106,8 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 2.0E-06
+            GRID == "gx1v6": 2.0E-06
+            GRID == "tx0.66v1": 2.0E-06
     INT_TIDE_DECAY_SCALE:
         description: |
             "[m] default = 0.0
@@ -1087,7 +1116,8 @@ Global:
         datatype: real
         units: m
         value:
-            common: 300.3003003003003
+            GRID == "gx1v6": 300.3003003003003
+            GRID == "tx0.66v1": 300.3003003003003
     KAPPA_ITIDES:
         description: |
             "[m-1] default = 6.283185307179586E-04
@@ -1096,7 +1126,8 @@ Global:
         datatype: real
         units: m-1
         value:
-            common: 6.28319E-04
+            GRID == "gx1v6": 6.28319E-04
+            GRID == "tx0.66v1": 6.28319E-04
     KAPPA_H2_FACTOR:
         description: |
             "[nondim] default = 1.0
@@ -1104,7 +1135,8 @@ Global:
         datatype: real
         units: nondim
         value:
-            common: 0.75
+            GRID == "gx1v6": 0.75
+            GRID == "tx0.66v1": 0.75
     TKE_ITIDE_MAX:
         description: |
             "[W m-2] default = 1000.0
@@ -1117,7 +1149,8 @@ Global:
         datatype: real
         units: W m-2
         value:
-            common: 0.1
+            GRID == "gx1v6": 0.1
+            GRID == "tx0.66v1": 0.1
     USE_KPP:
         description: |
             "[Boolean] default = False
@@ -1211,7 +1244,8 @@ Global:
         datatype: real
         units: nondim
         value:
-            common: 0.05
+            GRID == "gx1v6": 0.05
+            GRID == "tx0.66v1": 0.05
     HMIX_MIN:
         description: |
             "[m] default = 0.0
@@ -1257,7 +1291,8 @@ Global:
             PPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)"
         datatype: string
         value:
-            common: "PPM:H3"
+            GRID == "gx1v6": "PPM:H3"
+            GRID == "tx0.66v1": "PPM:H3"
     KHTR:
         description: |
             "[m2 s-1] default = 0.0
@@ -1274,7 +1309,8 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 50.0
+            GRID == "gx1v6": 50.0
+            GRID == "tx0.66v1": 50.0
     KHTR_MAX:
         description: |
             "[m2 s-1] default = 0.0
@@ -1282,7 +1318,8 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 900.0
+            GRID == "gx1v6": 900.0
+            GRID == "tx0.66v1": 900.0
     CHECK_DIFFUSIVE_CFL:
         description: |
             "[Boolean] default = False
