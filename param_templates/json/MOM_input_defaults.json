@@ -67,7 +67,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "USE_REGRIDDING": {
@@ -91,7 +92,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "THICKNESSDIFFUSE_FIRST": {
@@ -99,7 +101,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "DT": {
@@ -175,7 +178,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "SAVE_INITIAL_CONDS": {
@@ -207,7 +211,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "INPUTDIR": {
@@ -275,6 +280,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
+            "GRID == \"gx1v6\"": 0.5,
             "GRID == \"tx0.66v1\"": 9.5
          }
       },
@@ -298,7 +304,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "TEMP_SALT_Z_INIT_FILE": {
@@ -313,14 +320,16 @@
          "description": "\"default = 'ptemp'\nThe name of the potential temperature variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "common": "PTEMP"
+            "GRID == \"gx1v6\"": "PTEMP",
+            "GRID == \"tx0.66v1\"": "PTEMP"
          }
       },
       "Z_INIT_FILE_SALT_VAR": {
          "description": "\"default = 'salt'\nThe name of the salinity variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "common": "SALT"
+            "GRID == \"gx1v6\"": "SALT",
+            "GRID == \"tx0.66v1\"": "SALT"
          }
       },
       "USE_VARIABLE_MIXING": {
@@ -328,7 +337,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "RESOLN_SCALED_KH": {
@@ -362,7 +372,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "ETA_TOLERANCE": {
@@ -378,7 +389,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "SIMPLE_TKE_TO_KD": {
@@ -386,7 +398,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "REGRIDDING_COORDINATE_MODE": {
@@ -417,7 +430,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true
          }
       },
       "TIDE_SAL_SCALAR_VALUE": {
@@ -425,7 +438,8 @@
          "datatype": "real",
          "units": "m m-1",
          "value": {
-            "common": 0.094
+            "GRID == \"gx1v6\"": 0.094,
+            "GRID == \"tx0.66v1\"": 0.094
          }
       },
       "MASS_WEIGHT_IN_PRESSURE_GRADIENT": {
@@ -522,7 +536,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "common": 1.0
+            "GRID == \"gx1v6\"": 1.0,
+            "GRID == \"tx0.66v1\"": 1.0
          }
       },
       "U_TRUNC_FILE": {
@@ -568,7 +583,8 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "common": 7200.0
+            "GRID == \"gx1v6\"": 7200.0,
+            "GRID == \"tx0.66v1\"": 7200.0
          }
       },
       "Z_INIT_ALE_REMAPPING": {
@@ -576,7 +592,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "INTERPOLATE_RES_FN": {
@@ -584,7 +601,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": false
+            "GRID == \"gx1v6\"": false,
+            "GRID == \"tx0.66v1\"": false
          }
       },
       "GILL_EQUATORIAL_LD": {
@@ -592,7 +610,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "DRAG_BG_VEL": {
@@ -600,7 +619,8 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "common": 0.1
+            "GRID == \"gx1v6\"": 0.1,
+            "GRID == \"tx0.66v1\"": 0.1
          }
       },
       "BBL_USE_EOS": {
@@ -632,7 +652,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "BT_THICK_SCHEME": {
@@ -680,7 +701,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "common": 900.0
+            "GRID == \"gx1v6\"": 900.0,
+            "GRID == \"tx0.66v1\"": 900.0
          }
       },
       "KHTH_USE_FGNV_STREAMFUNCTION": {
@@ -688,7 +710,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "FGNV_C_MIN": {
@@ -696,7 +719,8 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "common": 0.01
+            "GRID == \"gx1v6\"": 0.01,
+            "GRID == \"tx0.66v1\"": 0.01
          }
       },
       "MIXEDLAYER_RESTRAT": {
@@ -745,7 +769,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": false
+            "GRID == \"gx1v6\"": false,
+            "GRID == \"tx0.66v1\"": false
          }
       },
       "USE_LOTW_BBL_DIFFUSIVITY": {
@@ -753,7 +778,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "KD_MAX": {
@@ -761,7 +787,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "common": 0.1
+            "GRID == \"gx1v6\"": 0.1,
+            "GRID == \"tx0.66v1\"": 0.1
          }
       },
       "HENYEY_IGW_BACKGROUND": {
@@ -769,7 +796,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true
+            "GRID == \"gx1v6\"": true,
+            "GRID == \"tx0.66v1\"": true
          }
       },
       "N2_FLOOR_IOMEGA2": {
@@ -777,7 +805,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "common": 0.0
+            "GRID == \"gx1v6\"": 0.0,
+            "GRID == \"tx0.66v1\"": 0.0
          }
       },
       "KD": {
@@ -793,7 +822,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "common": 2e-06
+            "GRID == \"gx1v6\"": 2e-06,
+            "GRID == \"tx0.66v1\"": 2e-06
          }
       },
       "INT_TIDE_DECAY_SCALE": {
@@ -801,7 +831,8 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "common": 300.3003003003003
+            "GRID == \"gx1v6\"": 300.3003003003003,
+            "GRID == \"tx0.66v1\"": 300.3003003003003
          }
       },
       "KAPPA_ITIDES": {
@@ -809,7 +840,8 @@
          "datatype": "real",
          "units": "m-1",
          "value": {
-            "common": 0.000628319
+            "GRID == \"gx1v6\"": 0.000628319,
+            "GRID == \"tx0.66v1\"": 0.000628319
          }
       },
       "KAPPA_H2_FACTOR": {
@@ -817,7 +849,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "common": 0.75
+            "GRID == \"gx1v6\"": 0.75,
+            "GRID == \"tx0.66v1\"": 0.75
          }
       },
       "TKE_ITIDE_MAX": {
@@ -825,7 +858,8 @@
          "datatype": "real",
          "units": "W m-2",
          "value": {
-            "common": 0.1
+            "GRID == \"gx1v6\"": 0.1,
+            "GRID == \"tx0.66v1\"": 0.1
          }
       },
       "USE_KPP": {
@@ -910,7 +944,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "common": 0.05
+            "GRID == \"gx1v6\"": 0.05,
+            "GRID == \"tx0.66v1\"": 0.05
          }
       },
       "HMIX_MIN": {
@@ -949,7 +984,8 @@
          "description": "\"default = 'PLM'\nThe horizontal transport scheme for tracers:\nPLM    - Piecewise Linear Method\nPPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)\"\n",
          "datatype": "string",
          "value": {
-            "common": "PPM:H3"
+            "GRID == \"gx1v6\"": "PPM:H3",
+            "GRID == \"tx0.66v1\"": "PPM:H3"
          }
       },
       "KHTR": {
@@ -966,7 +1002,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "common": 50.0
+            "GRID == \"gx1v6\"": 50.0,
+            "GRID == \"tx0.66v1\"": 50.0
          }
       },
       "KHTR_MAX": {
@@ -974,7 +1011,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "common": 900.0
+            "GRID == \"gx1v6\"": 900.0,
+            "GRID == \"tx0.66v1\"": 900.0
          }
       },
       "CHECK_DIFFUSIVE_CFL": {
@@ -1103,7 +1141,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"gx1v6\"": true
+            "GRID == \"MISOMIP\"": true
          }
       },
       "TIDES": {
@@ -1157,7 +1195,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "GRID == \"gx1v6\"": 0.06
+            "GRID == \"MISOMIP\"": 0.06
          }
       },
       "USE_JACKSON_PARAM": {
@@ -1165,7 +1203,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "GRID == \"gx1v6\"": true
+            "GRID == \"MISOMIP\"": true
          }
       },
       "VELOCITY_TOLERANCE": {
@@ -1182,6 +1220,574 @@
          "units": "Boolean",
          "value": {
             "GRID == \"gx1v6\"": true
+         }
+      },
+      "REENTRANT_X": {
+         "description": "\"[Boolean] default = True\nIf true, the domain is zonally reentrant.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": false
+         }
+      },
+      "RHO_0": {
+         "description": "\"[kg m-3] default = 1035.0\nThe mean ocean density used with BOUSSINESQ true to\ncalculate accelerations and the mass for conservation\nproperties, or with BOUSSINSEQ false to convert some\nparameters from vertical units of m to kg m-2.\"\n",
+         "datatype": "real",
+         "units": "kg m-3",
+         "value": {
+            "GRID == \"MISOMIP\"": 1028.0
+         }
+      },
+      "ANGSTROM": {
+         "description": "\"[m] default = 1.0E-10\nThe minumum layer thickness, usually one-Angstrom.\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": {
+            "GRID == \"MISOMIP\"": 1e-15
+         }
+      },
+      "IC_OUTPUT_FILE": {
+         "description": "\"default = 'MOM_IC'\nThe file into which to write the initial conditions.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "MISOMIP_IC"
+         }
+      },
+      "TRIMMING_USES_REMAPPING": {
+         "description": "\"[Boolean] default = False\nWhen trimming the column, also remap T and S.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "ISOMIP_S_SUR_SPONGE": {
+         "description": "\"[not defined] default = 35.0\nSurface salinity in sponge layer.\"\n",
+         "datatype": "real",
+         "units": "not defined",
+         "value": {
+            "GRID == \"MISOMIP\"": 33.8
+         }
+      },
+      "ISOMIP_S_BOT_SPONGE": {
+         "description": "\"[not defined] default = 35.0\nBottom salinity in sponge layer.\"\n",
+         "datatype": "real",
+         "units": "not defined",
+         "value": {
+            "GRID == \"MISOMIP\"": 34.7
+         }
+      },
+      "ISOMIP_T_BOT_SPONGE": {
+         "description": "\"[not defined] default = -1.9\nBottom temperature in sponge layer.\"\n",
+         "datatype": "real",
+         "units": "not defined",
+         "value": {
+            "GRID == \"MISOMIP\"": 1.0
+         }
+      },
+      "EQN_OF_STATE": {
+         "description": "\"default = 'WRIGHT'\nEQN_OF_STATE determines which ocean equation of state\nshould be used.  Currently, the valid choices are\n'LINEAR', 'UNESCO', and 'WRIGHT'.\nThis is only used if USE_EOS is true.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "LINEAR"
+         }
+      },
+      "RHO_T0_S0": {
+         "description": "\"[kg m-3] default = 1000.0\nWhen EQN_OF_STATE=LINEAR,\nthis is the density at T=0, S=0.\"\n",
+         "datatype": "real",
+         "units": "kg m-3",
+         "value": {
+            "GRID == \"MISOMIP\"": 999.910681
+         }
+      },
+      "DRHO_DT": {
+         "description": "\"[kg m-3 K-1] default = -0.2\nWhen EQN_OF_STATE=LINEAR,\nthis is the partial derivative of density with\ntemperature.\"\n",
+         "datatype": "real",
+         "units": "kg m-3 K-1",
+         "value": {
+            "GRID == \"MISOMIP\"": -0.038357
+         }
+      },
+      "DRHO_DS": {
+         "description": "\"[kg m-3 PSU-1] default = 0.8\nWhen EQN_OF_STATE=LINEAR,\nthis is the partial derivative of density with\nsalinity.\"\n",
+         "datatype": "real",
+         "units": "kg m-3 PSU-1",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.805876
+         }
+      },
+      "TFREEZE_S0_P0": {
+         "description": "\"TODO\"\n",
+         "datatype": "real",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.0832
+         }
+      },
+      "DTFREEZE_DS": {
+         "description": "\"TODO\"\n",
+         "datatype": "real",
+         "value": {
+            "GRID == \"MISOMIP\"": -0.0573
+         }
+      },
+      "USE_ISOMIP_TRACER": {
+         "description": "\"[Boolean] default = False\nIf true, use the ISOMIP_tracer tracer package.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "AXIS_UNITS": {
+         "description": "\"default = 'degrees'\nThe units for the Cartesian axes. Valid entries are:\ndegrees - degrees of latitude and longitude\nm - meters\nk - kilometers\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "k"
+         }
+      },
+      "SOUTHLAT": {
+         "description": "\"[k]\nThe southern latitude of the domain or the equivalent\nstarting value for the y-axis.\"\n",
+         "datatype": "real",
+         "units": "k",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.0
+         }
+      },
+      "LENLAT": {
+         "description": "\"[k]\nThe latitudinal or y-direction length of the domain.\"\n",
+         "datatype": "real",
+         "units": "k",
+         "value": {
+            "GRID == \"MISOMIP\"": 80.0
+         }
+      },
+      "WESTLON": {
+         "description": "\"[k] default = 0.0\nThe western longitude of the domain or the equivalent\nstarting value for the x-axis.\"\n",
+         "datatype": "real",
+         "units": "k",
+         "value": {
+            "GRID == \"MISOMIP\"": -2.0
+         }
+      },
+      "LENLON": {
+         "description": "\"[k]\nThe longitudinal or x-direction length of the domain.\"\n",
+         "datatype": "real",
+         "units": "k",
+         "value": {
+            "GRID == \"MISOMIP\"": 802.0
+         }
+      },
+      "ROTATION": {
+         "description": "\"default = '2omegasinlat'\nThis specifies how the Coriolis parameter is specified:\n2omegasinlat - Use twice the planetary rotation rate\ntimes the sine of latitude.\nbetaplane - Use a beta-plane or f-plane.\nUSER - call a user modified routine.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "beta"
+         }
+      },
+      "F_0": {
+         "description": "\"[s-1] default = 0.0\nThe reference value of the Coriolis parameter with the\nbetaplane option.\"\n",
+         "datatype": "real",
+         "units": "s-1",
+         "value": {
+            "GRID == \"MISOMIP\"": -0.000140871
+         }
+      },
+      "LIGHTEST_DENSITY": {
+         "description": "\"[kg m-3] default = 1027.0\nThe reference potential density used for the surface\ninterface.\"\n",
+         "datatype": "real",
+         "units": "kg m-3",
+         "value": {
+            "GRID == \"MISOMIP\"": 1027.1524
+         }
+      },
+      "DENSITY_RANGE": {
+         "description": "\"[kg m-3] default = 2.0\nThe range of reference potential densities across\nall interfaces.\"\n",
+         "datatype": "real",
+         "units": "kg m-3",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.7438856
+         }
+      },
+      "THICKNESS_CONFIG": {
+         "description": "\"A string that determines how the initial layer\nthicknesses are specified for a new run:\nfile - read interface heights from the file specified\nthickness_file - read thicknesses from the file specified\nby (THICKNESS_FILE).\ncoord - determined by ALE coordinate.\nuniform - uniform thickness layers evenly distributed\nbetween the surface and MAXIMUM_DEPTH.\nDOME - use a slope and channel configuration for the\nDOME sill-overflow test case.\nISOMIP - use a configuration for the\nISOMIP test case.\nbenchmark - use the benchmark test case thicknesses.\nsearch - search a density profile for the interface\ndensities. This is not yet implemented.\ncircle_obcs - the circle_obcs test case is used.\nDOME2D - 2D version of DOME initialization.\nadjustment2d - TBD AJA.\nsloshing - TBD AJA.\nseamount - TBD AJA.\nrossby_front - a mixed layer front in thermal wind balance.\nUSER - call a user modified routine.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "ISOMIP"
+         }
+      },
+      "SPONGE_CONFIG": {
+         "description": "\"default = 'file'\nA string that sets how the sponges are configured:\nISOMIP - use a configuration for the\nISOMIP test case.\nUSER - call a user modified routine.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "ISOMIP"
+         }
+      },
+      "MIN_THICKNESS": {
+         "description": "\"[m] default = 0.001\nMinimum layer thickness\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": {
+            "GRID == \"MISOMIP\"": 1e-12
+         }
+      },
+      "ISOMIP_TNUDG": {
+         "description": "\"default = 0.0 (days)\nNudging time scale for sponge layers\"\n",
+         "datatype": "real",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.1
+         }
+      },
+      "TS_CONFIG": {
+         "description": "\"A string that determines how the initial tempertures\nand salinities are specified for a new run:\nfile - read velocities from the file specified\nby (TS_FILE).\nfit - find the temperatures that are consistent with\nthe layer densities and salinity S_REF.\nTS_profile - use temperature and salinity profiles\n(read from TS_FILE) to set layer densities.\nbenchmark - use the benchmark test case T & S.\nlinear - linear in logical layer space.\nDOME2D - 2D DOME initialization.\nISOMIP - ISOMIP initialization.\nadjustment2d - TBD AJA.\nsloshing - TBD AJA.\nseamount - TBD AJA.\nrossby_front - a mixed layer front in thermal wind balance.\nSCM_ideal_hurr - used in the SCM idealized hurricane test.\nUSER - call a user modified routine.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "ISOMIP"
+         }
+      },
+      "T_REF": {
+         "description": "\"[degC]\nA reference temperature used in initialization.\"\n",
+         "datatype": "real",
+         "units": "degC",
+         "value": {
+            "GRID == \"MISOMIP\"": -1.9
+         }
+      },
+      "FIT_SALINITY": {
+         "description": "\"[Boolean] default = False\nIf true, accept the prescribed temperature and fit the\nsalinity; otherwise take salinity and fit temperature.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "TRIM_IC_FOR_P_SURF": {
+         "description": "\"[Boolean] default = False\nIf true, cuts way the top of the column for initial conditions\nat the depth where the hydrostatic presure matches the imposed\nsurface pressure which is read from file.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "SURFACE_PRESSURE_FILE": {
+         "description": "\"The initial condition file for the surface height.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "MISOMIP_181108.nc"
+         }
+      },
+      "SURFACE_PRESSURE_VAR": {
+         "description": "\"[kg m-2] default = ''\nThe initial condition variable for the surface height.\"\n",
+         "datatype": "string",
+         "units": "kg m-2",
+         "value": {
+            "GRID == \"MISOMIP\"": "thick"
+         }
+      },
+      "SURFACE_PRESSURE_SCALE": {
+         "description": "\"[file dependent] default = 1.0\nA scaling factor to convert SURFACE_PRESSURE_VAR from\nfile SURFACE_PRESSURE_FILE into a surface pressure.\"\n",
+         "datatype": "real",
+         "units": "file dependent",
+         "value": {
+            "GRID == \"MISOMIP\"": 8996.4
+         }
+      },
+      "SPONGE": {
+         "description": "\"[Boolean] default = False\nIf true, sponges may be applied anywhere in the domain.\nThe exact location and properties of those sponges are\nspecified via SPONGE_CONFIG.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "Z_OUTPUT_GRID_FILE": {
+         "description": "\"default = ''\nThe file that specifies the vertical grid for\ndepth-space diagnostics, or blank to disable\ndepth-space output.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "MISOMIP_zgrid_181106.nc"
+         }
+      },
+      "HTBL_SHELF_MIN": {
+         "description": "\"[m] default = 2.0\nThe minimum top boundary layer thickness that can be\nused with BOTTOMDRAGLAW. This might be\nKv / (cdrag * drag_bg_vel) to give Kv as the minimum\nnear-top viscosity.\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": {
+            "GRID == \"MISOMIP\"": 20.0
+         }
+      },
+      "KV_TBL_MIN": {
+         "description": "\"[m2 s-1] default = 1.0E-04\nThe minimum viscosities in the top boundary layer.\"\n",
+         "datatype": "real",
+         "units": "m2 s-1",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.01
+         }
+      },
+      "BE": {
+         "description": "\"[nondim] default = 0.6\nIf SPLIT is true, BE determines the relative weighting\nof a  2nd-order Runga-Kutta baroclinic time stepping\nscheme (0.5) and a backward Euler scheme (1) that is\nused for the Coriolis and inertial terms.  BE may be\nfrom 0.5 to 1, but instability may occur near 0.5.\nBE is also applicable if SPLIT is false and USE_RK2\nis true.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.7
+         }
+      },
+      "CORIOLIS_EN_DIS": {
+         "description": "\"[Boolean] default = False\nIf true, two estimates of the thickness fluxes are used\nto estimate the Coriolis term, and the one that\ndissipates energy relative to the other one is used.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "HARMONIC_BL_SCALE": {
+         "description": "\"[nondim] default = 0.0\nA scale to determine when water is in the boundary\nlayers based solely on harmonic mean thicknesses for\nthe purpose of determining the extent to which the\nthicknesses used in the viscosities are upwinded.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "GRID == \"MISOMIP\"": 1.0
+         }
+      },
+      "KVML": {
+         "description": "\"[m2 s-1] default = 1.0E-04\nThe kinematic viscosity in the mixed layer.  A typical\nvalue is ~1e-2 m2 s-1. KVML is not used if\nBULKMIXEDLAYER is true.  The default is set by KV.\"\n",
+         "datatype": "real",
+         "units": "m2 s-1",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.01
+         }
+      },
+      "DYNAMIC_SURFACE_PRESSURE": {
+         "description": "\"[Boolean] default = False\nIf true, add a dynamic pressure due to a viscous ice\nshelf, for instance.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "CORRECT_DENSITY": {
+         "description": "\"[Boolean] default = True\nIf true, and USE_EOS is true, the layer densities are\nrestored toward their target values by the diapycnal\nmixing, as described in Hallberg (MWR, 2000).\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": false
+         }
+      },
+      "BBL_EFFIC": {
+         "description": "\"[nondim] default = 0.2\nThe efficiency with which the energy extracted by\nbottom drag drives BBL diffusion.  This is only\nused if BOTTOMDRAGLAW is true.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.0
+         }
+      },
+      "IGNORE_FLUXES_OVER_LAND": {
+         "description": "\"[Boolean] default = False\nIf true, the model does not check if fluxes are being applied\nover land points. This is needed when the ocean is coupled\nwith ice shelves and sea ice, since the sea ice mask needs to\nbe different than the ocean mask to avoid sea ice formation\nunder ice shelves. This flag only works when use_ePBL = True.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "VARIABLE_WINDS": {
+         "description": "\"[Boolean] default = True\nIf true, the winds vary in time after the initialization.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": false
+         }
+      },
+      "VARIABLE_BUOYFORCE": {
+         "description": "\"[Boolean] default = True\nIf true, the buoyancy forcing varies in time after the\ninitialization of the model.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": false
+         }
+      },
+      "BUOY_CONFIG": {
+         "description": "\"The character string that indicates how buoyancy forcing\nis specified. Valid options include (file), (zero),\n(linear), (USER), and (NONE).\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "zero"
+         }
+      },
+      "WIND_CONFIG": {
+         "description": "\"The character string that indicates how wind forcing\nis specified. Valid options include (file), (2gyre),\n(1gyre), (gyres), (zero), and (USER).\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "zero"
+         }
+      },
+      "ICE_SHELF": {
+         "description": "\"[Boolean] default = False\nIf true, enables the ice shelf model.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "SHELF_THERMO": {
+         "description": "\"[Boolean] default = False\nIf true, use a thermodynamically interactive ice shelf.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "MELTING_CUTOFF_DEPTH": {
+         "description": "\"[not defined] default = 0.0\nDepth above which the melt is set to zero (it must be >= 0)\nDefault value won't affect the solution.\"\n",
+         "datatype": "real",
+         "units": "not defined",
+         "value": {
+            "GRID == \"MISOMIP\"": 90.0
+         }
+      },
+      "DENSITY_ICE": {
+         "description": "\"[kg m-3] default = 900.0\nA typical density of ice.\"\n",
+         "datatype": "real",
+         "units": "kg m-3",
+         "value": {
+            "GRID == \"MISOMIP\"": 918.0
+         }
+      },
+      "SHELF_INSULATOR": {
+         "description": "\"TODO\"\n",
+         "datatype": "logical",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "SHELF_3EQ_GAMMA": {
+         "description": "\"TODO\"\n",
+         "datatype": "logical",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "SHELF_3EQ_GAMMA_T": {
+         "description": "\"TODO\"\n",
+         "datatype": "real",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.087
+         }
+      },
+      "SHELF_S_ROOT": {
+         "description": "\"TODO\"\n",
+         "datatype": "logical",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "SHELF_2EQ_GAMMA_T": {
+         "description": "\"[m s-1]\nIf SHELF_THREE_EQN is false, this the fixed turbulent\nexchange velocity at the ice-ocean interface.\"\n",
+         "datatype": "real",
+         "units": "m s-1",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.0
+         }
+      },
+      "ICE_SHELF_TEMPERATURE": {
+         "description": "\"[degC] default = -15.0\nThe temperature at the center of the ice shelf.\"\n",
+         "datatype": "real",
+         "units": "degC",
+         "value": {
+            "GRID == \"MISOMIP\"": -20.0
+         }
+      },
+      "DT_FORCING": {
+         "description": "\"[s] default = 0.0\nThe time step for changing forcing, coupling with other\ncomponents, or potentially writing certain diagnostics.\nThe default value is given by DT.\"\n",
+         "datatype": "real",
+         "units": "s",
+         "value": {
+            "GRID == \"MISOMIP\"": 300.0
+         }
+      },
+      "COL_THICK_MELT_THRESHOLD": {
+         "description": "\"[m] default = 0.0\nThe minimum ML thickness where melting is allowed.\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": {
+            "GRID == \"MISOMIP\"": 10.0
+         }
+      },
+      "WRITE_OUTPUT_TO_FILE": {
+         "description": "\"[Boolean] default = False\nfor debugging purposes\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": true
+         }
+      },
+      "UTIDE": {
+         "description": "\"[m s-1] default = 0.0\"\n",
+         "datatype": "real",
+         "units": "m s-1",
+         "value": {
+            "GRID == \"MISOMIP\"": 0.01
+         }
+      },
+      "ICE_PROFILE_CONFIG": {
+         "description": "\"This specifies how the initial ice profile is specified.\nValid values are: CHANNEL, FILE, and USER.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "FILE"
+         }
+      },
+      "ICE_THICKNESS_FILE": {
+         "description": "\"default = 'ice_shelf_h.nc'\nThe file from which the bathymetry is read.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "MISOMIP_181108.nc"
+         }
+      },
+      "ICE_THICKNESS_VARNAME": {
+         "description": "\"default = 'h_shelf'\nThe name of the thickness variable in ICE_THICKNESS_FILE.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "thick"
+         }
+      },
+      "ICE_AREA_VARNAME": {
+         "description": "\"default = 'area_shelf_h'\nThe name of the area variable in ICE_THICKNESS_FILE.\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "area"
+         }
+      },
+      "CALCULATE_APE": {
+         "description": "\"[Boolean] default = True\nIf true, calculate the available potential energy of\nthe interfaces.  Setting this to false reduces the\nmemory footprint of high-PE-count models dramatically.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": false
+         }
+      },
+      "DATE_STAMPED_STDOUT": {
+         "description": "\"[Boolean] default = True\nIf true, use dates (not times) in messages to stdout\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "GRID == \"MISOMIP\"": false
+         }
+      },
+      "DAYMAX": {
+         "description": "\"[days]\nThe final time of the whole simulation, in units of\nTIMEUNIT seconds.  This also sets the potential end\ntime of the present run segment if the end time is\nnot set via ocean_solo_nml in input.nml.\"\n",
+         "datatype": "real",
+         "units": "days",
+         "value": {
+            "GRID == \"MISOMIP\"": 2.0
+         }
+      },
+      "INTERPOLATION_SCHEME": {
+         "description": "\"TODO\"\n",
+         "datatype": "string",
+         "value": {
+            "GRID == \"MISOMIP\"": "PPM_H4"
+         }
+      },
+      "MLE_USE_PBL_MLD": {
+         "description": "\"TODO\"\n",
+         "datatype": "logical",
+         "value": {
+            "GRID == \"MISOMIP\"": true
          }
       }
    },
