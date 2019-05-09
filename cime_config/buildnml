@@ -36,12 +36,12 @@ def prep_input(case):
     testcase        = case.get_value("TEST")
     hist_n          = case.get_value("HIST_N")
     hist_option     = case.get_value("HIST_OPTION")
-    input_files     = ["diag_table", "input.nml"]
+    input_files     = ["diag_table"]
 
     # The scope of the following path expansion is limited to this script only,
     # and is needed to import MOM_Params class:
     sys.path.append(os.path.join(srcroot,"components","mom","cime_config"))
-    from MOM_RPS import MOM_Params
+    from MOM_RPS import MOM_Params, MOM_input_nml
 
     # determine input category (B,C, or G):
     # this is needed to determine which input templates are to be copied for a given grid.
@@ -105,17 +105,27 @@ def prep_input(case):
                         line = ','.join(parts)+"\n"
                 diag_table.writelines(line)
 
-    # Create MOM_input from default_params.json:
-    default_params_path = os.path.join(srcroot,"components","mom","param_templates",
-                                "json", "default_params.json")
+    # Defie the constraints and params to be passed to RPS class for generating the input files:
     case_constraints = dict({"GRID": ocn_gridname.strip(),
                              "COMPSET": input_cat.strip()})
     case_params = dict({"INPUTDIR": os.path.join(din_loc_root,'ocn','mom',ocn_gridname),
                         "OCN_GRID": ocn_gridname })
-    MOM_input_path = os.path.join(rundir,"MOM_input")
 
-    params = MOM_Params(default_params_path, "json")
-    params.write_MOM_input(MOM_input_path, case_constraints, case_params)
+    # Create MOM_input from default_params.json:
+    MOM_input_src = os.path.join(srcroot,"components","mom","param_templates","json",
+                                            "MOM_input_defaults.json")
+    MOM_input_dest = os.path.join(rundir,"MOM_input")
+    MOM_input = MOM_Params(MOM_input_src)
+    MOM_input.write(MOM_input_dest, case_constraints, case_params)
+
+    # Create input.nml file:
+    input_nml_src = os.path.join(srcroot,"components","mom","param_templates", "json",
+                                         "input_nml_defaults.json")
+    input_nml_dest = os.path.join(rundir,"input.nml")
+    input_nml = MOM_input_nml(input_nml_src)
+    input_nml.write(input_nml_dest, case_constraints)
+
+
 
     # create an empty MOM_override file
     with open(os.path.join(rundir,"MOM_override"), 'w') as MOM_override:

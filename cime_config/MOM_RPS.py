@@ -10,17 +10,13 @@ class MOM_RPS(object,):
             - diag_table
     """
 
-    def __init__(self, input_path, input_format, output_path=None, output_format=None):
+    def __init__(self, input_path, input_format="json", output_path=None, output_format=None):
         self.input_file_read = False
         self.input_path = input_path
         self.input_format = input_format
         self.data = None
 
-        if output_path:
-            self.output_path = output_path
-        if output_format:
-            self.output_format = output_format
-
+        self.read()
 
     def _read_json(self):
         import json
@@ -28,12 +24,8 @@ class MOM_RPS(object,):
             self.data = json.load(json_file, object_pairs_hook=OrderedDict)
         self.input_file_read = True
 
-    @abc.abstractmethod
-    def check_consistency(self):
-        pass
-
-    @abc.abstractmethod
-    def read_input(self):
+    def _check_json_consistency(self):
+        #TODO
         pass
 
     def apply_constraints(self, constraints, add_params=None):
@@ -54,46 +46,79 @@ class MOM_RPS(object,):
         for module in self.data:
             for var in self.data[module]:
 
-                # list of potential values for this variable.
-                value_list = self.data[module][var]["value"]
+                # (list of) potential value(s) for this variable.
+                # maybe a single entry or multiple constrainted entries
+                value_entry = self.data[module][var]["value"]
 
                 # current applicable value for this variable:
                 val = None
 
-                for value_constraints in value_list:
-                    if value_constraints == "common":
-                        val = value_list[value_constraints]
+                # single value with no constraints:
+                if not (type(value_entry)==dict or type(value_entry)==OrderedDict):
+                    val = value_entry
 
-                    # multiple constraint pairs in value_constraints
-                    elif ',' in value_constraints:
-                        agrees = True
-                        for constr_pair in value_constraints.split(','):
-                            agrees = agrees and _constraint_satisfied(constr_pair, constraints)
-                        if agrees: # with all constaints:
-                            val = value_list[value_constraints]
+                # single or multiple value(s) with contraint(s):
+                else:
+                    for value_constraints in value_entry:
+                        if value_constraints == "common":
+                            val = value_entry[value_constraints]
 
-                    # a single constraint pair in value_constraints:
-                    elif '==' in value_constraints:
-                        if _constraint_satisfied(value_constraints, constraints):
-                            val = value_list[value_constraints]
+                        # multiple constraint pairs in value_constraints
+                        elif ',' in value_constraints:
+                            agrees = True
+                            for constr_pair in value_constraints.split(','):
+                                agrees = agrees and _constraint_satisfied(constr_pair, constraints)
+                            if agrees: # with all constaints:
+                                val = value_entry[value_constraints]
 
-                    # value is to be received from add_params filled by buildnml:
-                    elif self.data[module][var]["value"] == "None" and \
-                        add_params != None and var in add_params:
-                         val = add_params[var]
+                        # a single constraint pair in value_constraints:
+                        elif '==' in value_constraints:
+                            if _constraint_satisfied(value_constraints, constraints):
+                                val = value_entry[value_constraints]
 
-                    else:
-                        raise RuntimeError("Cannot parse configurations for variable "+var)
+                        # value is to be received from add_params filled by buildnml:
+                        elif self.data[module][var]["value"] == "None" and \
+                            add_params != None and var in add_params:
+                             val = add_params[var]
+
+                        else:
+                            raise RuntimeError("Cannot parse configurations for variable "+var)
 
                 self.data[module][var]['final_val'] = val
+
+    @abc.abstractmethod
+    def check_consistency(self):
+        pass
+
+    @abc.abstractmethod
+    def read(self):
+        raise NotImplementedError("read function must be implemented in the derived class.")
 
 
 class MOM_input_nml(MOM_RPS):
 
+    def read(self):
+        assert self.input_format=="json", "input.nml file defaults can only be read from a json file."
+        self._read_json()
+        self._check_json_consistency()
+
     def write(self, output_path, constraints=dict()):
-    
         assert self.input_format=="json", "input.nml file can only be generated from a json input file."
 
+        # Apply the constraints on the general data to get the targeted values
+        self.apply_constraints(constraints)
+
+        with open(os.path.join(output_path), 'w') as input_nml:
+            for module in self.data:
+                input_nml.write("&"+module+"\n")
+
+                for var in self.data[module]:
+                    val = self.data[module][var]["final_val"]
+                    if val==None:
+                        continue
+                    input_nml.write("    "+var+" = "+str(self.data[module][var]["final_val"])+"\n")
+
+                input_nml.write('/\n\n')
 
 class MOM_Params(MOM_RPS):
     """ Encapsulates data and methods for MOM6 case parameter files with the following formats:
@@ -102,19 +127,21 @@ class MOM_Params(MOM_RPS):
 
     supported_formats = ["MOM_input", "user_nl", "json"]
 
-    def __init__(self, input_path, input_format):
+    def __init__(self, input_path, input_format="json"):
         MOM_RPS.__init__(self, input_path, input_format)
 
         if self.input_format not in MOM_Params.supported_formats:
             raise RuntimeError("MOM parameter file format "+file_format+\
                                 " not supported")
 
+    def read(self):
         if self.input_format == "MOM_input":
             self._read_MOM_input()
         elif self.input_format == "user_nl":
             self._read_user_nl()
         elif self.input_format == "json":
             self._read_json()
+            self._check_json_consistency()
 
 
     def _read_MOM_input(self):
@@ -125,20 +152,13 @@ class MOM_Params(MOM_RPS):
         #TODO
         pass
 
-        # 3. Check consistency
-        self._check_json_consistency()
-
-    def _check_json_consistency(self):
-        #TODO
-        pass
-
     def write(self, output_path, constraints=dict(), add_params=dict()):
         """ writes a MOM_input file from a given json parameter file in accordance with
             the constraints and additional parameters that are passed. """
 
         assert self.input_format=="json", "MOM_input file can only be generated from a json input file."
 
-        # 1. First, determine parameter values for the given constraints of the case
+        # Apply the constraints on the general data to get the targeted values
         self.apply_constraints(constraints,add_params)
 
         # 2. Now, write MOM_input
