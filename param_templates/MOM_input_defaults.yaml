@@ -41,6 +41,7 @@ Global:
         value:
             GRID == "gx1v6": 320
             GRID == "tx0.66v1": 540
+            GRID == "MISOMIP": 402
     NJGLOBAL:
         description: |
             "The total number of thickness grid points in the
@@ -55,6 +56,7 @@ Global:
         value:
             GRID == "gx1v6": 384
             GRID == "tx0.66v1": 458
+            GRID == "MISOMIP": 40
     IO_LAYOUT:
         description: |
             "default = 0
@@ -71,6 +73,7 @@ Global:
         units: nondim
         value:
             common: 60
+            GRID == "MISOMIP": 36
     USE_LEGACY_DIABATIC_DRIVER:
         description: |
             "[Boolean] default = True
@@ -145,6 +148,7 @@ Global:
         value:
             GRID == "gx1v6": 1800.0
             GRID == "tx0.66v1": 1200.0
+            GRID == "MISOMIP": 600.0
     DT_THERM:
         description: |
             "[s] default = 3600.0
@@ -161,6 +165,7 @@ Global:
         value:
             GRID == "gx1v6": 1800.0
             GRID == "tx0.66v1": 3600.0
+            GRID == "MISOMIP": 1800.0
     HFREEZE:
         description: |
             "[m] default = -1.0
@@ -194,7 +199,7 @@ Global:
         datatype: real
         units: s
         value:
-            GRID == "gx1v6": 0.0
+            GRID == "common": 0.0
             GRID == "tx0.66v1": 7200.0
     FRAZIL:
         description: |
@@ -228,8 +233,9 @@ Global:
         datatype: real
         units: J kg-1 K-1
         value:
-            GRID == "C_P": 3925.0
+            GRID == "gx1v6": 3925.0
             GRID == "tx0.66v1": 3992.0
+            GRID == "MISOMIP": 3974.0
     CHECK_BAD_SURFACE_VALS:
         description: |
             "[Boolean] default = False
@@ -268,6 +274,7 @@ Global:
         units: deg C Pa-1
         value:
             GRID == "tx0.66v1": -7.75E-08
+            GRID == "MISOMIP": -7.53E-08
     USE_IDEAL_AGE_TRACER:
         description: |
             "[Boolean] default = False
@@ -302,7 +309,9 @@ Global:
             The file from which the coordinate densities are read."
         datatype: string
         value:
-            common: "none"
+            GRID == "gx1v6": "none"
+            GRID == "tx0.66v1": "none"
+            GRID == "MISOMIP": "linear"
     GRID_CONFIG:
         description: |
             "A character string that determines the method for
@@ -315,6 +324,7 @@ Global:
         datatype: string
         value:
             common: "mosaic"
+            GRID == "MISOMIP": "cartesian"
     GRID_FILE:
         description: |
             "Name of the file from which to read horizontal grid data."
@@ -353,6 +363,7 @@ Global:
         datatype: string
         value:
             common: "file"
+            GRID == "MISOMIP": "ISOMIP"
     TOPO_FILE:
         description: |
             "default = 'topog.nc'
@@ -368,7 +379,9 @@ Global:
         datatype: real
         units: m
         value:
-            common: 6000.0
+            GRID == "gx1v6": 6000.0
+            GRID == "tx0.66v1": 6000.0
+            GRID == "MISOMIP": 720.0
     MINIMUM_DEPTH:
         description: |
             "[m] default = 0.0
@@ -511,6 +524,7 @@ Global:
         units: m
         value:
             common: 1.0E-06
+            GRID == "MISOMIP": 1.0E-12
     USE_NEUTRAL_DIFFUSION:
         description: |
             "[Boolean] default = False
@@ -547,6 +561,7 @@ Global:
         datatype: string
         value:
             common: "Z*"
+            GRID == "MISOMIP": "SIGMA_SHELF_ZSTAR"
     ALE_COORDINATE_CONFIG:
         description: |
             "default = 'UNIFORM'
@@ -626,6 +641,7 @@ Global:
         units: m2 s-1
         value:
             GRID == "tx0.66v1": 1000.0
+            GRID == "MISOMIP": 6.0
     KH_VEL_SCALE:
         description: |
             "[m s-1] default = 0.0
@@ -637,6 +653,7 @@ Global:
         units: m s-1
         value:
             common: 0.01
+            GRID == "MISOMIP": 0.0
     KH_SIN_LAT:
         description: |
             "[m2 s-1] default = 0.0
@@ -664,6 +681,7 @@ Global:
         units: Boolean
         value:
             GRID == "tx0.66v1": True
+            GRID == "MISOMIP": False
     AH_VEL_SCALE:
         description: |
             "[m s-1] default = 0.0
@@ -676,6 +694,7 @@ Global:
         value:
             GRID == "gx1v6": 0.05
             GRID == "tx0.66v1": 0.1
+            GRID == "MISOMIP": 0.001
     USE_LAND_MASK_FOR_HVISC:
         description: |
             "[Boolean] default = False
@@ -698,6 +717,7 @@ Global:
         units: m
         value:
             common: 0.5
+            GRID == "MISOMIP": 20.0
     CHANNEL_DRAG:
         description: |
             "[Boolean] default = False
@@ -710,6 +730,7 @@ Global:
         units: Boolean
         value:
             common: True
+            GRID == "MISOMIP": False
     PRANDTL_TURB:
         description: |
             "[nondim] default = 0.0
@@ -770,6 +791,7 @@ Global:
         units: m s-1
         value:
             common: 6.0
+            GRID == "MISOMIP": 10.0
     CFL_TRUNCATE_RAMP_TIME:
         description: |
             "[s] default = 0.0
@@ -847,6 +869,7 @@ Global:
         units: m
         value:
             common: 0.1
+            GRID == "MISOMIP": 2.0
     BOUND_BT_CORRECTION:
         description: |
             "[Boolean] default = False
@@ -918,6 +941,7 @@ Global:
         units: s or nondim
         value:
             common: -0.95
+            GRID == "MISOMIP": -0.9
     DEPTH_MIN_DYN_PSURF:
         description: |
             "[m] default = 1.0E-06
@@ -937,6 +961,7 @@ Global:
         value:
             GRID == "gx1v6": 600.0
             GRID == "tx0.66v1": 800.0
+            GRID == "MISOMIP": 0.0
     KHTH_MAX:
         description: |
             "[m2 s-1] default = 0.0
@@ -977,6 +1002,7 @@ Global:
         units: Boolean
         value:
             common: True
+            GRID == "MISOMIP": False
     FOX_KEMPER_ML_RESTRAT_COEF:
         description: |
             "[nondim] default = 0.0
@@ -1096,6 +1122,7 @@ Global:
         units: m2 s-1
         value:
             common: 2.0E-05
+            GRID == "MISOMIP": 5.0E-5
     KD_MIN:
         description: |
             "[m2 s-1] default = 2.0E-07
@@ -1234,7 +1261,9 @@ Global:
         datatype: real
         units: m
         value:
-            common: 1.0E-05
+            GRID == "gx1v6": 1.0E-05
+            GRID == "tx0.66v1": 1.0E-05
+            GRID == "MISOMIP": 1.0E-08
     BULK_RI_ML:
         description: |
             "[nondim]
@@ -1255,6 +1284,7 @@ Global:
         units: m
         value:
             common: 2.0
+            GRID == "MISOMIP": 20.0
     PEN_SW_SCALE:
         description: |
             "[m] default = 0.0
@@ -1302,6 +1332,7 @@ Global:
         value:
             GRID == "gx1v6": 600.0
             GRID == "tx0.66v1": 800.0
+            GRID == "MISOMIP": 1.0
     KHTR_MIN:
         description: |
             "[m2 s-1] default = 0.0
@@ -1445,6 +1476,7 @@ Global:
         datatype: integer
         value:
             common: 3
+            GRID == "MISOMIP": -1
     RESTINT:
         description: |
             "[days] default = 0.0
@@ -1455,6 +1487,7 @@ Global:
         units: days
         value:
             common: 365.0
+            GRID == "MISOMIP": 0.0
     ENERGYSAVEDAYS:
         description: |
             "[days] default = 1.0
@@ -1465,6 +1498,7 @@ Global:
         value:
             GRID == "gx1v6": 0.01
             GRID == "tx0.66v1": 0.5
+            GRID == "MISOMIP": 1.0
     ENERGYSAVEDAYS_GEOMETRIC:
         description: |
             "[days] default = 0.0
