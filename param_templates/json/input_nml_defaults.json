@@ -1,13 +1,13 @@
 {
    "MOM_input_nml": {
       "output_directory": {
-         "value": "./"
+         "value": "'./'"
       },
       "restart_input_dir": {
-         "value": "./"
+         "value": "'./'"
       },
       "restart_output_dir": {
-         "value": "./"
+         "value": "'./'"
       },
       "parameter_filename": {
          "value": "'MOM_input', 'MOM_override'"
@@ -15,10 +15,10 @@
    },
    "fms_nml": {
       "clock_grain": {
-         "value": "ROUTINE"
+         "value": "'ROUTINE'"
       },
       "clock_flags": {
-         "value": "NONE"
+         "value": "'NONE'"
       },
       "domains_stack_size": {
          "value": 5000000
