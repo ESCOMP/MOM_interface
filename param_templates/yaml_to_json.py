@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
 """
-YAML to JSON converter for MOM_Interface developers. This script is intented to use to
-convert default.yaml file to json, since yaml is not a part of the standart Python library
-The script should be used to update default.json whenever default.yaml file is modified.
-Adapted from the corresponding MARBL tool.
+YAML to JSON converter for MOM_Interface developers. This script is intented to be used for
+converting default parameter files from yaml to json, since yaml is not a part of the standarti
+Python library. The script should be used to update default.json whenever default.yaml file is 
+modified. Adapted from the corresponding MARBL tool.
 """
 
 import sys, os, logging
 import argparse
 
-parser = argparse.ArgumentParser(description="Convert MOM_interface YAML files to JSON")
+parser = argparse.ArgumentParser(description="Convert MOM6 Runtime Parameter System file templates from"
+                                             " YAML files to JSON")
 
 parser.add_argument('-d', default='./',
                     help="path to manage_params directory")
@@ -21,7 +22,8 @@ args = parser.parse_args()
 def yaml_to_json(workdir):
 
     print(workdir)
-    yaml_files = [os.path.join(workdir,"default_params.yaml")]
+    yaml_files = [os.path.join(workdir,"MOM_input_defaults.yaml"),
+                  os.path.join(workdir,"input_nml_defaults.yaml")]
     output_dir = os.path.join(workdir,"json")
 
     import json

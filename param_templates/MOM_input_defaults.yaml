@@ -1,3 +1,6 @@
+# This file includes the MOM6 parameters used within the CESM framework,
+# and is used to generate MOM_input file at compile time.
+
 Global:
     TRIPOLAR_N:
         description: |
