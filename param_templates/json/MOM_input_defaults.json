@@ -12,16 +12,12 @@
       "NIHALO": {
          "description": "\"default = 2\nThe number of halo points on each side in the\nx-direction.  With STATIC_MEMORY_ this is set as NIHALO_\nin MOM_memory.h at compile time; without STATIC_MEMORY_\nthe default is NIHALO_ in MOM_memory.h (if defined) or 2.\"\n",
          "datatype": "integer",
-         "value": {
-            "common": 4
-         }
+         "value": 4
       },
       "NJHALO": {
          "description": "\"default = 2\nThe number of halo points on each side in the\ny-direction.  With STATIC_MEMORY_ this is set as NJHALO_\nin MOM_memory.h at compile time; without STATIC_MEMORY_\nthe default is NJHALO_ in MOM_memory.h (if defined) or 2.\"\n",
          "datatype": "integer",
-         "value": {
-            "common": 4
-         }
+         "value": 4
       },
       "NIGLOBAL": {
          "description": "\"The total number of thickness grid points in the\nx-direction in the physical domain. With STATIC_MEMORY_\nthis is set in MOM_memory.h at compile time.\"\n",
@@ -44,9 +40,7 @@
       "IO_LAYOUT": {
          "description": "\"default = 0\nThe processor layout to be used, or 0,0 to automatically\nset the io_layout to be the same as the layout.\"\n",
          "datatype": "string",
-         "value": {
-            "common": "1, 1"
-         }
+         "value": "1, 1"
       },
       "NK": {
          "description": "\"[nondim]\nThe number of model layers.\"\n",
@@ -78,17 +72,13 @@
          "description": "\"[Boolean] default = False\nIf True, use the ALE algorithm (regridding/remapping).\nIf False, use the layered isopycnal algorithm.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "BULKMIXEDLAYER": {
          "description": "\"[Boolean] default = False\nIf true, use a Kraus-Turner-like bulk mixed layer\nwith transitional buffer layers.  Layers 1 through\nNKML+NKBL have variable densities. There must be at\nleast NKML+NKBL+1 layers if BULKMIXEDLAYER is true.\nBULKMIXEDLAYER can not be used with USE_REGRIDDING.\nThe default is influenced by ENABLE_THERMODYNAMICS.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": false
-         }
+         "value": false
       },
       "THICKNESSDIFFUSE": {
          "description": "\"[Boolean] default = False\nIf true, interfaces or isopycnal surfaces are diffused,\ndepending on the value of FULL_THICKNESSDIFFUSE.\"\n",
@@ -157,17 +147,13 @@
          "description": "\"[Boolean] default = False\nIf true, water freezes if it gets too cold, and the\nthe accumulated heat deficit is returned in the\nsurface state.  FRAZIL is only used if\nENABLE_THERMODYNAMICS is true.\nIf true, apply geothermal heating.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "BOUND_SALINITY": {
          "description": "\"[Boolean] default = False\nIf true, limit salinity to being positive. (The sea-ice\nmodel may ask for more salt than is available and\ndrive the salinity negative otherwise.)\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "C_P": {
          "description": "\"[J kg-1 K-1] default = 3991.86795711963\nThe heat capacity of sea water, approximated as a\nconstant. This is only used if ENABLE_THERMODYNAMICS is\ntrue. The default value is from the TEOS-10 definition\nof conservative temperature.\"\n",
@@ -192,9 +178,7 @@
          "description": "\"[Boolean] default = False\nIf true, write the initial conditions to a file given\nby IC_OUTPUT_FILE.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "GRID_ROTATION_ANGLE_BUGS": {
          "description": "\"[Boolean] default = True\nIf true, use an older algorithm to calculate the sine and\ncosines needed rotate between grid-oriented directions and\ntrue north and east.  Differences arise at the tripolar fold.\"\n",
@@ -225,9 +209,7 @@
       "INPUTDIR": {
          "description": "\"default = '.'\nThe directory in which input files are found.\"\n",
          "datatype": "string",
-         "value": {
-            "common": "$DIN_LOC_ROOT"
-         }
+         "value": "$DIN_LOC_ROOT"
       },
       "COORD_CONFIG": {
          "description": "\"This specifies how layers are to be defined:\nfile - read coordinate information from the file\nspecified by (COORD_FILE).\nlinear - linear based on interfaces not layesrs.\nts_ref - use reference temperature and salinity\nts_range - use range of temperature and salinity\n(T_REF and S_REF) to determine surface density\nand GINT calculate internal densities.\ngprime - use reference density (RHO_0) for surface\ndensity and GINT calculate internal densities.\nts_profile - use temperature and salinity profiles\n(read from COORD_FILE) to set layer densities.\nUSER - call a user modified routine.\nThe file from which the coordinate densities are read.\"\n",
@@ -308,9 +290,7 @@
       "REMAPPING_SCHEME": {
          "description": "\"default = 'PLM'\nThis sets the reconstruction scheme used\nfor vertical remapping for all variables.\nIt can be one of the following schemes:\nPCM         (1st-order accurate)\nPLM         (2nd-order accurate)\nPPM_H4      (3rd-order accurate)\nPPM_IH4     (3rd-order accurate)\nPQM_IH4IH3  (4th-order accurate)\nPQM_IH6IH5  (5th-order accurate)\"\n",
          "datatype": "string",
-         "value": {
-            "common": "PPM_H4"
-         }
+         "value": "PPM_H4"
       },
       "INIT_LAYERS_FROM_Z_FILE": {
          "description": "\"[Boolean] default = False\nIf true, intialize the layer thicknesses, temperatures,\nand salnities from a Z-space file on a latitude-\nlongitude grid.\"\n",
@@ -436,9 +416,7 @@
          "description": "\"[Boolean] default = False\nIf true, the Coriolis terms at u-points are bounded by\nthe four estimates of (f+rv)v from the four neighboring\nv-points, and similarly at v-points.  This option would\nhave no effect on the SADOURNY Coriolis scheme if it\nwere possible to use centered difference thickness fluxes.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "TIDE_M2": {
          "description": "\"[Boolean] default = False\nIf true, apply tidal momentum forcing at the M2\nfrequency. This is only used if TIDES is true.\"\n",
@@ -461,17 +439,13 @@
          "description": "\"[Boolean] default = False\nIf true, use mass weighting when interpolation T/S for\ntop/bottom integrals in AFV pressure gradient calculation.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "LAPLACIAN": {
          "description": "\"[Boolean] default = False\nIf true, use a Laplacian horizontal viscosity.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "KH": {
          "description": "\"[m2 s-1] default = 0.0\nThe background Laplacian horizontal viscosity.\"\n",
@@ -564,32 +538,24 @@
       "U_TRUNC_FILE": {
          "description": "\"default = ''\nThe absolute path to a file into which the accelerations\nleading to zonal velocity truncations are written.\nUndefine this for efficiency if this diagnostic is not\nneeded.\"\n",
          "datatype": "string",
-         "value": {
-            "common": "U_velocity_truncations"
-         }
+         "value": "U_velocity_truncations"
       },
       "V_TRUNC_FILE": {
          "description": "\"default = ''\nThe absolute path to a file into which the accelerations\nleading to meridional velocity truncations are written.\nUndefine this for efficiency if this diagnostic is not\nneeded.\"\n",
          "datatype": "string",
-         "value": {
-            "common": "V_velocity_truncations"
-         }
+         "value": "V_velocity_truncations"
       },
       "KV": {
          "description": "\"[m2 s-1]\nThe background kinematic viscosity in the interior.\nThe molecular value, ~1e-6 m2 s-1, may be used.\"\n",
          "datatype": "real",
          "units": "m2 s-1",
-         "value": {
-            "common": 0.0001
-         }
+         "value": 0.0001
       },
       "HBBL": {
          "description": "\"[m]\nThe thickness of a bottom boundary layer with a\nviscosity of KVBBL if BOTTOMDRAGLAW is not defined, or\nthe thickness over which near-bottom velocities are\naveraged for the drag law if BOTTOMDRAGLAW is defined\nbut LINEAR_DRAG is not.\"\n",
          "datatype": "real",
          "units": "m",
-         "value": {
-            "common": 10.0
-         }
+         "value": 10.0
       },
       "MAXVEL": {
          "description": "\"[m s-1] default = 3.0E+08\nThe maximum velocity allowed before the velocity\ncomponents are truncated.\"\n",
@@ -649,9 +615,7 @@
          "description": "\"[Boolean] default = False\nIf true, use the equation of state in determining the\nproperties of the bottom boundary layer.  Otherwise use\nthe layer target potential densities.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "BBL_THICK_MIN": {
          "description": "\"[m] default = 0.0\nThe minimum bottom boundary layer thickness that can be\nused with BOTTOMDRAGLAW. This might be\nKv / (cdrag * drag_bg_vel) to give Kv as the minimum\nnear-bottom viscosity.\"\n",
@@ -666,9 +630,7 @@
          "description": "\"[Boolean] default = False\nIf true, the corrective pseudo mass-fluxes into the\nbarotropic solver are limited to values that require\nless than 0.1*MAXVEL to be accommodated.\nThe barotropic x-halo size that is actually used.\nThe barotropic y-halo size that is actually used.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "common": true
-         }
+         "value": true
       },
       "BT_PROJECT_VELOCITY": {
          "description": "\"[Boolean] default = False\nIf true, step the barotropic velocity first and project\nout the velocity tendancy by 1+BEBT when calculating the\ntransport.  The default (false) is to use a predictor\ncontinuity step to find the pressure field, and then\nto do a corrector continuity step using a weighted\naverage of the old and new velocities, with weights\nof (1-BEBT) and BEBT.\"\n",
@@ -682,17 +644,13 @@
       "BT_THICK_SCHEME": {
          "description": "\"default = 'HYBRID'\nA string describing the scheme that is used to set the\nopen face areas used for barotropic transport and the\nrelative weights of the accelerations. Valid values are:\nARITHMETIC - arithmetic mean layer thicknesses\nHARMONIC - harmonic mean layer thicknesses\nHYBRID (the default) - use arithmetic means for\nlayers above the shallowest bottom, the harmonic\nmean for layers below, and a weighted average for\nlayers that straddle that depth\nFROM_BT_CONT - use the average thicknesses kept\nin the h_u and h_v fields of the BT_cont_type\"\n",
          "datatype": "string",
-         "value": {
-            "common": "FROM_BT_CONT"
-         }
+         "value": "FROM_BT_CONT"
       },
       "BEBT": {
          "description": "\"[nondim] default = 0.1\nBEBT determines whether the barotropic time stepping\nuses the forward-backward time-stepping scheme or a\nbackward Euler scheme. BEBT is valid in the range from\n0 (for a forward-backward treatment of nonrotating\ngravity waves) to 1 (for a backward Euler treatment).\nIn practice, BEBT must be greater than about 0.05.\"\n",
          "datatype": "real",
          "units": "nondim",
-         "value": {
-            "common": 0.2
-         }
+         "value": 0.2
       },
       "DTBT": {
          "description": "\"[s or nondim] default = -0.98\nThe barotropic time step, in s. DTBT is only used with\nthe split explicit time stepping. To set the time step\nautomatically based the maximum stable value use 0, or\na negative value gives the fraction of the stable value.\nSetting DTBT to 0 is the same as setting it to -0.98.\nThe value of DTBT that will actually be used is an\ninteger fraction of DT, rounding down.\"\n",
@@ -954,9 +912,7 @@
       "MAX_ENT_IT": {
          "description": "\"default = 5\nThe maximum number of iterations that may be used to\ncalculate the interior diapycnal entrainment.\"\n",
          "datatype": "integer",
-         "value": {
-            "common": 20
-         }
+         "value": 20
       },
       "TOLERANCE_ENT": {
          "description": "\"[m] default = 2.683281572999748E-05\nThe tolerance with which to solve for entrainment values.\"\n",
@@ -1066,17 +1022,13 @@
          "description": "\"[truncations save_interval-1] default = 0\nThe run will be stopped, and the day set to a very\nlarge value if the velocity is truncated more than\nMAXTRUNC times between energy saves.  Set MAXTRUNC to 0\nto stop if there is any truncation of velocities.\"\n",
          "datatype": "integer",
          "units": "truncations save_interval-1",
-         "value": {
-            "common": 5000
-         }
+         "value": 5000
       },
       "MAXCPU": {
          "description": "\"[wall-clock seconds] default = -1.0\nThe maximum amount of cpu time per processor for which\nMOM should run before saving a restart file and\nquitting with a return value that indicates that a\nfurther run is required to complete the simulation.\nIf automatic restarts are not desired, use a negative\nvalue for MAXCPU.  MAXCPU has units of wall-clock\nseconds, so the actual CPU time used is larger by a\nfactor of the number of processors used.\"\n",
          "datatype": "real",
          "units": "wall-clock seconds",
-         "value": {
-            "common": 28800.0
-         }
+         "value": 28800.0
       },
       "OCEAN_SURFACE_STAGGER": {
          "description": "\"default = 'C'\nA case-insensitive character string to indicate the\nstaggering of the surface velocity field that is\nreturned to the coupler.  Valid values include\n'A', 'B', or 'C'.\"\n",
