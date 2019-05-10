@@ -1,4 +1,0 @@
-ocean_hgrid = $DIN_LOC_ROOT/ocn/mom/$OCN_GRID/ocean_hgrid.nc
-ocean_vgrid = $DIN_LOC_ROOT/ocn/mom/$OCN_GRID/ocean_vgrid.nc
-ocean_topog = $DIN_LOC_ROOT/ocn/mom/$OCN_GRID/ocean_topog.nc
-tempsalt    = $DIN_LOC_ROOT/ocn/mom/$OCN_GRID/WOA05_pottemp_salt.nc
