@@ -20,8 +20,7 @@ Global:
             in MOM_memory.h at compile time; without STATIC_MEMORY_
             the default is NIHALO_ in MOM_memory.h (if defined) or 2."
         datatype: integer
-        value:
-            common: 4
+        value: 4
     NJHALO:
         description: |
             "default = 2
@@ -30,8 +29,7 @@ Global:
             in MOM_memory.h at compile time; without STATIC_MEMORY_
             the default is NJHALO_ in MOM_memory.h (if defined) or 2."
         datatype: integer
-        value:
-            common: 4
+        value: 4
     NIGLOBAL:
         description: |
             "The total number of thickness grid points in the
@@ -63,8 +61,7 @@ Global:
             The processor layout to be used, or 0,0 to automatically
             set the io_layout to be the same as the layout."
         datatype: string
-        value:
-            common: 1, 1
+        value: 1, 1
     NK:
         description: |
             "[nondim]
@@ -101,8 +98,7 @@ Global:
             If False, use the layered isopycnal algorithm."
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     BULKMIXEDLAYER:
         description: |
             "[Boolean] default = False
@@ -114,8 +110,7 @@ Global:
             The default is influenced by ENABLE_THERMODYNAMICS."
         datatype: logical
         units: Boolean
-        value:
-            common: False
+        value: False
     THICKNESSDIFFUSE:
         description: |
             "[Boolean] default = False
@@ -211,8 +206,7 @@ Global:
             If true, apply geothermal heating."
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     BOUND_SALINITY:
         description: |
             "[Boolean] default = False
@@ -221,8 +215,7 @@ Global:
             drive the salinity negative otherwise.)"
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     C_P:
         description: |
             "[J kg-1 K-1] default = 3991.86795711963
@@ -252,8 +245,7 @@ Global:
             by IC_OUTPUT_FILE."
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     GRID_ROTATION_ANGLE_BUGS:
         description: |
             "[Boolean] default = True
@@ -289,8 +281,7 @@ Global:
             "default = '.'
             The directory in which input files are found."
         datatype: string
-        value:
-            common: "$DIN_LOC_ROOT"
+        value: "$DIN_LOC_ROOT"
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:
@@ -416,8 +407,7 @@ Global:
             PQM_IH4IH3  (4th-order accurate)
             PQM_IH6IH5  (5th-order accurate)"
         datatype: string
-        value:
-            common: "PPM_H4"
+        value: "PPM_H4"
     INIT_LAYERS_FROM_Z_FILE:
         description: |
             "[Boolean] default = False
@@ -593,8 +583,7 @@ Global:
             were possible to use centered difference thickness fluxes."
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     TIDE_M2:
         description: |
             "[Boolean] default = False
@@ -623,16 +612,14 @@ Global:
             top/bottom integrals in AFV pressure gradient calculation."
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     LAPLACIAN:
         description: |
             "[Boolean] default = False
             If true, use a Laplacian horizontal viscosity."
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     KH:
         description: |
             "[m2 s-1] default = 0.0
@@ -749,8 +736,7 @@ Global:
             Undefine this for efficiency if this diagnostic is not
             needed."
         datatype: string
-        value:
-            common: "U_velocity_truncations"
+        value: "U_velocity_truncations"
     V_TRUNC_FILE:
         description: |
             "default = ''
@@ -759,8 +745,7 @@ Global:
             Undefine this for efficiency if this diagnostic is not
             needed."
         datatype: string
-        value:
-            common: "V_velocity_truncations"
+        value: "V_velocity_truncations"
     KV:
         description: |
             "[m2 s-1]
@@ -768,8 +753,7 @@ Global:
             The molecular value, ~1e-6 m2 s-1, may be used."
         datatype: real
         units: m2 s-1
-        value:
-            common: 1.0E-04
+        value: 1.0E-04
     HBBL:
         description: |
             "[m]
@@ -780,8 +764,7 @@ Global:
             but LINEAR_DRAG is not."
         datatype: real
         units: m
-        value:
-            common: 10.0
+        value: 10.0
     MAXVEL:
         description: |
             "[m s-1] default = 3.0E+08
@@ -856,8 +839,7 @@ Global:
             the layer target potential densities."
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     BBL_THICK_MIN:
         description: |
             "[m] default = 0.0
@@ -880,8 +862,7 @@ Global:
             The barotropic y-halo size that is actually used."
         datatype: logical
         units: Boolean
-        value:
-            common: True
+        value: True
     BT_PROJECT_VELOCITY:
         description: |
             "[Boolean] default = False
@@ -912,8 +893,7 @@ Global:
             FROM_BT_CONT - use the average thicknesses kept
             in the h_u and h_v fields of the BT_cont_type"
         datatype: string
-        value:
-            common: "FROM_BT_CONT"
+        value: "FROM_BT_CONT"
     BEBT:
         description: |
             "[nondim] default = 0.1
@@ -925,8 +905,7 @@ Global:
             In practice, BEBT must be greater than about 0.05."
         datatype: real
         units: nondim
-        value:
-            common: 0.2
+        value: 0.2
     DTBT:
         description: |
             "[s or nondim] default = -0.98
@@ -1252,8 +1231,7 @@ Global:
             The maximum number of iterations that may be used to
             calculate the interior diapycnal entrainment."
         datatype: integer
-        value:
-            common: 20
+        value: 20
     TOLERANCE_ENT:
         description: |
             "[m] default = 2.683281572999748E-05
@@ -1382,8 +1360,7 @@ Global:
             to stop if there is any truncation of velocities."
         datatype: integer
         units: truncations save_interval-1
-        value:
-            common: 5000
+        value: 5000
     MAXCPU:
         description: |
             "[wall-clock seconds] default = -1.0
@@ -1397,8 +1374,7 @@ Global:
             factor of the number of processors used."
         datatype: real
         units: wall-clock seconds
-        value:
-            common: 2.88E+04
+        value: 2.88E+04
     OCEAN_SURFACE_STAGGER:
         description: |
             "default = 'C'
