@@ -120,6 +120,26 @@ class MOM_input_nml(MOM_RPS):
 
                 input_nml.write('/\n\n')
 
+class Input_data_list(MOM_RPS):
+
+    def read(self):
+        assert self.input_format=="json", "input_data_list file defaults can only be read from a json file."
+        self._read_json()
+        self._check_json_consistency()
+
+    def write(self, output_path, constraints=dict(), add_params=dict()):
+        assert self.input_format=="json", "input_data_list file defaults can only be read from a json file."
+
+        # Apply the constraints on the general data to get the targeted values
+        self.apply_constraints(constraints)
+
+        with open(os.path.join(output_path), 'w') as input_nml:
+            for var in self.data["mom.input_data_list"]:
+                val = self.data["mom.input_data_list"][var]["final_val"]
+                val = val.replace('$INPUTDIR',add_params['INPUTDIR'])
+                input_nml.write(var+" = "+val+"\n")
+
+
 class MOM_Params(MOM_RPS):
     """ Encapsulates data and methods for MOM6 case parameter files with the following formats:
         MOM_input, user_nl, json.
