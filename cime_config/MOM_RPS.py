@@ -29,7 +29,7 @@ class MOM_RPS(object,):
         pass
 
     def apply_constraints(self, constraints, add_params=None):
-        """ Applies a given set of constraints, e.g., {"GRID": "tx0.66v1, "COMPSET": "C"},
+        """ Applies a given set of constraints, e.g., {"grid": "tx0.66v1, "compset": "C"},
             on MOM_RPS data that is read from a (general) input file. """
 
         if not self.data:

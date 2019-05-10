@@ -106,8 +106,8 @@ def prep_input(case):
                 diag_table.writelines(line)
 
     # Define the constraints and params to be passed to RPS classes for generating the input files:
-    case_constraints = dict({"GRID": ocn_gridname.strip(),
-                             "COMPSET": input_cat.strip()})
+    case_constraints = dict({"grid": ocn_gridname.strip(),
+                             "compset": input_cat.strip()})
     case_params = dict({"INPUTDIR": os.path.join(din_loc_root,'ocn','mom',ocn_gridname),
                         "OCN_GRID": ocn_gridname })
 
