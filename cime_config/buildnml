@@ -114,19 +114,19 @@ def prep_input(case):
     json_templates_dir = os.path.join(srcroot,"components","mom","param_templates","json")
 
     # Create MOM_input:
-    MOM_input_src = os.path.join(json_templates_dir, "MOM_input_defaults.json")
+    MOM_input_src = os.path.join(json_templates_dir, "MOM_input.json")
     MOM_input_dest = os.path.join(rundir,"MOM_input")
     MOM_input = MOM_Params(MOM_input_src)
     MOM_input.write(MOM_input_dest, case_constraints, case_params)
 
     # Create input.nml:
-    input_nml_src = os.path.join(json_templates_dir, "input_nml_defaults.json")
+    input_nml_src = os.path.join(json_templates_dir, "input_nml.json")
     input_nml_dest = os.path.join(rundir,"input.nml")
     input_nml = MOM_input_nml(input_nml_src)
     input_nml.write(input_nml_dest, case_constraints)
 
     # Create mom.input_data_list:
-    input_data_list_src = os.path.join(json_templates_dir, "input_data_list_defaults.json")
+    input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
     input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
     input_data_list = Input_data_list(input_data_list_src)
     input_data_list.write(input_data_list_dest, case_constraints, case_params)
