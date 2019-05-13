@@ -205,7 +205,7 @@ class MOM_Params(MOM_RPS):
 
                 # Begin module block:
                 if module != "Global":
-                    MOM_input.write("%"+module+"\n")
+                    MOM_input.write(module+"%\n")
 
                 for var in self.data[module]:
                     val = self.data[module][var]["final_val"]
@@ -225,5 +225,5 @@ class MOM_Params(MOM_RPS):
 
                 # End module block:
                 if module != "Global":
-                    MOM_input.write(module+"%\n")
+                    MOM_input.write("%"+module+"\n")
 
