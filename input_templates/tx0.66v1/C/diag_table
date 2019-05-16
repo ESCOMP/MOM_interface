@@ -237,6 +237,10 @@
 "ocean_model","e","e","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
 "ocean_model","temp","temp","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
 "ocean_model","salt","salt","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","T_ady_2d","T_ady_2d","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","T_adx_2d","T_adx_2d","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","T_diffy_2d","T_diffy_2d","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","T_diffx_2d","T_diffx_2d","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
 
 # Tracer Fluxes:
 #"ocean_model","T_adx",  "T_adx",  "$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
