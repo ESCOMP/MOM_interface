@@ -37,6 +37,7 @@ def buildlib(caseroot, libroot, bldroot):
             expect(stat==0, "FMS build Failed {}".format(err))
 
         # Find CVMix source code, which might be in several different locations
+        logger.info("Looking for CVMix source code...")
         # (1) If $CESMROOT/libraries/CVMix exists, build that copy
         cvmix_srcdir = os.path.join(srcroot,"libraries","CVMix","src","shared")
         # (2) Otherwise, look for CVMix in the POP component
@@ -48,9 +49,10 @@ def buildlib(caseroot, libroot, bldroot):
         # If none of those exist, abort
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")
-        logger.info("Building CVMix with source from {}".format(cvmix_srcdir))
+        logger.info("... CVMix will be built with source from {}\n".format(cvmix_srcdir))
 
         # Find MARBL source code, which might be in several different locations
+        logger.info("Looking for MARBL source code...")
         # (1) If $CESMROOT/libraries/MARBL exists, build that copy
         marbl_srcdir = os.path.join(srcroot,"libraries","MARBL","src")
         # (2) Otherwise, look for MARBL in the POP component
@@ -62,7 +64,7 @@ def buildlib(caseroot, libroot, bldroot):
         # If none of those exist, abort
         if not os.path.exists(marbl_srcdir):
             expect(False, "MARBL external not found")
-        logger.info("Building MARBL with source from {}".format(marbl_srcdir))
+        logger.info("... MARBL will be built with source from {}\n".format(marbl_srcdir))
 
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
