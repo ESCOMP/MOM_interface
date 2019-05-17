@@ -31,7 +31,7 @@ def buildlib(caseroot, libroot, bldroot):
         fmsbuilddir = os.path.join(bldroot,"FMS")
         if not os.path.exists(fmsbuildlib):
             #todo: call checkout_externals to get this component
-            raise FileNotFoundError("FMS external not found")
+            raise RuntimeError("FMS external not found")
         else:
             stat, _, err = run_cmd("{} {} {} {}".format(fmsbuildlib, bldroot, fmsbuilddir, caseroot), verbose=True)
             expect(stat==0, "FMS build Failed {}".format(err))
@@ -47,7 +47,7 @@ def buildlib(caseroot, libroot, bldroot):
             cvmix_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","CVMix-src","src","shared")
         # If none of those exist, abort
         if not os.path.exists(cvmix_srcdir):
-            raise FileNotFoundError("CVMix external not found")
+            raise RuntimeError("CVMix external not found")
         logger.info("Building CVMix with source from {}".format(cvmix_srcdir))
 
         # Find MARBL source code, which might be in several different locations
@@ -61,7 +61,7 @@ def buildlib(caseroot, libroot, bldroot):
             marbl_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","MARBL","src")
         # If none of those exist, abort
         if not os.path.exists(marbl_srcdir):
-            raise FileNotFoundError("MARBL external not found")
+            raise RuntimeError("MARBL external not found")
         logger.info("Building MARBL with source from {}".format(marbl_srcdir))
 
         casetools = case.get_value("CASETOOLS")
