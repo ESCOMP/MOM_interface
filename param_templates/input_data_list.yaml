@@ -3,24 +3,24 @@
 mom.input_data_list:
     ocean_hgrid:
         value:
-            grid=="gx1v6":    "$INPUTDIR/ocean_hgrid.nc"
-            grid=="tx0.66v1": "$INPUTDIR/ocean_hgrid_180829.nc"
+            OCN_GRID=="gx1v6":    "${INPUTDIR}/ocean_hgrid.nc"
+            OCN_GRID=="tx0.66v1": "${INPUTDIR}/ocean_hgrid_180829.nc"
     ocean_vgrid:
         value:
-            grid=="gx1v6":    "$INPUTDIR/ocean_vgrid.nc"
-            grid=="tx0.66v1": "$INPUTDIR/ocean_vgrid_180829.nc"
+            OCN_GRID=="gx1v6":    "${INPUTDIR}/ocean_vgrid.nc"
+            OCN_GRID=="tx0.66v1": "${INPUTDIR}/ocean_vgrid_180829.nc"
     ocean_topog:
         value:
-            grid=="gx1v6":    "$INPUTDIR/ocean_topog.nc"
-            grid=="tx0.66v1": "$INPUTDIR/ocean_topog_190314.nc"
+            OCN_GRID=="gx1v6":    "${INPUTDIR}/ocean_topog.nc"
+            OCN_GRID=="tx0.66v1": "${INPUTDIR}/ocean_topog_190314.nc"
     tempsalt:
         value:
-            grid=="gx1v6":    "$INPUTDIR/WOA05_pottemp_salt.nc"
-            grid=="tx0.66v1": "$INPUTDIR/WOA05_pottemp_salt_180829.nc"
+            OCN_GRID=="gx1v6":    "${INPUTDIR}/WOA05_pottemp_salt.nc"
+            OCN_GRID=="tx0.66v1": "${INPUTDIR}/WOA05_pottemp_salt_180829.nc"
     saltrestore:
         value:
-            grid=="tx0.66v1": "$INPUTDIR/salt_restore_tx0.66v1_180828.nc"
+            OCN_GRID=="tx0.66v1": "${INPUTDIR}/salt_restore_tx0.66v1_180828.nc"
     tidal_energy:
         value:
-            grid=="tx0.66v1": "$INPUTDIR/energy_new_t0.66v1_conserve_180608.nc"
+            OCN_GRID=="tx0.66v1": "${INPUTDIR}/energy_new_t0.66v1_conserve_180608.nc"
     
