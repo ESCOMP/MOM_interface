@@ -24,7 +24,8 @@ def yaml_to_json(workdir):
     print(workdir)
     yaml_files = [os.path.join(workdir,"MOM_input.yaml"),
                   os.path.join(workdir,"input_nml.yaml"),
-                  os.path.join(workdir,"input_data_list.yaml")]
+                  os.path.join(workdir,"input_data_list.yaml"),
+                  os.path.join(workdir,"diag_table.yaml")]
     output_dir = os.path.join(workdir,"json")
 
     import json

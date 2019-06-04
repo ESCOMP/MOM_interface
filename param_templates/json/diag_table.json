@@ -1,0 +1,78 @@
+{
+   "FileList": {
+      "hist_monthly": {
+         "file_suffix": "h%4yr-%2mo",
+         "output_freq": 1,
+         "output_freq_units": "months",
+         "time_axis_units": "days",
+         "new_file_freq": 1,
+         "new_file_freq_units": "months",
+         "default_vertical_coord": "z_star",
+         "reduction_method": "mean",
+         "fields": {
+            "native": [
+               "taux",
+               "tauy",
+               "friver",
+               "prsn",
+               "precip",
+               "evs",
+               "hfsso",
+               "rlntds",
+               "hfsnthermds",
+               "sfdsi",
+               "salt_flux_added",
+               "rsntds",
+               "hfds",
+               "ustar",
+               "frazil",
+               "Rd_dx",
+               "SSH",
+               "SST",
+               "SSS",
+               "speed",
+               "SSU",
+               "SSV",
+               "MLD_003",
+               "MLD_0125",
+               "KPP_OBLdepth",
+               "thetaoga",
+               "soga"
+            ],
+            "z_star": [
+               "KE",
+               "u",
+               "v",
+               "h",
+               "temp",
+               "salt",
+               "rhoinsitu",
+               "age"
+            ]
+         }
+      },
+      "surface_daily_avg": {
+         "file_suffix": "sfc%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "default_vertical_coord": "z_star",
+         "reduction_method": "mean",
+         "fields": {
+            "native": [
+               "SSH",
+               "SST",
+               "SSS",
+               "SSU",
+               "SSV",
+               "KPP_OBLdepth",
+               "mass_wt",
+               "temp_int",
+               "salt_int"
+            ]
+         }
+      }
+   }
+}

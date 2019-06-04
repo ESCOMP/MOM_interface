@@ -1,0 +1,56 @@
+# This file includes the MOM6 parameters used within the CESM framework,
+# and is used to generate MOM_input file at compile time.
+
+# FileList:
+#     FileIdentifier:
+#         file_suffix: ??? # suffix to be added to file name, such that : CASENAME.suffix.nc
+#         output_freq: ??? # The period between records in file. O means every timestep.
+#                          # -1 means write only at the end of the run
+#         output_freq_units: ??? # valid values:  “years”, “months”, “days”, “hours”, 
+#                                # “minutes” or “seconds”
+#         time_axis_units: ??? # The units to use for the time-axis in the file.
+#                              # Valid values: “years”, “months”, “days”, “hours”, “minutes”
+#                              # or “seconds”
+#         new_file_freq: ??? # The period between generation of new files.
+#         new_file_freq_units: ???
+#         reduction_method: ??? valid values: "snapshot", "mean", "min", "max"
+#         fields:
+#             native:
+#                 [???]
+#             z_star:
+#                 [???]
+              
+
+FileList:
+    hist_monthly:
+        file_suffix: "h%4yr-%2mo"
+        output_freq: 1
+        output_freq_units: "months"
+        time_axis_units: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
+        default_vertical_coord: "z_star"
+        reduction_method: "mean"
+        fields:
+            native:
+                [ "taux", "tauy", "friver", "prsn", "precip", "evs", "hfsso", "rlntds", "hfsnthermds", 
+                  "sfdsi", "salt_flux_added", "rsntds", "hfds", "ustar", "frazil", "Rd_dx", "SSH", "SST",
+                  "SSS", "speed", "SSU","SSV", "MLD_003", "MLD_0125", "KPP_OBLdepth","thetaoga","soga" ]
+            z_star:
+                [ "KE", "u", "v", "h", "temp", "salt", "rhoinsitu", "age" ]
+    surface_daily_avg:
+        file_suffix: "sfc%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        default_vertical_coord: "z_star"
+        reduction_method: "mean"
+        fields:
+            native:
+                [ "SSH", "SST", "SSS", "SSU", "SSV", "KPP_OBLdepth", "mass_wt", "temp_int", "salt_int" ]
+              
+
+              
+
