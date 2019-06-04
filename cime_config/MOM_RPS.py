@@ -2,6 +2,7 @@ from __future__ import print_function
 from collections import OrderedDict
 import os
 import abc
+import re
 
 class MOM_RPS(object,):
     """ Base class for MOM6 (R)untime (P)arameter (S)ystem files including:
@@ -28,20 +29,28 @@ class MOM_RPS(object,):
         #TODO
         pass
 
-    def apply_constraints(self, constraints, add_params=None):
-        """ Applies a given set of constraints, e.g., {"grid": "tx0.66v1, "compset": "C"},
-            on MOM_RPS data that is read from a (general) input file. """
+    def apply_constraints(self, case):
+        """ For a variable, if multiple values are provided in a value list, this function
+            determines the appropriate value for the case by looking at constraints
+            (guards) to the left of values in yaml file and by comparing them against
+            the xml variable of the case, e.g. OCN_GRID."""
 
         if not self.data:
             raise RuntimeError("Cannot apply the constraints. No data found.")
 
-        def _constraint_satisfied(constr_pair, base_constraints):
+        def _constraint_satisfied(constr_pair, case):
             " Checks if a given value constraint agrees with a given constaints basse"
             constr_key = constr_pair.split('==')[0].strip()\
                 .replace('"','').replace("'","")
             constr_val = constr_pair.split('==')[1].strip()\
                 .replace('"','').replace("'","")
-            return base_constraints[constr_key] == constr_val
+
+            try:
+                case_val = case.get_value(constr_key)
+            except:
+                raise RuntimeError("Cannot find the constraint "+constr_key+" in xml files")
+
+            return case_val == constr_val
 
         for module in self.data:
             for var in self.data[module]:
@@ -67,23 +76,33 @@ class MOM_RPS(object,):
                         elif ',' in value_constraints:
                             agrees = True
                             for constr_pair in value_constraints.split(','):
-                                agrees = agrees and _constraint_satisfied(constr_pair, constraints)
+                                agrees = agrees and _constraint_satisfied(constr_pair, case)
                             if agrees: # with all constaints:
                                 val = value_entry[value_constraints]
 
                         # a single constraint pair in value_constraints:
                         elif '==' in value_constraints:
-                            if _constraint_satisfied(value_constraints, constraints):
+                            if _constraint_satisfied(value_constraints, case):
                                 val = value_entry[value_constraints]
-
-                        # value is to be received from add_params filled by buildnml:
-                        elif self.data[module][var]["value"] == "None" and \
-                            add_params != None and var in add_params:
-                             val = add_params[var]
 
                         else:
                             raise RuntimeError("Cannot parse configurations for variable "+var)
 
+                self.data[module][var]['final_val'] = str(val)
+
+    def deduce_special_vals(self, case):
+        """ Replaces the values defined with special keys, i.e., ${XML_VAR}, in yaml files"""
+        for module in self.data:
+            for var in self.data[module]:
+                val = self.data[module][var]['final_val']
+                special_keys_list = re.findall(r'\$\{.+?\}',val)
+                for special_key in special_keys_list:
+                    special_key_strip = special_key.replace("$","").replace("{","").replace("}","")
+                    special_val = case.get_value(special_key_strip)
+                    if special_key==None:
+                        raise RuntimeError("The constraint "+special_key+" is not a CIMEi xml"
+                                           " variable for this case")
+                    val = val.replace(special_key,special_val)
                 self.data[module][var]['final_val'] = val
 
     @abc.abstractmethod
@@ -127,11 +146,11 @@ class Input_data_list(MOM_RPS):
         self._read_json()
         self._check_json_consistency()
 
-    def write(self, output_path, constraints=dict(), add_params=dict()):
+    def write(self, output_path, case, add_params=dict()):
         assert self.input_format=="json", "input_data_list file defaults can only be read from a json file."
 
         # Apply the constraints on the general data to get the targeted values
-        self.apply_constraints(constraints)
+        self.apply_constraints(case)
 
         with open(os.path.join(output_path), 'w') as input_nml:
             for var in self.data["mom.input_data_list"]:
@@ -172,14 +191,18 @@ class MOM_Params(MOM_RPS):
         #TODO
         pass
 
-    def write(self, output_path, constraints=dict(), add_params=dict()):
+    def write(self, output_path, case, add_params=dict()):
         """ writes a MOM_input file from a given json parameter file in accordance with
             the constraints and additional parameters that are passed. """
 
         assert self.input_format=="json", "MOM_input file can only be generated from a json input file."
 
+
         # Apply the constraints on the general data to get the targeted values
-        self.apply_constraints(constraints,add_params)
+        self.apply_constraints(case)
+
+        # Replace special xml values (e.g., $INPUTDIR) with their actual values
+        self.deduce_special_vals(case)
 
         # 2. Now, write MOM_input
 
