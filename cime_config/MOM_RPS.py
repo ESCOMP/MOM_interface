@@ -158,6 +158,11 @@ class Input_data_list(MOM_RPS):
         # Replace special xml values (e.g., $INPUTDIR) with their actual values
         self.deduce_special_vals(case)
 
+        with open(os.path.join(output_path), 'w') as input_data_list:
+            for module in self.data:
+                for var in self.data[module]:
+                    input_data_list.write(var+" = "+str(self.data[module][var]["final_val"])+"\n")
+
 
 class MOM_Params(MOM_RPS):
     """ Encapsulates data and methods for MOM6 case parameter files with the following formats:
