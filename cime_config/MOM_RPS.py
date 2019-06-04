@@ -99,8 +99,8 @@ class MOM_RPS(object,):
                 for special_key in special_keys_list:
                     special_key_strip = special_key.replace("$","").replace("{","").replace("}","")
                     special_val = case.get_value(special_key_strip)
-                    if special_key==None:
-                        raise RuntimeError("The constraint "+special_key+" is not a CIMEi xml"
+                    if special_val==None:
+                        raise RuntimeError("The constraint "+special_key_strip+" is not a CIME xml"
                                            " variable for this case")
                     val = val.replace(special_key,special_val)
                 self.data[module][var]['final_val'] = val
@@ -121,11 +121,14 @@ class MOM_input_nml(MOM_RPS):
         self._read_json()
         self._check_json_consistency()
 
-    def write(self, output_path, constraints=dict()):
+    def write(self, output_path, case):
         assert self.input_format=="json", "input.nml file can only be generated from a json input file."
 
         # Apply the constraints on the general data to get the targeted values
-        self.apply_constraints(constraints)
+        self.apply_constraints(case)
+
+        # Replace special xml values (e.g., $INPUTDIR) with their actual values
+        self.deduce_special_vals(case)
 
         with open(os.path.join(output_path), 'w') as input_nml:
             for module in self.data:
@@ -152,11 +155,8 @@ class Input_data_list(MOM_RPS):
         # Apply the constraints on the general data to get the targeted values
         self.apply_constraints(case)
 
-        with open(os.path.join(output_path), 'w') as input_nml:
-            for var in self.data["mom.input_data_list"]:
-                val = self.data["mom.input_data_list"][var]["final_val"]
-                val = val.replace('$INPUTDIR',add_params['INPUTDIR'])
-                input_nml.write(var+" = "+val+"\n")
+        # Replace special xml values (e.g., $INPUTDIR) with their actual values
+        self.deduce_special_vals(case)
 
 
 class MOM_Params(MOM_RPS):
