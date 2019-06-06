@@ -183,7 +183,7 @@ class Diag_table(MOM_RPS):
             mfl = len(casename) +\
                   max([len(self.data['Files'][file_block_name]['suffix'])\
                               for file_block_name in self.data['Files']])\
-                  + 6 # quotation marks and tabbing
+                  + 4 # quotation marks and tabbing
 
             # Section 1: File section
             diag_table.write('### Section-1: File List\n')
@@ -191,14 +191,18 @@ class Diag_table(MOM_RPS):
             for file_block_name in self.data['Files']:
                 file_block = self.data['Files'][file_block_name]
 
-                diag_table.write(('{filename:'+str(mfl)+'s} {output_freq} {output_freq_units:9s} 1, '
-                                  '{time_axis_units:9s} time, {new_file_freq:5s} {new_file_freq_units}\n').
+                file_descr_str = ('{filename:'+str(mfl)+'s} {output_freq:3s} {output_freq_units:9s} 1, '
+                                  '{time_axis_units:9s} "time"').\
                     format( filename = '"'+casename+'.'+file_block['suffix']+'",',
                             output_freq = str(file_block['output_freq'])+',',
                             output_freq_units = '"'+file_block['output_freq_units']+'",',
-                            time_axis_units = '"'+file_block['time_axis_units']+'",',
-                            new_file_freq= '"'+str(file_block['new_file_freq'])+'"',
-                            new_file_freq_units= '"'+str(file_block['new_file_freq_units'])+'"' ) )
+                            time_axis_units = '"'+file_block['time_axis_units']+'",')
+
+                if 'new_file_freq' in file_block:
+                    file_descr_str += ', "'+str(file_block['new_file_freq'])+'", '
+                    if 'time_axis_units' in file_block:
+                        file_descr_str += '"'+str(file_block['new_file_freq_units'])+'"'
+                diag_table.write(file_descr_str+'\n')
 
             diag_table.write('\n')
 

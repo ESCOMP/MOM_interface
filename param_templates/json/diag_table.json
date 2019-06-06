@@ -1,6 +1,6 @@
 {
    "FieldLists": {
-      "list1": {
+      "l1": {
          "module": "ocean_model",
          "packing": 1,
          "regional_section": "none",
@@ -34,7 +34,7 @@
             "soga"
          ]
       },
-      "list2": {
+      "l2": {
          "module": "ocean_model_z",
          "packing": 1,
          "regional_section": "none",
@@ -49,7 +49,7 @@
             "age"
          ]
       },
-      "list3": {
+      "l3": {
          "module": "ocean_model",
          "packing": 1,
          "regional_section": "none",
@@ -64,6 +64,60 @@
             "temp_int",
             "salt_int"
          ]
+      },
+      "l4": {
+         "module": "ocean_model",
+         "packing": 2,
+         "regional_section": "none",
+         "fields": [
+            "taux",
+            "tauy",
+            "ustar",
+            "PRCmE",
+            "lprec",
+            "fprec",
+            "evap",
+            "vprec",
+            "lrunoff",
+            "frunoff",
+            "seaice_melt",
+            "net_heat_coupler",
+            "net_heat_surface",
+            "frazil"
+         ]
+      },
+      "l5": {
+         "module": "ocean_model",
+         "packing": 2,
+         "regional_section": "none",
+         "fields": [
+            "KHTR_h",
+            "KHTR_t",
+            "Ahh",
+            "Khh"
+         ]
+      },
+      "l6": {
+         "module": "ocean_model",
+         "packing": 2,
+         "regional_section": "none",
+         "fields": [
+            "geolon",
+            "geolat",
+            "geolon_c",
+            "geolat_c",
+            "geolon_u",
+            "geolat_u",
+            "geolon_v",
+            "geolat_v",
+            "area_t",
+            "depth_ocean",
+            "wet",
+            "wet_c",
+            "wet_u",
+            "wet_v",
+            "Coriolis"
+         ]
       }
    },
    "Files": {
@@ -74,7 +128,6 @@
          "time_axis_units": "days",
          "new_file_freq": 1,
          "new_file_freq_units": "months",
-         "default_vertical_coord": "z_star",
          "reduction_method": "mean",
          "field_lists": [
             {
@@ -135,7 +188,6 @@
          "time_axis_units": "days",
          "new_file_freq": 365,
          "new_file_freq_units": "days",
-         "default_vertical_coord": "z_star",
          "reduction_method": "mean",
          "field_lists": [
             {
@@ -152,6 +204,91 @@
                   "mass_wt",
                   "temp_int",
                   "salt_int"
+               ]
+            }
+         ]
+      },
+      "forcing_daily_avg": {
+         "suffix": "frc%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": "mean",
+         "field_lists": [
+            {
+               "module": "ocean_model",
+               "packing": 2,
+               "regional_section": "none",
+               "fields": [
+                  "taux",
+                  "tauy",
+                  "ustar",
+                  "PRCmE",
+                  "lprec",
+                  "fprec",
+                  "evap",
+                  "vprec",
+                  "lrunoff",
+                  "frunoff",
+                  "seaice_melt",
+                  "net_heat_coupler",
+                  "net_heat_surface",
+                  "frazil"
+               ]
+            }
+         ]
+      },
+      "visc_and_diff_daily_avg": {
+         "suffix": "visc%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": "mean",
+         "field_lists": [
+            {
+               "module": "ocean_model",
+               "packing": 2,
+               "regional_section": "none",
+               "fields": [
+                  "KHTR_h",
+                  "KHTR_t",
+                  "Ahh",
+                  "Khh"
+               ]
+            }
+         ]
+      },
+      "static": {
+         "suffix": "static",
+         "output_freq": -1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "reduction_method": ".false.",
+         "field_lists": [
+            {
+               "module": "ocean_model",
+               "packing": 2,
+               "regional_section": "none",
+               "fields": [
+                  "geolon",
+                  "geolat",
+                  "geolon_c",
+                  "geolat_c",
+                  "geolon_u",
+                  "geolat_u",
+                  "geolon_v",
+                  "geolat_v",
+                  "area_t",
+                  "depth_ocean",
+                  "wet",
+                  "wet_c",
+                  "wet_u",
+                  "wet_v",
+                  "Coriolis"
                ]
             }
          ]
