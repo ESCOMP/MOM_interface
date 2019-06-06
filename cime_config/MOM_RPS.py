@@ -163,6 +163,103 @@ class Input_data_list(MOM_RPS):
                 for var in self.data[module]:
                     input_data_list.write(var+" = "+str(self.data[module][var]["final_val"])+"\n")
 
+class Diag_table(MOM_RPS):
+
+    def read(self):
+        assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
+        self._read_json()
+
+    def write(self, output_path, case, add_params=dict()):
+        assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
+
+        with open(os.path.join(output_path), 'w') as diag_table:
+
+            # Print header:
+            casename = case.get_value("CASE")
+            diag_table.write('"MOM6 diagnostic fields table for CESM case: '+casename+'"\n')
+            diag_table.write('1 1 1 0 0 0\n') #TODO
+            
+            # max filename length:
+            mfl = len(casename) +\
+                  max([len(self.data['Files'][file_block_name]['suffix'])\
+                              for file_block_name in self.data['Files']])\
+                  + 6 # quotation marks and tabbing
+
+            # Section 1: File section
+            diag_table.write('### Section-1: File List\n')
+            diag_table.write('#========================\n')
+            for file_block_name in self.data['Files']:
+                file_block = self.data['Files'][file_block_name]
+
+                diag_table.write(('{filename:'+str(mfl)+'s} {output_freq} {output_freq_units:9s} 1, '
+                                  '{time_axis_units:9s} time, {new_file_freq:5s} {new_file_freq_units}\n').
+                    format( filename = '"'+casename+'.'+file_block['suffix']+'",',
+                            output_freq = str(file_block['output_freq'])+',',
+                            output_freq_units = '"'+file_block['output_freq_units']+'",',
+                            time_axis_units = '"'+file_block['time_axis_units']+'",',
+                            new_file_freq= '"'+str(file_block['new_file_freq'])+'"',
+                            new_file_freq_units= '"'+str(file_block['new_file_freq_units'])+'"' ) )
+
+            diag_table.write('\n')
+
+            ## Field section (per file):
+            diag_table.write('### Section-2: Fields List\n')
+            diag_table.write('#=========================\n')
+            for file_block_name in self.data['Files']:
+                file_block = self.data['Files'][file_block_name]
+
+                diag_table.write('# {filename}\n'.
+                    format(filename = '"'+casename+'.'+file_block['suffix']+'":'))
+
+
+                # max fieldname length:
+                for flist in file_block['field_lists']:
+                    mfnl = max([len(field) for field in flist['fields']]) + 3
+                    mfnl = min(16,mfnl) # limit to 16
+                    for field in flist['fields']:
+                        diag_table.write(('{module_name:14s} {field:'+str(mfnl)+'}{field:'+str(mfnl)+'}'
+                                          '{filename} "all", {reduction_method} {regional_section} {packing}\n').
+                            format( module_name = '"'+flist['module']+'",',
+                                    field = '"'+field+'",',
+                                    filename = '"'+casename+'.'+str(file_block['suffix'])+'",',
+                                    reduction_method = '"'+str(file_block['reduction_method'])+'",',
+                                    regional_section = '"'+str(flist['regional_section'])+'",',
+                                    packing = str(flist['packing'])
+                                ) )
+                    
+                diag_table.write('\n')
+                        
+
+#                for file_list file_block['field_lists']:
+                    
+
+            ## Field section:
+            #for file_block in self.data:
+            #    fields = []
+            #    if 'native' in self.data[file_block]['fields']:
+            #        fields += [("ocean_model",f) for f in self.data[file_block]['fields']['native']]
+            #    if 'z_star' in self.data[file_block]['fields']:
+            #        fields += [("ocean_model_z",f) for f in self.data[file_block]['fields']['z_star']]
+
+            #    # header:
+            #    diag_table.write('### Field list for {filename}\n'.
+            #        format(filename = '"'+casename+'.'+self.data[file_block]['suffix']+'":'))
+
+            #    # max fieldname length:
+            #    mfnl = max([len(field) for m,field in fields]) + 4 # plus tabbing
+            #    mfnl = min([mfnl, 14]) # limit to 14?
+
+            #    for module_name, field in fields:
+            #        dia8yyg_table.write(('{module_name:16s}{field:'+str(mfnl)+'}{field:'+str(mfnl)+'}'
+            #                          '{filename}"all",{reduction_method}"none",8\n').
+            #            format( module_name = '"'+module_name+'",',
+            #                    field = '"'+field+'",',
+            #                    filename = '"'+casename+'.'+self.data[file_block]['suffix']+'",',
+            #                    reduction_method = '"'+self.data[file_block]['reduction_method']+'",'
+            #                ) )
+                    
+            #    diag_table.write('\n')
+
 
 class MOM_Params(MOM_RPS):
     """ Encapsulates data and methods for MOM6 case parameter files with the following formats:
