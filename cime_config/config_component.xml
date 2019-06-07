@@ -7,6 +7,7 @@
   <description>
     <desc ocn="MOM6">MOM6 OCEAN </desc>
   </description>
+
   <entry id="COMP_OCN">
     <type>char</type>
     <valid_values>mom</valid_values>
@@ -16,6 +17,31 @@
     <desc>MOM6 ocean component</desc>
   </entry>
 
+  <entry id="OCN_DIAG_MODE">
+    <type>char</type>
+    <valid_values>spinup,production,development,testing</valid_values>
+    <default_value>production</default_value>
+    <group>case_comp</group>
+    <file>env_case.xml</file>
+    <desc> Predefined ocean diagnostics configurations for various purposes. This variable
+           controls the frequency, precision, and field lists of diagnostics to be outputted.
+           Valid values ordered in increasing intensity: "spinup", "production", "testing",
+           "development". Further specialization of diagnostics may be done by copying an
+           edited version of diag_table file in SourceMods/src.mom/
+    </desc>
+  </entry>
+
+  <entry id="OCN_SECTION_DIAGS">
+    <type>logical</type>
+    <valid_values>TRUE,FALSE</valid_values>
+    <default_value>TRUE</default_value>
+    <group>case_comp</group>
+    <file>env_case.xml</file>
+    <desc> Flag to turn on ocean section diagnostics.
+           Further specialization of diagnostics my be done by copying an edied version of
+           diag_table file in SourceMods/src.mom/
+    </desc>
+  </entry>
 
   <help>
     =========================================
