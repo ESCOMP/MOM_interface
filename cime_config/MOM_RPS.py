@@ -39,7 +39,7 @@ class MOM_RPS(object,):
             raise RuntimeError("Cannot apply the constraints. No data found.")
 
         def _constraint_satisfied(constr_pair, case):
-            " Checks if a given value constraint agrees with the case settings"
+            " Checks if a given value constraint agrees with the case settings."
             constr_key = constr_pair.split('==')[0].strip()\
                 .replace('"','').replace("'","")
             constr_val = constr_pair.split('==')[1].strip()\
@@ -50,7 +50,8 @@ class MOM_RPS(object,):
             except:
                 raise RuntimeError("Cannot find the constraint "+constr_key+" in xml files")
 
-            return case_val == constr_val
+            # Note: Case-insensitive comparison!
+            return str(case_val).lower() == str(constr_val).lower()
 
         def _do_determine_value(multi_option_dict):
             """ From an ordered dict (multi_option_dict), whose entries are alternative values
@@ -102,7 +103,9 @@ class MOM_RPS(object,):
                 by picking the values with guards that satisfy the case constraints"""
 
             for child in entry:
-                if (type(entry[child])==OrderedDict):
+                if (isinstance(child,list)):
+                    continue
+                elif (type(entry[child])==OrderedDict):
                     if (_is_multi_option_entry(entry[child])):
                         entry[child] = _do_determine_value(entry[child])
                     else:
@@ -146,7 +149,9 @@ class MOM_RPS(object,):
             """ Recursive deduces special values of a given yaml entry. """
 
             for child in entry:
-                if (type(entry[child])==OrderedDict):
+                if (isinstance(child,list)):
+                    continue
+                elif (type(entry[child])==OrderedDict):
                     _deduce_special_vals_recursive(entry[child])
                 else:
                     if (_has_special_value(entry[child])):
@@ -224,6 +229,12 @@ class Diag_table(MOM_RPS):
     def write(self, output_path, case, add_params=dict()):
         assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
 
+        # Apply the constraints on the general data to get the targeted values
+        self.apply_constraints(case)
+
+        # Replace special xml values (e.g., $INPUTDIR) with their actual values
+        self.deduce_special_vals(case)
+
         with open(os.path.join(output_path), 'w') as diag_table:
 
             # Print header:
@@ -237,53 +248,69 @@ class Diag_table(MOM_RPS):
                               for file_block_name in self.data['Files']])\
                   + 4 # quotation marks and tabbing
 
-            ## Section 1: File section
-            #diag_table.write('### Section-1: File List\n')
-            #diag_table.write('#========================\n')
-            #for file_block_name in self.data['Files']:
-            #    file_block = self.data['Files'][file_block_name]
+            # Section 1: File section
+            diag_table.write('### Section-1: File List\n')
+            diag_table.write('#========================\n')
+            for file_block_name in self.data['Files']:
+                file_block = self.data['Files'][file_block_name]
 
-            #    file_descr_str = ('{filename:'+str(mfl)+'s} {output_freq:3s} {output_freq_units:9s} 1, '
-            #                      '{time_axis_units:9s} "time"').\
-            #        format( filename = '"'+casename+'.'+file_block['suffix']+'",',
-            #                output_freq = str(file_block['output_freq'])+',',
-            #                output_freq_units = '"'+file_block['output_freq_units']+'",',
-            #                time_axis_units = '"'+file_block['time_axis_units']+'",')
+                file_descr_str = ('{filename:'+str(mfl)+'s} {output_freq:3s} {output_freq_units:9s} 1, '
+                                  '{time_axis_units:9s} "time"').\
+                    format( filename = '"'+casename+'.'+file_block['suffix']+'",',
+                            output_freq = str(file_block['output_freq'])+',',
+                            output_freq_units = '"'+file_block['output_freq_units']+'",',
+                            time_axis_units = '"'+file_block['time_axis_units']+'",')
 
-            #    if 'new_file_freq' in file_block:
-            #        file_descr_str += ', "'+str(file_block['new_file_freq'])+'", '
-            #        if 'time_axis_units' in file_block:
-            #            file_descr_str += '"'+str(file_block['new_file_freq_units'])+'"'
-            #    diag_table.write(file_descr_str+'\n')
+                if 'new_file_freq' in file_block:
+                    file_descr_str += ', "'+str(file_block['new_file_freq'])+'", '
+                    if 'time_axis_units' in file_block:
+                        file_descr_str += '"'+str(file_block['new_file_freq_units'])+'"'
+                diag_table.write(file_descr_str+'\n')
 
-            #diag_table.write('\n')
+            diag_table.write('\n')
 
-            ### Field section (per file):
-            #diag_table.write('### Section-2: Fields List\n')
-            #diag_table.write('#=========================\n')
-            #for file_block_name in self.data['Files']:
-            #    file_block = self.data['Files'][file_block_name]
+            ## Field section (per file):
+            diag_table.write('### Section-2: Fields List\n')
+            diag_table.write('#=========================\n')
+            for file_block_name in self.data['Files']:
+                file_block = self.data['Files'][file_block_name]
 
-            #    diag_table.write('# {filename}\n'.\
-            #        format(filename = file_block_name + ' ("'+casename+'.'+file_block['suffix']+'"):'))
+                if file_block['fields']==None:
+                    # No fields for this file. Skip to next file.
+                    continue
 
+                diag_table.write('# {filename}\n'.\
+                    format(filename = file_block_name + ' ("'+casename+'.'+file_block['suffix']+'"):'))
 
-            #    # max fieldname length:
-            #    for flist in file_block['field_lists']:
-            #        mfnl = max([len(field) for field in flist['fields']]) + 3
-            #        mfnl = min(16,mfnl) # limit to 16
-            #        for field in flist['fields']:
-            #            diag_table.write(('{module_name:14s} {field:'+str(mfnl)+'}{field:'+str(mfnl)+'}'
-            #                              '{filename} "all", {reduction_method} {regional_section} {packing}\n').
-            #                format( module_name = '"'+flist['module']+'",',
-            #                        field = '"'+field+'",',
-            #                        filename = '"'+casename+'.'+str(file_block['suffix'])+'",',
-            #                        reduction_method = '"'+str(file_block['reduction_method'])+'",',
-            #                        regional_section = '"'+str(file_block['regional_section'])+'",',
-            #                        packing = str(flist['packing'])
-            #                    ) )
+                # keep a record of all fields in this file to make sure no duplicate field exists
+                fields_all = []
 
-            #    diag_table.write('\n')
+                # Loop over bullet list of fields
+                for field_block in file_block['fields']:
+                    module = field_block['module']
+                    packing = field_block['packing']
+                    field_list_1d = sum(field_block['lists'],[])
+
+                    # check if there are any duplicate fields in the same file:
+                    for field in field_list_1d:
+                        assert field not in fields_all, \
+                            'Field "'+field+'" is listed more than once'+' in file: '+file_block['suffix']
+                        fields_all.append(field)
+
+                    mfnl = max([len(field) for field in field_list_1d]) + 3
+                    mfnl = min(16,mfnl) # limit to 16
+                    for field in field_list_1d:
+                        diag_table.write(('{module_name:14s} {field:'+str(mfnl)+'}{field:'+str(mfnl)+'}'
+                                          '{filename} "all", {reduction_method} {regional_section} {packing}\n').
+                            format( module_name = '"'+module+'",',
+                                    field = '"'+field+'",',
+                                    filename = '"'+casename+'.'+str(file_block['suffix'])+'",',
+                                    reduction_method = '"'+str(file_block['reduction_method'])+'",',
+                                    regional_section = '"'+str(file_block['regional_section'])+'",',
+                                    packing = str(packing)
+                                ) )
+
+                diag_table.write('\n')
 
 
 #                for file_list file_block['field_lists']:
