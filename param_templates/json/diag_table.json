@@ -115,38 +115,21 @@
          "suffix": "h%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": {
-            "OCN_DIAG_MODE==\"spinup\"": "years",
-            "OCN_DIAG_MODE==\"production\"": "months"
+            "common": "months",
+            "OCN_DIAG_MODE==\"spinup\"": "years"
          },
          "time_axis_units": "days",
          "new_file_freq": 1,
          "new_file_freq_units": {
-            "OCN_DIAG_MODE==\"spinup\"": "years",
-            "OCN_DIAG_MODE==\"production\"": "months"
+            "common": "months",
+            "OCN_DIAG_MODE==\"spinup\"": "years"
          },
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "OCN_DIAG_MODE==\"spinup\"": [
+            "common": [
                {
-                  "module": "ocean_model",
-                  "packing": 2,
-                  "lists": [
-                     [
-                        "u",
-                        "v",
-                        "h",
-                        "temp",
-                        "salt",
-                        "rhoinsitu",
-                        "KE"
-                     ]
-                  ]
-               }
-            ],
-            "OCN_DIAG_MODE==\"production\"}": [
-               {
-                  "module": "ocean_model",
+                  "module": "ocean_model_z",
                   "packing": 1,
                   "lists": [
                      [
@@ -160,6 +143,23 @@
                      ],
                      [
                         "age"
+                     ]
+                  ]
+               }
+            ],
+            "OCN_DIAG_MODE==\"spinup\"": [
+               {
+                  "module": "ocean_model_z",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "u",
+                        "v",
+                        "h",
+                        "temp",
+                        "salt",
+                        "rhoinsitu",
+                        "KE"
                      ]
                   ]
                }
@@ -242,7 +242,6 @@
          "new_file_freq_units": "days",
          "reduction_method": "mean",
          "regional_section": "none",
-         "field_lists": null,
          "fields": {
             "OCN_DIAG_MODE==\"production\"": [
                {
@@ -303,7 +302,7 @@
          "reduction_method": ".true.",
          "regional_section": "20.1 20.1 -70.0 -34.6 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==\"True\"": [
+            "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
                   "packing": 1,
@@ -314,6 +313,222 @@
                         "so",
                         "umo",
                         "uo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Bab_al_mandeb_Strait": {
+         "suffix": "Bab_al_mandeb_Strait%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "45.0 45.0 10.5 13.5 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "umo",
+                        "uo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Barents_opening": {
+         "suffix": "Barents_opening%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-5.2 18.8  78.93 78.93 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Bering_Strait": {
+         "suffix": "Bering_Strait%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-174.5  -171.5 66.6 66.6 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Davis_Strait": {
+         "suffix": "Davis_Strait%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-53.5 -45.3 69.5 69.5 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Denmark_Strait": {
+         "suffix": "Denmark_Strait%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-38.50 -21.5 65.0 65.0 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Drake_Passage": {
+         "suffix": "Drake_Passage%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-67.0 -67.0 -69.0 -55.2 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "umo",
+                        "uo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "English_Channel": {
+         "suffix": "English_Channel%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "0.0 0.0 51.0 52.9 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "umo",
+                        "uo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Fram_Strait": {
+         "suffix": "Fram_Strait%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-21.0 -9.8 80.5 80.5 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
                      ]
                   ]
                }
