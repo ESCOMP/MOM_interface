@@ -185,53 +185,53 @@ class Diag_table(MOM_RPS):
                               for file_block_name in self.data['Files']])\
                   + 4 # quotation marks and tabbing
 
-            # Section 1: File section
-            diag_table.write('### Section-1: File List\n')
-            diag_table.write('#========================\n')
-            for file_block_name in self.data['Files']:
-                file_block = self.data['Files'][file_block_name]
+            ## Section 1: File section
+            #diag_table.write('### Section-1: File List\n')
+            #diag_table.write('#========================\n')
+            #for file_block_name in self.data['Files']:
+            #    file_block = self.data['Files'][file_block_name]
 
-                file_descr_str = ('{filename:'+str(mfl)+'s} {output_freq:3s} {output_freq_units:9s} 1, '
-                                  '{time_axis_units:9s} "time"').\
-                    format( filename = '"'+casename+'.'+file_block['suffix']+'",',
-                            output_freq = str(file_block['output_freq'])+',',
-                            output_freq_units = '"'+file_block['output_freq_units']+'",',
-                            time_axis_units = '"'+file_block['time_axis_units']+'",')
+            #    file_descr_str = ('{filename:'+str(mfl)+'s} {output_freq:3s} {output_freq_units:9s} 1, '
+            #                      '{time_axis_units:9s} "time"').\
+            #        format( filename = '"'+casename+'.'+file_block['suffix']+'",',
+            #                output_freq = str(file_block['output_freq'])+',',
+            #                output_freq_units = '"'+file_block['output_freq_units']+'",',
+            #                time_axis_units = '"'+file_block['time_axis_units']+'",')
 
-                if 'new_file_freq' in file_block:
-                    file_descr_str += ', "'+str(file_block['new_file_freq'])+'", '
-                    if 'time_axis_units' in file_block:
-                        file_descr_str += '"'+str(file_block['new_file_freq_units'])+'"'
-                diag_table.write(file_descr_str+'\n')
+            #    if 'new_file_freq' in file_block:
+            #        file_descr_str += ', "'+str(file_block['new_file_freq'])+'", '
+            #        if 'time_axis_units' in file_block:
+            #            file_descr_str += '"'+str(file_block['new_file_freq_units'])+'"'
+            #    diag_table.write(file_descr_str+'\n')
 
-            diag_table.write('\n')
+            #diag_table.write('\n')
 
-            ## Field section (per file):
-            diag_table.write('### Section-2: Fields List\n')
-            diag_table.write('#=========================\n')
-            for file_block_name in self.data['Files']:
-                file_block = self.data['Files'][file_block_name]
+            ### Field section (per file):
+            #diag_table.write('### Section-2: Fields List\n')
+            #diag_table.write('#=========================\n')
+            #for file_block_name in self.data['Files']:
+            #    file_block = self.data['Files'][file_block_name]
 
-                diag_table.write('# {filename}\n'.
-                    format(filename = '"'+casename+'.'+file_block['suffix']+'":'))
+            #    diag_table.write('# {filename}\n'.\
+            #        format(filename = file_block_name + ' ("'+casename+'.'+file_block['suffix']+'"):'))
 
 
-                # max fieldname length:
-                for flist in file_block['field_lists']:
-                    mfnl = max([len(field) for field in flist['fields']]) + 3
-                    mfnl = min(16,mfnl) # limit to 16
-                    for field in flist['fields']:
-                        diag_table.write(('{module_name:14s} {field:'+str(mfnl)+'}{field:'+str(mfnl)+'}'
-                                          '{filename} "all", {reduction_method} {regional_section} {packing}\n').
-                            format( module_name = '"'+flist['module']+'",',
-                                    field = '"'+field+'",',
-                                    filename = '"'+casename+'.'+str(file_block['suffix'])+'",',
-                                    reduction_method = '"'+str(file_block['reduction_method'])+'",',
-                                    regional_section = '"'+str(flist['regional_section'])+'",',
-                                    packing = str(flist['packing'])
-                                ) )
-                    
-                diag_table.write('\n')
+            #    # max fieldname length:
+            #    for flist in file_block['field_lists']:
+            #        mfnl = max([len(field) for field in flist['fields']]) + 3
+            #        mfnl = min(16,mfnl) # limit to 16
+            #        for field in flist['fields']:
+            #            diag_table.write(('{module_name:14s} {field:'+str(mfnl)+'}{field:'+str(mfnl)+'}'
+            #                              '{filename} "all", {reduction_method} {regional_section} {packing}\n').
+            #                format( module_name = '"'+flist['module']+'",',
+            #                        field = '"'+field+'",',
+            #                        filename = '"'+casename+'.'+str(file_block['suffix'])+'",',
+            #                        reduction_method = '"'+str(file_block['reduction_method'])+'",',
+            #                        regional_section = '"'+str(file_block['regional_section'])+'",',
+            #                        packing = str(flist['packing'])
+            #                    ) )
+            #        
+            #    diag_table.write('\n')
                         
 
 #                for file_list file_block['field_lists']:
