@@ -110,31 +110,52 @@ class MOM_RPS(object,):
                 else:
                     continue
 
-        for var in self.data:
-            _determine_value_recursive(self.data[var])
+        for entry in self.data:
+            _determine_value_recursive(self.data[entry])
 
 
 
     def deduce_special_vals(self, case):
         """ Replaces the values defined with special keys, i.e., ${XML_VAR}, in yaml files"""
-        for module in self.data:
-            for var in self.data[module]:
-                val = self.data[module][var]['value']
 
-                # if no appropriate value was found for this case, exclude it:
-                if val == None:
-                    self.data[module].pop(var)
+        def _has_special_value(entry):
+            """ Checks if a given entry of type string has a special value to be deduced. """
+            assert( type(entry)!=OrderedDict )
+            if isinstance(entry,basestring) and "${" in entry:
+                return True
+            else:
+                return False
 
-                if type(val)==str:
-                    special_keys_list = re.findall(r'\$\{.+?\}',val)
-                    for special_key in special_keys_list:
-                        special_key_strip = special_key.replace("$","").replace("{","").replace("}","")
-                        special_val = case.get_value(special_key_strip)
-                        if special_val==None:
-                            raise RuntimeError("The constraint "+special_key_strip+" is not a CIME xml"
-                                               " variable for this case")
-                        val = val.replace(special_key,special_val)
-                    self.data[module][var]['value'] = val
+        def _do_deduce_special_vals(entry):
+            """ Returns the deduced value for a given entry with special value """
+
+            assert(_has_special_value(entry))
+
+            special_keys_list = re.findall(r'\$\{.+?\}',entry)
+            for special_key in special_keys_list:
+                special_key_strip = special_key.replace("$","").replace("{","").replace("}","")
+                special_val = case.get_value(special_key_strip)
+                if special_val==None:
+                    raise RuntimeError("The constraint "+special_key_strip+" is not a CIME xml"
+                                       " variable for this case")
+                entry = entry.replace(special_key,special_val)
+            return entry
+
+
+        def _deduce_special_vals_recursive(entry):
+            """ Recursive deduces special values of a given yaml entry. """
+
+            for child in entry:
+                if (type(entry[child])==OrderedDict):
+                    _deduce_special_vals_recursive(entry[child])
+                else:
+                    if (_has_special_value(entry[child])):
+                        entry[child] = _do_deduce_special_vals(entry[child])
+                    else:
+                        continue
+
+        for entry in self.data:
+            _deduce_special_vals_recursive(self.data[entry])
 
     @abc.abstractmethod
     def check_consistency(self):
