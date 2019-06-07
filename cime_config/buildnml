@@ -114,22 +114,22 @@ def prep_input(case):
     MOM_input.write(MOM_input_dest, case)
 
     # Create input.nml:
-    input_nml_src = os.path.join(json_templates_dir, "input_nml.json")
-    input_nml_dest = os.path.join(rundir,"input.nml")
-    input_nml = MOM_input_nml(input_nml_src)
-    input_nml.write(input_nml_dest, case)
+    #input_nml_src = os.path.join(json_templates_dir, "input_nml.json")
+    #input_nml_dest = os.path.join(rundir,"input.nml")
+    #input_nml = MOM_input_nml(input_nml_src)
+    #input_nml.write(input_nml_dest, case)
 
-    # Create mom.input_data_list:
-    input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
-    input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
-    input_data_list = Input_data_list(input_data_list_src)
-    input_data_list.write(input_data_list_dest, case)
+    ## Create mom.input_data_list:
+    #input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
+    #input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
+    #input_data_list = Input_data_list(input_data_list_src)
+    #input_data_list.write(input_data_list_dest, case)
 
-    # Create diag_table:
-    diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
-    diag_table_dest = os.path.join(rundir,"diag_table_EXP")
-    diag_table = Diag_table(diag_table_src)
-    diag_table.write(diag_table_dest, case)
+    ## Create diag_table:
+    #diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
+    #diag_table_dest = os.path.join(rundir,"diag_table_EXP")
+    #diag_table = Diag_table(diag_table_src)
+    #diag_table.write(diag_table_dest, case)
 
     # Create an empty MOM_override:
     with open(os.path.join(rundir,"MOM_override"), 'w') as MOM_override:
