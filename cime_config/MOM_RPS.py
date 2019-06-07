@@ -5,7 +5,7 @@ import abc
 import re
 
 class MOM_RPS(object,):
-    """ Base class for MOM6 (R)untime (P)arameter (S)ystem files including:
+    """ Base class for MOM6 (R)untime (P)arameter (S)ystem fileiiiii including:
             - Params files (MOM_input, MOM_override, user_nl_mom)
             - MOM_namelist (input.nml)
             - diag_table
@@ -39,7 +39,7 @@ class MOM_RPS(object,):
             raise RuntimeError("Cannot apply the constraints. No data found.")
 
         def _constraint_satisfied(constr_pair, case):
-            " Checks if a given value constraint agrees with a given constaints basse"
+            " Checks if a given value constraint agrees with the case settings"
             constr_key = constr_pair.split('==')[0].strip()\
                 .replace('"','').replace("'","")
             constr_val = constr_pair.split('==')[1].strip()\
@@ -52,58 +52,89 @@ class MOM_RPS(object,):
 
             return case_val == constr_val
 
-        for module in self.data:
-            for var in self.data[module]:
+        def _do_determine_value(multi_option_dict):
+            """ From an ordered dict (multi_option_dict), whose entries are alternative values
+                with guards (constraints), returns the last entry whose guards are satisfied
+                by the case"""
 
-                # (list of) potential value(s) for this variable.
-                # maybe a single entry or multiple constrainted entries
-                value_entry = self.data[module][var]["value"]
+            assert(_is_multi_option_entry(multi_option_dict))
+            assert( type(multi_option_dict)==OrderedDict )
 
-                # current applicable value for this variable:
-                val = None
+            val = None
+            for value_constraints in multi_option_dict:
+                if value_constraints == "common":
+                    val = multi_option_dict[value_constraints]
 
-                # single value with no constraints:
-                if not (type(value_entry)==dict or type(value_entry)==OrderedDict):
-                    val = value_entry
+                # multiple constraint pairs in value_constraints
+                elif ',' in value_constraints:
+                    agrees = True
+                    for constr_pair in value_constraints.split(','):
+                        agrees = agrees and _constraint_satisfied(constr_pair, case)
+                    if agrees: # with all constaints:
+                        val = multi_option_dict[value_constraints]
 
-                # single or multiple value(s) with contraint(s):
+                # a single constraint pair in value_constraints:
+                elif '==' in value_constraints:
+                    if _constraint_satisfied(value_constraints, case):
+                        val = multi_option_dict[value_constraints]
+
+                # not a multi-option entry
                 else:
-                    for value_constraints in value_entry:
-                        if value_constraints == "common":
-                            val = value_entry[value_constraints]
+                    raise RuntimeError("Error while determining constraints")
 
-                        # multiple constraint pairs in value_constraints
-                        elif ',' in value_constraints:
-                            agrees = True
-                            for constr_pair in value_constraints.split(','):
-                                agrees = agrees and _constraint_satisfied(constr_pair, case)
-                            if agrees: # with all constaints:
-                                val = value_entry[value_constraints]
+            return val
 
-                        # a single constraint pair in value_constraints:
-                        elif '==' in value_constraints:
-                            if _constraint_satisfied(value_constraints, case):
-                                val = value_entry[value_constraints]
 
-                        else:
-                            raise RuntimeError("Cannot parse configurations for variable "+var)
+        def _is_multi_option_entry(entry):
+            """ returns true if a given dictionary has entries that consist of
+                multi-option (alternative) guarded entries"""
 
-                self.data[module][var]['final_val'] = str(val)
+            assert( type(entry)==OrderedDict )
+
+            options = [child for child in entry if "common" in child or "==" in child]
+            if (len(options)>0):
+                return True
+            else:
+                return False
+
+        def _determine_value_recursive(entry):
+            """ Given a yaml entry, recursively determines values to be adopted
+                by picking the values with guards that satisfy the case constraints"""
+
+            for child in entry:
+                if (type(entry[child])==OrderedDict):
+                    if (_is_multi_option_entry(entry[child])):
+                        entry[child] = _do_determine_value(entry[child])
+                    else:
+                        _determine_value_recursive(entry[child])
+                else:
+                    continue
+
+        for var in self.data:
+            _determine_value_recursive(self.data[var])
+
+
 
     def deduce_special_vals(self, case):
         """ Replaces the values defined with special keys, i.e., ${XML_VAR}, in yaml files"""
         for module in self.data:
             for var in self.data[module]:
-                val = self.data[module][var]['final_val']
-                special_keys_list = re.findall(r'\$\{.+?\}',val)
-                for special_key in special_keys_list:
-                    special_key_strip = special_key.replace("$","").replace("{","").replace("}","")
-                    special_val = case.get_value(special_key_strip)
-                    if special_val==None:
-                        raise RuntimeError("The constraint "+special_key_strip+" is not a CIME xml"
-                                           " variable for this case")
-                    val = val.replace(special_key,special_val)
-                self.data[module][var]['final_val'] = val
+                val = self.data[module][var]['value']
+
+                # if no appropriate value was found for this case, exclude it:
+                if val == None:
+                    self.data[module].pop(var)
+
+                if type(val)==str:
+                    special_keys_list = re.findall(r'\$\{.+?\}',val)
+                    for special_key in special_keys_list:
+                        special_key_strip = special_key.replace("$","").replace("{","").replace("}","")
+                        special_val = case.get_value(special_key_strip)
+                        if special_val==None:
+                            raise RuntimeError("The constraint "+special_key_strip+" is not a CIME xml"
+                                               " variable for this case")
+                        val = val.replace(special_key,special_val)
+                    self.data[module][var]['value'] = val
 
     @abc.abstractmethod
     def check_consistency(self):
@@ -135,10 +166,10 @@ class MOM_input_nml(MOM_RPS):
                 input_nml.write("&"+module+"\n")
 
                 for var in self.data[module]:
-                    val = self.data[module][var]["final_val"]
+                    val = self.data[module][var]["value"]
                     if val==None:
                         continue
-                    input_nml.write("    "+var+" = "+str(self.data[module][var]["final_val"])+"\n")
+                    input_nml.write("    "+var+" = "+str(self.data[module][var]["value"])+"\n")
 
                 input_nml.write('/\n\n')
 
@@ -161,7 +192,7 @@ class Input_data_list(MOM_RPS):
         with open(os.path.join(output_path), 'w') as input_data_list:
             for module in self.data:
                 for var in self.data[module]:
-                    input_data_list.write(var+" = "+str(self.data[module][var]["final_val"])+"\n")
+                    input_data_list.write(var+" = "+str(self.data[module][var]["value"])+"\n")
 
 class Diag_table(MOM_RPS):
 
@@ -178,7 +209,7 @@ class Diag_table(MOM_RPS):
             casename = case.get_value("CASE")
             diag_table.write('"MOM6 diagnostic fields table for CESM case: '+casename+'"\n')
             diag_table.write('1 1 1 0 0 0\n') #TODO
-            
+
             # max filename length:
             mfl = len(casename) +\
                   max([len(self.data['Files'][file_block_name]['suffix'])\
@@ -230,12 +261,12 @@ class Diag_table(MOM_RPS):
             #                        regional_section = '"'+str(file_block['regional_section'])+'",',
             #                        packing = str(flist['packing'])
             #                    ) )
-            #        
+
             #    diag_table.write('\n')
-                        
+
 
 #                for file_list file_block['field_lists']:
-                    
+
 
             ## Field section:
             #for file_block in self.data:
@@ -261,7 +292,7 @@ class Diag_table(MOM_RPS):
             #                    filename = '"'+casename+'.'+self.data[file_block]['suffix']+'",',
             #                    reduction_method = '"'+self.data[file_block]['reduction_method']+'",'
             #                ) )
-                    
+
             #    diag_table.write('\n')
 
 
@@ -337,12 +368,12 @@ class MOM_Params(MOM_RPS):
                     MOM_input.write(module+"%\n")
 
                 for var in self.data[module]:
-                    val = self.data[module][var]["final_val"]
+                    val = self.data[module][var]["value"]
                     if val==None:
                         continue
 
                     # write "variable = value" pair
-                    MOM_input.write(var+" = "+str(self.data[module][var]["final_val"])+"\n")
+                    MOM_input.write(var+" = "+str(self.data[module][var]["value"])+"\n")
 
                     # Write the variable description:
                     var_comments = self.data[module][var]["description"].split('\n')
