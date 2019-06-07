@@ -305,7 +305,7 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",
@@ -332,7 +332,7 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",
@@ -359,7 +359,7 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",
@@ -386,7 +386,7 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",
@@ -413,7 +413,7 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",
@@ -440,7 +440,7 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",
@@ -467,7 +467,7 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",
@@ -494,7 +494,7 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",
@@ -521,7 +521,250 @@
             "OCN_SECTION_DIAGS==True": [
                {
                   "module": "ocean_model",
-                  "packing": 1,
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Florida_Bahamas": {
+         "suffix": "Florida_Bahamas%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-80.1 -77.9 25.3 25.3 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Gibraltar_Strait": {
+         "suffix": "Gibraltar_Strait%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-6.5 -6.5 34.3 37.4 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "umo",
+                        "uo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Hormuz_Strait": {
+         "suffix": "Hormuz_Strait%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "55.9 55.9 25.0 27.5 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "umo",
+                        "uo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Iceland_Norway": {
+         "suffix": "Iceland_Norway%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-21.5 1.5 65.0 65.0 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Indonesian_Throughflow": {
+         "suffix": "Indonesian_Throughflow%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-246.5 -220.8 -7.0 -7.0 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Mozambique_Channel": {
+         "suffix": "Mozambique_Channel%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "39.9 44.7 -16.0 -16.0 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vmo",
+                        "vo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Pacific_undercurrent": {
+         "suffix": "Pacific_undercurrent%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-155.0 -155.0 -2.0 2.0 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "umo",
+                        "uo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Taiwan_Luzon": {
+         "suffix": "Taiwan_Luzon%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-239.0 -239.0 18.8 22.5 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "umo",
+                        "uo"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "Windward_Passage": {
+         "suffix": "Windward_Passage%4yr",
+         "output_freq": 1,
+         "output_freq_units": "days",
+         "time_axis_units": "days",
+         "new_file_freq": 365,
+         "new_file_freq_units": "days",
+         "reduction_method": ".true.",
+         "regional_section": "-74.2 -73.2 20.39 20.39 -1 -1",
+         "fields": {
+            "OCN_SECTION_DIAGS==True": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
                   "lists": [
                      [
                         "volcello",

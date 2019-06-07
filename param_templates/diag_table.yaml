@@ -134,7 +134,7 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_u ]
 
     Bab_al_mandeb_Strait:
@@ -149,7 +149,7 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_u ]
 
     Barents_opening:
@@ -164,7 +164,7 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_v ]
 
     Bering_Strait:
@@ -179,7 +179,7 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_v ]
 
     Davis_Strait:
@@ -194,7 +194,7 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_v ]
 
     Denmark_Strait:
@@ -209,7 +209,7 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_v ]
 
     Drake_Passage:
@@ -224,7 +224,7 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_u ]
 
     English_Channel:
@@ -239,7 +239,7 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_u ]
 
     Fram_Strait:
@@ -254,6 +254,141 @@ Files:
         fields:
             OCN_SECTION_DIAGS==True:
                 - module:   "ocean_model"  # native
-                  packing:  1            # double precision
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_v ]
+
+    Florida_Bahamas:
+        suffix: "Florida_Bahamas%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "-80.1 -77.9 25.3 25.3 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_v ]
+
+    Gibraltar_Strait:
+        suffix: "Gibraltar_Strait%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "-6.5 -6.5 34.3 37.4 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_u ]
+
+    Hormuz_Strait:
+        suffix: "Hormuz_Strait%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "55.9 55.9 25.0 27.5 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_u ]
+
+    Iceland_Norway:
+        suffix: "Iceland_Norway%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "-21.5 1.5 65.0 65.0 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_v ]
+
+    Indonesian_Throughflow:
+        suffix: "Indonesian_Throughflow%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "-246.5 -220.8 -7.0 -7.0 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_v ]
+
+    Mozambique_Channel:
+        suffix: "Mozambique_Channel%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "39.9 44.7 -16.0 -16.0 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_v ]
+
+    Pacific_undercurrent:
+        suffix: "Pacific_undercurrent%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "-155.0 -155.0 -2.0 2.0 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_u ]
+
+    Taiwan_Luzon:
+        suffix: "Taiwan_Luzon%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "-239.0 -239.0 18.8 22.5 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
+                  lists:    [ *vert_sections_u ]
+
+    Windward_Passage:
+        suffix: "Windward_Passage%4yr"
+        output_freq: 1
+        output_freq_units: "days"
+        time_axis_units: "days"
+        new_file_freq: 365
+        new_file_freq_units: "days"
+        reduction_method: ".true."  # time average
+        regional_section: "-74.2 -73.2 20.39 20.39 -1 -1"
+        fields:
+            OCN_SECTION_DIAGS==True:
+                - module:   "ocean_model"  # native
+                  packing:  2            # single precision
                   lists:    [ *vert_sections_v ]
 
