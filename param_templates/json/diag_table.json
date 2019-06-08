@@ -4,13 +4,31 @@
          "u",
          "v",
          "h",
+         "e",
          "temp",
          "salt",
          "rhoinsitu",
-         "KE"
+         "KE",
+         "Rml",
+         "Rv",
+         "e_D"
       ],
       [
-         "age"
+         "volcello",
+         "thetao",
+         "so",
+         "vintage",
+         "soga",
+         "thetaoga"
+      ],
+      [
+         "age",
+         "CFC11",
+         "CFC12",
+         "T_ady_2d",
+         "T_adx_2d",
+         "T_diffy_2d",
+         "T_diffx_2d"
       ],
       [
          "SSH",
@@ -18,10 +36,13 @@
          "SSS",
          "SSU",
          "SSV",
-         "KPP_OBLdepth",
          "mass_wt",
          "temp_int",
-         "salt_int"
+         "salt_int",
+         "Rd_dx",
+         "speed",
+         "MLD_003",
+         "MLD_0125"
       ],
       [
          "KPP_OBLdepth"
@@ -42,35 +63,14 @@
          "hfds",
          "ustar",
          "frazil",
-         "frazil",
-         "Rd_dx",
-         "SSH",
-         "SST",
-         "SSS",
-         "speed",
-         "SSU",
-         "SSV",
-         "MLD_003",
-         "MLD_0125",
-         "KPP_OBLdepth",
-         "thetaoga",
-         "soga"
-      ],
-      [
-         "taux",
-         "tauy",
-         "ustar",
          "PRCmE",
-         "lprec",
-         "fprec",
          "evap",
          "vprec",
          "lrunoff",
          "frunoff",
          "seaice_melt",
          "net_heat_coupler",
-         "net_heat_surface",
-         "frazil"
+         "net_heat_surface"
       ],
       [
          "KHTR_h",
@@ -136,13 +136,79 @@
                         "u",
                         "v",
                         "h",
+                        "e",
                         "temp",
                         "salt",
                         "rhoinsitu",
-                        "KE"
+                        "KE",
+                        "Rml",
+                        "Rv",
+                        "e_D"
                      ],
                      [
-                        "age"
+                        "volcello",
+                        "thetao",
+                        "so",
+                        "vintage",
+                        "soga",
+                        "thetaoga"
+                     ],
+                     [
+                        "KPP_OBLdepth"
+                     ],
+                     [
+                        "taux",
+                        "tauy",
+                        "friver",
+                        "prsn",
+                        "precip",
+                        "evs",
+                        "hfsso",
+                        "rlntds",
+                        "hfsnthermds",
+                        "sfdsi",
+                        "salt_flux_added",
+                        "rsntds",
+                        "hfds",
+                        "ustar",
+                        "frazil",
+                        "PRCmE",
+                        "evap",
+                        "vprec",
+                        "lrunoff",
+                        "frunoff",
+                        "seaice_melt",
+                        "net_heat_coupler",
+                        "net_heat_surface"
+                     ],
+                     [
+                        "SSH",
+                        "SST",
+                        "SSS",
+                        "SSU",
+                        "SSV",
+                        "mass_wt",
+                        "temp_int",
+                        "salt_int",
+                        "Rd_dx",
+                        "speed",
+                        "MLD_003",
+                        "MLD_0125"
+                     ],
+                     [
+                        "KHTR_h",
+                        "KHTR_t",
+                        "Ahh",
+                        "Khh"
+                     ],
+                     [
+                        "age",
+                        "CFC11",
+                        "CFC12",
+                        "T_ady_2d",
+                        "T_adx_2d",
+                        "T_diffy_2d",
+                        "T_diffx_2d"
                      ]
                   ]
                }
@@ -156,10 +222,14 @@
                         "u",
                         "v",
                         "h",
+                        "e",
                         "temp",
                         "salt",
                         "rhoinsitu",
-                        "KE"
+                        "KE",
+                        "Rml",
+                        "Rv",
+                        "e_D"
                      ]
                   ]
                }
@@ -187,10 +257,13 @@
                         "SSS",
                         "SSU",
                         "SSV",
-                        "KPP_OBLdepth",
                         "mass_wt",
                         "temp_int",
-                        "salt_int"
+                        "salt_int",
+                        "Rd_dx",
+                        "speed",
+                        "MLD_003",
+                        "MLD_0125"
                      ]
                   ]
                }
@@ -215,18 +288,27 @@
                      [
                         "taux",
                         "tauy",
+                        "friver",
+                        "prsn",
+                        "precip",
+                        "evs",
+                        "hfsso",
+                        "rlntds",
+                        "hfsnthermds",
+                        "sfdsi",
+                        "salt_flux_added",
+                        "rsntds",
+                        "hfds",
                         "ustar",
+                        "frazil",
                         "PRCmE",
-                        "lprec",
-                        "fprec",
                         "evap",
                         "vprec",
                         "lrunoff",
                         "frunoff",
                         "seaice_melt",
                         "net_heat_coupler",
-                        "net_heat_surface",
-                        "frazil"
+                        "net_heat_surface"
                      ]
                   ]
                }
