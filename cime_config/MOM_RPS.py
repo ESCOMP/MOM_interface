@@ -40,9 +40,20 @@ class MOM_RPS(object,):
 
         def _constraint_satisfied(constr_pair, case):
             " Checks if a given value constraint agrees with the case settings."
-            constr_key = constr_pair.split('==')[0].strip()\
+
+            # determine logical operation:
+            op_str = None
+            if "==" in constr_pair:
+                op_str = "=="
+            elif "!=" in constr_pair:
+                op_str = "!="
+            else:
+                raise RuntimeError("Cannot determine logical operation for constr pair: "+constr_pair)
+
+
+            constr_key = constr_pair.split(op_str)[0].strip()\
                 .replace('"','').replace("'","")
-            constr_val = constr_pair.split('==')[1].strip()\
+            constr_val = constr_pair.split(op_str)[1].strip()\
                 .replace('"','').replace("'","")
 
             try:
@@ -51,7 +62,12 @@ class MOM_RPS(object,):
                 raise RuntimeError("Cannot find the constraint "+constr_key+" in xml files")
 
             # Note: Case-insensitive comparison!
-            return str(case_val).lower() == str(constr_val).lower()
+            if op_str=='==':
+                return str(case_val).lower() == str(constr_val).lower()
+            elif op_str=='!=':
+                return str(case_val).lower() != str(constr_val).lower()
+            else:
+                raise RuntimeError("Cannot determine logical operation for constr pair: "+constr_pair)
 
         def _do_determine_value(multi_option_dict):
             """ From an ordered dict (multi_option_dict), whose entries are alternative values
@@ -75,7 +91,8 @@ class MOM_RPS(object,):
                         val = multi_option_dict[value_constraints]
 
                 # a single constraint pair in value_constraints:
-                elif '==' in value_constraints:
+                elif ('==' in value_constraints) or\
+                     ('!=' in value_constraints):
                     if _constraint_satisfied(value_constraints, case):
                         val = multi_option_dict[value_constraints]
 
@@ -92,7 +109,7 @@ class MOM_RPS(object,):
 
             assert( type(entry)==OrderedDict )
 
-            options = [child for child in entry if "common" in child or "==" in child]
+            options = [child for child in entry if 'common' in child or '==' in child or '!=' in child]
             if (len(options)>0):
                 return True
             else:
@@ -253,6 +270,10 @@ class Diag_table(MOM_RPS):
             diag_table.write('#========================\n')
             for file_block_name in self.data['Files']:
                 file_block = self.data['Files'][file_block_name]
+
+                if file_block['fields']==None:
+                    # No fields for this file. Skip to next file.
+                    continue
 
                 file_descr_str = ('{filename:'+str(mfl)+'s} {output_freq:3s} {output_freq_units:9s} 1, '
                                   '{time_axis_units:9s} "time"').\
