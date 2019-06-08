@@ -58,7 +58,7 @@
          "rlntds",
          "hfsnthermds",
          "sfdsi",
-         "salt_flux_added",
+         "salt_flux",
          "rsntds",
          "hfds",
          "ustar",
@@ -69,8 +69,35 @@
          "lrunoff",
          "frunoff",
          "seaice_melt",
+         "sensible",
+         "latent",
+         "SW",
+         "LW",
+         "p_surf"
+      ],
+      [
          "net_heat_coupler",
-         "net_heat_surface"
+         "net_heat_surface",
+         "seaice_melt_heat",
+         "LwLatSens",
+         "Heat_PmE",
+         "heat_content_lrunoff",
+         "heat_content_frunoff",
+         "heat_content_icemelt",
+         "heat_content_lprec",
+         "heat_content_fprec",
+         "heat_content_vprec",
+         "heat_content_cond",
+         "heat_content_massout",
+         "heat_content_massin",
+         "heat_content_surfwater",
+         "internal_heat",
+         "heat_added",
+         "vprec_global_adjustment",
+         "net_fresh_water_global_adjustment",
+         "salt_flux_global_restoring_adjustment",
+         "net_massout",
+         "net_massin"
       ],
       [
          "KHTR_h",
@@ -167,7 +194,7 @@
                         "rlntds",
                         "hfsnthermds",
                         "sfdsi",
-                        "salt_flux_added",
+                        "salt_flux",
                         "rsntds",
                         "hfds",
                         "ustar",
@@ -178,8 +205,11 @@
                         "lrunoff",
                         "frunoff",
                         "seaice_melt",
-                        "net_heat_coupler",
-                        "net_heat_surface"
+                        "sensible",
+                        "latent",
+                        "SW",
+                        "LW",
+                        "p_surf"
                      ],
                      [
                         "SSH",
@@ -280,7 +310,7 @@
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "OCN_DIAG_MODE==\"production\"": [
+            "OCN_DIAG_MODE==\"development\"": [
                {
                   "module": "ocean_model",
                   "packing": 1,
@@ -296,7 +326,7 @@
                         "rlntds",
                         "hfsnthermds",
                         "sfdsi",
-                        "salt_flux_added",
+                        "salt_flux",
                         "rsntds",
                         "hfds",
                         "ustar",
@@ -307,8 +337,35 @@
                         "lrunoff",
                         "frunoff",
                         "seaice_melt",
+                        "sensible",
+                        "latent",
+                        "SW",
+                        "LW",
+                        "p_surf"
+                     ],
+                     [
                         "net_heat_coupler",
-                        "net_heat_surface"
+                        "net_heat_surface",
+                        "seaice_melt_heat",
+                        "LwLatSens",
+                        "Heat_PmE",
+                        "heat_content_lrunoff",
+                        "heat_content_frunoff",
+                        "heat_content_icemelt",
+                        "heat_content_lprec",
+                        "heat_content_fprec",
+                        "heat_content_vprec",
+                        "heat_content_cond",
+                        "heat_content_massout",
+                        "heat_content_massin",
+                        "heat_content_surfwater",
+                        "internal_heat",
+                        "heat_added",
+                        "vprec_global_adjustment",
+                        "net_fresh_water_global_adjustment",
+                        "salt_flux_global_restoring_adjustment",
+                        "net_massout",
+                        "net_massin"
                      ]
                   ]
                }
@@ -325,7 +382,7 @@
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "OCN_DIAG_MODE==\"production\"": [
+            "OCN_DIAG_MODE==\"development\"": [
                {
                   "module": "ocean_model",
                   "packing": 1,
@@ -384,7 +441,7 @@
          "reduction_method": ".true.",
          "regional_section": "20.1 20.1 -70.0 -34.6 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -411,7 +468,7 @@
          "reduction_method": ".true.",
          "regional_section": "45.0 45.0 10.5 13.5 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -438,7 +495,7 @@
          "reduction_method": ".true.",
          "regional_section": "-5.2 18.8  78.93 78.93 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -465,7 +522,7 @@
          "reduction_method": ".true.",
          "regional_section": "-174.5  -171.5 66.6 66.6 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -492,7 +549,7 @@
          "reduction_method": ".true.",
          "regional_section": "-53.5 -45.3 69.5 69.5 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -519,7 +576,7 @@
          "reduction_method": ".true.",
          "regional_section": "-38.50 -21.5 65.0 65.0 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -546,7 +603,7 @@
          "reduction_method": ".true.",
          "regional_section": "-67.0 -67.0 -69.0 -55.2 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -573,7 +630,7 @@
          "reduction_method": ".true.",
          "regional_section": "0.0 0.0 51.0 52.9 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -600,7 +657,7 @@
          "reduction_method": ".true.",
          "regional_section": "-21.0 -9.8 80.5 80.5 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -627,7 +684,7 @@
          "reduction_method": ".true.",
          "regional_section": "-80.1 -77.9 25.3 25.3 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -654,7 +711,7 @@
          "reduction_method": ".true.",
          "regional_section": "-6.5 -6.5 34.3 37.4 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -681,7 +738,7 @@
          "reduction_method": ".true.",
          "regional_section": "55.9 55.9 25.0 27.5 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -708,7 +765,7 @@
          "reduction_method": ".true.",
          "regional_section": "-21.5 1.5 65.0 65.0 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -735,7 +792,7 @@
          "reduction_method": ".true.",
          "regional_section": "-246.5 -220.8 -7.0 -7.0 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -762,7 +819,7 @@
          "reduction_method": ".true.",
          "regional_section": "39.9 44.7 -16.0 -16.0 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -789,7 +846,7 @@
          "reduction_method": ".true.",
          "regional_section": "-155.0 -155.0 -2.0 2.0 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -816,7 +873,7 @@
          "reduction_method": ".true.",
          "regional_section": "-239.0 -239.0 18.8 22.5 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -843,7 +900,7 @@
          "reduction_method": ".true.",
          "regional_section": "-74.2 -73.2 20.39 20.39 -1 -1",
          "fields": {
-            "OCN_SECTION_DIAGS==True": [
+            "OCN_DIAG_MODE!=\"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
