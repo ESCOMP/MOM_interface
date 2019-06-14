@@ -1,5 +1,27 @@
-# This file includes the MOM6 parameters used within the CESM framework,
-# and is used to generate MOM_input file at compile time.
+# This file includes CESM defaults for MOM6 parameters. During compile time,
+# this file is read to generate MOM_input file depending on the case settings.
+ 
+### Warning: ###
+# This file is intended to be edited by MOM6+CESM developers.
+# For customizing cases, users should add their "parameter=value" pairs
+# to user_nl_mom or add their complete versions of input files (e.g.
+# MOM_input, diag_table, etc.) to SourceMods/src.mom directory.
+
+### Syntax ###
+# Module_name:
+#     Param_name:
+#         description: "..."
+#         datatype: ...
+#         value: ...
+ 
+### Notes to developers ###
+#   * To maintain the precision of double-precision floating-poing numbers,
+#     make sure to specify the values (not datatypes) as strings, e.g,:
+#       value: "300.3003003003003"
+#   * Use $ sign followed by enclosing curly brackets to designate keywords
+#     to be replaced by case-specific values, e.g., ${DIN_LOC_ROOT}.
+
+# =============================================================================
 
 Global:
     INPUTDIR:
@@ -1122,8 +1144,8 @@ Global:
         datatype: real
         units: m
         value:
-            OCN_GRID=="gx1v6": 300.3003003003003
-            OCN_GRID=="tx0.66v1": 300.3003003003003
+            OCN_GRID=="gx1v6": "300.3003003003003"
+            OCN_GRID=="tx0.66v1": "300.3003003003003"
     KAPPA_ITIDES:
         description: |
             "[m-1] default = 6.283185307179586E-04
