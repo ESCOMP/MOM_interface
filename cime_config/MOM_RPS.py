@@ -29,76 +29,76 @@ class MOM_RPS(object,):
         #TODO
         pass
 
-    def apply_constraints(self, case):
+    def infer_guarded_vals(self, case):
         """ For a variable, if multiple values are provided in a value list, this function
-            determines the appropriate value for the case by looking at constraints
-            (guards) to the left of values in yaml file and by comparing them against
+            determines the appropriate value for the case by looking at guards
+            to the left of values in yaml file and by comparing them against
             the xml variable of the case, e.g. OCN_GRID."""
 
         if not self.data:
-            raise RuntimeError("Cannot apply the constraints. No data found.")
+            raise RuntimeError("Cannot apply the guards. No data found.")
 
-        def _constraint_satisfied(constr_pair, case):
-            " Checks if a given value constraint agrees with the case settings."
+        def _guard_satisfied(guard_pair, case):
+            " Checks if a given value guard agrees with the case settings."
 
             # determine logical operation:
             op_str = None
-            if "==" in constr_pair:
+            if "==" in guard_pair:
                 op_str = "=="
-            elif "!=" in constr_pair:
+            elif "!=" in guard_pair:
                 op_str = "!="
             else:
-                raise RuntimeError("Cannot determine logical operation for constr pair: "+constr_pair)
+                raise RuntimeError("Cannot determine logical operation for guard pair: "+guard_pair)
 
 
-            constr_key = constr_pair.split(op_str)[0].strip()\
+            guard_key = guard_pair.split(op_str)[0].strip()\
                 .replace('"','').replace("'","")
-            constr_val = constr_pair.split(op_str)[1].strip()\
+            guard_val = guard_pair.split(op_str)[1].strip()\
                 .replace('"','').replace("'","")
 
             try:
-                case_val = case.get_value(constr_key)
+                case_val = case.get_value(guard_key)
             except:
-                raise RuntimeError("Cannot find the constraint "+constr_key+" in xml files")
+                raise RuntimeError("Cannot find the guard "+guard_key+" in xml files")
 
             # Note: Case-insensitive comparison!
             if op_str=='==':
-                return str(case_val).lower() == str(constr_val).lower()
+                return str(case_val).lower() == str(guard_val).lower()
             elif op_str=='!=':
-                return str(case_val).lower() != str(constr_val).lower()
+                return str(case_val).lower() != str(guard_val).lower()
             else:
-                raise RuntimeError("Cannot determine logical operation for constr pair: "+constr_pair)
+                raise RuntimeError("Cannot determine logical operation for guard pair: "+guard_pair)
 
         def _do_determine_value(multi_option_dict):
             """ From an ordered dict (multi_option_dict), whose entries are alternative values
-                with guards (constraints), returns the last entry whose guards are satisfied
+                with guards, returns the last entry whose guards are satisfied
                 by the case"""
 
             assert(_is_multi_option_entry(multi_option_dict))
             assert( type(multi_option_dict)==OrderedDict )
 
             val = None
-            for value_constraints in multi_option_dict:
-                if value_constraints == "common":
-                    val = multi_option_dict[value_constraints]
+            for value_guards in multi_option_dict:
+                if value_guards == "common":
+                    val = multi_option_dict[value_guards]
 
-                # multiple constraint pairs in value_constraints
-                elif ',' in value_constraints:
+                # multiple guard pairs in value_guards
+                elif ',' in value_guards:
                     agrees = True
-                    for constr_pair in value_constraints.split(','):
-                        agrees = agrees and _constraint_satisfied(constr_pair, case)
-                    if agrees: # with all constaints:
-                        val = multi_option_dict[value_constraints]
+                    for guard_pair in value_guards.split(','):
+                        agrees = agrees and _guard_satisfied(guard_pair, case)
+                    if agrees: # with all guards:
+                        val = multi_option_dict[value_guards]
 
-                # a single constraint pair in value_constraints:
-                elif ('==' in value_constraints) or\
-                     ('!=' in value_constraints):
-                    if _constraint_satisfied(value_constraints, case):
-                        val = multi_option_dict[value_constraints]
+                # a single guard pair in value_guards:
+                elif ('==' in value_guards) or\
+                     ('!=' in value_guards):
+                    if _guard_satisfied(value_guards, case):
+                        val = multi_option_dict[value_guards]
 
                 # not a multi-option entry
                 else:
-                    raise RuntimeError("Error while determining constraints")
+                    raise RuntimeError("Error while determining guards")
 
             return val
 
@@ -117,7 +117,7 @@ class MOM_RPS(object,):
 
         def _determine_value_recursive(entry):
             """ Given a yaml entry, recursively determines values to be adopted
-                by picking the values with guards that satisfy the case constraints"""
+                by picking the values with guards that are satisfied by the case config"""
 
             for child in entry:
                 if (isinstance(child,list)):
@@ -135,18 +135,23 @@ class MOM_RPS(object,):
 
 
 
-    def deduce_special_vals(self, case):
+    def infer_special_vals(self, case):
         """ Replaces the values defined with special keys, i.e., ${XML_VAR}, in yaml files"""
 
+        try: # Python 2
+            str_type = basestring
+        except NameError: # Python 3
+            str_type = str
+
         def _has_special_value(entry):
-            """ Checks if a given entry of type string has a special value to be deduced. """
+            """ Checks if a given entry of type string has a special value to be inferred. """
             assert( type(entry)!=OrderedDict )
-            if isinstance(entry,basestring) and "${" in entry:
+            if isinstance(entry,str_type) and "${" in entry:
                 return True
             else:
                 return False
 
-        def _do_deduce_special_vals(entry):
+        def _do_infer_special_vals(entry):
             """ Returns the deduced value for a given entry with special value """
 
             assert(_has_special_value(entry))
@@ -156,7 +161,7 @@ class MOM_RPS(object,):
                 special_key_strip = special_key.replace("$","").replace("{","").replace("}","")
                 special_val = case.get_value(special_key_strip)
                 if special_val==None:
-                    raise RuntimeError("The constraint "+special_key_strip+" is not a CIME xml"
+                    raise RuntimeError("The guard "+special_key_strip+" is not a CIME xml"
                                        " variable for this case")
                 entry = entry.replace(special_key,special_val)
             return entry
@@ -172,7 +177,7 @@ class MOM_RPS(object,):
                     _deduce_special_vals_recursive(entry[child])
                 else:
                     if (_has_special_value(entry[child])):
-                        entry[child] = _do_deduce_special_vals(entry[child])
+                        entry[child] = _do_infer_special_vals(entry[child])
                     else:
                         continue
 
@@ -198,11 +203,11 @@ class MOM_input_nml(MOM_RPS):
     def write(self, output_path, case):
         assert self.input_format=="json", "input.nml file can only be generated from a json input file."
 
-        # Apply the constraints on the general data to get the targeted values
-        self.apply_constraints(case)
+        # Apply the guards on the general data to get the targeted values
+        self.infer_guarded_vals(case)
 
         # Replace special xml values (e.g., $INPUTDIR) with their actual values
-        self.deduce_special_vals(case)
+        self.infer_special_vals(case)
 
         with open(os.path.join(output_path), 'w') as input_nml:
             for module in self.data:
@@ -226,11 +231,11 @@ class Input_data_list(MOM_RPS):
     def write(self, output_path, case, add_params=dict()):
         assert self.input_format=="json", "input_data_list file defaults can only be read from a json file."
 
-        # Apply the constraints on the general data to get the targeted values
-        self.apply_constraints(case)
+        # Apply the guards on the general data to get the targeted values
+        self.infer_guarded_vals(case)
 
         # Replace special xml values (e.g., $INPUTDIR) with their actual values
-        self.deduce_special_vals(case)
+        self.infer_special_vals(case)
 
         with open(os.path.join(output_path), 'w') as input_data_list:
             for module in self.data:
@@ -246,11 +251,11 @@ class Diag_table(MOM_RPS):
     def write(self, output_path, case, add_params=dict()):
         assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
 
-        # Apply the constraints on the general data to get the targeted values
-        self.apply_constraints(case)
+        # Apply the guards on the general data to get the targeted values
+        self.infer_guarded_vals(case)
 
         # Replace special xml values (e.g., $INPUTDIR) with their actual values
-        self.deduce_special_vals(case)
+        self.infer_special_vals(case)
 
         with open(os.path.join(output_path), 'w') as diag_table:
 
@@ -399,16 +404,16 @@ class MOM_Params(MOM_RPS):
 
     def write(self, output_path, case, add_params=dict()):
         """ writes a MOM_input file from a given json parameter file in accordance with
-            the constraints and additional parameters that are passed. """
+            the guards and additional parameters that are passed. """
 
         assert self.input_format=="json", "MOM_input file can only be generated from a json input file."
 
 
-        # Apply the constraints on the general data to get the targeted values
-        self.apply_constraints(case)
+        # Apply the guards on the general data to get the targeted values
+        self.infer_guarded_vals(case)
 
         # Replace special xml values (e.g., $INPUTDIR) with their actual values
-        self.deduce_special_vals(case)
+        self.infer_special_vals(case)
 
         # 2. Now, write MOM_input
 
