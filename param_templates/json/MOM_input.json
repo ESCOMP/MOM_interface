@@ -3,17 +3,15 @@
       "INPUTDIR": {
          "description": "\"The directory in which input files are found.\"\n",
          "datatype": "string",
-         "value": {
-            "common": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}"
-         }
+         "value": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}"
       },
       "TRIPOLAR_N": {
          "description": "\"[Boolean] default = False\nUse tripolar connectivity at the northern edge of the\ndomain.  With TRIPOLAR_N, NIGLOBAL must be even.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": false,
-            "OCN_GRID==\"tx0.66v1\"": true
+            "OCN_GRID==\"tx0.66v1\"": true,
+            "else": false
          }
       },
       "NIHALO": {
@@ -54,8 +52,8 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "common": 60,
-            "OCN_GRID==\"MISOMIP\"": 36
+            "OCN_GRID==\"MISOMIP\"": 36,
+            "else": 60
          }
       },
       "USE_LEGACY_DIABATIC_DRIVER": {
@@ -146,8 +144,8 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "OCN_GRID==\"common\"": 0.0,
-            "OCN_GRID==\"tx0.66v1\"": 7200.0
+            "OCN_GRID==\"tx0.66v1\"": 7200.0,
+            "else": 0.0
          }
       },
       "FRAZIL": {
@@ -226,8 +224,8 @@
          "description": "\"A character string that determines the method for\ndefining the horizontal grid.  Current options are:\nmosaic - read the grid from a mosaic (supergrid)\nfile set by GRID_FILE.\ncartesian - use a (flat) Cartesian grid.\nspherical - use a simple spherical grid.\nmercator - use a Mercator spherical grid.\"\n",
          "datatype": "string",
          "value": {
-            "common": "mosaic",
-            "OCN_GRID==\"MISOMIP\"": "cartesian"
+            "OCN_GRID==\"MISOMIP\"": "cartesian",
+            "else": "mosaic"
          }
       },
       "GRID_FILE": {
@@ -250,8 +248,8 @@
          "description": "\"This specifies how bathymetry is specified:\nfile - read bathymetric information from the file\nspecified by (TOPO_FILE).\nflat - flat bottom set to MAXIMUM_DEPTH.\nbowl - an analytically specified bowl-shaped basin\nranging between MAXIMUM_DEPTH and MINIMUM_DEPTH.\nspoon - a similar shape to 'bowl', but with an vertical\nwall at the southern face.\nhalfpipe - a zonally uniform channel with a half-sine\nprofile in the meridional direction.\nbenchmark - use the benchmark test case topography.\nDOME - use a slope and channel configuration for the\nDOME sill-overflow test case.\nDOME2D - use a shelf and slope configuration for the\nDOME2D gravity current/overflow test case.\nseamount - Gaussian bump for spontaneous motion test case.\nUSER - call a user modified routine.\"\n",
          "datatype": "string",
          "value": {
-            "common": "file",
-            "OCN_GRID==\"MISOMIP\"": "ISOMIP"
+            "OCN_GRID==\"MISOMIP\"": "ISOMIP",
+            "else": "file"
          }
       },
       "TOPO_FILE": {
@@ -376,8 +374,8 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "common": 1e-06,
-            "OCN_GRID==\"MISOMIP\"": 1e-12
+            "OCN_GRID==\"MISOMIP\"": 1e-12,
+            "else": 1e-06
          }
       },
       "USE_NEUTRAL_DIFFUSION": {
@@ -402,8 +400,8 @@
          "description": "\"default = 'LAYER'\nCoordinate mode for vertical regridding.\nChoose among the following possibilities:\nLAYER - Isopycnal or stacked shallow water layers\nZSTAR, Z* - stetched geopotential z*\nSIGMA_SHELF_ZSTAR - stetched geopotential z* ignoring shelf\nSIGMA - terrain following coordinates\nRHO   - continuous isopycnal\nHYCOM1 - HyCOM-like hybrid coordinate\nSLIGHT - stretched coordinates above continuous isopycnal\nADAPTIVE - optimize for smooth neutral density surfaces\"\n",
          "datatype": "string",
          "value": {
-            "common": "Z*",
-            "OCN_GRID==\"MISOMIP\"": "SIGMA_SHELF_ZSTAR"
+            "OCN_GRID==\"MISOMIP\"": "SIGMA_SHELF_ZSTAR",
+            "else": "Z*"
          }
       },
       "ALE_COORDINATE_CONFIG": {
@@ -463,8 +461,8 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "common": 0.01,
-            "OCN_GRID==\"MISOMIP\"": 0.0
+            "OCN_GRID==\"MISOMIP\"": 0.0,
+            "else": 0.01
          }
       },
       "KH_SIN_LAT": {
@@ -515,8 +513,8 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "common": 0.5,
-            "OCN_GRID==\"MISOMIP\"": 20.0
+            "OCN_GRID==\"MISOMIP\"": 20.0,
+            "else": 0.5
          }
       },
       "CHANNEL_DRAG": {
@@ -524,8 +522,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true,
-            "OCN_GRID==\"MISOMIP\"": false
+            "OCN_GRID==\"MISOMIP\"": false,
+            "else": true
          }
       },
       "PRANDTL_TURB": {
@@ -564,8 +562,8 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "common": 6.0,
-            "OCN_GRID==\"MISOMIP\"": 10.0
+            "OCN_GRID==\"MISOMIP\"": 10.0,
+            "else": 6.0
          }
       },
       "CFL_TRUNCATE_RAMP_TIME": {
@@ -624,8 +622,8 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "common": 0.1,
-            "OCN_GRID==\"MISOMIP\"": 2.0
+            "OCN_GRID==\"MISOMIP\"": 2.0,
+            "else": 0.1
          }
       },
       "BOUND_BT_CORRECTION": {
@@ -659,8 +657,8 @@
          "datatype": "real",
          "units": "s or nondim",
          "value": {
-            "common": -0.95,
-            "OCN_GRID==\"MISOMIP\"": -0.9
+            "OCN_GRID==\"MISOMIP\"": -0.9,
+            "else": -0.95
          }
       },
       "DEPTH_MIN_DYN_PSURF": {
@@ -713,8 +711,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": true,
-            "OCN_GRID==\"MISOMIP\"": false
+            "OCN_GRID==\"MISOMIP\"": false,
+            "else": true
          }
       },
       "FOX_KEMPER_ML_RESTRAT_COEF": {
@@ -800,8 +798,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "common": 2e-05,
-            "OCN_GRID==\"MISOMIP\"": 5e-05
+            "OCN_GRID==\"MISOMIP\"": 5e-05,
+            "else": 2e-05
          }
       },
       "KD_MIN": {
@@ -940,8 +938,8 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "common": 2.0,
-            "OCN_GRID==\"MISOMIP\"": 20.0
+            "OCN_GRID==\"MISOMIP\"": 20.0,
+            "else": 2.0
          }
       },
       "PEN_SW_SCALE": {
@@ -1044,8 +1042,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "common": false,
-            "OCN_GRID==\"tx0.66v1\", COMP_ATM==\"datm\"": true
+            "OCN_GRID==\"tx0.66v1\", COMP_ATM==\"datm\"": true,
+            "else": false
          }
       },
       "FLUXCONST": {
@@ -1092,8 +1090,8 @@
          "description": "\"default = 1\nAn integer whose bits encode which restart files are\nwritten. Add 2 (bit 1) for a time-stamped file, and odd\n(bit 0) for a non-time-stamped file. A non-time-stamped\nrestart file is saved at the end of the run segment\nfor any non-negative value.\"\n",
          "datatype": "integer",
          "value": {
-            "common": 3,
-            "OCN_GRID==\"MISOMIP\"": -1
+            "OCN_GRID==\"MISOMIP\"": -1,
+            "else": 3
          }
       },
       "RESTINT": {
@@ -1101,8 +1099,8 @@
          "datatype": "real",
          "units": "days",
          "value": {
-            "common": 365.0,
-            "OCN_GRID==\"MISOMIP\"": 0.0
+            "OCN_GRID==\"MISOMIP\"": 0.0,
+            "else": 365.0
          }
       },
       "ENERGYSAVEDAYS": {

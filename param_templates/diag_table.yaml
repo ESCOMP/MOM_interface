@@ -50,17 +50,21 @@ Files:
         suffix: "h%4yr-%2mo"
         output_freq: 1
         output_freq_units:
-            common: "months"
             OCN_DIAG_MODE=="spinup": "years"
+            else: "months"
         time_axis_units: "days"
         new_file_freq: 1
         new_file_freq_units:
-            common: "months"
             OCN_DIAG_MODE=="spinup": "years"
+            else: "months"
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-            common:
+            OCN_DIAG_MODE=="spinup":
+                - module:   "ocean_model_z"   # z_space
+                  packing:  2                 # single precision
+                  lists:    [ *prognostic ]
+            else:
                 - module:   "ocean_model_z"   # z_space
                   packing:  1                 # double precision
                   lists:    [ *prognostic,
@@ -70,10 +74,6 @@ Files:
                               *surface_flds,
                               *visc_flds,
                               *tracers ]
-            OCN_DIAG_MODE=="spinup":
-                - module:   "ocean_model_z"   # z_space
-                  packing:  2                 # single precision
-                  lists:    [ *prognostic ]
 
     surface_avg:
         suffix: "sfc%4yr"

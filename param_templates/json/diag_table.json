@@ -142,19 +142,40 @@
          "suffix": "h%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": {
-            "common": "months",
-            "OCN_DIAG_MODE==\"spinup\"": "years"
+            "OCN_DIAG_MODE==\"spinup\"": "years",
+            "else": "months"
          },
          "time_axis_units": "days",
          "new_file_freq": 1,
          "new_file_freq_units": {
-            "common": "months",
-            "OCN_DIAG_MODE==\"spinup\"": "years"
+            "OCN_DIAG_MODE==\"spinup\"": "years",
+            "else": "months"
          },
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "common": [
+            "OCN_DIAG_MODE==\"spinup\"": [
+               {
+                  "module": "ocean_model_z",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "u",
+                        "v",
+                        "h",
+                        "e",
+                        "temp",
+                        "salt",
+                        "rhoinsitu",
+                        "KE",
+                        "Rml",
+                        "Rv",
+                        "e_D"
+                     ]
+                  ]
+               }
+            ],
+            "else": [
                {
                   "module": "ocean_model_z",
                   "packing": 1,
@@ -239,27 +260,6 @@
                         "T_adx_2d",
                         "T_diffy_2d",
                         "T_diffx_2d"
-                     ]
-                  ]
-               }
-            ],
-            "OCN_DIAG_MODE==\"spinup\"": [
-               {
-                  "module": "ocean_model_z",
-                  "packing": 2,
-                  "lists": [
-                     [
-                        "u",
-                        "v",
-                        "h",
-                        "e",
-                        "temp",
-                        "salt",
-                        "rhoinsitu",
-                        "KE",
-                        "Rml",
-                        "Rv",
-                        "e_D"
                      ]
                   ]
                }

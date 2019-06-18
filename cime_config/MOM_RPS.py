@@ -97,8 +97,8 @@ class MOM_RPS(object,):
 
             val = None
             for value_guards in multi_option_dict:
-                if value_guards == "common":
-                    val = multi_option_dict[value_guards]
+                if value_guards == "else":
+                    pass # for now
 
                 # multiple guard pairs in value_guards
                 elif ',' in value_guards:
@@ -118,6 +118,10 @@ class MOM_RPS(object,):
                 else:
                     raise RuntimeError("Error while determining guards")
 
+            # If no other guard evaluates to true, get the value prefixed by "else":
+            if val==None and "else" in multi_option_dict:
+                val = multi_option_dict["else"]
+
             return val
 
 
@@ -127,7 +131,7 @@ class MOM_RPS(object,):
 
             assert( type(entry)==OrderedDict )
 
-            options = [child for child in entry if 'common' in child or '==' in child or '!=' in child]
+            options = [child for child in entry if 'else' in child or '==' in child or '!=' in child]
             if (len(options)>0):
                 return True
             else:

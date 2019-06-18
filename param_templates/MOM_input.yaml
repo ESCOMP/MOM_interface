@@ -28,8 +28,7 @@ Global:
         description: |
             "The directory in which input files are found."
         datatype: string
-        value:
-            common: ${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}
+        value: ${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}
     TRIPOLAR_N:
         description: |
             "[Boolean] default = False
@@ -38,8 +37,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False
             OCN_GRID=="tx0.66v1": True
+            else: False
     NIHALO:
         description: |
             "default = 2
@@ -97,8 +96,8 @@ Global:
         datatype: integer
         units: nondim
         value:
-            common: 60
             OCN_GRID=="MISOMIP": 36
+            else: 60
     USE_LEGACY_DIABATIC_DRIVER:
         description: |
             "[Boolean] default = True
@@ -222,8 +221,8 @@ Global:
         datatype: real
         units: s
         value:
-            OCN_GRID=="common": 0.0
             OCN_GRID=="tx0.66v1": 7200.0
+            else: 0.0
     FRAZIL:
         description: |
             "[Boolean] default = False
@@ -336,8 +335,8 @@ Global:
             mercator - use a Mercator spherical grid."
         datatype: string
         value:
-            common: "mosaic"
             OCN_GRID=="MISOMIP": "cartesian"
+            else: "mosaic"
     GRID_FILE:
         description: |
             "Name of the file from which to read horizontal grid data."
@@ -375,8 +374,8 @@ Global:
             USER - call a user modified routine."
         datatype: string
         value:
-            common: "file"
             OCN_GRID=="MISOMIP": "ISOMIP"
+            else: "file"
     TOPO_FILE:
         description: |
             "default = 'topog.nc'
@@ -535,8 +534,8 @@ Global:
         datatype: real
         units: m
         value:
-            common: 1.0E-06
             OCN_GRID=="MISOMIP": 1.0E-12
+            else: 1.0E-06
     USE_NEUTRAL_DIFFUSION:
         description: |
             "[Boolean] default = False
@@ -572,8 +571,8 @@ Global:
             ADAPTIVE - optimize for smooth neutral density surfaces"
         datatype: string
         value:
-            common: "Z*"
             OCN_GRID=="MISOMIP": "SIGMA_SHELF_ZSTAR"
+            else: "Z*"
     ALE_COORDINATE_CONFIG:
         description: |
             "default = 'UNIFORM'
@@ -661,8 +660,8 @@ Global:
         datatype: real
         units: m s-1
         value:
-            common: 0.01
             OCN_GRID=="MISOMIP": 0.0
+            else: 0.01
     KH_SIN_LAT:
         description: |
             "[m2 s-1] default = 0.0
@@ -725,8 +724,8 @@ Global:
         datatype: real
         units: m
         value:
-            common: 0.5
             OCN_GRID=="MISOMIP": 20.0
+            else: 0.5
     CHANNEL_DRAG:
         description: |
             "[Boolean] default = False
@@ -738,8 +737,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
             OCN_GRID=="MISOMIP": False
+            else: True
     PRANDTL_TURB:
         description: |
             "[nondim] default = 0.0
@@ -795,8 +794,8 @@ Global:
         datatype: real
         units: m s-1
         value:
-            common: 6.0
             OCN_GRID=="MISOMIP": 10.0
+            else: 6.0
     CFL_TRUNCATE_RAMP_TIME:
         description: |
             "[s] default = 0.0
@@ -872,8 +871,8 @@ Global:
         datatype: real
         units: m
         value:
-            common: 0.1
             OCN_GRID=="MISOMIP": 2.0
+            else: 0.1
     BOUND_BT_CORRECTION:
         description: |
             "[Boolean] default = False
@@ -941,8 +940,8 @@ Global:
         datatype: real
         units: s or nondim
         value:
-            common: -0.95
             OCN_GRID=="MISOMIP": -0.9
+            else: -0.95
     DEPTH_MIN_DYN_PSURF:
         description: |
             "[m] default = 1.0E-06
@@ -1002,8 +1001,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: True
             OCN_GRID=="MISOMIP": False
+            else: True
     FOX_KEMPER_ML_RESTRAT_COEF:
         description: |
             "[nondim] default = 0.0
@@ -1122,8 +1121,8 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            common: 2.0E-05
             OCN_GRID=="MISOMIP": 5.0E-5
+            else: 2.0E-05
     KD_MIN:
         description: |
             "[m2 s-1] default = 2.0E-07
@@ -1283,8 +1282,8 @@ Global:
         datatype: real
         units: m
         value:
-            common: 2.0
             OCN_GRID=="MISOMIP": 20.0
+            else: 2.0
     PEN_SW_SCALE:
         description: |
             "[m] default = 0.0
@@ -1416,8 +1415,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            common: False   # for all B compsets and grids
             OCN_GRID=="tx0.66v1", COMP_ATM=="datm": True  # for C and G compsets on tx0.66v1
+            else: False   # for all B compsets and grids
     FLUXCONST:
         description: |
             "[m day-1]
@@ -1472,8 +1471,8 @@ Global:
             for any non-negative value."
         datatype: integer
         value:
-            common: 3
             OCN_GRID=="MISOMIP": -1
+            else: 3
     RESTINT:
         description: |
             "[days] default = 0.0
@@ -1483,8 +1482,8 @@ Global:
         datatype: real
         units: days
         value:
-            common: 365.0
             OCN_GRID=="MISOMIP": 0.0
+            else: 365.0
     ENERGYSAVEDAYS:
         description: |
             "[days] default = 1.0
