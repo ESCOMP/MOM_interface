@@ -19,42 +19,42 @@ try: # Python 2
 except NameError: # Python 3
     str_type = str
 
-def has_special_variable(entry):
-    """ Checks if a given entry of type string has a special value to be inferred. """
+def has_param_to_expand(entry):
+    """ Checks if a given entry of type string has cime parameter to expand"""
     assert( type(entry)!=OrderedDict )
     if isinstance(entry,str_type) and "$" in entry:
         return True
     else:
         return False
 
-def infer_special_variable(entry, case, entry_is_guard=False):
-    """ Returns the inferred value for a given entry with special value """
+def expand_cime_parameter(entry, case, entry_is_guard=False):
+    """ Returns the version of an entry where cime parameters are expanded"""
 
-    assert(has_special_variable(entry))
+    assert(has_param_to_expand(entry))
 
     # first, infer ${*}
-    special_vars = re.findall(r'\$\{.+?\}',entry)
-    for special_var in special_vars:
-        special_var_strip = special_var.replace("${","").replace("}","")
-        inferred_val = case.get_value(special_var_strip)
-        if inferred_val==None:
-            raise RuntimeError("The guard "+special_var_strip+" is not a CIME xml"
+    cime_params = re.findall(r'\$\{.+?\}',entry)
+    for cime_param in cime_params:
+        cime_param_strip = cime_param.replace("${","").replace("}","")
+        cime_param_expanded = case.get_value(cime_param_strip)
+        if cime_param_expanded==None:
+            raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
                                " variable for this case")
-        if isinstance(inferred_val,str_type) and entry_is_guard:
-            inferred_val = '"'+inferred_val+'"'
-        entry = entry.replace(special_var,inferred_val)
+        if isinstance(cime_param_expanded,str_type) and entry_is_guard:
+            cime_param_expanded = '"'+cime_param_expanded+'"'
+        entry = entry.replace(cime_param,cime_param_expanded)
 
     # now infer $*
     for word in entry.split():
         if word[0] == '$':
-            special_var = word[1:]
-            inferred_val = case.get_value(special_var)
-            if inferred_val==None:
-                raise RuntimeError("The guard "+special_var_strip+" is not a CIME xml"
+            cime_param = word[1:]
+            cime_param_expanded = case.get_value(cime_param)
+            if cime_param_expanded==None:
+                raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
                                    " variable for this case")
-            if isinstance(inferred_val,str_type) and entry_is_guard:
-                inferred_val = '"'+inferred_val+'"'
-            entry = entry.replace(word,str(inferred_val))
+            if isinstance(cime_param_expanded,str_type) and entry_is_guard:
+                cime_param_expanded = '"'+cime_param_expanded+'"'
+            entry = entry.replace(word,str(cime_param_expanded))
 
     return entry
 
@@ -98,8 +98,8 @@ class MOM_RPS(object,):
         def _guard_satisfied(guard, case):
             " Checks if a given value guard agrees with the case settings."
 
-            if has_special_variable(guard):
-                guard_inferred = infer_special_variable(guard, case, entry_is_guard=True)
+            if has_param_to_expand(guard):
+                guard_inferred = expand_cime_parameter(guard, case, entry_is_guard=True)
             else:
                 guard_inferred = guard
 
@@ -179,25 +179,25 @@ class MOM_RPS(object,):
             _determine_value_recursive(self.data[entry])
 
 
-    def infer_special_vals(self, case):
-        """ Replaces the values defined with special keys, i.e., ${XML_VAR}, in yaml files"""
+    def expand_cime_params_in_vals(self, case):
+        """ Expands cime parameters in values of key:value pairs"""
 
-        def _deduce_special_vals_recursive(entry):
-            """ Recursive deduces special values of a given yaml entry. """
+        def _expand_cime_params_in_vals_recursive(entry):
+            """ Recursively expands cime parameters in values of key:value pairs"""
 
             for child in entry:
                 if (isinstance(child,list)):
                     continue
                 elif (type(entry[child])==OrderedDict):
-                    _deduce_special_vals_recursive(entry[child])
+                    _expand_cime_params_in_vals_recursive(entry[child])
                 else:
-                    if (has_special_variable(entry[child])):
-                        entry[child] = infer_special_variable(entry[child],case)
+                    if (has_param_to_expand(entry[child])):
+                        entry[child] = expand_cime_parameter(entry[child],case)
                     else:
                         continue
 
         for entry in self.data:
-            _deduce_special_vals_recursive(self.data[entry])
+            _expand_cime_params_in_vals_recursive(self.data[entry])
 
     @abc.abstractmethod
     def check_consistency(self):
@@ -221,8 +221,8 @@ class MOM_input_nml(MOM_RPS):
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)
 
-        # Replace special xml values (e.g., $INPUTDIR) with their actual values
-        self.infer_special_vals(case)
+        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
+        self.expand_cime_params_in_vals(case)
 
         with open(os.path.join(output_path), 'w') as input_nml:
             for module in self.data:
@@ -249,8 +249,8 @@ class Input_data_list(MOM_RPS):
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)
 
-        # Replace special xml values (e.g., $INPUTDIR) with their actual values
-        self.infer_special_vals(case)
+        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
+        self.expand_cime_params_in_vals(case)
 
         with open(os.path.join(output_path), 'w') as input_data_list:
             for module in self.data:
@@ -269,8 +269,8 @@ class Diag_table(MOM_RPS):
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)
 
-        # Replace special xml values (e.g., $INPUTDIR) with their actual values
-        self.infer_special_vals(case)
+        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
+        self.expand_cime_params_in_vals(case)
 
         with open(os.path.join(output_path), 'w') as diag_table:
 
@@ -427,8 +427,8 @@ class MOM_Params(MOM_RPS):
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)
 
-        # Replace special xml values (e.g., $INPUTDIR) with their actual values
-        self.infer_special_vals(case)
+        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
+        self.expand_cime_params_in_vals(case)
 
         # 2. Now, write MOM_input
 
