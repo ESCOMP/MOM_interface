@@ -32,10 +32,12 @@ def has_param_to_expand(entry):
     else:
         return False
 
-def expand_cime_parameter(entry, case, entry_is_guard=False):
+def expand_cime_parameter(entry, case):
     """ Returns the version of an entry where cime parameters are expanded"""
 
     assert has_param_to_expand(entry)
+
+    entry_is_logical_str = isinstance(entry,str_type) and is_logical_expr(entry)
 
     # first, infer ${*}
     cime_params = re.findall(r'\$\{.+?\}',entry)
@@ -45,7 +47,7 @@ def expand_cime_parameter(entry, case, entry_is_guard=False):
         if cime_param_expanded==None:
             raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
                                " variable for this case")
-        if isinstance(cime_param_expanded,str_type) and entry_is_guard:
+        if isinstance(cime_param_expanded,str_type) and entry_is_logical_str:
             cime_param_expanded = '"'+cime_param_expanded+'"'
         entry = entry.replace(cime_param,cime_param_expanded)
 
@@ -57,7 +59,7 @@ def expand_cime_parameter(entry, case, entry_is_guard=False):
             if cime_param_expanded==None:
                 raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
                                    " variable for this case")
-            if isinstance(cime_param_expanded,str_type) and entry_is_guard:
+            if isinstance(cime_param_expanded,str_type) and entry_is_logical_str:
                 cime_param_expanded = '"'+cime_param_expanded+'"'
             entry = entry.replace(word,str(cime_param_expanded))
 
@@ -104,7 +106,7 @@ class MOM_RPS(object,):
             " Checks if a given value guard agrees with the case settings."
 
             if has_param_to_expand(guard):
-                guard_inferred = expand_cime_parameter(guard, case, entry_is_guard=True)
+                guard_inferred = expand_cime_parameter(guard, case)
             else:
                 guard_inferred = guard
 
@@ -468,6 +470,12 @@ class MOM_Params(MOM_RPS):
                     if val==None:
                         continue
 
+                    # eval
+                    if (isinstance(val,str_type) and val[0]=='='):
+                        try:
+                            val = eval(val[1:])
+                        except:
+                            raise RuntimeError("Cannot evaluate value: "+val+" for variable "+var)
 
                     # write "variable = value" pair
                     MOM_input.write(var+" = "+ str(val) +"\n")
