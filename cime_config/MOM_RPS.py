@@ -19,9 +19,14 @@ try: # Python 2
 except NameError: # Python 3
     str_type = str
 
+def is_logical_expr(string):
+    """ returns true if a string is a logical expression """
+    logical_keywords = [' and ',' or ', ' not ', '==', '=', '>', '<', 'true', 'false']
+    return len([key for key in logical_keywords if key in string.lower()])>0
+
 def has_param_to_expand(entry):
     """ Checks if a given entry of type string has cime parameter to expand"""
-    assert( type(entry)!=OrderedDict )
+    assert type(entry)!=OrderedDict
     if isinstance(entry,str_type) and "$" in entry:
         return True
     else:
@@ -30,7 +35,7 @@ def has_param_to_expand(entry):
 def expand_cime_parameter(entry, case, entry_is_guard=False):
     """ Returns the version of an entry where cime parameters are expanded"""
 
-    assert(has_param_to_expand(entry))
+    assert has_param_to_expand(entry)
 
     # first, infer ${*}
     cime_params = re.findall(r'\$\{.+?\}',entry)
@@ -108,6 +113,8 @@ class MOM_RPS(object,):
             except:
                 raise RuntimeError("Cannot evaluate guard: "+guard)
 
+            assert type(result)==type(True), "Guard is not boolean: "+str(guard)
+
             return result
 
         def _do_determine_value(multi_option_dict):
@@ -115,8 +122,8 @@ class MOM_RPS(object,):
                 with guards, returns the last entry whose guards are satisfied
                 by the case"""
 
-            assert(_is_multi_option_entry(multi_option_dict))
-            assert( type(multi_option_dict)==OrderedDict )
+            assert _is_multi_option_entry(multi_option_dict)
+            assert type(multi_option_dict)==OrderedDict
 
             val = None
             for value_guards in multi_option_dict:
@@ -152,9 +159,9 @@ class MOM_RPS(object,):
             """ returns true if a given dictionary has entries that consist of
                 multi-option (alternative) guarded entries"""
 
-            assert( type(entry)==OrderedDict )
+            assert type(entry)==OrderedDict
 
-            options = [child for child in entry if 'else' in child or '==' in child or '!=' in child]
+            options = [child for child in entry if is_logical_expr(child)]
             if (len(options)>0):
                 return True
             else:
