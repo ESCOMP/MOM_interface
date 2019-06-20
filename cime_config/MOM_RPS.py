@@ -19,6 +19,45 @@ try: # Python 2
 except NameError: # Python 3
     str_type = str
 
+def has_special_variable(entry):
+    """ Checks if a given entry of type string has a special value to be inferred. """
+    assert( type(entry)!=OrderedDict )
+    if isinstance(entry,str_type) and "$" in entry:
+        return True
+    else:
+        return False
+
+def infer_special_variable(entry, case, entry_is_guard=False):
+    """ Returns the inferred value for a given entry with special value """
+
+    assert(has_special_variable(entry))
+
+    # first, infer ${*}
+    special_vars = re.findall(r'\$\{.+?\}',entry)
+    for special_var in special_vars:
+        special_var_strip = special_var.replace("${","").replace("}","")
+        inferred_val = case.get_value(special_var_strip)
+        if inferred_val==None:
+            raise RuntimeError("The guard "+special_var_strip+" is not a CIME xml"
+                               " variable for this case")
+        if isinstance(inferred_val,str_type) and entry_is_guard:
+            inferred_val = '"'+inferred_val+'"'
+        entry = entry.replace(special_var,inferred_val)
+
+    # now infer $*
+    for word in entry.split():
+        if word[0] == '$':
+            special_var = word[1:]
+            inferred_val = case.get_value(special_var)
+            if inferred_val==None:
+                raise RuntimeError("The guard "+special_var_strip+" is not a CIME xml"
+                                   " variable for this case")
+            if isinstance(inferred_val,str_type) and entry_is_guard:
+                inferred_val = '"'+inferred_val+'"'
+            entry = entry.replace(word,str(inferred_val))
+
+    return entry
+
 
 ### MOM Runtime Parameter System Module =======================================
 
@@ -56,36 +95,20 @@ class MOM_RPS(object,):
         if not self.data:
             raise RuntimeError("Cannot apply the guards. No data found.")
 
-        def _guard_satisfied(guard_pair, case):
+        def _guard_satisfied(guard, case):
             " Checks if a given value guard agrees with the case settings."
 
-            # determine logical operation:
-            op_str = None
-            if "==" in guard_pair:
-                op_str = "=="
-            elif "!=" in guard_pair:
-                op_str = "!="
+            if has_special_variable(guard):
+                guard_inferred = infer_special_variable(guard, case, entry_is_guard=True)
             else:
-                raise RuntimeError("Cannot determine logical operation for guard pair: "+guard_pair)
-
-
-            guard_key = guard_pair.split(op_str)[0].strip()\
-                .replace('"','').replace("'","")
-            guard_val = guard_pair.split(op_str)[1].strip()\
-                .replace('"','').replace("'","")
+                guard_inferred = guard
 
             try:
-                case_val = case.get_value(guard_key)
+                result = eval(guard_inferred)
             except:
-                raise RuntimeError("Cannot find the guard "+guard_key+" in xml files")
+                raise RuntimeError("Cannot evaluate guard: "+guard)
 
-            # Note: Case-insensitive comparison!
-            if op_str=='==':
-                return str(case_val).lower() == str(guard_val).lower()
-            elif op_str=='!=':
-                return str(case_val).lower() != str(guard_val).lower()
-            else:
-                raise RuntimeError("Cannot determine logical operation for guard pair: "+guard_pair)
+            return result
 
         def _do_determine_value(multi_option_dict):
             """ From an ordered dict (multi_option_dict), whose entries are alternative values
@@ -156,45 +179,8 @@ class MOM_RPS(object,):
             _determine_value_recursive(self.data[entry])
 
 
-
     def infer_special_vals(self, case):
         """ Replaces the values defined with special keys, i.e., ${XML_VAR}, in yaml files"""
-
-        def _has_special_value(entry):
-            """ Checks if a given entry of type string has a special value to be inferred. """
-            assert( type(entry)!=OrderedDict )
-            if isinstance(entry,str_type) and "${" in entry:
-                return True
-            else:
-                return False
-
-        def _do_infer_special_var(entry):
-            """ Returns the inferred value for a given entry with special value """
-
-            assert(_has_special_value(entry))
-
-            # first, infer ${*}
-            special_vars = re.findall(r'\$\{.+?\}',entry)
-            for special_var in special_vars:
-                special_var_strip = special_var.replace("${","").replace("}","")
-                inferred_val = case.get_value(special_var_strip)
-                if inferred_val==None:
-                    raise RuntimeError("The guard "+special_var_strip+" is not a CIME xml"
-                                       " variable for this case")
-                entry = entry.replace(special_var,inferred_val)
-
-            # now infer $*
-            for word in entry.split():
-                if word[0] == '$':
-                    special_var = word[1:]
-                    inferred_val = case.get_value(special_var)
-                    if inferred_val==None:
-                        raise RuntimeError("The guard "+special_var_strip+" is not a CIME xml"
-                                           " variable for this case")
-                    entry = entry.replace(word,str(inferred_val))
-
-            return entry
-
 
         def _deduce_special_vals_recursive(entry):
             """ Recursive deduces special values of a given yaml entry. """
@@ -205,8 +191,8 @@ class MOM_RPS(object,):
                 elif (type(entry[child])==OrderedDict):
                     _deduce_special_vals_recursive(entry[child])
                 else:
-                    if (_has_special_value(entry[child])):
-                        entry[child] = _do_infer_special_var(entry[child])
+                    if (has_special_variable(entry[child])):
+                        entry[child] = infer_special_variable(entry[child],case)
                     else:
                         continue
 
@@ -459,16 +445,6 @@ class MOM_Params(MOM_RPS):
         parameters for this example can be found in the corresponding
         MOM_parameter_doc.all file which is generated by the model at run-time. */\n\n"""
 
-        def _val_str(val):
-            if isinstance(val,str_type):
-                if not is_number(val):
-                    val_return = '"'+val+'"'
-                else:
-                    val_return = val
-            else:
-                val_return = str(val)
-            return val_return
-
         with open(os.path.join(output_path), 'w') as MOM_input:
 
             MOM_input.write(MOM_input_header)
@@ -487,7 +463,7 @@ class MOM_Params(MOM_RPS):
 
 
                     # write "variable = value" pair
-                    MOM_input.write(var+" = "+ _val_str(val) +"\n")
+                    MOM_input.write(var+" = "+ str(val) +"\n")
 
                     # Write the variable description:
                     var_comments = self.data[module][var]["description"].split('\n')
