@@ -168,19 +168,31 @@ class MOM_RPS(object,):
             else:
                 return False
 
-        def _do_infer_special_vals(entry):
-            """ Returns the deduced value for a given entry with special value """
+        def _do_infer_special_var(entry):
+            """ Returns the inferred value for a given entry with special value """
 
             assert(_has_special_value(entry))
 
-            special_keys_list = re.findall(r'\$\{.+?\}',entry)
-            for special_key in special_keys_list:
-                special_key_strip = special_key.replace("$","").replace("{","").replace("}","")
-                special_val = case.get_value(special_key_strip)
-                if special_val==None:
-                    raise RuntimeError("The guard "+special_key_strip+" is not a CIME xml"
+            # first, infer ${*}
+            special_vars = re.findall(r'\$\{.+?\}',entry)
+            for special_var in special_vars:
+                special_var_strip = special_var.replace("${","").replace("}","")
+                inferred_val = case.get_value(special_var_strip)
+                if inferred_val==None:
+                    raise RuntimeError("The guard "+special_var_strip+" is not a CIME xml"
                                        " variable for this case")
-                entry = entry.replace(special_key,special_val)
+                entry = entry.replace(special_var,inferred_val)
+
+            # now infer $*
+            for word in entry.split():
+                if word[0] == '$':
+                    special_var = word[1:]
+                    inferred_val = case.get_value(special_var)
+                    if inferred_val==None:
+                        raise RuntimeError("The guard "+special_var_strip+" is not a CIME xml"
+                                           " variable for this case")
+                    entry = entry.replace(word,str(inferred_val))
+
             return entry
 
 
@@ -194,7 +206,7 @@ class MOM_RPS(object,):
                     _deduce_special_vals_recursive(entry[child])
                 else:
                     if (_has_special_value(entry[child])):
-                        entry[child] = _do_infer_special_vals(entry[child])
+                        entry[child] = _do_infer_special_var(entry[child])
                     else:
                         continue
 
