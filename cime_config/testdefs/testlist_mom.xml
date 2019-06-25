@@ -8,7 +8,7 @@
         </options>
       </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
-			<machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
   <test name="ERS_Vnuopc" grid="T62_g16" compset="CMOM_IAF">
@@ -19,7 +19,7 @@
         </options>
       </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
-			<machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
   <test name="SMS_D_Ld2" grid="T62_g16" compset="CMOM">
@@ -30,7 +30,7 @@
         </options>
       </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
-			<machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
   <test name="SMS" grid="T62_t061" compset="CMOM_IAF">
@@ -41,7 +41,7 @@
         </options>
       </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
-			<machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
   <test name="SMS_Vnuopc" grid="T62_t061" compset="GMOM">
@@ -52,7 +52,7 @@
         </options>
       </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
-			<machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
   <test name="ERI" grid="T62_t061" compset="GMOM">
@@ -63,7 +63,7 @@
         </options>
       </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
-			<machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
   <test name="ERS" grid="TL319_t061" compset="CMOM_JRA">
@@ -83,7 +83,7 @@
         </options>
       </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
-			<machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
 </testlist>
