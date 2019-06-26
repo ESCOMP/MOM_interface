@@ -63,7 +63,11 @@
         </options>
       </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
-      <machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">99:00:00</option>
+        </options>
+      </machine>
     </machines>
   </test>
   <test name="ERS" grid="TL319_t061" compset="CMOM_JRA">
