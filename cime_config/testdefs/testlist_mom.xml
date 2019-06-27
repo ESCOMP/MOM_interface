@@ -7,11 +7,19 @@
           <option name="wallclock">00:30:00</option>
         </options>
       </machine>
-      <machine name="hobart" compiler="intel" category="aux_mom">
+      <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
+    </machines>
+  </test>
+  <test name="ERS_Vnuopc" grid="T62_g16" compset="CMOM_IAF">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
         <options>
           <option name="wallclock">00:30:00</option>
         </options>
       </machine>
+      <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
   <test name="SMS_D_Ld2" grid="T62_g16" compset="CMOM">
@@ -21,6 +29,8 @@
           <option name="wallclock">00:30:00</option>
         </options>
       </machine>
+      <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
   <test name="SMS" grid="T62_t061" compset="CMOM_IAF">
@@ -30,13 +40,32 @@
           <option name="wallclock">00:30:00</option>
         </options>
       </machine>
+      <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
-  <test name="SMS" grid="T62_t061" compset="GMOM">
+  <test name="SMS_Vnuopc" grid="T62_t061" compset="GMOM">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom">
         <options>
           <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
+      <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
+    </machines>
+  </test>
+  <test name="ERI" grid="T62_t061" compset="GMOM">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
+      <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">99:00:00</option>
         </options>
       </machine>
     </machines>
@@ -57,6 +86,8 @@
           <option name="wallclock">00:30:00</option>
         </options>
       </machine>
+      <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
 </testlist>
