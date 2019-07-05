@@ -36,6 +36,7 @@ def prep_input(case):
     testcase        = case.get_value("TEST")
     hist_n          = case.get_value("HIST_N")
     hist_option     = case.get_value("HIST_OPTION")
+    ocn_ncpl        = case.get_value("OCN_NCPL")
     input_files     = ["diag_table", "input.nml", "MOM_input"]
 
     # determine input category (B,C, or G):
