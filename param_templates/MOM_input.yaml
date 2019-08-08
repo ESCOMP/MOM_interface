@@ -202,17 +202,6 @@ Global:
         units: m
         value:
             $OCN_GRID == "tx0.66v1": 10.0
-    MIN_Z_DIAG_INTERVAL:
-        description: |
-            "[s] default = 0.0
-            The minimum amount of time in seconds between
-            calculations of depth-space diagnostics. Making this
-            larger than DT_THERM reduces the  performance penalty
-            of regridding to depth online."
-        datatype: real
-        units: s
-        value:
-            $OCN_GRID == "tx0.66v1": 2.16E+04
     DTBT_RESET_PERIOD:
         description: |
             "[s] default = 7200.0
