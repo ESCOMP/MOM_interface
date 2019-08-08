@@ -2,36 +2,36 @@
    "mom.input_data_list": {
       "ocean_hgrid": {
          "value": {
-            "OCN_GRID==\"gx1v6\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_hgrid.nc",
-            "OCN_GRID==\"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_hgrid_180829.nc"
+            "$OCN_GRID == \"gx1v6\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_hgrid.nc",
+            "$OCN_GRID == \"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_hgrid_180829.nc"
          }
       },
       "ocean_vgrid": {
          "value": {
-            "OCN_GRID==\"gx1v6\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_vgrid.nc",
-            "OCN_GRID==\"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_vgrid_180829.nc"
+            "$OCN_GRID == \"gx1v6\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_vgrid.nc",
+            "$OCN_GRID == \"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_vgrid_180829.nc"
          }
       },
       "ocean_topog": {
          "value": {
-            "OCN_GRID==\"gx1v6\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_topog.nc",
-            "OCN_GRID==\"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_topog_190314.nc"
+            "$OCN_GRID == \"gx1v6\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_topog.nc",
+            "$OCN_GRID == \"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_topog_190314.nc"
          }
       },
       "tempsalt": {
          "value": {
-            "OCN_GRID==\"gx1v6\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt.nc",
-            "OCN_GRID==\"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt_180829.nc"
+            "$OCN_GRID == \"gx1v6\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt.nc",
+            "$OCN_GRID == \"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt_180829.nc"
          }
       },
       "saltrestore": {
          "value": {
-            "OCN_GRID==\"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/salt_restore_tx0.66v1_180828.nc"
+            "$OCN_GRID == \"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/salt_restore_tx0.66v1_180828.nc"
          }
       },
       "tidal_energy": {
          "value": {
-            "OCN_GRID==\"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/energy_new_t0.66v1_conserve_180608.nc"
+            "$OCN_GRID == \"tx0.66v1\"": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/energy_new_t0.66v1_conserve_180608.nc"
          }
       }
    }
