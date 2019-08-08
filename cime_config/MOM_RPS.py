@@ -57,7 +57,7 @@ def expand_cime_parameter(entry, case):
             cime_param = word[1:]
             cime_param_expanded = case.get_value(cime_param)
             if cime_param_expanded==None:
-                raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
+                raise RuntimeError("The guard "+cime_param+" is not a CIME xml"
                                    " variable for this case")
             if isinstance(cime_param_expanded,str_type) and entry_is_logical_str:
                 cime_param_expanded = '"'+cime_param_expanded+'"'
@@ -113,7 +113,7 @@ class MOM_RPS(object,):
             try:
                 result = eval(guard_inferred)
             except:
-                raise RuntimeError("Cannot evaluate guard: "+guard)
+                raise RuntimeError("Cannot evaluate guard: "+guard+" in file: "+self.input_path)
 
             assert type(result)==type(True), "Guard is not boolean: "+str(guard)
 
