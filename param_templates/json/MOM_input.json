@@ -53,7 +53,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 36,
-            "else": 60
+            "else": 63
          }
       },
       "USE_LEGACY_DIABATIC_DRIVER": {
