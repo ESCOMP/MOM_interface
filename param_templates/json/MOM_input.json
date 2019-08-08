@@ -400,7 +400,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"gx1v6\"": "FILE:ocean_vgrid.nc,dz",
-            "$OCN_GRID == \"tx0.66v1\"": "FILE:ocean_vgrid_180829.nc,dz"
+            "$OCN_GRID == \"tx0.66v1\"": "FILE:ocean_vgrid_190320.nc,dz"
          }
       },
       "BOUND_CORIOLIS": {
@@ -1100,7 +1100,7 @@
          "units": "days",
          "value": {
             "$OCN_GRID == \"gx1v6\"": 0.01,
-            "$OCN_GRID == \"tx0.66v1\"": 0.5,
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"MISOMIP\"": 1.0
          }
       },
@@ -1197,6 +1197,22 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"gx1v6\"": true
+         }
+      },
+      "BAD_VAL_SSS_MAX": {
+         "description": "\"default = 45.0\nThe value of SSS above which a bad value message is triggered, if\nCHECK_BAD_SURFACE_VALS is true.\"\n",
+         "datatype": "real",
+         "units": "PPT",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\" and $COMP_ICE == \"cice\"": 75.0
+         }
+      },
+      "BAD_VAL_SST_MIN": {
+         "description": "\"default = -2.1\nThe value of SST below which a bad value message is triggered, if\nCHECK_BAD_SURFACE_VALS is true.\"\n",
+         "datatype": "real",
+         "units": "degC",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": -2.5
          }
       },
       "REENTRANT_X": {
@@ -1765,22 +1781,6 @@
          "datatype": "logical",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": true
-         }
-      },
-      "BAD_VAL_SSS_MAX": {
-         "description": "\"default = 45.0\nThe value of SSS above which a bad value message is triggered, if\nCHECK_BAD_SURFACE_VALS is true.\"\n",
-         "datatype": "real",
-         "units": "PPT",
-         "value": {
-            "$OCN_GRID == \"tx066.v1\"": 75.0
-         }
-      },
-      "BAD_VAL_SST_MIN": {
-         "description": "\"default = -2.1\nThe value of SST below which a bad value message is triggered, if\nCHECK_BAD_SURFACE_VALS is true.\"\n",
-         "datatype": "real",
-         "units": "degC",
-         "value": {
-            "$OCN_GRID == \"tx066.v1\"": -2.5
          }
       }
    },
