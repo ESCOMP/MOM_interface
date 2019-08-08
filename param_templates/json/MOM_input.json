@@ -1774,6 +1774,22 @@
          "value": {
             "$OCN_GRID == \"MISOMIP\"": true
          }
+      },
+      "BAD_VAL_SSS_MAX": {
+         "description": "\"default = 45.0\nThe value of SSS above which a bad value message is triggered, if\nCHECK_BAD_SURFACE_VALS is true.\"\n",
+         "datatype": "real",
+         "units": "PPT",
+         "value": {
+            "$OCN_GRID == \"tx066.v1\"": 75.0
+         }
+      },
+      "BAD_VAL_SST_MIN": {
+         "description": "\"default = -2.1\nThe value of SST below which a bad value message is triggered, if\nCHECK_BAD_SURFACE_VALS is true.\"\n",
+         "datatype": "real",
+         "units": "degC",
+         "value": {
+            "$OCN_GRID == \"tx066.v1\"": -2.5
+         }
       }
    },
    "KPP": {

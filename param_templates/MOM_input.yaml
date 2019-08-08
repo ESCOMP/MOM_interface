@@ -2324,6 +2324,24 @@ Global:
         datatype: logical
         value:
             $OCN_GRID == "MISOMIP": True
+    BAD_VAL_SSS_MAX:
+        description: |
+          "default = 45.0
+          The value of SSS above which a bad value message is triggered, if
+          CHECK_BAD_SURFACE_VALS is true."
+        datatype: real
+        units: PPT
+        value:
+            $OCN_GRID == "tx066.v1": 75.0
+    BAD_VAL_SST_MIN:
+        description: |
+          "default = -2.1
+          The value of SST below which a bad value message is triggered, if
+          CHECK_BAD_SURFACE_VALS is true."
+        datatype: real
+        units: degC
+        value:
+            $OCN_GRID == "tx066.v1": -2.5
 
 KPP:
     N_SMOOTH:
