@@ -8,6 +8,26 @@
 "$CASENAME.mom6.hm%4yr-%2mo",  1,  "months", 1, "days", "time",1,"months"
 "$CASENAME.mom6.static",            -1,"days",1,"days","time",
 
+# Vertical Sections
+"$CASENAME_Agulhas_Section%4yr",         1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Bab_al_mandeb_Strait%4yr",    1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Barents_opening%4yr",         1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Bering_Strait%4yr",           1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Davis_Strait%4yr",            1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Denmark_Strait%4yr",          1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Drake_Passage%4yr",           1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_English_Channel%4yr",         1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Fram_Strait%4yr",             1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Florida_Bahamas%4yr",         1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Gibraltar_Strait%4yr",        1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Hormuz_Strait%4yr",           1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Iceland_Norway%4yr",          1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Indonesian_Throughflow%4yr",  1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Mozambique_Channel%4yr",      1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Pacific_undercurrent%4yr",    1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Taiwan_Luzon%4yr",            1, "days",   1, "days", "time", 365,"days"
+"$CASENAME_Windward_Passage%4yr",        1, "days",   1, "days", "time", 365,"days"
+
 #===============================================================================
 # CESM-specific notes:
 #   For CESM archiver to work with MOM6 output files, MOM6 requires to adhere to
@@ -20,6 +40,144 @@
 #   with the actual case name while building the case.
 #===============================================================================
 
+#This is the field section of the diag_table.
+
+# A/ In bipolar Arctic, the lat/lon values are taken from the "nominal" grid values
+# B/ tx0.666v1 goes from -286.66 to 72.66.  So longitudes must be set within this range.
+# C/ Can use these sections for post-processing diagnostics.
+# D/ Most of these sections have details that are specific to x0.666v1 grid.  Details generally change
+#    when changing the grid resolution.
+
+# Agulhas Section (north-south), transport is closely tied to Drake Passage transport
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Agulhas_Section%4yr",    "all", .true., "20.1 20.1 -70.0 -34.6 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Agulhas_Section%4yr",    "all", .true., "20.1 20.1 -70.0 -34.6 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Agulhas_Section%4yr",    "all", .true., "20.1 20.1 -70.0 -34.6 -1 -1",2
+"ocean_model_z", "umo",  "umo",          "$CASENAME_Agulhas_Section%4yr",    "all", .true., "20.1 20.1 -70.0 -34.6 -1 -1",2
+"ocean_model_z", "uo",   "uo",           "$CASENAME_Agulhas_Section%4yr",    "all", .true., "20.1 20.1 -70.0 -34.6 -1 -1",2
+
+
+# Bab Al-mandeb Strait (north-south section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Bab_al_mandeb_Strait%4yr",    "all", .true., "45.0 45.0 10.5 13.5 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Bab_al_mandeb_Strait%4yr",    "all", .true., "45.0 45.0 10.5 13.5 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Bab_al_mandeb_Strait%4yr",    "all", .true., "45.0 45.0 10.5 13.5 -1 -1",2
+"ocean_model_z", "umo",  "umo",          "$CASENAME_Bab_al_mandeb_Strait%4yr",    "all", .true., "45.0 45.0 10.5 13.5 -1 -1",2
+"ocean_model_z", "uo",   "uo",           "$CASENAME_Bab_al_mandeb_Strait%4yr",    "all", .true., "45.0 45.0 10.5 13.5 -1 -1",2
+
+# Barents Opening, not a closed section  (east-west section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Barents_opening%4yr",    "all", .true., "-5.2 18.8  78.93 78.93 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Barents_opening%4yr",    "all", .true., "-5.2 18.8  78.93 78.93 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Barents_opening%4yr",    "all", .true., "-5.2 18.8  78.93 78.93 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Barents_opening%4yr",    "all", .true., "-5.2 18.8  78.93 78.93 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Barents_opening%4yr",    "all", .true., "-5.2 18.8  78.93 78.93 -1 -1",2
+
+# Bering Strait (east-west section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Bering_Strait%4yr",    "all", .true., "-174.5  -171.5 66.6 66.6 -1 -1",2
+
+# Davis Strait (east-west section)
+# GMM, needs to be confirmed
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Davis_Strait%4yr",    "all", .true., "-53.5 -45.3 69.5 69.5 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Davis_Strait%4yr",    "all", .true., "-53.5 -45.3 69.5 69.5 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Davis_Strait%4yr",    "all", .true., "-53.5 -45.3 69.5 69.5 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Davis_Strait%4yr",    "all", .true., "-53.5 -45.3 69.5 69.5 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Davis_Strait%4yr",    "all", .true., "-53.5 -45.3 69.5 69.5 -1 -1",2
+
+# Denmark Strait, not a closed section (east-west section)
+# GMM, needs to be confirmed
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-38.50 -21.5 65.0 65.0 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-38.50 -21.5 65.0 65.0 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-38.50 -21.5 65.0 65.0 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-38.50 -21.5 65.0 65.0 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Denmark_Strait%4yr",    "all", .true., "-38.50 -21.5 65.0 65.0 -1 -1",2
+
+# Drake Passage (north-south section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Drake_Passage%4yr",    "all", .true., "-67.0 -67.0 -69.0 -55.2 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Drake_Passage%4yr",    "all", .true., "-67.0 -67.0 -69.0 -55.2 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Drake_Passage%4yr",    "all", .true., "-67.0 -67.0 -69.0 -55.2 -1 -1",2
+"ocean_model_z", "umo",  "umo",          "$CASENAME_Drake_Passage%4yr",    "all", .true., "-67.0 -67.0 -69.0 -55.2 -1 -1",2
+"ocean_model_z", "uo",   "uo",           "$CASENAME_Drake_Passage%4yr",    "all", .true., "-67.0 -67.0 -69.0 -55.2 -1 -1",2
+
+# English Channel, not a closed section (north-south section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_English_Channel%4yr",    "all", .true., "0.0 0.0 51.0 52.9 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_English_Channel%4yr",    "all", .true., "0.0 0.0 51.0 52.9 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_English_Channel%4yr",    "all", .true., "0.0 0.0 51.0 52.9 -1 -1",2
+"ocean_model_z", "umo",  "umo",          "$CASENAME_English_Channel%4yr",    "all", .true., "0.0 0.0 51.0 52.9 -1 -1",2
+"ocean_model_z", "uo",   "uo",           "$CASENAME_English_Channel%4yr",    "all", .true., "0.0 0.0 51.0 52.9 -1 -1",2
+
+# Fram Strait (east-west section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Fram_Strait%4yr",    "all", .true., "-21.0 -9.8 80.5 80.5 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Fram_Strait%4yr",    "all", .true., "-21.0 -9.8 80.5 80.5 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Fram_Strait%4yr",    "all", .true., "-21.0 -9.8 80.5 80.5 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Fram_Strait%4yr",    "all", .true., "-21.0 -9.8 80.5 80.5 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Fram_Strait%4yr",    "all", .true., "-21.0 -9.8 80.5 80.5 -1 -1",2
+
+# Florida-Bahamas Strait, not a closed section (east-west section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Florida_Bahamas%4yr",    "all", .true., "-80.1 -77.9 25.3 25.3 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Florida_Bahamas%4yr",    "all", .true., "-80.1 -77.9 25.3 25.3 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Florida_Bahamas%4yr",    "all", .true., "-80.1 -77.9 25.3 25.3 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Florida_Bahamas%4yr",    "all", .true., "-80.1 -77.9 25.3 25.3 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Florida_Bahamas%4yr",    "all", .true., "-80.1 -77.9 25.3 25.3 -1 -1",2
+
+# Gibraltar Strait (north-south section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Gibraltar_Strait%4yr", "all", .true., "-6.5 -6.5 34.3 37.4 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Gibraltar_Strait%4yr", "all", .true., "-6.5 -6.5 34.3 37.4 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Gibraltar_Strait%4yr", "all", .true., "-6.5 -6.5 34.3 37.4 -1 -1",2
+"ocean_model_z", "umo",  "umo",          "$CASENAME_Gibraltar_Strait%4yr", "all", .true., "-6.5 -6.5 34.3 37.4 -1 -1",2
+"ocean_model_z", "uo",   "uo",           "$CASENAME_Gibraltar_Strait%4yr", "all", .true., "-6.5 -6.5 34.3 37.4 -1 -1",2
+
+# Hormuz Strait (north-south section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Hormuz_Strait%4yr",    "all", .true., "55.9 55.9 25.0 27.5 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Hormuz_Strait%4yr",    "all", .true., "55.9 55.9 25.0 27.5 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Hormuz_Strait%4yr",    "all", .true., "55.9 55.9 25.0 27.5 -1 -1",2
+"ocean_model_z", "umo",  "umo",          "$CASENAME_Hormuz_Strait%4yr",    "all", .true., "55.9 55.9 25.0 27.5 -1 -1",2
+"ocean_model_z", "uo",   "uo",           "$CASENAME_Hormuz_Strait%4yr",    "all", .true., "55.9 55.9 25.0 27.5 -1 -1",2
+
+# Iceland_Norway (east-west section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Iceland_Norway%4yr",    "all", .true., "-21.5 1.5 65.0 65.0 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Iceland_Norway%4yr",    "all", .true., "-21.5 1.5 65.0 65.0 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Iceland_Norway%4yr",    "all", .true., "-21.5 1.5 65.0 65.0 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Iceland_Norway%4yr",    "all", .true., "-21.5 1.5 65.0 65.0 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Iceland_Norway%4yr",    "all", .true., "-21.5 1.5 65.0 65.0 -1 -1",2
+
+# Indonesian Throughflow (east-west section): settings in spirit of OMIP "bulk" transport calculation
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Indonesian_Throughflow%4yr",    "all", .true., "-246.5 -220.8 -7.0 -7.0 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Indonesian_Throughflow%4yr",    "all", .true., "-246.5 -220.8 -7.0 -7.0 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Indonesian_Throughflow%4yr",    "all", .true., "-246.5 -220.8 -7.0 -7.0 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Indonesian_Throughflow%4yr",    "all", .true., "-246.5 -220.8 -7.0 -7.0 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Indonesian_Throughflow%4yr",    "all", .true., "-246.5 -220.8 -7.0 -7.0 -1 -1",2
+
+# Mozambique Channel (east-west section)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Mozambique_Channel%4yr",    "all", .true., "39.9 44.7 -16.0 -16.0 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Mozambique_Channel%4yr",    "all", .true., "39.9 44.7 -16.0 -16.0 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Mozambique_Channel%4yr",    "all", .true., "39.9 44.7 -16.0 -16.0 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Mozambique_Channel%4yr",    "all", .true., "39.9 44.7 -16.0 -16.0 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Mozambique_Channel%4yr",    "all", .true., "39.9 44.7 -16.0 -16.0 -1 -1",2
+
+# Pacific Equatorial Undercurrent (north-south section)
+"ocean_model_z", "volcello", "volcello",  "$CASENAME_Pacific_undercurrent%4yr",  "all", .true., "-155.0 -155.0 -2.0 2.0 -1 -1",2
+"ocean_model_z", "thetao", "thetao",      "$CASENAME_Pacific_undercurrent%4yr",  "all", .true., "-155.0 -155.0 -2.0 2.0 -1 -1",2
+"ocean_model_z", "so",   "so",            "$CASENAME_Pacific_undercurrent%4yr",  "all", .true., "-155.0 -155.0 -2.0 2.0 -1 -1",2
+"ocean_model_z", "umo",  "umo",           "$CASENAME_Pacific_undercurrent%4yr",  "all", .true., "-155.0 -155.0 -2.0 2.0 -1 -1",2
+"ocean_model_z", "uo",   "uo",            "$CASENAME_Pacific_undercurrent%4yr",  "all", .true., "-155.0 -155.0 -2.0 2.0 -1 -1",2
+
+# Taiwan_Luzon (north-south section)
+"ocean_model_z", "volcello", "volcello",  "$CASENAME_Taiwan_Luzon%4yr",  "all", .true., "-239.0 -239.0 18.8 22.5 -1 -1",2
+"ocean_model_z", "thetao", "thetao",      "$CASENAME_Taiwan_Luzon%4yr",  "all", .true., "-239.0 -239.0 18.8 22.5 -1 -1",2
+"ocean_model_z", "so",   "so",            "$CASENAME_Taiwan_Luzon%4yr",  "all", .true., "-239.0 -239.0 18.8 22.5 -1 -1",2
+"ocean_model_z", "umo",  "umo",           "$CASENAME_Taiwan_Luzon%4yr",  "all", .true., "-239.0 -239.0 18.8 22.5 -1 -1",2
+"ocean_model_z", "uo",   "uo",            "$CASENAME_Taiwan_Luzon%4yr",  "all", .true., "-239.0 -239.0 18.8 22.5 -1 -1",2
+
+
+# Caribbean (east-west section, Cuba-Haiti) Windward Passage (not a closed section on tx0.66v1 grid)
+"ocean_model_z", "volcello", "volcello", "$CASENAME_Windward_Passage%4yr", "all", .true., "-74.2 -73.2 20.39 20.39 -1 -1",2
+"ocean_model_z", "thetao","thetao",      "$CASENAME_Windward_Passage%4yr", "all", .true., "-74.2 -73.2 20.39 20.39 -1 -1",2
+"ocean_model_z", "so",   "so",           "$CASENAME_Windward_Passage%4yr", "all", .true., "-74.2 -73.2 20.39 20.39 -1 -1",2
+"ocean_model_z", "vmo",  "vmo",          "$CASENAME_Windward_Passage%4yr", "all", .true., "-74.2 -73.2 20.39 20.39 -1 -1",2
+"ocean_model_z", "vo",   "vo",           "$CASENAME_Windward_Passage%4yr", "all", .true., "-74.0 -73.33 20.39 20.39 -1 -1",2
+
 # history files
 # 3D fields remmaped to z-space
 "ocean_model_z","KE","KE","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
@@ -30,6 +188,9 @@
 "ocean_model_z","salt","salt","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model_z","rhoinsitu","rhoinsitu","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
 "ocean_model_z","age","age","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",1
+"ocean_model_z", "volcello","volcello","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",2 # Cell measure for 3d data
+"ocean_model_z", "thetao","thetao","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",2  # if use pre-TEOS10
+"ocean_model_z", "so","so","$CASENAME.mom6.h%4yr-%2mo","all","mean","none",2
 #"ocean_model_z","vintage","vintage","$CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
 #"ocean_model_z","CFC11","CFC11","$CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
 #"ocean_model_z","CFC12","CFC12","$CASENAME.mom6.h%4yr-%2mo","all",mean,"none",2
@@ -76,6 +237,10 @@
 "ocean_model","e","e","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
 "ocean_model","temp","temp","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
 "ocean_model","salt","salt","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","T_ady_2d","T_ady_2d","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","T_adx_2d","T_adx_2d","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","T_diffy_2d","T_diffy_2d","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
+"ocean_model","T_diffx_2d","T_diffx_2d","$CASENAME.mom6.hm%4yr-%2mo","all","mean","none",2
 
 # Tracer Fluxes:
 #"ocean_model","T_adx",  "T_adx",  "$CASENAME.mom6.hm.%4yr-%3dy","all",.true.,"none",2
@@ -107,9 +272,9 @@
 "ocean_model","SSU","SSU","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 "ocean_model","SSV","SSV","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 "ocean_model","KPP_OBLdepth","KPP_OBLdepth","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
-"ocean_model","mass_wt","mass_wt","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
-"ocean_model","temp_int","temp_int","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
-"ocean_model","salt_int","salt_int","$CASENAME.mom6.sfc%4yr","all",.false.,"none",2
+"ocean_model","mass_wt","mass_wt","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","temp_int","temp_int","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
+"ocean_model","salt_int","salt_int","$CASENAME.mom6.sfc%4yr","all",.true.,"none",2
 
 # Momentum Balance Terms:
 #=======================
@@ -163,8 +328,6 @@
 #"ocean_model","FrictWork","FrictWork","$CASENAME.mom6.visc%4yr","all",.true.,"none",2
 #
 
-# Surface Forcing:
-#=================
 # Surface Forcing:
 #=================
 "ocean_model","taux","taux","$CASENAME.mom6.frc%4yr","all",.true.,"none",2

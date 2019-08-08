@@ -1,0 +1,22 @@
+===============================================================================
+Tag Creator: altuntas
+Developers:  altuntas
+Tag Date:    05 Aug 2019
+Tag Name:    mi_20190805
+
+MOM_interface Updates Summary:
+        - Added ChangeLog file.
+          ChangeLog is updated each time a new MOM_interface tag is created.
+          A new MOM_interface tag is created when new version(s) of NCAR/MOM6
+          and/or MOM_interface is to be incorporated in an upcoming CESM tag.
+        - Changed MOM6 entry in Externals.cfg to point to a tag instead of 
+          a branch.
+
+MOM6 Updates Summary: n/a
+
+Testing: aux_mom on cheyenne/intel
+
+Files Modified/Added/Removed:
+  new file:   ChangeLog
+  modified:   Externals.cfg
+
