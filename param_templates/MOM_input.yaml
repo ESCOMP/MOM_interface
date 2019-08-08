@@ -97,7 +97,8 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "MISOMIP": 36
-            else: 63
+            $OCN_GRID == "gx1v6": 60
+            $OCN_GRID == "tx0.66v1": 63
     USE_LEGACY_DIABATIC_DRIVER:
         description: |
             "[Boolean] default = True
@@ -1625,7 +1626,7 @@ Global:
         datatype: real
         units: PPT
         value:
-            $OCN_GRID == "tx0.66v1" and $COMP_ICE == "cice" : 75.0
+            $OCN_GRID == "tx0.66v1" and $COMP_ICE == "cice" and $COMP_ATM != "cam": 75.0
     BAD_VAL_SST_MIN:
         description: |
           "default = -2.1
