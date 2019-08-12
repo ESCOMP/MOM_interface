@@ -1118,6 +1118,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"MISOMIP\"": true
          }
       },
@@ -1181,6 +1182,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"MISOMIP\"": true
          }
       },
@@ -1529,7 +1531,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": true
+            "$OCN_GRID == \"MISOMIP\"": 0.06
          }
       },
       "HARMONIC_BL_SCALE": {
