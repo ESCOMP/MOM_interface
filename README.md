@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ESCOMP/MOM_interface.svg?branch=master)](https://travis-ci.org/alperaltuntas/MOM_interface)
+[![Build Status](https://travis-ci.org/ESCOMP/MOM_interface.svg?branch=master)](https://travis-ci.org/ESCOMP/MOM_interface)
 
 # MOM_interface
 
