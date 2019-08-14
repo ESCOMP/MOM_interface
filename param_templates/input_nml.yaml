@@ -1,0 +1,27 @@
+# This file includes the MOM6 parameters used within the CESM framework,
+# and is used to generate MOM_input file at compile time.
+
+MOM_input_nml:
+    output_directory:
+        value: "'./'"
+    restart_input_dir:
+        value: "'./'"
+    restart_output_dir:
+        value: "'./'"
+    parameter_filename:
+        value: "'MOM_input', 'MOM_override'"
+fms_nml:
+    clock_grain:
+        value: "'ROUTINE'"
+    clock_flags:
+        value: "'NONE'"
+    domains_stack_size:
+        value: 5000000
+    stack_size:
+        value: 0
+
+diag_manager_nml:
+    flush_nc_files:
+        value: .true.
+
+

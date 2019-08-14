@@ -1,0 +1,15 @@
+language: python
+python:
+  - "2.7"
+  - "3.6"
+
+git:
+  submodules: false # no need to check out MOM6 for now
+
+install:
+  - chmod ugo+x ./tests/check_default_params.py
+  - pip install pyyaml
+
+script: 
+  - ./tests/check_default_params.py
+
