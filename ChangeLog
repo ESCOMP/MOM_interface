@@ -1,22 +1,92 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  altuntas, gmarques, mlevy
+Tag Date:    19 Aug 2019
+Tag Name:    mi_20190819
+
+MOM_interface Updates Summary:
+- New input staging approach based on common yaml files
+  - Adds a new python module MOM_RPS, in cime_config to automate input file staging
+  - MOM_input: done
+  - input.nml: done
+  - mom.input_data_list: done
+  - diag_table: almost done. Need to review field lists.*
+  - allows fine tuning: Any xml parameter (e.g., OCN_GRID, DATM_MODE, etc) may be used to specify defaults.
+  - MOM_RPS read/write is invoked via builnml.
+- CI testing added. (travis)
+- Add CVMix to Externals_MOM, don't build MARBL
+
+MOM6 Updates Summary:
+- Adds time0 and time_start in MCT and NUOPC (PR #116)
+
+Testing: aux_mom on cheyenne/intel
+
+MOM_interface Files Modified/Added/Removed: git diff --name-status mi_20190805..master
+M       .gitignore
+A       .travis.yml
+M       Externals_MOM.cfg
+M       README.md
+A       cime_config/MOM_RPS.py
+M       cime_config/buildlib
+M       cime_config/buildnml
+M       cime_config/config_component.xml
+D       input_templates/ISOMIP/C/MOM_input
+D       input_templates/ISOMIP/C/input.nml
+D       input_templates/ISOMIP/C/mom.input_data_list
+D       input_templates/MISOMIP/B/MOM_input
+D       input_templates/MISOMIP/B/input.nml
+D       input_templates/MISOMIP/B/mom.input_data_list
+D       input_templates/MISOMIP/C/MOM_input
+D       input_templates/MISOMIP/C/input.nml
+D       input_templates/MISOMIP/C/mom.input_data_list
+D       input_templates/MISOMIP/G/MOM_input
+D       input_templates/MISOMIP/G/input.nml
+D       input_templates/MISOMIP/G/mom.input_data_list
+D       input_templates/gx1v6/B/MOM_input
+D       input_templates/gx1v6/B/input.nml
+D       input_templates/gx1v6/B/mom.input_data_list
+D       input_templates/gx1v6/C/MOM_input
+D       input_templates/gx1v6/C/input.nml
+D       input_templates/gx1v6/C/mom.input_data_list
+D       input_templates/gx1v6/G/MOM_input
+D       input_templates/tx0.66v1/B/mom.input_data_list
+D       input_templates/tx0.66v1/C/MOM_input
+D       input_templates/tx0.66v1/C/input.nml
+D       input_templates/tx0.66v1/C/mom.input_data_list
+D       input_templates/tx0.66v1/G/MOM_input
+D       input_templates/tx0.66v1/G/input.nml
+D       input_templates/tx0.66v1/G/mom.input_data_list
+A       param_templates/MOM_input.yaml
+A       param_templates/diag_table.yaml
+A       param_templates/input_data_list.yaml
+A       param_templates/input_nml.yaml
+A       param_templates/json/MOM_input.json
+A       param_templates/json/README
+A       param_templates/json/diag_table.json
+A       param_templates/json/input_data_list.json
+A       param_templates/json/input_nml.json
+A       param_templates/yaml_to_json.py
+A       tests/check_default_params.py
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  altuntas
 Tag Date:    05 Aug 2019
 Tag Name:    mi_20190805
 
 MOM_interface Updates Summary:
-        - Added ChangeLog file.
-          ChangeLog is updated each time a new MOM_interface tag is created.
-          A new MOM_interface tag is created when new version(s) of NCAR/MOM6
-          and/or MOM_interface is to be incorporated in an upcoming CESM tag.
-        - Changed MOM6 entry in Externals.cfg to point to a tag instead of 
-          a branch.
+- Added ChangeLog file.
+  ChangeLog is updated each time a new MOM_interface tag is created.
+  A new MOM_interface tag is created when new version(s) of NCAR/MOM6
+  and/or MOM_interface is to be incorporated in an upcoming CESM tag.
+- Changed MOM6 entry in Externals.cfg to point to a tag instead of 
+  a branch.
 
 MOM6 Updates Summary: n/a
 
 Testing: aux_mom on cheyenne/intel
 
 Files Modified/Added/Removed:
-  new file:   ChangeLog
-  modified:   Externals.cfg
+new file:   ChangeLog
+modified:   Externals.cfg
 
