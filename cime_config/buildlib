@@ -36,35 +36,21 @@ def buildlib(caseroot, libroot, bldroot):
             stat, _, err = run_cmd("{} {} {} {}".format(fmsbuildlib, bldroot, fmsbuilddir, caseroot), verbose=True)
             expect(stat==0, "FMS build Failed {}".format(err))
 
-        # Find CVMix source code, which might be in several different locations
-        logger.info("Looking for CVMix source code...")
-        # (1) If $CESMROOT/libraries/CVMix exists, build that copy
-        cvmix_srcdir = os.path.join(srcroot,"libraries","CVMix","src","shared")
-        # (2) Otherwise, look for CVMix in the POP component
-        if not os.path.exists(cvmix_srcdir):
-            cvmix_srcdir = os.path.join(srcroot,"components","pop","externals","CVMix","src","shared")
-        # (3) Lastly, look for the CVMix submodule in MOM6
-        if not os.path.exists(cvmix_srcdir):
-            cvmix_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","CVMix-src","src","shared")
-        # If none of those exist, abort
+        # CVMix source code is brought in as a git submodule (or my manage_externals)
+        logger.info("Making sure CVMix code is available...")
+        cvmix_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","CVMix-src","src","shared")
+        # If CVMix is not found, abort
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")
-        logger.info("... CVMix will be built with source from {}\n".format(cvmix_srcdir))
 
-        # Find MARBL source code, which might be in several different locations
-        logger.info("Looking for MARBL source code...")
-        # (1) If $CESMROOT/libraries/MARBL exists, build that copy
-        marbl_srcdir = os.path.join(srcroot,"libraries","MARBL","src")
-        # (2) Otherwise, look for MARBL in the POP component
-        if not os.path.exists(marbl_srcdir):
-            marbl_srcdir = os.path.join(srcroot,"components","pop","externals","MARBL","src")
-        # (3) Lastly, look for the MARBL submodule in MOM6
-        if not os.path.exists(marbl_srcdir):
+        # Current code base does not need to build MARBL yet
+        if False:
+            # MARBL source code is brought in as a git submodule (or my manage_externals)
+            logger.info("Making sure MARBL code is available...")
             marbl_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","MARBL","src")
-        # If none of those exist, abort
-        if not os.path.exists(marbl_srcdir):
-            expect(False, "MARBL external not found")
-        logger.info("... MARBL will be built with source from {}\n".format(marbl_srcdir))
+            # If MARBL is not found, abort
+            if not os.path.exists(marbl_srcdir):
+                expect(False, "MARBL external not found")
 
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
@@ -100,7 +86,7 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "core"),
                      os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "geoKdTree"),
                      cvmix_srcdir,
-                     marbl_srcdir,
+#                     marbl_srcdir,
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","lateral"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"),
                      os.path.join(srcroot,"components","mom","MOM6","src","tracer"),
