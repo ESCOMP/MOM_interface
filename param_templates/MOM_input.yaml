@@ -1496,8 +1496,7 @@ Global:
             The interval increases by a factor of 2. after each call to write_energy."
         datatype: real
         units: days
-        value:
-            $OCN_GRID == "tx0.66v1": 0.25
+        value: 0.0
     ENERGETICS_SFC_PBL:
         description: |
           "[Boolean] default = False
