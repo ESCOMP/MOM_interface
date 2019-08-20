@@ -1105,14 +1105,6 @@
             "$OCN_GRID == \"MISOMIP\"": 1.0
          }
       },
-      "ENERGYSAVEDAYS_GEOMETRIC": {
-         "description": "\"[days] default = 0.0\nThe starting interval in units of TIMEUNIT for the first call\nto save the energies of the run and other globally summed diagnostics.\nThe interval increases by a factor of 2. after each call to write_energy.\"\n",
-         "datatype": "real",
-         "units": "days",
-         "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.25
-         }
-      },
       "ENERGETICS_SFC_PBL": {
          "description": "\"[Boolean] default = False\nIf true, use an implied energetics planetary boundary\nlayer scheme to determine the diffusivity and viscosity\nin the surface boundary layer.\"\n",
          "datatype": "logical",
