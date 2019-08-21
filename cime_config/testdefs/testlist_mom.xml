@@ -40,6 +40,11 @@
           <option name="wallclock">00:30:00</option>
         </options>
       </machine>
+      <machine name="cheyenne" compiler="intel" category="prealpha">
+        <options>
+          <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
