@@ -47,8 +47,8 @@ Files:
     # native grid
     hist:
         suffix: 
-            $OCN_DIAG_MODE == "spinup": "h%4yr"
-            else: "h%4yr-%2mo"
+            $OCN_DIAG_MODE == "spinup": "hm%4yr"
+            else: "hm%4yr-%2mo"
         output_freq: 1
         output_freq_units:
             $OCN_DIAG_MODE == "spinup": "years"
