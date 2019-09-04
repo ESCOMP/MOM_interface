@@ -1,30 +1,30 @@
 {
    "FieldLists": [
       [
-         "u",
-         "v",
+         "uo",
+         "vo",
          "h",
          "e",
-         "temp",
-         "salt",
-         "rhoinsitu",
-         "KE",
-         "Rml",
-         "Rv",
-         "e_D"
-      ],
-      [
-         "volcello",
          "thetao",
          "so",
-         "vintage",
-         "soga",
-         "thetaoga"
+         "rhoinsitu",
+         "KE",
+         "rhopot0"
       ],
       [
-         "age",
-         "CFC11",
-         "CFC12",
+         "soga",
+         "thetaoga",
+         "umo",
+         "vmo",
+         "uh",
+         "vh",
+         "vhbt",
+         "uhbt",
+         "uhml",
+         "vhml"
+      ],
+      [
+         "agessc",
          "T_ady_2d",
          "T_adx_2d",
          "T_diffy_2d",
@@ -32,55 +32,49 @@
       ],
       [
          "SSH",
-         "SST",
-         "SSS",
+         "tos",
+         "sos",
          "SSU",
          "SSV",
          "mass_wt",
-         "temp_int",
-         "salt_int",
+         "opottempmint",
+         "somint",
          "Rd_dx",
          "speed",
-         "MLD_003",
-         "MLD_0125"
+         "mlotst"
       ],
       [
-         "KPP_OBLdepth"
+         "oml"
       ],
       [
-         "taux",
-         "tauy",
+         "tauuo",
+         "tauvo",
          "friver",
          "prsn",
-         "precip",
+         "prlq",
          "evs",
          "hfsso",
          "rlntds",
          "hfsnthermds",
          "sfdsi",
-         "salt_flux",
          "rsntds",
          "hfds",
          "ustar",
-         "frazil",
-         "PRCmE",
-         "evap",
+         "hfsifrazil",
+         "wfo",
          "vprec",
-         "lrunoff",
-         "frunoff",
-         "seaice_melt",
-         "sensible",
-         "latent",
-         "SW",
-         "LW",
-         "p_surf"
+         "ficeberg",
+         "fsitherm",
+         "hflso",
+         "pso",
+         "seaice_melt_heat",
+         "Heat_PmE",
+         "salt_flux_added"
       ],
       [
          "net_heat_coupler",
-         "net_heat_surface",
-         "seaice_melt_heat",
+         "hfds",
          "LwLatSens",
-         "Heat_PmE",
          "heat_content_lrunoff",
          "heat_content_frunoff",
          "heat_content_icemelt",
@@ -88,11 +82,9 @@
          "heat_content_fprec",
          "heat_content_vprec",
          "heat_content_cond",
-         "heat_content_massout",
+         "hfevapds",
          "heat_content_massin",
          "heat_content_surfwater",
-         "internal_heat",
-         "heat_added",
          "vprec_global_adjustment",
          "net_fresh_water_global_adjustment",
          "salt_flux_global_restoring_adjustment",
@@ -100,10 +92,12 @@
          "net_massin"
       ],
       [
-         "KHTR_h",
-         "KHTR_t",
-         "Ahh",
-         "Khh"
+         "diftrelo",
+         "diftrblo",
+         "difmxybo",
+         "difmxylo",
+         "vhGM",
+         "uhGM"
       ],
       [
          "geolon",
@@ -139,7 +133,137 @@
    ],
    "Files": {
       "hist": {
-         "suffix": "h%4yr-%2mo",
+         "suffix": {
+            "$OCN_DIAG_MODE == \"spinup\"": "hm%4yr",
+            "else": "hm%4yr-%2mo"
+         },
+         "output_freq": 1,
+         "output_freq_units": {
+            "$OCN_DIAG_MODE == \"spinup\"": "years",
+            "else": "months"
+         },
+         "time_axis_units": "days",
+         "new_file_freq": 1,
+         "new_file_freq_units": {
+            "$OCN_DIAG_MODE == \"spinup\"": "years",
+            "else": "months"
+         },
+         "reduction_method": "mean",
+         "regional_section": "none",
+         "fields": {
+            "$OCN_DIAG_MODE == \"spinup\"": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "uo",
+                        "vo",
+                        "h",
+                        "e",
+                        "thetao",
+                        "so",
+                        "rhoinsitu",
+                        "KE",
+                        "rhopot0"
+                     ]
+                  ]
+               }
+            ],
+            "else": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "uo",
+                        "vo",
+                        "h",
+                        "e",
+                        "thetao",
+                        "so",
+                        "rhoinsitu",
+                        "KE",
+                        "rhopot0"
+                     ],
+                     [
+                        "soga",
+                        "thetaoga",
+                        "umo",
+                        "vmo",
+                        "uh",
+                        "vh",
+                        "vhbt",
+                        "uhbt",
+                        "uhml",
+                        "vhml"
+                     ],
+                     [
+                        "oml"
+                     ],
+                     [
+                        "tauuo",
+                        "tauvo",
+                        "friver",
+                        "prsn",
+                        "prlq",
+                        "evs",
+                        "hfsso",
+                        "rlntds",
+                        "hfsnthermds",
+                        "sfdsi",
+                        "rsntds",
+                        "hfds",
+                        "ustar",
+                        "hfsifrazil",
+                        "wfo",
+                        "vprec",
+                        "ficeberg",
+                        "fsitherm",
+                        "hflso",
+                        "pso",
+                        "seaice_melt_heat",
+                        "Heat_PmE",
+                        "salt_flux_added"
+                     ],
+                     [
+                        "SSH",
+                        "tos",
+                        "sos",
+                        "SSU",
+                        "SSV",
+                        "mass_wt",
+                        "opottempmint",
+                        "somint",
+                        "Rd_dx",
+                        "speed",
+                        "mlotst"
+                     ],
+                     [
+                        "diftrelo",
+                        "diftrblo",
+                        "difmxybo",
+                        "difmxylo",
+                        "vhGM",
+                        "uhGM"
+                     ],
+                     [
+                        "agessc",
+                        "T_ady_2d",
+                        "T_adx_2d",
+                        "T_diffy_2d",
+                        "T_diffx_2d"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "hist_z_space": {
+         "suffix": {
+            "$OCN_DIAG_MODE == \"spinup\"": "h%4yr",
+            "else": "h%4yr-%2mo"
+         },
          "output_freq": 1,
          "output_freq_units": {
             "$OCN_DIAG_MODE == \"spinup\"": "years",
@@ -160,17 +284,15 @@
                   "packing": 2,
                   "lists": [
                      [
-                        "u",
-                        "v",
+                        "uo",
+                        "vo",
                         "h",
                         "e",
-                        "temp",
-                        "salt",
+                        "thetao",
+                        "so",
                         "rhoinsitu",
                         "KE",
-                        "Rml",
-                        "Rv",
-                        "e_D"
+                        "rhopot0"
                      ]
                   ]
                }
@@ -181,85 +303,15 @@
                   "packing": 1,
                   "lists": [
                      [
-                        "u",
-                        "v",
+                        "uo",
+                        "vo",
                         "h",
                         "e",
-                        "temp",
-                        "salt",
-                        "rhoinsitu",
-                        "KE",
-                        "Rml",
-                        "Rv",
-                        "e_D"
-                     ],
-                     [
-                        "volcello",
                         "thetao",
                         "so",
-                        "vintage",
-                        "soga",
-                        "thetaoga"
-                     ],
-                     [
-                        "KPP_OBLdepth"
-                     ],
-                     [
-                        "taux",
-                        "tauy",
-                        "friver",
-                        "prsn",
-                        "precip",
-                        "evs",
-                        "hfsso",
-                        "rlntds",
-                        "hfsnthermds",
-                        "sfdsi",
-                        "salt_flux",
-                        "rsntds",
-                        "hfds",
-                        "ustar",
-                        "frazil",
-                        "PRCmE",
-                        "evap",
-                        "vprec",
-                        "lrunoff",
-                        "frunoff",
-                        "seaice_melt",
-                        "sensible",
-                        "latent",
-                        "SW",
-                        "LW",
-                        "p_surf"
-                     ],
-                     [
-                        "SSH",
-                        "SST",
-                        "SSS",
-                        "SSU",
-                        "SSV",
-                        "mass_wt",
-                        "temp_int",
-                        "salt_int",
-                        "Rd_dx",
-                        "speed",
-                        "MLD_003",
-                        "MLD_0125"
-                     ],
-                     [
-                        "KHTR_h",
-                        "KHTR_t",
-                        "Ahh",
-                        "Khh"
-                     ],
-                     [
-                        "age",
-                        "CFC11",
-                        "CFC12",
-                        "T_ady_2d",
-                        "T_adx_2d",
-                        "T_diffy_2d",
-                        "T_diffx_2d"
+                        "rhoinsitu",
+                        "KE",
+                        "rhopot0"
                      ]
                   ]
                }
@@ -283,17 +335,16 @@
                   "lists": [
                      [
                         "SSH",
-                        "SST",
-                        "SSS",
+                        "tos",
+                        "sos",
                         "SSU",
                         "SSV",
                         "mass_wt",
-                        "temp_int",
-                        "salt_int",
+                        "opottempmint",
+                        "somint",
                         "Rd_dx",
                         "speed",
-                        "MLD_003",
-                        "MLD_0125"
+                        "mlotst"
                      ]
                   ]
                }
@@ -316,39 +367,34 @@
                   "packing": 1,
                   "lists": [
                      [
-                        "taux",
-                        "tauy",
+                        "tauuo",
+                        "tauvo",
                         "friver",
                         "prsn",
-                        "precip",
+                        "prlq",
                         "evs",
                         "hfsso",
                         "rlntds",
                         "hfsnthermds",
                         "sfdsi",
-                        "salt_flux",
                         "rsntds",
                         "hfds",
                         "ustar",
-                        "frazil",
-                        "PRCmE",
-                        "evap",
+                        "hfsifrazil",
+                        "wfo",
                         "vprec",
-                        "lrunoff",
-                        "frunoff",
-                        "seaice_melt",
-                        "sensible",
-                        "latent",
-                        "SW",
-                        "LW",
-                        "p_surf"
+                        "ficeberg",
+                        "fsitherm",
+                        "hflso",
+                        "pso",
+                        "seaice_melt_heat",
+                        "Heat_PmE",
+                        "salt_flux_added"
                      ],
                      [
                         "net_heat_coupler",
-                        "net_heat_surface",
-                        "seaice_melt_heat",
+                        "hfds",
                         "LwLatSens",
-                        "Heat_PmE",
                         "heat_content_lrunoff",
                         "heat_content_frunoff",
                         "heat_content_icemelt",
@@ -356,11 +402,9 @@
                         "heat_content_fprec",
                         "heat_content_vprec",
                         "heat_content_cond",
-                        "heat_content_massout",
+                        "hfevapds",
                         "heat_content_massin",
                         "heat_content_surfwater",
-                        "internal_heat",
-                        "heat_added",
                         "vprec_global_adjustment",
                         "net_fresh_water_global_adjustment",
                         "salt_flux_global_restoring_adjustment",
@@ -388,10 +432,12 @@
                   "packing": 1,
                   "lists": [
                      [
-                        "KHTR_h",
-                        "KHTR_t",
-                        "Ahh",
-                        "Khh"
+                        "diftrelo",
+                        "diftrblo",
+                        "difmxybo",
+                        "difmxylo",
+                        "vhGM",
+                        "uhGM"
                      ]
                   ]
                }
