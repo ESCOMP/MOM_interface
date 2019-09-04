@@ -341,19 +341,32 @@ class Diag_table(MOM_RPS):
                     packing = field_block['packing']
                     field_list_1d = sum(field_block['lists'],[])
 
-                    # check if there are any duplicate fields in the same file:
+                    # seperate field_name and output_name:
+                    field_list_1d_seperated = []
                     for field in field_list_1d:
-                        assert field not in fields_all, \
-                            'Field "'+field+'" is listed more than once'+' in file: '+file_block['suffix']
-                        fields_all.append(field)
+                        field_split = field.split(':')
+                        if len(field_split)==2:
+                            field = field_split[0], field_split[1]
+                        elif len(field_split)==1:
+                            field = field_split[0], field_split[0]
+                        else:
+                            raise RuntimeError("Cannot infer field name and output name for "+field)
+                        field_list_1d_seperated.append(field)
+
+                    # check if there are any duplicate fields in the same file:
+                    for field_name, output_name in field_list_1d_seperated:
+                        assert field_name not in fields_all, \
+                            'Field "'+field_name+'" is listed more than once'+' in file: '+file_block['suffix']
+                        fields_all.append(field_name)
 
                     mfnl = max([len(field) for field in field_list_1d]) + 3
                     mfnl = min(16,mfnl) # limit to 16
-                    for field in field_list_1d:
-                        diag_table.write(('{module_name:14s} {field:'+str(mfnl)+'}{field:'+str(mfnl)+'}'
+                    for field_name, output_name in field_list_1d_seperated:
+                        diag_table.write(('{module_name:14s} {field_name:'+str(mfnl)+'}{output_name:'+str(mfnl)+'}'
                                           '{filename} "all", {reduction_method} {regional_section} {packing}\n').
                             format( module_name = '"'+module+'",',
-                                    field = '"'+field+'",',
+                                    field_name = '"'+field_name+'",',
+                                    output_name = '"'+output_name+'",',
                                     filename = '"'+casename+'.'+str(file_block['suffix'])+'",',
                                     reduction_method = '"'+str(file_block['reduction_method'])+'",',
                                     regional_section = '"'+str(file_block['regional_section'])+'",',
