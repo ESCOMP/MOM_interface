@@ -312,7 +312,7 @@ class Diag_table(MOM_RPS):
                             time_axis_units = '"'+file_block['time_axis_units']+'",')
 
                 if 'new_file_freq' in file_block:
-                    file_descr_str += ', "'+str(file_block['new_file_freq'])+'", '
+                    file_descr_str += ', '+str(file_block['new_file_freq'])+', '
                     if 'time_axis_units' in file_block:
                         file_descr_str += '"'+str(file_block['new_file_freq_units'])+'"'
                 diag_table.write(file_descr_str+'\n')
