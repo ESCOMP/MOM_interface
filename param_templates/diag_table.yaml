@@ -4,32 +4,31 @@
 ###############################################################################
 
 FieldLists:
-    - &prognostic       ["u", "v", "h", "e", "temp", "salt", "rhoinsitu", "KE", "Rml", "Rv", "e_D"]
+    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "rhoinsitu", "KE", "rhopot0"]
 
-    - &hist_additional  ["volcello", "thetao", "so", "vintage", "soga", "thetaoga"]
+    - &hist_additional  ["soga", "thetaoga", "umo", "vmo", "uh", "vh", "vhbt", "uhbt",
+                         "uhml", "vhml"]
 
-    - &tracers          ["age", "CFC11", "CFC12", "T_ady_2d", "T_adx_2d", "T_diffy_2d",
-                         "T_diffx_2d"]
+    - &tracers          ["agessc", "T_ady_2d", "T_adx_2d", "T_diffy_2d", "T_diffx_2d"]
 
-    - &surface_flds     ["SSH", "SST", "SSS", "SSU", "SSV", "mass_wt", "temp_int", 
-                         "salt_int", "Rd_dx", "speed", "MLD_003", "MLD_0125"]
+    - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint", 
+                         "somint", "Rd_dx", "speed", "mlotst"]
 
-    - &kpp_diags        ["KPP_OBLdepth"]
+    - &kpp_diags        ["oml"]
 
-    - &forcing_flds     ["taux", "tauy", "friver", "prsn", "precip", "evs", "hfsso", "rlntds",
-                         "hfsnthermds", "sfdsi", "salt_flux", "rsntds", "hfds", "ustar",
-                         "frazil", "PRCmE", "evap", "vprec", "lrunoff", "frunoff", "seaice_melt",
-                         "sensible", "latent", "SW", "LW", "p_surf"]
+    - &forcing_flds     ["tauuo", "tauvo", "friver", "prsn", "prlq", "evs", "hfsso", "rlntds",
+                         "hfsnthermds", "sfdsi", "rsntds", "hfds", "ustar",
+                         "hfsifrazil", "wfo", "vprec", "ficeberg", "fsitherm",
+                         "hflso", "pso", "seaice_melt_heat", "Heat_PmE", "salt_flux_added"]
 
-    - &forcing_flds_dev ["net_heat_coupler", "net_heat_surface", "seaice_melt_heat", "LwLatSens",
-                         "Heat_PmE", "heat_content_lrunoff", "heat_content_frunoff", 
-                         "heat_content_icemelt", "heat_content_lprec", "heat_content_fprec",
-                         "heat_content_vprec", "heat_content_cond", "heat_content_massout",
-                         "heat_content_massin", "heat_content_surfwater", "internal_heat",
-                         "heat_added", "vprec_global_adjustment", "net_fresh_water_global_adjustment",
+    - &forcing_flds_dev ["net_heat_coupler", "hfds", "LwLatSens", "heat_content_lrunoff",
+                         "heat_content_frunoff", "heat_content_icemelt", "heat_content_lprec", 
+                         "heat_content_fprec", "heat_content_vprec", "heat_content_cond", 
+                         "hfevapds", "heat_content_massin", "heat_content_surfwater", 
+                         "vprec_global_adjustment", "net_fresh_water_global_adjustment",
                          "salt_flux_global_restoring_adjustment", "net_massout", "net_massin"] 
 
-    - &visc_flds        ["KHTR_h", "KHTR_t", "Ahh", "Khh",]
+    - &visc_flds        ["diftrelo", "diftrblo", "difmxybo", "difmxylo", "vhGM", "uhGM"]
 
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
                          "geolon_v", "geolat_v", "area_t", "depth_ocean", "wet", "wet_c", "wet_u",
@@ -45,9 +44,43 @@ FieldLists:
 ###############################################################################
 
 Files:
-
+    # native grid
     hist:
-        suffix: "h%4yr-%2mo"
+        suffix: 
+            $OCN_DIAG_MODE == "spinup": "hm%4yr"
+            else: "hm%4yr-%2mo"
+        output_freq: 1
+        output_freq_units:
+            $OCN_DIAG_MODE == "spinup": "years"
+            else: "months"
+        time_axis_units: "days"
+        new_file_freq: 1
+        new_file_freq_units:
+            $OCN_DIAG_MODE == "spinup": "years"
+            else: "months"
+        reduction_method: "mean"    # time average
+        regional_section: "none"    # global
+        fields:
+            $OCN_DIAG_MODE == "spinup":
+                - module:   "ocean_model"   # z_space
+                  packing:  2                 # single precision
+                  lists:    [ *prognostic ]
+            else:
+                - module:   "ocean_model"   # z_space
+                  packing:  1                 # double precision
+                  lists:    [ *prognostic,
+                              *hist_additional,
+                              *kpp_diags,
+                              *forcing_flds,
+                              *surface_flds,
+                              *visc_flds,
+                              *tracers ]
+
+    # essential variable mapped to z_space
+    hist_z_space:
+        suffix:
+            $OCN_DIAG_MODE == "spinup": "h%4yr"
+            else: "h%4yr-%2mo"
         output_freq: 1
         output_freq_units:
             $OCN_DIAG_MODE == "spinup": "years"
@@ -67,13 +100,7 @@ Files:
             else:
                 - module:   "ocean_model_z"   # z_space
                   packing:  1                 # double precision
-                  lists:    [ *prognostic,
-                              *hist_additional,
-                              *kpp_diags,
-                              *forcing_flds,
-                              *surface_flds,
-                              *visc_flds,
-                              *tracers ]
+                  lists:    [ *prognostic ]
 
     surface_avg:
         suffix: "sfc%4yr"
