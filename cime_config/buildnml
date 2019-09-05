@@ -27,84 +27,20 @@ logger = logging.getLogger(__name__)
 
 # prepares the input files of a case and places in rundir:
 def prep_input(case):
-    casename        = case.get_value("CASE")
     Buildconf       = case.get_value("CASEBUILD")
     rundir          = case.get_value("RUNDIR")
-    ocn_gridname    = case.get_value("OCN_GRID")
     srcroot         = case.get_value("SRCROOT")
-    din_loc_root    = case.get_value("DIN_LOC_ROOT")
-    testcase        = case.get_value("TEST")
-    hist_n          = case.get_value("HIST_N")
-    hist_option     = case.get_value("HIST_OPTION")
-    ocn_ncpl        = case.get_value("OCN_NCPL")
-    input_files     = ["diag_table"]
 
     # The scope of the following path expansion is limited to this script only,
     # and is needed to import MOM_Params class:
     sys.path.append(os.path.join(srcroot,"components","mom","cime_config"))
     from MOM_RPS import MOM_Params, MOM_input_nml, Input_data_list, Diag_table
 
-    # determine input category (B,C, or G):
-    # this is needed to determine which input templates are to be copied for a given grid.
-    input_cat  = None
-    comp_ice   = case.get_value("COMP_ICE")
-    comp_atm   = case.get_value("COMP_ATM")
-    active_ice = (comp_ice=="cice")
-    active_atm = (comp_atm=="cam")
-
-    if (not (active_ice or active_atm)):
-        input_cat = "C"
-    elif (active_ice and not active_atm):
-        input_cat = "G"
-    elif (active_ice and active_atm):
-        input_cat = "B"
-    else:
-        expect(False, "Cannot determine input category for this compset.")
-
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
         os.makedirs(rundir)
 
-    # check if input file templates are available for the given ocn grid:
-    if not (os.path.exists(os.path.join(srcroot,"components","mom","input_templates",ocn_gridname,input_cat))):
-        expect(False, "Couldn't find input files for ocean grid '%s' and input category '%s' at '%s'" \
-                      %(ocn_gridname,input_cat,os.path.join(srcroot,"components","mom","input_templates")))
-
-    # copy template input files:
-    logger.info("\tCopying input files for %s"%(ocn_gridname))
-    template_files_dir  = os.path.join(srcroot,"components","mom","input_templates",ocn_gridname,input_cat)
-    for input_file_name in input_files:
-        input_file_path = os.path.join(template_files_dir,input_file_name)
-        if not os.path.exists(input_file_path):
-            expect(False, "Couldn't find input files at "+input_file_path)
-
-        run_cmd("cp "+input_file_path+" "+rundir)
-
-    # process diag_table: (replace all the instances of "CASENAME" in data_table with the actual case name)
-
-    if hist_option == "ndays":
-        hist_option = "days"
-    elif hist_option == "nsteps":
-        hist_option = "seconds"
-        hist_n = int(86400/ocn_ncpl)
-
-    with open(os.path.join(template_files_dir,"diag_table"), 'r') as diag_table_in:
-        with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
-            for line in diag_table_in:
-                line = line.replace('$CASENAME', casename)
-                if testcase:
-                    # this makes all real fields double precision
-                    if line.endswith('2\n'):
-                        line = line[:-2] + "1\n"
-                    # this changes output frequency and number of records per file
-                    # using HIST_N and HIST_OPTION from case
-                    if line.startswith("\""+casename):
-                        parts = line.split(',')
-                        if len(parts) > 7:
-                            parts[1] = parts[6] = "1"
-                            parts[2] = parts[7] = "days"
-                        line = ','.join(parts)+"\n"
-                diag_table.writelines(line)
+    # Parse json files and create MOM6 input files in rundir
 
     json_templates_dir = os.path.join(srcroot,"components","mom","param_templates","json")
 
@@ -128,7 +64,7 @@ def prep_input(case):
 
     # Create diag_table:
     diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
-    diag_table_dest = os.path.join(rundir,"diag_table_EXP")
+    diag_table_dest = os.path.join(rundir,"diag_table")
     diag_table = Diag_table(diag_table_src)
     diag_table.write(diag_table_dest, case)
 
@@ -152,6 +88,7 @@ def process_SourceMods(case):
     for filename in os.listdir(SourceMods_dir):
         if filename in replaceable:
             run_cmd("cp "+os.path.join(SourceMods_dir,filename)+" "+rundir)
+
 
 def process_user_nl_mom(case):
     caseroot = case.get_value("CASEROOT")
