@@ -412,7 +412,7 @@ class MOM_Params(MOM_RPS):
         MOM_input, user_nl, json.
     """
 
-    supported_formats = ["MOM_input", "user_nl", "json"]
+    supported_formats = ["MOM6_syntax", "json"]
 
     def __init__(self, input_path, input_format="json"):
         MOM_RPS.__init__(self, input_path, input_format)
@@ -422,23 +422,72 @@ class MOM_Params(MOM_RPS):
                                 " not supported")
 
     def read(self):
-        if self.input_format == "MOM_input":
-            self._read_MOM_input()
-        elif self.input_format == "user_nl":
-            self._read_user_nl()
+        if self.input_format == "MOM6_syntax":
+            self._read_MOM6_syntax()
         elif self.input_format == "json":
             self._read_json()
             self._check_json_consistency()
 
 
-    def _read_MOM_input(self):
-        #TODO
-        pass
+    def _read_MOM6_syntax(self):
+        """Reads in input files in MOM6 syntax, e.g., MOM_Input, MOM_override, and user_nl_mom"""
 
-    def _read_user_nl(self):
-        #TODO
-        pass
+        self.data = dict()
+        with open(self.input_path,'r') as param_file:
+            within_comment_block = False
+            curr_module = "Global"
+            for line in param_file:    
+                if len(line)>1:
+                    line_s = line.split()
 
+                    # check if within comment block.
+                    if (not within_comment_block) and line.strip()[0:2] == "/*":
+                        within_comment_block = True
+    
+                    if within_comment_block and line.strip()[-2:] == "*/":
+                        within_comment_block = False
+                        continue
+    
+                    if not within_comment_block and line_s[0][0] != "!": # not a single comment line either
+                        # check format:
+                        if (curr_module=="Global") and line.strip()[-1] == "%":
+                            curr_module = line.strip()[:-1]
+                        elif curr_module!="Global" and line.strip()[0] == "%":
+                            curr_module = "Global"
+                        else:
+                            # discard override keyword if provided:
+                            if line_s[0] == "#override" and len(line_s)>1:
+                                line_s = line_s[1:]
+                            line_j = ' '.join(line_s)
+    
+                            # now parse the line:
+                            if ("=" in line_j):
+                                line_ss     = line_j.split("=")
+                                param_str   = (line_ss[0]).strip()  # the first element is the parameter name
+                                val_str     = ' '.join(line_ss[1:]) # the rest is tha value string
+                                if '!' in val_str:
+                                    val_str = val_str.split("!")[0] # discard the comment in val str, if there is
+    
+                                # add this module if not added before:
+                                if not curr_module in self.data:
+                                    self.data[curr_module] = dict()
+
+                                # check if param already provided:
+                                if param_str in self.data[curr_module]:
+                                    raise SystemExit('ERROR: '+param_str+' listed more than once in '+file_name)
+    
+                                # enter the parameter in the dictionary:
+                                self.data[curr_module][param_str] = val_str
+                            else:
+                                raise SystemExit('ERROR: Cannot parse the following line in user_nl_mom: '+line)
+    
+            # Check if there is unclosed block:
+            if within_comment_block:
+                raise SystemExit('ERROR: faulty comment block!')
+            if curr_module!="Global":
+                raise SystemExit('ERROR: faulty module block!')
+
+        
     def write(self, output_path, case, add_params=dict()):
         """ writes a MOM_input file from a given json parameter file in accordance with
             the guards and additional parameters that are passed. """
