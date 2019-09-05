@@ -6,42 +6,48 @@ class FType_MOM_params(MOM_RPS):
     """ Encapsulates data and methods for MOM6 case parameter files: MOM_input, user_nl.
     """
 
-    supported_formats = ["MOM6_syntax", "json"]
+    supported_formats_in    = ["MOM_input", "json"]
+    supported_formats_out   = ["MOM_input", "MOM_override"]
 
-    def __init__(self, input_path, input_format="json"):
-        MOM_RPS.__init__(self, input_path, input_format)
+    def __init__(self, input_path, input_format="json", output_format="MOM_input"):
+        MOM_RPS.__init__(self, input_path, input_format=input_format, output_format=output_format)
 
-        if self.input_format not in FType_MOM_params.supported_formats:
-            raise RuntimeError("MOM parameter file format "+file_format+\
-                                " not supported")
+        if self.input_format not in FType_MOM_params.supported_formats_in:
+            raise RuntimeError("File format "+input_format+\
+                                " is not a supported input format for FType_MOM_params")
+        if self.output_format not in FType_MOM_params.supported_formats_out:
+            raise RuntimeError("File format "+output_format+\
+                                " is not a supported output format for FType_MOM_params")
 
     def read(self):
-        if self.input_format == "MOM6_syntax":
-            self._read_MOM6_syntax()
+        if self.input_format == "MOM_input":
+            self._read_MOM_input()
         elif self.input_format == "json":
             self._read_json()
             self._check_json_consistency()
 
 
-    def _read_MOM6_syntax(self):
-        """Reads in input files in MOM6 syntax, e.g., MOM_Input, MOM_override, and user_nl_mom"""
+    def _read_MOM_input(self):
+        """Reads in input files in MOM_input syntax. Note that this method may be used to
+           read in MOM_override and user_nl_mom too, since the syntax is the same, but
+           write methods for MOM_input and MOM_override are different."""
 
         self.data = dict()
         with open(self.input_path,'r') as param_file:
             within_comment_block = False
             curr_module = "Global"
-            for line in param_file:    
+            for line in param_file:
                 if len(line)>1:
                     line_s = line.split()
 
                     # check if within comment block.
                     if (not within_comment_block) and line.strip()[0:2] == "/*":
                         within_comment_block = True
-    
+
                     if within_comment_block and line.strip()[-2:] == "*/":
                         within_comment_block = False
                         continue
-    
+
                     if not within_comment_block and line_s[0][0] != "!": # not a single comment line either
                         # check format:
                         if (curr_module=="Global") and line.strip()[-1] == "%":
@@ -53,7 +59,7 @@ class FType_MOM_params(MOM_RPS):
                             if line_s[0] == "#override" and len(line_s)>1:
                                 line_s = line_s[1:]
                             line_j = ' '.join(line_s)
-    
+
                             # now parse the line:
                             if ("=" in line_j):
                                 line_ss     = line_j.split("=")
@@ -61,7 +67,7 @@ class FType_MOM_params(MOM_RPS):
                                 val_str     = ' '.join(line_ss[1:]) # the rest is tha value string
                                 if '!' in val_str:
                                     val_str = val_str.split("!")[0] # discard the comment in val str, if there is
-    
+
                                 # add this module if not added before:
                                 if not curr_module in self.data:
                                     self.data[curr_module] = dict()
@@ -69,26 +75,32 @@ class FType_MOM_params(MOM_RPS):
                                 # check if param already provided:
                                 if param_str in self.data[curr_module]:
                                     raise SystemExit('ERROR: '+param_str+' listed more than once in '+file_name)
-    
+
                                 # enter the parameter in the dictionary:
-                                self.data[curr_module][param_str] = val_str
+                                self.data[curr_module][param_str] = {'value':val_str}
                             else:
                                 raise SystemExit('ERROR: Cannot parse the following line in user_nl_mom: '+line)
-    
+
             # Check if there is unclosed block:
             if within_comment_block:
                 raise SystemExit('ERROR: faulty comment block!')
             if curr_module!="Global":
                 raise SystemExit('ERROR: faulty module block!')
 
-        
-    def write(self, output_path, case, add_params=dict()):
+    def write(self, output_path, case=None, def_params=None):
+        if self.output_format == "MOM_input":
+            assert case!=None, "Must provide a case object to write out MOM_input"
+            self._write_MOM_input(output_path, case)
+        elif self.output_format == "MOM_override":
+            assert def_params!=None, "Must provide a def_params object to write out MOM_override"
+            self._write_MOM_override(output_path, def_params)
+
+    def _write_MOM_input(self, output_path, case):
         """ writes a MOM_input file from a given json parameter file in accordance with
             the guards and additional parameters that are passed. """
 
         assert self.input_format=="json", "MOM_input file can only be generated from a json input file."
         str_type = get_str_type()
-
 
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)
@@ -149,3 +161,48 @@ class FType_MOM_params(MOM_RPS):
                 if module != "Global":
                     MOM_input.write("%"+module+"\n")
 
+    def _write_MOM_override(self, output_path, def_params):
+
+        assert self.input_format=="MOM_input", "MOM_override file can only be generated from a user_nl_mom file."
+        # ^ Note: user_nl_mom is assumed to have the same input syntax as MOM_input
+        str_type = get_str_type()
+
+        MOM_override_header =\
+        """/* WARNING: DO NOT EDIT this file! Any user changes made in files
+        in RUNDIR will be overriden. This file is automatically generated.
+        MOM6 parameter changes may ve made via SourceMods or user_nl_mom
+        within CASEROOT.\n"""
+
+        with open(os.path.join(output_path), 'w') as MOM_override:
+
+           MOM_override.write(MOM_override_header)
+
+           for module in self.data:
+                #Begin module block:
+                if module != "Global":
+                    MOM_override.write("\n"+module+"%\n")
+
+                for var in self.data[module]:
+                    val = self.data[module][var]["value"]
+
+                    # parameter is provided in both MOM_input and user_nl_mom
+                    if module in def_params.data and var in def_params.data[module]:
+
+                        # values are different
+                        if val != def_params.data[module][var]["value"]:
+                            MOM_override.write('#override {varname} = {value}\n'.\
+                                                format(varname=var, value=val) )
+
+                        # values are the same
+                        else:
+                            MOM_override.write('!!! {varname} = {value} !(UNCHANGED)\n'.\
+                                                format(varname=var, value=val) )
+
+                    # parameter is provided only in user_nl_mom
+                    else:
+                        MOM_override.write('{varname} = {value}\n'.\
+                                            format(varname=var, value=val) )
+
+                #End module block:
+                if module != "Global":
+                    MOM_override.write("%"+module+"\n\n")
