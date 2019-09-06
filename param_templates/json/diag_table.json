@@ -44,7 +44,7 @@
          "mlotst"
       ],
       [
-         "oml"
+         "KPP_OBLdepth:oml"
       ],
       [
          "tauuo",
@@ -92,6 +92,7 @@
          "net_massin"
       ],
       [
+         "volcello",
          "diftrelo",
          "diftrblo",
          "difmxybo",
@@ -199,7 +200,7 @@
                         "vhml"
                      ],
                      [
-                        "oml"
+                        "KPP_OBLdepth:oml"
                      ],
                      [
                         "tauuo",
@@ -240,6 +241,7 @@
                         "mlotst"
                      ],
                      [
+                        "volcello",
                         "diftrelo",
                         "diftrblo",
                         "difmxybo",
@@ -432,6 +434,7 @@
                   "packing": 1,
                   "lists": [
                      [
+                        "volcello",
                         "diftrelo",
                         "diftrblo",
                         "difmxybo",
@@ -485,9 +488,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "20.1 20.1 -70.0 -34.6 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "20.1 20.1 -70.0 -34.6 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -512,9 +517,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "45.0 45.0 10.5 13.5 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "45.0 45.0 10.5 13.5 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -539,9 +546,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-5.2 18.8  78.93 78.93 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-5.2 18.8  78.93 78.93 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -566,9 +575,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-174.5  -171.5 66.6 66.6 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-174.5  -171.5 66.6 66.6 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -593,9 +604,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-53.5 -45.3 69.5 69.5 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-53.5 -45.3 69.5 69.5 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -620,9 +633,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-38.50 -21.5 65.0 65.0 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-38.50 -21.5 65.0 65.0 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -647,9 +662,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-67.0 -67.0 -69.0 -55.2 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-67.0 -67.0 -69.0 -55.2 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -674,9 +691,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "0.0 0.0 51.0 52.9 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "0.0 0.0 51.0 52.9 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -701,9 +720,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-21.0 -9.8 80.5 80.5 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-21.0 -9.8 80.5 80.5 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -728,9 +749,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-80.1 -77.9 25.3 25.3 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-80.1 -77.9 25.3 25.3 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -755,9 +778,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-6.5 -6.5 34.3 37.4 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-6.5 -6.5 34.3 37.4 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -782,9 +807,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "55.9 55.9 25.0 27.5 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "55.9 55.9 25.0 27.5 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -809,9 +836,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-21.5 1.5 65.0 65.0 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-21.5 1.5 65.0 65.0 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -836,9 +865,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-246.5 -220.8 -7.0 -7.0 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-246.5 -220.8 -7.0 -7.0 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -863,9 +894,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "39.9 44.7 -16.0 -16.0 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "39.9 44.7 -16.0 -16.0 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -890,9 +923,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-155.0 -155.0 -2.0 2.0 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-155.0 -155.0 -2.0 2.0 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -917,9 +952,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-239.0 -239.0 18.8 22.5 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-239.0 -239.0 18.8 22.5 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
@@ -944,9 +981,11 @@
          "new_file_freq": 365,
          "new_file_freq_units": "days",
          "reduction_method": ".true.",
-         "regional_section": "-74.2 -73.2 20.39 20.39 -1 -1",
+         "regional_section": {
+            "$OCN_GRID == \"tx0.66v1\"": "-74.2 -73.2 20.39 20.39 -1 -1"
+         },
          "fields": {
-            "$OCN_DIAG_MODE != \"spinup\"": [
+            "$OCN_GRID == \"tx0.66v1\" and $OCN_DIAG_MODE != \"spinup\"": [
                {
                   "module": "ocean_model",
                   "packing": 2,
