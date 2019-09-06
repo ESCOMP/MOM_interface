@@ -3,7 +3,7 @@ from MOM_RPS import MOM_RPS
 from utils import get_str_type
 
 class FType_MOM_params(MOM_RPS):
-    """ Encapsulates data and methods for MOM6 case parameter files: MOM_input, user_nl.
+    """ Encapsulates data and read/write methods for MOM6 case parameter files: MOM_input, user_nl.
     """
 
     supported_formats_in    = ["MOM_input", "json"]

@@ -2,7 +2,7 @@ import os
 from MOM_RPS import MOM_RPS
 
 class FType_input_nml(MOM_RPS):
-    """FMS input.nml file type encapsulator. Derived from MOM_RPS."""
+    """Encapsulates data and read/write methods for MOM6 (FMS) input.nml file"""
 
     def read(self):
         assert self.input_format=="json", "input.nml file defaults can only be read from a json file."

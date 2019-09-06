@@ -2,7 +2,7 @@ import os
 from MOM_RPS import MOM_RPS
 
 class FType_input_data_list(MOM_RPS):
-    """input_data_list file type encapsulator. Derived from MOM_RPS."""
+    """Encapsulates data and read/write methods for MOM6 input_data_list file."""
 
     def read(self):
         assert self.input_format=="json", "input_data_list file defaults can only be read from a json file."
