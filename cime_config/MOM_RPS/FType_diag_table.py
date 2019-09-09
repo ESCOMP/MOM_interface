@@ -2,7 +2,7 @@ import os
 from MOM_RPS import MOM_RPS
 
 class FType_diag_table(MOM_RPS):
-    """diag_table file type encapsulator. Derived from MOM_RPS."""
+    """Encapsulates data and read/write methods for MOM6 diag_table input file."""
 
     def read(self):
         assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
@@ -23,10 +23,10 @@ class FType_diag_table(MOM_RPS):
             casename = case.get_value("CASE")
             diag_table.write('"MOM6 diagnostic fields table for CESM case: '+casename+'"\n')
             diag_table.write('1 1 1 0 0 0\n') #TODO
+            filename = lambda suffix : '"'+casename+'.mom6.'+suffix+'"'
 
             # max filename length:
-            mfl = len(casename) +\
-                  max([len(self.data['Files'][file_block_name]['suffix'])\
+            mfl = max([len(filename(self.data['Files'][file_block_name]['suffix']))\
                               for file_block_name in self.data['Files']])\
                   + 4 # quotation marks and tabbing
 
@@ -35,14 +35,15 @@ class FType_diag_table(MOM_RPS):
             diag_table.write('#========================\n')
             for file_block_name in self.data['Files']:
                 file_block = self.data['Files'][file_block_name]
+                fname = filename(file_block['suffix'])
 
                 if file_block['fields']==None:
                     # No fields for this file. Skip to next file.
                     continue
 
-                file_descr_str = ('{filename:'+str(mfl)+'s} {output_freq:3s} {output_freq_units:9s} 1, '
+                file_descr_str = ('{fname:'+str(mfl)+'s} {output_freq:3s} {output_freq_units:9s} 1, '
                                   '{time_axis_units:9s} "time"').\
-                    format( filename = '"'+casename+'.'+file_block['suffix']+'",',
+                    format( fname = fname+',',
                             output_freq = str(file_block['output_freq'])+',',
                             output_freq_units = '"'+file_block['output_freq_units']+'",',
                             time_axis_units = '"'+file_block['time_axis_units']+'",')
@@ -60,13 +61,14 @@ class FType_diag_table(MOM_RPS):
             diag_table.write('#=========================\n')
             for file_block_name in self.data['Files']:
                 file_block = self.data['Files'][file_block_name]
+                fname = filename(file_block['suffix'])
 
                 if file_block['fields']==None:
                     # No fields for this file. Skip to next file.
                     continue
 
-                diag_table.write('# {filename}\n'.\
-                    format(filename = file_block_name + ' ("'+casename+'.'+file_block['suffix']+'"):'))
+                diag_table.write('# {fname}\n'.\
+                    format(fname = fname) )
 
                 # keep a record of all fields in this file to make sure no duplicate field exists
                 fields_all = []
@@ -99,11 +101,11 @@ class FType_diag_table(MOM_RPS):
                     mfnl = min(16,mfnl) # limit to 16
                     for field_name, output_name in field_list_1d_seperated:
                         diag_table.write(('{module_name:14s} {field_name:'+str(mfnl)+'}{output_name:'+str(mfnl)+'}'
-                                          '{filename} "all", {reduction_method} {regional_section} {packing}\n').
+                                          '{fname} "all", {reduction_method} {regional_section} {packing}\n').
                             format( module_name = '"'+module+'",',
                                     field_name = '"'+field_name+'",',
                                     output_name = '"'+output_name+'",',
-                                    filename = '"'+casename+'.'+str(file_block['suffix'])+'",',
+                                    fname = fname+',',
                                     reduction_method = '"'+str(file_block['reduction_method'])+'",',
                                     regional_section = '"'+str(file_block['regional_section'])+'",',
                                     packing = str(packing)
