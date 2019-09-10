@@ -118,7 +118,7 @@
           <ntasks_rof>36</ntasks_rof>
           <ntasks_cpl>36</ntasks_cpl>
           <ntasks_ice>72</ntasks_ice>
-          <ntasks_ocn>108</ntasks_ocn>
+          <ntasks_ocn>144</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
@@ -151,7 +151,7 @@
           <ntasks_rof>36</ntasks_rof>
           <ntasks_cpl>36</ntasks_cpl>
           <ntasks_ice>36</ntasks_ice>
-          <ntasks_ocn>108</ntasks_ocn>
+          <ntasks_ocn>144</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
@@ -462,7 +462,7 @@
           <ntasks_rof>36</ntasks_rof>
           <ntasks_cpl>36</ntasks_cpl>
           <ntasks_ice>72</ntasks_ice>
-          <ntasks_ocn>108</ntasks_ocn>
+          <ntasks_ocn>144</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
@@ -495,7 +495,7 @@
           <ntasks_rof>36</ntasks_rof>
           <ntasks_cpl>36</ntasks_cpl>
           <ntasks_ice>36</ntasks_ice>
-          <ntasks_ocn>108</ntasks_ocn>
+          <ntasks_ocn>144</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
@@ -773,7 +773,7 @@
           <ntasks_rof>36</ntasks_rof>
           <ntasks_cpl>36</ntasks_cpl>
           <ntasks_ice>36</ntasks_ice>
-          <ntasks_ocn>108</ntasks_ocn>
+          <ntasks_ocn>144</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
@@ -793,7 +793,7 @@
           <rootpe_rof>0</rootpe_rof>
           <rootpe_cpl>0</rootpe_cpl>
           <rootpe_ice>0</rootpe_ice>
-          <rootpe_ocn>72</rootpe_ocn>
+          <rootpe_ocn>36</rootpe_ocn>
           <rootpe_lnd>0</rootpe_lnd>
           <rootpe_wav>0</rootpe_wav>
           <rootpe_glc>0</rootpe_glc>
@@ -806,7 +806,7 @@
           <ntasks_rof>36</ntasks_rof>
           <ntasks_cpl>36</ntasks_cpl>
           <ntasks_ice>72</ntasks_ice>
-          <ntasks_ocn>108</ntasks_ocn>
+          <ntasks_ocn>144</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>

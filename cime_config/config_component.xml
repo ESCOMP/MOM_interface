@@ -19,10 +19,10 @@
 
   <entry id="OCN_DIAG_MODE">
     <type>char</type>
-    <valid_values>spinup,production,development,testing</valid_values>
+    <valid_values>spinup,production,development</valid_values>
     <default_value>production</default_value>
     <group>case_comp</group>
-    <file>env_case.xml</file>
+    <file>env_run.xml</file>
     <desc> Predefined ocean diagnostics configurations for various purposes. This variable
            controls the frequency, precision, and field lists of diagnostics to be outputted.
            Valid values ordered in increasing intensity: "spinup", "production", "testing",

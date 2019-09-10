@@ -1,5 +1,25 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  gmarques altuntas
+Tag Date:    21 Aug 2019
+Tag Name:    mi_20190821
+
+MOM_interface Updates Summary:
+- Set ENERGYSAVEDAYS_GEOMETRIC=0.0 for all cases
+- add a CMOM test in prealpha test suite
+
+MOM6 Updates Summary: 
+- Obsolete ADD_KV_SLOW and remove visc%Kv_slow from restart files
+
+Testing: aux_mom on cheyenne/intel
+
+Files Modified/Added/Removed: git diff --name-status mi_20190819..master
+M       cime_config/testdefs/testlist_mom.xml
+M       param_templates/MOM_input.yaml
+M       param_templates/json/MOM_input.json
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  altuntas, gmarques, mlevy
 Tag Date:    19 Aug 2019
 Tag Name:    mi_20190819
