@@ -27,109 +27,47 @@ logger = logging.getLogger(__name__)
 
 # prepares the input files of a case and places in rundir:
 def prep_input(case):
-    casename        = case.get_value("CASE")
     Buildconf       = case.get_value("CASEBUILD")
     rundir          = case.get_value("RUNDIR")
-    ocn_gridname    = case.get_value("OCN_GRID")
     srcroot         = case.get_value("SRCROOT")
-    din_loc_root    = case.get_value("DIN_LOC_ROOT")
-    testcase        = case.get_value("TEST")
-    hist_n          = case.get_value("HIST_N")
-    hist_option     = case.get_value("HIST_OPTION")
-    ocn_ncpl        = case.get_value("OCN_NCPL")
-    input_files     = ["diag_table"]
 
     # The scope of the following path expansion is limited to this script only,
-    # and is needed to import MOM_Params class:
-    sys.path.append(os.path.join(srcroot,"components","mom","cime_config"))
-    from MOM_RPS import MOM_Params, MOM_input_nml, Input_data_list, Diag_table
-
-    # determine input category (B,C, or G):
-    # this is needed to determine which input templates are to be copied for a given grid.
-    input_cat  = None
-    comp_ice   = case.get_value("COMP_ICE")
-    comp_atm   = case.get_value("COMP_ATM")
-    active_ice = (comp_ice=="cice")
-    active_atm = (comp_atm=="cam")
-
-    if (not (active_ice or active_atm)):
-        input_cat = "C"
-    elif (active_ice and not active_atm):
-        input_cat = "G"
-    elif (active_ice and active_atm):
-        input_cat = "B"
-    else:
-        expect(False, "Cannot determine input category for this compset.")
+    # and is needed to import MOM6 input file classes:
+    sys.path.append(os.path.join(srcroot,"components","mom","cime_config","MOM_RPS"))
+    from FType_MOM_params import FType_MOM_params
+    from FType_input_nml import FType_input_nml
+    from FType_input_data_list import FType_input_data_list
+    from FType_diag_table import FType_diag_table
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
         os.makedirs(rundir)
 
-    # check if input file templates are available for the given ocn grid:
-    if not (os.path.exists(os.path.join(srcroot,"components","mom","input_templates",ocn_gridname,input_cat))):
-        expect(False, "Couldn't find input files for ocean grid '%s' and input category '%s' at '%s'" \
-                      %(ocn_gridname,input_cat,os.path.join(srcroot,"components","mom","input_templates")))
-
-    # copy template input files:
-    logger.info("\tCopying input files for %s"%(ocn_gridname))
-    template_files_dir  = os.path.join(srcroot,"components","mom","input_templates",ocn_gridname,input_cat)
-    for input_file_name in input_files:
-        input_file_path = os.path.join(template_files_dir,input_file_name)
-        if not os.path.exists(input_file_path):
-            expect(False, "Couldn't find input files at "+input_file_path)
-
-        run_cmd("cp "+input_file_path+" "+rundir)
-
-    # process diag_table: (replace all the instances of "CASENAME" in data_table with the actual case name)
-
-    if hist_option == "ndays":
-        hist_option = "days"
-    elif hist_option == "nsteps":
-        hist_option = "seconds"
-        hist_n = int(86400/ocn_ncpl)
-
-    with open(os.path.join(template_files_dir,"diag_table"), 'r') as diag_table_in:
-        with open(os.path.join(rundir,"diag_table"), 'w') as diag_table:
-            for line in diag_table_in:
-                line = line.replace('$CASENAME', casename)
-                if testcase:
-                    # this makes all real fields double precision
-                    if line.endswith('2\n'):
-                        line = line[:-2] + "1\n"
-                    # this changes output frequency and number of records per file
-                    # using HIST_N and HIST_OPTION from case
-                    if line.startswith("\""+casename):
-                        parts = line.split(',')
-                        if len(parts) > 7:
-                            parts[1] = parts[6] = "1"
-                            parts[2] = parts[7] = "days"
-                        line = ','.join(parts)+"\n"
-                diag_table.writelines(line)
-
+    # Parse json files and create MOM6 input files in rundir
     json_templates_dir = os.path.join(srcroot,"components","mom","param_templates","json")
 
     # Create MOM_input:
     MOM_input_src = os.path.join(json_templates_dir, "MOM_input.json")
     MOM_input_dest = os.path.join(rundir,"MOM_input")
-    MOM_input = MOM_Params(MOM_input_src)
+    MOM_input = FType_MOM_params(MOM_input_src)
     MOM_input.write(MOM_input_dest, case)
 
     # Create input.nml:
     input_nml_src = os.path.join(json_templates_dir, "input_nml.json")
     input_nml_dest = os.path.join(rundir,"input.nml")
-    input_nml = MOM_input_nml(input_nml_src)
+    input_nml = FType_input_nml(input_nml_src)
     input_nml.write(input_nml_dest, case)
 
     # Create mom.input_data_list:
     input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
     input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
-    input_data_list = Input_data_list(input_data_list_src)
+    input_data_list = FType_input_data_list(input_data_list_src)
     input_data_list.write(input_data_list_dest, case)
 
     # Create diag_table:
     diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
-    diag_table_dest = os.path.join(rundir,"diag_table_EXP")
-    diag_table = Diag_table(diag_table_src)
+    diag_table_dest = os.path.join(rundir,"diag_table")
+    diag_table = FType_diag_table(diag_table_src)
     diag_table.write(diag_table_dest, case)
 
     # Create an empty MOM_override:
@@ -153,115 +91,32 @@ def process_SourceMods(case):
         if filename in replaceable:
             run_cmd("cp "+os.path.join(SourceMods_dir,filename)+" "+rundir)
 
+
 def process_user_nl_mom(case):
     caseroot = case.get_value("CASEROOT")
     rundir   = case.get_value("RUNDIR")
+    srcroot  = case.get_value("SRCROOT")
 
     # parse the parameters in user_nl_mom:
-    nl_params = read_param_file(caseroot,"user_nl_mom")
+    sys.path.append(os.path.join(srcroot,"components","mom","cime_config","MOM_RPS"))
+    from FType_MOM_params import FType_MOM_params
+    user_nl_mom = FType_MOM_params(os.path.join(caseroot,"user_nl_mom"),
+                                    input_format="MOM_input", output_format="MOM_override")
+    user_nl_mom.read()
 
     # copy the user_nl_mom parameters into MOM_override:
-    if len(nl_params)>0:
-        modules = dict()
+    if len(user_nl_mom.data)>0:
 
         # check if a copy of MOM_override is provided in SourceMods:
         SourceMods_dir = os.path.join(caseroot,"SourceMods","src.mom")
         if "MOM_override" in os.listdir(SourceMods_dir):
             raise SystemExit("ERROR: Cannot provide parameter changes via both SourceMods and user_nl_mom!")
 
-        # parse the MOM_input file:
-        MOM_input_params = read_param_file(rundir,"MOM_input")
+        # parse the MOM_input file staged in rundir:
+        MOM_input_rundir = FType_MOM_params(os.path.join(rundir,"MOM_input"),input_format="MOM_input")
 
-        with open(os.path.join(rundir,"MOM_override"), 'w') as MOM_override:
-            MOM_override.write('! WARNING: DO NOT EDIT this file! Any user change made in this file will be\n')
-            MOM_override.write('!          overriden. This file is automatically generated. MOM6 parameter\n')
-            MOM_override.write('!          changes may be made via SourceMods or user_nl_mom.\n')
-            MOM_override.write('!-------------------------------------------------------------------------\n\n')
-
-            # first determine all the modules:
-            for param,module in nl_params:
-                if module in modules:
-                    modules[module].append(param)
-                else:
-                    modules[module] = [param]
-
-            # now, write all the parameters (and group the parameters belonging to the same module.)
-            for module in modules:
-                if module: MOM_override.write(module+"%\n")
-                for param in modules[module]:
-                    if ((param,module) in MOM_input_params): # parameter is provided in both MOM_input and user_nl_mom
-                        if (nl_params[param,module] != MOM_input_params[param,module]):
-                            MOM_override.write('#override '+param+' = '+nl_params[param,module]+'\n')
-                        else:
-                            MOM_override.write('! '+param+' = '+nl_params[param,module]+' !(unchanged)\n')
-                    else:
-                        MOM_override.write(param+' = '+nl_params[param,module]+'\n')
-
-                if module: MOM_override.write("%"+module+"\n")
-                MOM_override.write("\n")
-
-
-
-# parses a parameter file (either user_nl_mom or MOM_input) and returns the following dictionary:
-#       params_dict[k1,k2] = val
-# where k1 is the parameter name, k2 is the module the parameter belongs to, and val is the string
-# corresponding to the value of the parameter excluding any trailing comment.
-def read_param_file(file_dir,file_name):
-
-    if file_name not in ["MOM_input","user_nl_mom"]:
-        raise SystemExit("ERROR: file format unsupported by read_param_file()")
-
-    params_dict = dict()
-    with open(os.path.join(file_dir,file_name),'r') as user_nl_mom:
-        within_comment_block = False
-        current_module = None
-        for line in user_nl_mom:
-            if len(line)>1:
-                line_s = line.split()
-
-                # check if within comment block.
-                if (not within_comment_block) and line.strip()[0:2] == "/*":
-                    within_comment_block = True
-
-                if within_comment_block and line.strip()[-2:] == "*/":
-                    within_comment_block = False
-                    continue
-
-                if not within_comment_block and line_s[0][0] != "!": # not a single comment line either
-                    # check format:
-                    if (not current_module) and line.strip()[-1] == "%":
-                        current_module = line.strip()[:-1]
-                    elif current_module and line.strip()[0] == "%":
-                        current_module = None
-                    else:
-                        # discard override keyword if provided:
-                        if line_s[0] == "#override" and len(line_s)>1:
-                            line_s = line_s[1:]
-                        line_j = ' '.join(line_s)
-
-                        # now parse the line:
-                        if ("=" in line_j):
-                            line_ss     = line_j.split("=")
-                            param_str   = (line_ss[0]).strip()  # the first element is the parameter name
-                            val_str     = ' '.join(line_ss[1:])  # the rest is tha value string
-                            if '!' in val_str:
-                                val_str = val_str.split("!")[0] # discard the comment in the value string, if there is
-
-                            # check if param already provided:
-                            if (param_str,current_module) in params_dict:
-                                raise SystemExit('ERROR: '+param_str+' listed more than once in '+file_name)
-
-                            # enter the parameter in the dictionary:
-                            params_dict[param_str,current_module] = val_str
-                        else:
-                            raise SystemExit('ERROR: Cannot parse the following line in user_nl_mom: '+line)
-
-        # Check if there is unclosed block:
-        if within_comment_block:
-            raise SystemExit('ERROR: faulty comment block!')
-        if current_module:
-            raise SystemExit('ERROR: faulty module block!')
-    return params_dict
+        # Write MOM_override (based on data from user_nl_mom)
+        user_nl_mom.write(os.path.join(rundir,"MOM_override"), def_params=MOM_input_rundir)
 
 
 # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
