@@ -43,14 +43,12 @@ def buildlib(caseroot, libroot, bldroot):
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")
 
-        # Current code base does not need to build MARBL yet
-        if False:
-            # MARBL source code is brought in as a git submodule (or my manage_externals)
-            logger.info("Making sure MARBL code is available...")
-            marbl_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","MARBL","src")
-            # If MARBL is not found, abort
-            if not os.path.exists(marbl_srcdir):
-                expect(False, "MARBL external not found")
+        # MARBL source code is brought in as a git submodule (or my manage_externals)
+        logger.info("Making sure MARBL code is available...")
+        marbl_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","MARBL","src")
+        # If MARBL is not found, abort
+        if not os.path.exists(marbl_srcdir):
+            expect(False, "MARBL external not found")
 
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
@@ -86,7 +84,7 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "core"),
                      os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "geoKdTree"),
                      cvmix_srcdir,
-#                     marbl_srcdir,
+                     marbl_srcdir,
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","lateral"),
                      os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"),
                      os.path.join(srcroot,"components","mom","MOM6","src","tracer"),
