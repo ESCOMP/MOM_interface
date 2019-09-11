@@ -11,6 +11,13 @@ FieldLists:
 
     - &tracers          ["agessc", "T_ady_2d", "T_adx_2d", "T_diffy_2d", "T_diffx_2d"]
 
+    # NOTE: for now I'm hard-coding the MARBL tracer names. Eventually we will rely on
+    #       MARBL to tell us these names
+    - &MARBL            ["PO4", "NO3", "SiO3", "NH4", "Fe", "Lig", "O2", "DIC", "DIC_ALT_CO2",
+                         "ALK", "ALK_ALT_CO2", "DOC", "DON", "DOP", "DOPr", "DONr", "DOCr",
+                         "zooC", "spChl", "spC", "spP", "spFe", "spCaCO3", "diatChl", "diatC",
+                         "diatP", "diatFe", "diatSi", "diazChl", "diazC", "diazP", "diazFe"]
+
     - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint", 
                          "somint", "Rd_dx", "speed", "mlotst"]
 
@@ -46,7 +53,7 @@ FieldLists:
 Files:
     # native grid
     hist:
-        suffix: 
+        suffix:
             $OCN_DIAG_MODE == "spinup": "hm%4yr"
             else: "hm%4yr-%2mo"
         output_freq: 1
@@ -67,6 +74,17 @@ Files:
                 - module:   "ocean_model"
                   packing:  2                 # single precision
                   lists:    [ *prognostic ]
+            $OCN_BGC_CONFIG != "none":
+                - module:   "ocean_model"
+                  packing:  1                 # double precision
+                  lists:    [ *prognostic,
+                              *hist_additional,
+                              *kpp_diags,
+                              *forcing_flds,
+                              *surface_flds,
+                              *visc_flds,
+                              *tracers,
+                              *MARBL ]
             else:
                 - module:   "ocean_model"
                   packing:  1                 # double precision
