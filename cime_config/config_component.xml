@@ -5,7 +5,8 @@
 <entry_id version="3.0">
 
   <description>
-    <desc ocn="MOM6">MOM6 OCEAN </desc>
+    <desc ocn="MOM6[%ECO]">MOM6 OCEAN </desc>
+    <desc option="ECO">Ecosystem</desc>
   </description>
 
   <entry id="COMP_OCN">
@@ -21,13 +22,27 @@
     <type>char</type>
     <valid_values>spinup,production,development</valid_values>
     <default_value>production</default_value>
-    <group>case_comp</group>
+    <group>run_component_mom</group>
     <file>env_run.xml</file>
     <desc> Predefined ocean diagnostics configurations for various purposes. This variable
            controls the frequency, precision, and field lists of diagnostics to be outputted.
            Valid values ordered in increasing intensity: "spinup", "production", "testing",
            "development". Further specialization of diagnostics may be done by copying an
            edited version of diag_table file in SourceMods/src.mom/
+    </desc>
+  </entry>
+
+  <entry id="OCN_BGC_CONFIG">
+    <type>char</type>
+    <valid_values>none,latest</valid_values>
+    <default_value>none</default_value>
+    <values>
+      <value compset="_MOM6%[^_]*ECO">latest</value>
+    </values>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Version of ocean BGC tunings to use (default values can be overwritten by user_nl_mom and user_nl_marbl).
+          "none" => run without MARBL tracers.
     </desc>
   </entry>
 

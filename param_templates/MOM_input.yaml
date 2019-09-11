@@ -296,6 +296,14 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+    USE_MARBL_TRACERS:
+        description: |
+            "[Boolean] default = False
+            If true, use the MARBL tracer package."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_BGC_CONFIG != "none": True
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:

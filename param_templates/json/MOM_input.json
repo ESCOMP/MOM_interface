@@ -203,6 +203,14 @@
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
+      "USE_MARBL_TRACERS": {
+         "description": "\"[Boolean] default = False\nIf true, use the MARBL tracer package.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_BGC_CONFIG != \"none\"": true
+         }
+      },
       "COORD_CONFIG": {
          "description": "\"This specifies how layers are to be defined:\nfile - read coordinate information from the file\nspecified by (COORD_FILE).\nlinear - linear based on interfaces not layesrs.\nts_ref - use reference temperature and salinity\nts_range - use range of temperature and salinity\n(T_REF and S_REF) to determine surface density\nand GINT calculate internal densities.\ngprime - use reference density (RHO_0) for surface\ndensity and GINT calculate internal densities.\nts_profile - use temperature and salinity profiles\n(read from COORD_FILE) to set layer densities.\nUSER - call a user modified routine.\nThe file from which the coordinate densities are read.\"\n",
          "datatype": "string",
