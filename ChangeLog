@@ -1,6 +1,24 @@
 ===============================================================================
 Tag Creator: altuntas
-Developers:  gmarques altuntas
+Developers:  altuntas, gmarques
+Tag Date:    12 Sep 2019
+Tag Name:    mi_20190912
+
+MOM_interface Updates Summary:
+- Switch to new diag_table and cleanup/reorganize MOM_RPS
+- CMORize variables and add missing diagnostic file
+- add ability to provide different names for field_name and output_name
+
+MOM6 Updates Summary:
+- Fixes coding issues with GME
+- Improve mesh consistency check
+- Adds consistency check between mesh and mom6 grid
+
+Testing: aux_mom on cheyenne/intel
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  gmarques, altuntas
 Tag Date:    21 Aug 2019
 Tag Name:    mi_20190821
 
@@ -8,7 +26,7 @@ MOM_interface Updates Summary:
 - Set ENERGYSAVEDAYS_GEOMETRIC=0.0 for all cases
 - add a CMOM test in prealpha test suite
 
-MOM6 Updates Summary: 
+MOM6 Updates Summary:
 - Obsolete ADD_KV_SLOW and remove visc%Kv_slow from restart files
 
 Testing: aux_mom on cheyenne/intel
@@ -99,7 +117,7 @@ MOM_interface Updates Summary:
   ChangeLog is updated each time a new MOM_interface tag is created.
   A new MOM_interface tag is created when new version(s) of NCAR/MOM6
   and/or MOM_interface is to be incorporated in an upcoming CESM tag.
-- Changed MOM6 entry in Externals.cfg to point to a tag instead of 
+- Changed MOM6 entry in Externals.cfg to point to a tag instead of
   a branch.
 
 MOM6 Updates Summary: n/a
