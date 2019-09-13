@@ -34,6 +34,8 @@ FieldLists:
                          "geolon_v", "geolat_v", "area_t", "depth_ocean", "wet", "wet_c", "wet_u",
                           "wet_v", "Coriolis"]
 
+    - &sigma2           ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
+    
     - &vert_sections_u  ["volcello", "thetao", "so", "umo", "uo"]
 
     - &vert_sections_v  ["volcello", "thetao", "so", "vmo", "vo"]
@@ -44,6 +46,29 @@ FieldLists:
 ###############################################################################
 
 Files:
+    # sigma2
+    sigma2:
+        suffix: 
+            $OCN_DIAG_MODE == "spinup": "rho2%4yr"
+            else: "rho2%4yr-%2mo"
+        output_freq: 1
+        output_freq_units:
+            $OCN_DIAG_MODE == "spinup": "years"
+            $TEST == True : "days"
+            else: "months"
+        time_axis_units: "days"
+        new_file_freq: 1
+        new_file_freq_units:
+            $OCN_DIAG_MODE == "spinup": "years"
+            $TEST == True: "days"
+            else: "months"
+        reduction_method: "mean"    # time average
+        regional_section: "none"    # global
+        fields:
+            - module:   "ocean_model_rho2"
+              packing:  2                 # single precision
+              lists:    [ *sigma2 ]
+    
     # native grid
     hist:
         suffix: 
