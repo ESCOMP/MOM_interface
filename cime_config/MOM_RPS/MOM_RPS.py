@@ -3,7 +3,7 @@ from collections import OrderedDict
 import os
 import abc
 import re
-from utils import get_str_type, is_logical_expr, has_param_to_expand, expand_cime_parameter
+from rps_utils import get_str_type, is_logical_expr, has_param_to_expand, expand_cime_parameter
 
 ### MOM Runtime Parameter System Module =======================================
 
