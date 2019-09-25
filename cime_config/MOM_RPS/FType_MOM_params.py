@@ -102,11 +102,11 @@ class FType_MOM_params(MOM_RPS):
         assert self.input_format=="json", "MOM_input file can only be generated from a json input file."
         str_type = get_str_type()
 
+        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
+        self.expand_cime_params(case)
+
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)
-
-        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
-        self.expand_cime_params_in_vals(case)
 
         # 2. Now, write MOM_input
 

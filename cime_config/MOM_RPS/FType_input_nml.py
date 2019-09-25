@@ -12,11 +12,11 @@ class FType_input_nml(MOM_RPS):
     def write(self, output_path, case):
         assert self.input_format=="json", "input.nml file can only be generated from a json input file."
 
+        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
+        self.expand_cime_params(case)
+
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)
-
-        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
-        self.expand_cime_params_in_vals(case)
 
         with open(os.path.join(output_path), 'w') as input_nml:
             for module in self.data:
