@@ -21,5 +21,7 @@ class FType_input_data_list(MOM_RPS):
         with open(os.path.join(output_path), 'w') as input_data_list:
             for module in self.data:
                 for var in self.data[module]:
-                    input_data_list.write(var+" = "+str(self.data[module][var]["value"])+"\n")
+                    val = self.data[module][var]
+                    if val != None:
+                        input_data_list.write(var+" = "+str(val)+"\n")
 
