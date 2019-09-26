@@ -30,6 +30,7 @@ def prep_input(case):
     Buildconf       = case.get_value("CASEBUILD")
     rundir          = case.get_value("RUNDIR")
     srcroot         = case.get_value("SRCROOT")
+    atm_model       = case.get_value("COMP_ATM")
 
     # The scope of the following path expansion is limited to this script only,
     # and is needed to import MOM6 input file classes:
@@ -50,13 +51,15 @@ def prep_input(case):
     MOM_input_src = os.path.join(json_templates_dir, "MOM_input.json")
     MOM_input_dest = os.path.join(rundir,"MOM_input")
     MOM_input = FType_MOM_params(MOM_input_src)
-    MOM_input.write(MOM_input_dest, case)
+    if atm_model != "fv3gfs":
+        MOM_input.write(MOM_input_dest, case)
 
     # Create input.nml:
     input_nml_src = os.path.join(json_templates_dir, "input_nml.json")
     input_nml_dest = os.path.join(rundir,"input.nml")
     input_nml = FType_input_nml(input_nml_src)
-    input_nml.write(input_nml_dest, case)
+    if atm_model != "fv3gfs":
+        input_nml.write(input_nml_dest, case)
 
     # Create mom.input_data_list:
     input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
@@ -68,7 +71,8 @@ def prep_input(case):
     diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
     diag_table_dest = os.path.join(rundir,"diag_table")
     diag_table = FType_diag_table(diag_table_src)
-    diag_table.write(diag_table_dest, case)
+    if atm_model != "fv3gfs":
+        diag_table.write(diag_table_dest, case)
 
     # Create an empty MOM_override:
     with open(os.path.join(rundir,"MOM_override"), 'w') as MOM_override:
