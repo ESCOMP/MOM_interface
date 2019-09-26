@@ -52,9 +52,7 @@ Global:
             in MOM_memory.h at compile time; without STATIC_MEMORY_
             the default is NIHALO_ in MOM_memory.h (if defined) or 2."
         datatype: integer
-        value:
-            $OCN_GRID == "tx0.25v1": 2
-            else: 4
+        value: 4
     NJHALO:
         description: |
             "default = 2
@@ -63,9 +61,7 @@ Global:
             in MOM_memory.h at compile time; without STATIC_MEMORY_
             the default is NJHALO_ in MOM_memory.h (if defined) or 2."
         datatype: integer
-        value:
-            $OCN_GRID == "tx0.25v1": 2
-            else: 4
+        value: 4
     NIGLOBAL:
         description: |
             "The total number of thickness grid points in the

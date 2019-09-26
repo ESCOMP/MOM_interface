@@ -18,18 +18,12 @@
       "NIHALO": {
          "description": "\"default = 2\nThe number of halo points on each side in the\nx-direction.  With STATIC_MEMORY_ this is set as NIHALO_\nin MOM_memory.h at compile time; without STATIC_MEMORY_\nthe default is NIHALO_ in MOM_memory.h (if defined) or 2.\"\n",
          "datatype": "integer",
-         "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 2,
-            "else": 4
-         }
+         "value": 4
       },
       "NJHALO": {
          "description": "\"default = 2\nThe number of halo points on each side in the\ny-direction.  With STATIC_MEMORY_ this is set as NJHALO_\nin MOM_memory.h at compile time; without STATIC_MEMORY_\nthe default is NJHALO_ in MOM_memory.h (if defined) or 2.\"\n",
          "datatype": "integer",
-         "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 2,
-            "else": 4
-         }
+         "value": 4
       },
       "NIGLOBAL": {
          "description": "\"The total number of thickness grid points in the\nx-direction in the physical domain. With STATIC_MEMORY_\nthis is set in MOM_memory.h at compile time.\"\n",
