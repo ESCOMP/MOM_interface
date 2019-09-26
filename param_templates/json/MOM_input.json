@@ -291,7 +291,7 @@
          }
       },
       "MINIMUM_DEPTH": {
-         "description": "\"[m] default = 0.0\nIf MASKING_DEPTH is unspecified, then anything shallower than\nMINIMUM_DEPTH is assumed to be land and all fluxes are masked out.\nIf MASKING_DEPTH is specified, then all depths shallower than\nMINIMUM_DEPTH but depper than MASKING_DEPTH are rounded to MINIMUM_DEPTH.\"\n",
+         "description": "\"[m] default = 0.0\nIf MASKING_DEPTH is unspecified, then anything shallower than\nMINIMUM_DEPTH is assumed to be land and all fluxes are masked out.\nIf MASKING_DEPTH is specified, then all depths shallower than\nMINIMUM_DEPTH but depper than MASKING_DEPTH are rounded to\nMINIMUM_DEPTH.\"\n",
          "datatype": "real",
          "units": "m",
          "value": {
@@ -433,7 +433,7 @@
          }
       },
       "SIMPLE_TKE_TO_KD": {
-         "description": "\"[Boolean] default = False\nIf true, uses a simple estimate of Kd/TKE that will\nwork for arbitrary vertical coordinates. If false,\ncalculates Kd/TKE and bounds based on exact energetics/nfor an isopycnal layer-formulation.\"\n",
+         "description": "\"[Boolean] default = False\nIf true, uses a simple estimate of Kd/TKE that will\nwork for arbitrary vertical coordinates. If false,\ncalculates Kd/TKE and bounds based on exact\nenergetics/nfor an isopycnal layer-formulation.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
