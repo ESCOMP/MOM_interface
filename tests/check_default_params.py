@@ -13,7 +13,7 @@ for f in os.listdir('./param_templates/'):
         f_json = json.load(open(os.path.join("./param_templates/json/",f.replace('yaml','json')), 'r'),
                         object_pairs_hook=OrderedDict)
         print("Checking ",f)
-        assert (f_yaml==f_json), f"{f} and .json files appear to have different "\
+        assert (f_yaml==f_json), f+" and .json files appear to have different "\
                                  "information. If you have updated yaml file but not json file, "\
                                  "update it by running param_templates/yaml_to_json.py and then "\
                                  "push the updated json file."
