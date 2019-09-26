@@ -650,9 +650,9 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "FILE:ocean_vgrid.nc,dz"
-            $OCN_GRID == "tx0.66v1": "FILE:ocean_vgrid_190320.nc,dz"
-            $OCN_GRID == "tx0.25v1": "HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"
+            $OCN_GRID == "gx1v6": '"FILE:ocean_vgrid.nc,dz"'
+            $OCN_GRID == "tx0.66v1": '"FILE:ocean_vgrid_190320.nc,dz"'
+            $OCN_GRID == "tx0.25v1": '"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"'
     REGRID_COMPRESSIBILITY_FRACTION:
         description: |
           "[not defined] default = 0.0
@@ -677,7 +677,7 @@ Global:
           The list of maximum depths for each interface."
         datatype: string
         value:
-            $OCN_GRID == "tx0.25v1": "FNC1:5,8000.0,1.0,.01"
+            $OCN_GRID == "tx0.25v1": '"FNC1:5,8000.0,1.0,.01"'
     MAX_LAYER_THICKNESS_CONFIG:
         description: |
           "default = 'NONE'
@@ -692,7 +692,7 @@ Global:
           The list of maximum thickness for each layer."
         datatype: string
         value:
-            $OCN_GRID == "tx0.25v1": "FNC1:400,31000.0,0.1,.01"
+            $OCN_GRID == "tx0.25v1": '"FNC1:400,31000.0,0.1,.01"'
     BOUND_CORIOLIS:
         description: |
             "[Boolean] default = False
@@ -932,13 +932,7 @@ Global:
             is of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME."
         datatype: string
         value:
-            $OCN_GRID == "tx0.25v1": "z Z ZSTAR"
-    DIAG_COORD_DEF_Z:
-        description: |
-            "TODO"
-        datatype: string
-        value:
-            $OCN_GRID == "tx0.25v1": "FILE:interpolate_zgrid_40L.nc,interfaces=zw"
+            $OCN_GRID == "tx0.25v1": '"z Z ZSTAR"'
     DIAG_MISVAL:
         description: |
             "TODO"
@@ -1806,9 +1800,9 @@ Global:
             PPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)"
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "PPM:H3"
-            $OCN_GRID == "tx0.66v1": "PPM:H3"
-            $OCN_GRID == "tx0.25v1": "PPM:H3"
+            $OCN_GRID == "gx1v6": '"PPM:H3"'
+            $OCN_GRID == "tx0.66v1": '"PPM:H3"'
+            $OCN_GRID == "tx0.25v1": '"PPM:H3"'
     KHTR:
         description: |
             "[m2 s-1] default = 0.0
@@ -2085,7 +2079,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "gx1v6": "WOA09"
-            $OCN_GRID == "tx0.25v1": "FILE:interpolate_zgrid_40L.nc,interfaces=zw"
+            $OCN_GRID == "tx0.25v1": '"FILE:interpolate_zgrid_40L.nc,interfaces=zw"'
     MAX_RINO_IT:
         description: |
           "[nondim] default = 50

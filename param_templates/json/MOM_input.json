@@ -461,9 +461,9 @@
          "description": "\"default = 'UNIFORM'\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter ALE_RESOLUTION\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "FILE:ocean_vgrid.nc,dz",
-            "$OCN_GRID == \"tx0.66v1\"": "FILE:ocean_vgrid_190320.nc,dz",
-            "$OCN_GRID == \"tx0.25v1\"": "HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"
+            "$OCN_GRID == \"gx1v6\"": "\"FILE:ocean_vgrid.nc,dz\"",
+            "$OCN_GRID == \"tx0.66v1\"": "\"FILE:ocean_vgrid_190320.nc,dz\"",
+            "$OCN_GRID == \"tx0.25v1\"": "\"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01\""
          }
       },
       "REGRID_COMPRESSIBILITY_FRACTION": {
@@ -478,14 +478,14 @@
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum interface depths.\nValid options are:\nNONE        - there are no maximum interface depths\nPARAM       - use the vector-parameter MAXIMUM_INTERFACE_DEPTHS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum depths for each interface.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "FNC1:5,8000.0,1.0,.01"
+            "$OCN_GRID == \"tx0.25v1\"": "\"FNC1:5,8000.0,1.0,.01\""
          }
       },
       "MAX_LAYER_THICKNESS_CONFIG": {
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum layer thicknesses.\nValid options are:\nNONE        - there are no maximum layer thicknesses\nPARAM       - use the vector-parameter MAX_LAYER_THICKNESS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum thickness for each layer.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "FNC1:400,31000.0,0.1,.01"
+            "$OCN_GRID == \"tx0.25v1\"": "\"FNC1:400,31000.0,0.1,.01\""
          }
       },
       "BOUND_CORIOLIS": {
@@ -675,15 +675,7 @@
          "description": "\"A list of string tuples associating diag_table modules to\na coordinate definition used for diagnostics. Each string\nis of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "z Z ZSTAR"
-         }
-      },
-      "DIAG_COORD_DEF_Z": {
-         "description": "\"default = WOA09\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_Z\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
-         "datatype": "string",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": "WOA09",
-            "$OCN_GRID == \"tx0.25v1\"": "FILE:interpolate_zgrid_40L.nc,interfaces=zw"
+            "$OCN_GRID == \"tx0.25v1\"": "\"z Z ZSTAR\""
          }
       },
       "DIAG_MISVAL": {
@@ -1387,9 +1379,9 @@
          "description": "\"default = 'PLM'\nThe horizontal transport scheme for tracers:\nPLM    - Piecewise Linear Method\nPPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "PPM:H3",
-            "$OCN_GRID == \"tx0.66v1\"": "PPM:H3",
-            "$OCN_GRID == \"tx0.25v1\"": "PPM:H3"
+            "$OCN_GRID == \"gx1v6\"": "\"PPM:H3\"",
+            "$OCN_GRID == \"tx0.66v1\"": "\"PPM:H3\"",
+            "$OCN_GRID == \"tx0.25v1\"": "\"PPM:H3\""
          }
       },
       "KHTR": {
@@ -1605,6 +1597,14 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.15
+         }
+      },
+      "DIAG_COORD_DEF_Z": {
+         "description": "\"default = WOA09\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_Z\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
+         "datatype": "string",
+         "value": {
+            "$OCN_GRID == \"gx1v6\"": "WOA09",
+            "$OCN_GRID == \"tx0.25v1\"": "\"FILE:interpolate_zgrid_40L.nc,interfaces=zw\""
          }
       },
       "MAX_RINO_IT": {
