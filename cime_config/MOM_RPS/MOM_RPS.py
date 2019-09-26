@@ -124,7 +124,8 @@ class MOM_RPS(object,):
         def _expand_cime_params_recursive(entry):
             """ Recursively expands cime parameters in key:value pairs"""
 
-            for child in entry:
+            children = [child for child in entry]
+            for child in children:
 
                 # first, values
                 if (isinstance(child,list)):
