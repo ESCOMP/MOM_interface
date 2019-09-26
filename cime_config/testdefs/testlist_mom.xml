@@ -60,6 +60,15 @@
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
   </test>
+  <test name="SMS_Vnuopc" grid="T62_t025" compset="CMOM">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom">
+        <options>
+          <option name="wallclock">00:30:00</option>
+        </options>
+      </machine>
+    </machines>
+  </test>
   <test name="ERI" grid="T62_t061" compset="GMOM">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom">
