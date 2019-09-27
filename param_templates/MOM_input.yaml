@@ -562,8 +562,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "gx1v6": False
+            $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx0.25v1": True
     ETA_TOLERANCE:
         description: |
