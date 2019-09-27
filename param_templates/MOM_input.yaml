@@ -1,6 +1,6 @@
 # This file includes CESM defaults for MOM6 parameters. During compile time,
 # this file is read to generate MOM_input file depending on the case settings.
- 
+
 ### Warning: ###
 # This file is intended to be edited by MOM6+CESM developers.
 # For customizing cases, users should add their "parameter=value" pairs
@@ -13,15 +13,21 @@
 #         description: "..."
 #         datatype: ...
 #         value: ...
- 
+
 ### Notes to developers ###
 #   * To maintain the precision of double-precision floating-poing numbers,
 #     make sure to specify the values (not datatypes) as strings, e.g,:
 #       value: "300.3003003003003"
 #   * Use $ sign followed by enclosing curly brackets to designate keywords
 #     to be replaced by case-specific values, e.g., ${DIN_LOC_ROOT}.
+#   * Expandable string variables are added quotation marks if they are NOT
+#     specified with curly brackets. i.e.,
+#       ${VAR}  -> str_val
+#       $VAR    -> "str_val"
 
 # =============================================================================
+
+---
 
 Global:
     INPUTDIR:
@@ -38,6 +44,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
             else: False
     NIHALO:
         description: |
@@ -66,6 +73,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 320
             $OCN_GRID == "tx0.66v1": 540
+            $OCN_GRID == "tx0.25v1": 1440
             $OCN_GRID == "MISOMIP": 402
     NJGLOBAL:
         description: |
@@ -81,6 +89,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 384
             $OCN_GRID == "tx0.66v1": 458
+            $OCN_GRID == "tx0.25v1": 1080
             $OCN_GRID == "MISOMIP": 40
     IO_LAYOUT:
         description: |
@@ -96,9 +105,10 @@ Global:
         datatype: integer
         units: nondim
         value:
-            $OCN_GRID == "MISOMIP": 36
             $OCN_GRID == "gx1v6": 60
             $OCN_GRID == "tx0.66v1": 63
+            $OCN_GRID == "tx0.25v1": 75
+            $OCN_GRID == "MISOMIP": 36
     USE_LEGACY_DIABATIC_DRIVER:
         description: |
             "[Boolean] default = True
@@ -127,18 +137,6 @@ Global:
         datatype: logical
         units: Boolean
         value: True
-    BULKMIXEDLAYER:
-        description: |
-            "[Boolean] default = False
-            If true, use a Kraus-Turner-like bulk mixed layer
-            with transitional buffer layers.  Layers 1 through
-            NKML+NKBL have variable densities. There must be at
-            least NKML+NKBL+1 layers if BULKMIXEDLAYER is true.
-            BULKMIXEDLAYER can not be used with USE_REGRIDDING.
-            The default is influenced by ENABLE_THERMODYNAMICS."
-        datatype: logical
-        units: Boolean
-        value: False
     THICKNESSDIFFUSE:
         description: |
             "[Boolean] default = False
@@ -149,6 +147,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     THICKNESSDIFFUSE_FIRST:
         description: |
             "[Boolean] default = False
@@ -159,6 +158,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     DT:
         description: |
             "[s]
@@ -170,6 +170,7 @@ Global:
         units: s
         value:
             $OCN_GRID == "gx1v6": 1800.0
+            $OCN_GRID == "tx0.25v1": 900.0
             $OCN_GRID == "tx0.66v1": 1200.0
             $OCN_GRID == "MISOMIP": 600.0
     DT_THERM:
@@ -187,11 +188,11 @@ Global:
         units: s
         value:
             $OCN_GRID == "MISOMIP": 1800.0
-            else : >
-                = ( (${NCPL_BASE_PERIOD}=="decade") * 86400.0 * 3650 +
-                    (${NCPL_BASE_PERIOD}=="year") * 86400.0 * 365 +
-                    (${NCPL_BASE_PERIOD}=="day") * 86400.0 +
-                    (${NCPL_BASE_PERIOD}=="hour") * 3600 ) / $OCN_NCPL
+            else: >
+                = ( ( $NCPL_BASE_PERIOD =="decade") * 86400.0 * 3650 +
+                    ( $NCPL_BASE_PERIOD =="year") * 86400.0 * 365 +
+                    ( $NCPL_BASE_PERIOD =="day") * 86400.0 +
+                    ( $NCPL_BASE_PERIOD =="hour") * 3600 ) / $OCN_NCPL
     HFREEZE:
         description: |
             "[m] default = -1.0
@@ -203,6 +204,7 @@ Global:
         units: m
         value:
             $OCN_GRID == "tx0.66v1": 10.0
+            $OCN_GRID == "tx0.25v1": 20.0
     DTBT_RESET_PERIOD:
         description: |
             "[s] default = 7200.0
@@ -215,6 +217,7 @@ Global:
         units: s
         value:
             $OCN_GRID == "tx0.66v1": 7200.0
+            $OCN_GRID == "tx0.25v1": 3600.0
             else: 0.0
     FRAZIL:
         description: |
@@ -248,6 +251,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 3925.0
             $OCN_GRID == "tx0.66v1": 3992.0
+            $OCN_GRID == "tx0.25v1": 3992.0
             $OCN_GRID == "MISOMIP": 3974.0
     CHECK_BAD_SURFACE_VALS:
         description: |
@@ -258,6 +262,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     SAVE_INITIAL_CONDS:
         description: |
             "[Boolean] default = False
@@ -276,6 +281,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.25v1": False
     DTFREEZE_DP:
         description: |
             "[deg C Pa-1] default = 0.0
@@ -286,6 +292,7 @@ Global:
         units: deg C Pa-1
         value:
             $OCN_GRID == "tx0.66v1": -7.75E-08
+            $OCN_GRID == "tx0.25v1": -7.75E-08
             $OCN_GRID == "MISOMIP": -7.53E-08
     USE_IDEAL_AGE_TRACER:
         description: |
@@ -296,6 +303,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:
@@ -316,7 +324,26 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "none"
             $OCN_GRID == "tx0.66v1": "none"
+            $OCN_GRID == "tx0.25v1": "file"
             $OCN_GRID == "MISOMIP": "linear"
+    COORD_FILE:
+        description: |
+            "The file from which the coordinate densities are read."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "layer_coord.nc"
+    BOUNDARY_EXTRAPOLATION:
+        description: |
+            "[Boolean] default = False
+            When defined, a proper high-order reconstruction
+            scheme is used within boundary cells rather
+            than PCM. E.g., if PPM is used for remapping, a
+            PPM reconstruction will also be used within
+            boundary cells."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
     GRID_CONFIG:
         description: |
             "A character string that determines the method for
@@ -337,6 +364,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "ocean_hgrid.nc"
             $OCN_GRID == "tx0.66v1": "ocean_hgrid_180829.nc"
+            $OCN_GRID == "tx0.25v1": "ocean_hgrid.nc"
     USE_TRIPOLAR_GEOLONB_BUG:
         description: |
             "[Boolean] default = True
@@ -346,6 +374,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.25v1": False
     TOPO_CONFIG:
         description: |
             "This specifies how bathymetry is specified:
@@ -377,6 +406,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "ocean_topog.nc"
             $OCN_GRID == "tx0.66v1": "ocean_topog_190314.nc"
+            $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
     MAXIMUM_DEPTH:
         description: |
             "[m]
@@ -386,6 +416,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 6000.0
             $OCN_GRID == "tx0.66v1": 6000.0
+            $OCN_GRID == "tx0.25v1": 6500.0
             $OCN_GRID == "MISOMIP": 720.0
     MINIMUM_DEPTH:
         description: |
@@ -393,12 +424,14 @@ Global:
             If MASKING_DEPTH is unspecified, then anything shallower than
             MINIMUM_DEPTH is assumed to be land and all fluxes are masked out.
             If MASKING_DEPTH is specified, then all depths shallower than
-            MINIMUM_DEPTH but depper than MASKING_DEPTH are rounded to MINIMUM_DEPTH."
+            MINIMUM_DEPTH but depper than MASKING_DEPTH are rounded to
+            MINIMUM_DEPTH."
         datatype: real
         units: m
         value:
             $OCN_GRID == "gx1v6": 0.5
             $OCN_GRID == "tx0.66v1": 9.5
+            $OCN_GRID == "tx0.25v1": 9.5
     MASKING_DEPTH:
         description: |
             "[m] default = -9999.0
@@ -408,6 +441,7 @@ Global:
         units: m
         value:
             $OCN_GRID == "tx0.66v1": 0.0
+            $OCN_GRID == "tx0.25v1": 0.0
     REMAPPING_SCHEME:
         description: |
             "default = 'PLM'
@@ -433,6 +467,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     TEMP_SALT_Z_INIT_FILE:
         description: |
             "default = 'temp_salt_z.nc'
@@ -442,6 +477,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "WOA05_pottemp_salt.nc"
             $OCN_GRID == "tx0.66v1": "WOA05_pottemp_salt_180829.nc"
+            $OCN_GRID == "tx0.25v1": "MOM6_IC_TS.nc"
     Z_INIT_FILE_PTEMP_VAR:
         description: |
             "default = 'ptemp'
@@ -451,6 +487,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "PTEMP"
             $OCN_GRID == "tx0.66v1": "PTEMP"
+            $OCN_GRID == "tx0.25v1": "temp"
     Z_INIT_FILE_SALT_VAR:
         description: |
             "default = 'salt'
@@ -473,6 +510,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     RESOLN_SCALED_KH:
         description: |
             "[Boolean] default = False
@@ -484,6 +522,16 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.25v1": True
+    KHTR_SLOPE_CFF:
+        description: |
+            "[nondim] default = 0.0
+            The nondimensional coefficient in the Visbeck formula
+            for the epipycnal tracer diffusivity"
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.25
     KHTH_USE_EBT_STRUCT:
         description: |
             "[Boolean] default = False
@@ -504,6 +552,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.25v1": True
     USE_STORED_SLOPES:
         description: |
             "[Boolean] default = False
@@ -515,6 +564,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     ETA_TOLERANCE:
         description: |
             "[m] default = 3.15E-09
@@ -529,6 +579,18 @@ Global:
         value:
             $OCN_GRID == "MISOMIP": 1.0E-12
             else: 1.0E-06
+    ETA_TOLERANCE_AUX:
+        description: |
+            "[m] default = 1.0E-06
+            The tolerance for free-surface height discrepancies
+            between the barotropic solution and the sum of the
+            layer thicknesses when calculating the auxiliary
+            corrected velocities. By default, this is the same as
+            ETA_TOLERANCE, but can be made larger for efficiency."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID == "tx0.25v1": 0.001
     USE_NEUTRAL_DIFFUSION:
         description: |
             "[Boolean] default = False
@@ -543,12 +605,14 @@ Global:
             "[Boolean] default = False
             If true, uses a simple estimate of Kd/TKE that will
             work for arbitrary vertical coordinates. If false,
-            calculates Kd/TKE and bounds based on exact energetics/nfor an isopycnal layer-formulation."
+            calculates Kd/TKE and bounds based on exact
+            energetics/nfor an isopycnal layer-formulation."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     REGRIDDING_COORDINATE_MODE:
         description: |
             "default = 'LAYER'
@@ -564,6 +628,7 @@ Global:
             ADAPTIVE - optimize for smooth neutral density surfaces"
         datatype: string
         value:
+            $OCN_GRID == "tx0.25v1": "HYCOM1"
             $OCN_GRID == "MISOMIP": "SIGMA_SHELF_ZSTAR"
             else: "Z*"
     ALE_COORDINATE_CONFIG:
@@ -585,8 +650,49 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "FILE:ocean_vgrid.nc,dz"
-            $OCN_GRID == "tx0.66v1": "FILE:ocean_vgrid_190320.nc,dz"
+            $OCN_GRID == "gx1v6": '"FILE:ocean_vgrid.nc,dz"'
+            $OCN_GRID == "tx0.66v1": '"FILE:ocean_vgrid_190320.nc,dz"'
+            $OCN_GRID == "tx0.25v1": '"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"'
+    REGRID_COMPRESSIBILITY_FRACTION:
+        description: |
+            "[not defined] default = 0.0
+            When interpolating potential density profiles we can add
+            some artificial compressibility solely to make homogenous
+            regions appear stratified."
+        datatype: real
+        units: not defined
+        value:
+            $OCN_GRID == "tx0.25v1": 0.01
+    MAXIMUM_INT_DEPTH_CONFIG:
+        description: |
+            "default = 'NONE'
+            Determines how to specify the maximum interface depths.
+            Valid options are:
+            NONE        - there are no maximum interface depths
+            PARAM       - use the vector-parameter MAXIMUM_INTERFACE_DEPTHS
+            FILE:string - read from a file. The string specifies
+            the filename and variable name, separated
+            by a comma or space, e.g. FILE:lev.nc,Z
+            FNC1:string - FNC1:dz_min,H_total,power,precision
+            The list of maximum depths for each interface."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": '"FNC1:5,8000.0,1.0,.01"'
+    MAX_LAYER_THICKNESS_CONFIG:
+        description: |
+            "default = 'NONE'
+            Determines how to specify the maximum layer thicknesses.
+            Valid options are:
+            NONE        - there are no maximum layer thicknesses
+            PARAM       - use the vector-parameter MAX_LAYER_THICKNESS
+            FILE:string - read from a file. The string specifies
+            the filename and variable name, separated
+            by a comma or space, e.g. FILE:lev.nc,Z
+            FNC1:string - FNC1:dz_min,H_total,power,precision
+            The list of maximum thickness for each layer."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": '"FNC1:400,31000.0,0.1,.01"'
     BOUND_CORIOLIS:
         description: |
             "[Boolean] default = False
@@ -654,6 +760,7 @@ Global:
         units: m s-1
         value:
             $OCN_GRID == "MISOMIP": 0.0
+            $OCN_GRID == "tx0.25v1": 0.0
             else: 0.01
     KH_SIN_LAT:
         description: |
@@ -695,6 +802,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 0.05
             $OCN_GRID == "tx0.66v1": 0.1
+            $OCN_GRID == "tx0.25v1": 0.01
             $OCN_GRID == "MISOMIP": 0.001
     USE_LAND_MASK_FOR_HVISC:
         description: |
@@ -742,6 +850,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 1.0
             $OCN_GRID == "tx0.66v1": 1.0
+            $OCN_GRID == "tx0.25v1": 1.25
     U_TRUNC_FILE:
         description: |
             "default = ''
@@ -808,6 +917,28 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
+    NUM_DIAG_COORDS:
+        description: |
+            " The number of diagnostic vertical coordinates to use.
+            For each coordinate, an entry in DIAG_COORDS must be provided."
+        datatype: integer
+        value:
+            $OCN_GRID == "tx0.25v1": 1
+    DIAG_COORDS:
+        description: |
+            "A list of string tuples associating diag_table modules to
+            a coordinate definition used for diagnostics. Each string
+            is of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": '"z Z ZSTAR"'
+    DIAG_MISVAL:
+        description: |
+            "TODO"
+        datatype: real
+        value:
+            $OCN_GRID == "tx0.25v1": -1e34
     INTERPOLATE_RES_FN:
         description: |
             "[Boolean] default = True
@@ -820,6 +951,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": False
             $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.25v1": False
     GILL_EQUATORIAL_LD:
         description: |
             "[Boolean] default = False
@@ -832,6 +964,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     DRAG_BG_VEL:
         description: |
             "[m s-1] default = 0.0
@@ -845,6 +978,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 0.1
             $OCN_GRID == "tx0.66v1": 0.1
+            $OCN_GRID == "tx0.25v1": 0.1
     BBL_USE_EOS:
         description: |
             "[Boolean] default = False
@@ -892,6 +1026,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     BT_THICK_SCHEME:
         description: |
             "default = 'HYBRID'
@@ -907,7 +1042,18 @@ Global:
             FROM_BT_CONT - use the average thicknesses kept
             in the h_u and h_v fields of the BT_cont_type"
         datatype: string
-        value: "FROM_BT_CONT"
+        value:
+            $OCN_GRID != "tx0.25v1": "FROM_BT_CONT"
+    BT_USE_OLD_CORIOLIS_BRACKET_BUG:
+        description: |
+            "[Boolean] default = False
+            If True, use an order of operations that is not bitwise
+            rotationally symmetric in the meridional Coriolis term of
+            the barotropic solver."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
     BEBT:
         description: |
             "[nondim] default = 0.1
@@ -933,6 +1079,7 @@ Global:
         datatype: real
         units: s or nondim
         value:
+            $OCN_GRID == "tx0.25v1": -0.9
             $OCN_GRID == "MISOMIP": -0.9
             else: -0.95
     DEPTH_MIN_DYN_PSURF:
@@ -945,6 +1092,19 @@ Global:
         units: m
         value:
             $OCN_GRID == "tx0.66v1": 1.0
+    MAX_P_SURF:
+        description: |
+            "[Pa] default = -1.0
+            The maximum surface pressure that can be exerted by the
+            atmosphere and floating sea-ice or ice shelves. This is
+            needed because the FMS coupling structure does not
+            limit the water that can be frozen out of the ocean and
+            the ice-ocean heat fluxes are treated explicitly.  No
+            limit is applied if a negative value is used."
+        datatype: real
+        units: Pa
+        value:
+            $OCN_GRID == "tx0.25v1": 0.0
     KHTH:
         description: |
             "[m2 s-1] default = 0.0
@@ -964,6 +1124,18 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 900.0
             $OCN_GRID == "tx0.66v1": 900.0
+    KHTH_MAX_CFL:
+        description: |
+            "[nondimensional] default = 0.8
+            The maximum value of the local diffusive CFL ratio that
+            is permitted for the thickness diffusivity. 1.0 is the
+            marginally unstable value in a pure layered model, but
+            much smaller numbers (e.g. 0.1) seem to work better for
+            ALE-based models."
+        datatype: real
+        units: nondimensional
+        value:
+            $OCN_GRID == "tx0.25v1": 0.1
     KHTH_USE_FGNV_STREAMFUNCTION:
         description: |
             "[Boolean] default = False
@@ -1017,6 +1189,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 20.0
             $OCN_GRID == "tx0.66v1": 1.0
+            $OCN_GRID == "tx0.25v1": 1.0
     MLE_FRONT_LENGTH:
         description: |
             "[m] default = 0.0
@@ -1028,6 +1201,7 @@ Global:
         units: m
         value:
             $OCN_GRID == "tx0.66v1": 200.0
+            $OCN_GRID == "tx0.25v1": 500.0
     MLE_MLD_DECAY_TIME:
         description: |
             "[s] default = 0.0
@@ -1039,6 +1213,7 @@ Global:
         units: s
         value:
             $OCN_GRID == "tx0.66v1": 2.592E+06
+            $OCN_GRID == "tx0.25v1": 2.592E+06
     USE_CVMix_CONVECTION:
         description: |
             "[Boolean] default = False
@@ -1061,6 +1236,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": False
             $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.25v1": False
     USE_LOTW_BBL_DIFFUSIVITY:
         description: |
             "[Boolean] default = False
@@ -1072,6 +1248,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     KD_MAX:
         description: |
             "[m2 s-1] default = -1.0
@@ -1083,6 +1260,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 0.1
             $OCN_GRID == "tx0.66v1": 0.1
+            $OCN_GRID == "tx0.25v1": 0.1
     HENYEY_IGW_BACKGROUND:
         description: |
             "[Boolean] default = False
@@ -1094,6 +1272,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     N2_FLOOR_IOMEGA2:
         description: |
             "[nondim] default = 1.0
@@ -1105,6 +1284,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 0.0
             $OCN_GRID == "tx0.66v1": 0.0
+            $OCN_GRID == "tx0.25v1": 0.0
     KD:
         description: |
             "[m2 s-1]
@@ -1114,6 +1294,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
+            $OCN_GRID == "tx0.25v1": 1.5E-05
             $OCN_GRID == "MISOMIP": 5.0E-5
             else: 2.0E-05
     KD_MIN:
@@ -1128,6 +1309,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 2.0E-06
             $OCN_GRID == "tx0.66v1": 2.0E-06
+            $OCN_GRID == "tx0.25v1": 2.0E-06
     INT_TIDE_DECAY_SCALE:
         description: |
             "[m] default = 0.0
@@ -1138,6 +1320,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "300.3003003003003"
             $OCN_GRID == "tx0.66v1": "300.3003003003003"
+            $OCN_GRID == "tx0.25v1": "300.3003003003003"
     KAPPA_ITIDES:
         description: |
             "[m-1] default = 6.283185307179586E-04
@@ -1148,6 +1331,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 6.28319E-04
             $OCN_GRID == "tx0.66v1": 6.28319E-04
+            $OCN_GRID == "tx0.25v1": 6.28319E-04
     KAPPA_H2_FACTOR:
         description: |
             "[nondim] default = 1.0
@@ -1157,6 +1341,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 0.75
             $OCN_GRID == "tx0.66v1": 0.75
+            $OCN_GRID == "tx0.25v1": 0.84
     TKE_ITIDE_MAX:
         description: |
             "[W m-2] default = 1000.0
@@ -1171,6 +1356,65 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 0.1
             $OCN_GRID == "tx0.66v1": 0.1
+            $OCN_GRID == "tx0.25v1": 0.1
+    READ_TIDEAMP:
+        description: |
+            "[Boolean] default = False
+            If true, read a file (given by TIDEAMP_FILE) containing
+            the tidal amplitude with INT_TIDE_DISSIPATION."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    TIDEAMP_FILE:
+        description: |
+            "default = 'tideamp.nc'
+            The path to the file containing the spatially varying
+            tidal amplitudes with INT_TIDE_DISSIPATION."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "tidal_amplitude.v20140616.nc"
+    CD_TIDES:
+        description: |
+            "[nondim] default = 1.0E-04
+            The drag coefficient that applies to the tides."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.0018
+    GUST_CONST:
+        description: |
+            "[Pa] default = 0.02
+            The background gustiness in the winds."
+        datatype: real
+        units: Pa
+        value:
+            $OCN_GRID == "tx0.25v1": 0.0
+    USE_RIGID_SEA_ICE:
+        description: |
+            "[Boolean] default = False
+            If true, sea-ice is rigid enough to exert a
+            nonhydrostatic pressure that resist vertical motion."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    SEA_ICE_RIGID_MASS:
+        description: |
+            "[kg m-2] default = 1000.0
+            The mass of sea-ice per unit area at which the sea-ice
+            starts to exhibit rigidity"
+        datatype: real
+        units: kg m-2
+        value:
+            $OCN_GRID == "tx0.25v1": 100.0
+    H2_FILE:
+        description: |
+            "The path to the file containing the sub-grid-scale
+            topographic roughness amplitude with INT_TIDE_DISSIPATION."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
     USE_KPP:
         description: |
             "[Boolean] default = False
@@ -1198,6 +1442,19 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
+    INT_TIDE_PROFILE:
+        description: |
+            "default = 'STLAURENT_02'
+            INT_TIDE_PROFILE selects the vertical profile of energy
+            dissipation with INT_TIDE_DISSIPATION. Valid values are:
+            STLAURENT_02 - Use the St. Laurent et al exponential
+            decay profile.
+            POLZIN_09 - Use the Polzin WKB-streched algebraic
+            decay profile."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "POLZIN_09"
     TIDAL_ENERGY_FILE:
         description: |
             "The path to the file containing tidal energy
@@ -1245,7 +1502,9 @@ Global:
             The maximum number of iterations that may be used to
             calculate the interior diapycnal entrainment."
         datatype: integer
-        value: 20
+        value:
+            $OCN_GRID == "tx0.25v1": 5
+            else: 20
     TOLERANCE_ENT:
         description: |
             "[m] default = 2.683281572999748E-05
@@ -1276,6 +1535,7 @@ Global:
         units: m
         value:
             $OCN_GRID == "MISOMIP": 20.0
+            $OCN_GRID == "tx0.25v1": 0.0
             else: 2.0
     PEN_SW_SCALE:
         description: |
@@ -1305,6 +1565,233 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": True
+    MSTAR_MODE:
+        description: |
+            "[units=nondim] default = 0
+            An integer switch for how to compute MSTAR.
+            0 for constant MSTAR
+            1 for MSTAR w/ MLD in stabilizing limit
+            2 for MSTAR w/ L_E/L_O in stabilizing limit."
+        datatype: integer
+        units: units=nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 2
+    MSTAR:
+        description: |
+            "[units=nondim] default = 1.2
+            The ratio of the friction velocity cubed to the TKE
+            input to the mixed layer."
+        datatype: real
+        units: units=nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.0
+    MIX_LEN_EXPONENT:
+        description: |
+            "[units=nondim] default = 2.0
+            The exponent applied to the ratio of the distance to the MLD
+            and the MLD depth which determines the shape of the mixing length."
+        datatype: real
+        units: units=nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 1.0
+    MSTAR_CAP:
+        description: |
+            "[units=nondim] default = -1.0
+            Maximum value of mstar allowed in model if non-negative
+            (used if MSTAR_MODE>0)."
+        datatype: real
+        units: units=nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 10.0
+    MSTAR_CONV_ADJ:
+        description: |
+            "[units=nondim] default = 0.0
+            Factor used for reducing mstar during convection
+            due to reduction of stable density gradient."
+        datatype: real
+        units: units=nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.667
+    MSTAR2_COEF1:
+        description: |
+            "[units=nondim] default = 0.3
+            Coefficient in computing mstar when rotation and
+            stabilizing effects are both important (used if MSTAR_MODE=2)"
+        datatype: real
+        units: units=nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.29
+    MSTAR2_COEF2:
+        description: |
+            "[units=nondim] default = 0.085
+            Coefficient in computing mstar when only rotation limits
+            the total mixing. (used only if MSTAR_MODE=2)"
+        datatype: real
+        units: units=nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.152
+    NSTAR:
+        description: |
+            "[nondim] default = 0.2
+            The portion of the buoyant potential energy imparted by
+            surface fluxes that is available to drive entrainment
+            at the base of mixed layer when that energy is positive."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.06
+    TKE_DECAY:
+        description: |
+            "[nondim] default = 2.5
+            TKE_DECAY relates the vertical rate of decay of the
+            TKE available for mechanical entrainment to the natural
+            Ekman depth."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.01
+    ML_OMEGA_FRAC:
+        description: |
+            "[nondim] default = 0.0
+            When setting the decay scale for turbulence, use this
+            fraction of the absolute rotation rate blended with the
+            local value of f, as sqrt((1-of)*f^2 + of*4*omega^2)."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.001
+    USE_MLD_ITERATION:
+        description: |
+            "[Boolean] default = False
+            A logical that specifies whether or not to use the
+            distance to the bottom of the actively turblent boundary
+            layer to help set the EPBL length scale."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    ORIG_MLD_ITERATION:
+        description: |
+            "[Boolean] default = True
+            A logical that specifies whether or not to use the
+            old method for determining MLD depth in iteration, which
+            is limited to resolution."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": False
+    EPBL_TRANSITION_SCALE:
+        description: |
+            "[nondim] default = 0.1
+            A scale for the mixing length in the transition layer
+            at the edge of the boundary layer as a fraction of the
+            boundary layer thickness.  The default is 0.1."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.01
+    USE_LA_LI2016:
+        description: |
+            "[nondim] default = False
+            A logical to use the Li et al. 2016 (submitted) formula to
+            determine the Langmuir number."
+        datatype: logical
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    LT_ENHANCE:
+        description: |
+            "[nondim] default = 0
+            Integer for Langmuir number mode.
+            *Requires USE_LA_LI2016 to be set to True.
+            Options: 0 - No Langmuir
+            1 - Van Roekel et al. 2014/Li et al., 2016
+            2 - Multiplied w/ adjusted La.
+            3 - Added w/ adjusted La."
+        datatype: integer
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 3
+    LT_ENHANCE_COEF:
+        description: |
+            "[nondim] default = 0.447
+            Coefficient for Langmuir enhancement if LT_ENHANCE > 1"
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.044
+    LT_ENHANCE_EXP:
+        description: |
+            "[nondim] default = -1.33
+            Exponent for Langmuir enhancement if LT_ENHANCE > 1"
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": -1.5
+    LT_MOD_LAC1:
+        description: |
+            "[nondim] default = -0.87
+            Coefficient for modification of Langmuir number due to
+            MLD approaching Ekman depth if LT_ENHANCE=2."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.0
+    LT_MOD_LAC4:
+        description: |
+            "[nondim] default = 0.95
+            Coefficient for modification of Langmuir number due to
+            ratio of Ekman to stable Obukhov depth if LT_ENHANCE=2."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.0
+    LT_MOD_LAC5:
+        description: |
+            "[nondim] default = 0.95
+            Coefficient for modification of Langmuir number due to
+            ratio of Ekman to unstable Obukhov depth if LT_ENHANCE=2."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.22
+    EPBL_USTAR_MIN:
+        description: |
+            "[m s-1]
+            The (tiny) minimum friction velocity used within the
+            ePBL code, derived from OMEGA and ANGSTROM."
+        datatype: real
+        units: m s-1
+        value:
+            $OCN_GRID == "tx0.25v1": 1.45842E-18
+    VAR_PEN_SW:
+        description: |
+            "[Boolean] default = False
+            If true, use one of the CHL_A schemes specified by
+            OPACITY_SCHEME to determine the e-folding depth of
+            incoming short wave radiation."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    CHL_FILE:
+        description: |
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "seawifs-clim-1997-2010.1440x1080.v20180328.nc"
+    CHL_VARNAME:
+        description: |
+            "default = 'CHL_A'"
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "chlor_a"
+    PEN_SW_NBANDS:
+        description: |
+            "default = 1
+            The number of bands of penetrating shortwave radiation."
+        datatype: integer
+        value:
+            $OCN_GRID == "tx0.25v1": 3
     TRACER_ADVECTION_SCHEME:
         description: |
             "default = 'PLM'
@@ -1313,8 +1800,9 @@ Global:
             PPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)"
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "PPM:H3"
-            $OCN_GRID == "tx0.66v1": "PPM:H3"
+            $OCN_GRID == "gx1v6": '"PPM:H3"'
+            $OCN_GRID == "tx0.66v1": '"PPM:H3"'
+            $OCN_GRID == "tx0.25v1": '"PPM:H3"'
     KHTR:
         description: |
             "[m2 s-1] default = 0.0
@@ -1354,6 +1842,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": True
     MAX_TR_DIFFUSION_CFL:
         description: |
             "[nondim] default = -1.0
@@ -1374,7 +1863,9 @@ Global:
             to stop if there is any truncation of velocities."
         datatype: integer
         units: truncations save_interval-1
-        value: 5000
+        value:
+            $OCN_GRID == "tx0.25v1": 100000
+            else: 5000
     MAXCPU:
         description: |
             "[wall-clock seconds] default = -1.0
@@ -1399,6 +1890,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.66v1": "A"
+            $OCN_GRID == "tx0.25v1": "A"
     RESTORE_SALINITY:
         description: |
             "[Boolean] default = False
@@ -1409,7 +1901,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1" and $COMP_ATM == "datm": True  # for C and G compsets on tx0.66v1
-            else: False   # for all B compsets and grids
+            else: False
     FLUXCONST:
         description: |
             "[m day-1]
@@ -1465,6 +1957,7 @@ Global:
         datatype: integer
         value:
             $OCN_GRID == "MISOMIP": -1
+            $OCN_GRID == "tx0.25v1": 1
             else: 3
     RESTINT:
         description: |
@@ -1476,6 +1969,7 @@ Global:
         units: days
         value:
             $OCN_GRID == "MISOMIP": 0.0
+            $OCN_GRID == "tx0.25v1": 0.0
             else: 365.0
     ENERGYSAVEDAYS:
         description: |
@@ -1487,816 +1981,995 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 0.01
             $OCN_GRID == "tx0.66v1": 1.0
+            $OCN_GRID == "tx0.25v1": 0.25
             $OCN_GRID == "MISOMIP": 1.0
     ENERGETICS_SFC_PBL:
         description: |
-          "[Boolean] default = False
-          If true, use an implied energetics planetary boundary
-          layer scheme to determine the diffusivity and viscosity
-          in the surface boundary layer."
+            "[Boolean] default = False
+            If true, use an implied energetics planetary boundary
+            layer scheme to determine the diffusivity and viscosity
+            in the surface boundary layer."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
+            $OCN_GRID == "tx0.25v1": True
             $OCN_GRID == "MISOMIP": True
     TIDES:
         description: |
-          "[Boolean] default = False
-          If true, apply tidal momentum forcing."
+            "[Boolean] default = False
+            If true, apply tidal momentum forcing."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
     USE_MEKE:
         description: |
-          "[Boolean] default = False
-          If true, turns on the MEKE scheme which calculates
-          a sub-grid mesoscale eddy kinetic energy budget."
+            "[Boolean] default = False
+            If true, turns on the MEKE scheme which calculates
+            a sub-grid mesoscale eddy kinetic energy budget."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
+            $OCN_GRID == "tx0.25v1": True
     MEKE_GMCOEFF:
         description: |
-          "[nondim] default = -1.0
-          The efficiency of the conversion of potential energy
-          into MEKE by the thickness mixing parameterization.
-          If MEKE_GMCOEFF is negative, this conversion is not
-          used or calculated."
+            "[nondim] default = -1.0
+            The efficiency of the conversion of potential energy
+            into MEKE by the thickness mixing parameterization.
+            If MEKE_GMCOEFF is negative, this conversion is not
+            used or calculated."
         datatype: real
         units: nondim
         value:
             $OCN_GRID == "gx1v6": 1.0
+            $OCN_GRID == "tx0.25v1": 1.0
+    MEKE_BGSRC:
+        description: |
+            "[W kg-1] default = 0.0
+            A background energy source for MEKE."
+        datatype: real
+        units: W kg-1
+        value:
+            $OCN_GRID == "tx0.25v1": 1.0E-13
+    MEKE_KHMEKE_FAC:
+        description: |
+            "[nondim] default = 0.0
+            A factor that maps MEKE%Kh to Kh for MEKE itself."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 1.0
+    MEKE_ALPHA_RHINES:
+        description: |
+            "[nondim] default = 0.05
+            If positive, is a coefficient weighting the Rhines scale
+            in the expression for mixing length used in MEKE-derived diffusiviity."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.15
+    MEKE_ALPHA_EADY:
+        description: |
+            "[nondim] default = 0.05
+            If positive, is a coefficient weighting the Eady length scale
+            in the expression for mixing length used in MEKE-derived diffusiviity."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.25v1": 0.15
     DIAG_COORD_DEF_Z:
         description: |
-          "default = 'WOA09'
-          Determines how to specify the coordinate
-          resolution. Valid options are:
-          PARAM       - use the vector-parameter DIAG_COORD_RES_Z
-          UNIFORM[:N] - uniformly distributed
-          FILE:string - read from a file. The string specifies
-          the filename and variable name, separated
-          by a comma or space, e.g. FILE:lev.nc,dz
-          or FILE:lev.nc,interfaces=zw
-          WOA09[:N]   - the WOA09 vertical grid (approximately)
-          FNC1:string - FNC1:dz_min,H_total,power,precision
-          HYBRID:string - read from a file. The string specifies
-          the filename and two variable names, separated
-          by a comma or space, for sigma-2 and dz. e.g.
-          HYBRID:vgrid.nc,sigma2,dz"
+            "default = WOA09
+            Determines how to specify the coordinate
+            resolution. Valid options are:
+            PARAM       - use the vector-parameter DIAG_COORD_RES_Z
+            UNIFORM[:N] - uniformly distributed
+            FILE:string - read from a file. The string specifies
+            the filename and variable name, separated
+            by a comma or space, e.g. FILE:lev.nc,dz
+            or FILE:lev.nc,interfaces=zw
+            WOA09[:N]   - the WOA09 vertical grid (approximately)
+            FNC1:string - FNC1:dz_min,H_total,power,precision
+            HYBRID:string - read from a file. The string specifies
+            the filename and two variable names, separated
+            by a comma or space, for sigma-2 and dz. e.g.
+            HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
             $OCN_GRID == "gx1v6": "WOA09"
+            $OCN_GRID == "tx0.25v1": '"FILE:interpolate_zgrid_40L.nc,interfaces=zw"'
     MAX_RINO_IT:
         description: |
-          "[nondim] default = 50
-          The maximum number of iterations that may be used to
-          estimate the Richardson number driven mixing."
+            "[nondim] default = 50
+            The maximum number of iterations that may be used to
+            estimate the Richardson number driven mixing."
         datatype: integer
         units: nondim
         value:
             $OCN_GRID == "gx1v6": 25
+            $OCN_GRID == "tx0.25v1": 25
     CHANNEL_CONFIG:
         description: |
-          "default = 'none'
-          A parameter that determines which set of channels are
-          restricted to specific  widths.  Options are:
-          none - All channels have the grid width.
-          global_1deg - Sets 16 specific channels appropriate
-          for a 1-degree model, as used in CM2G.
-          list - Read the channel locations and widths from a
-          text file, like MOM_channel_list in the MOM_SIS
-          test case.
-          file - Read open face widths everywhere from a
-          NetCDF file on the model grid."
+            "default = 'none'
+            A parameter that determines which set of channels are
+            restricted to specific  widths.  Options are:
+            none - All channels have the grid width.
+            global_1deg - Sets 16 specific channels appropriate
+            for a 1-degree model, as used in CM2G.
+            list - Read the channel locations and widths from a
+            text file, like MOM_channel_list in the MOM_SIS
+            test case.
+            file - Read open face widths everywhere from a
+            NetCDF file on the model grid."
         datatype: string
         value:
             $OCN_GRID == "gx1v6": "global_1deg"
+            $OCN_GRID == "tx0.25v1": "list"
+    CHANNEL_LIST_FILE:
+        description: |
+            "default = MOM_channel_list
+            The file from which the list of narrowed channels is read."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "MOM_channels_global_025"
     SMAG_BI_CONST:
         description: |
-          "[nondim] default = 0.0
-          The nondimensional biharmonic Smagorinsky constant,
-          typically 0.015 - 0.06."
+            "[nondim] default = 0.0
+            The nondimensional biharmonic Smagorinsky constant,
+            typically 0.015 - 0.06."
         datatype: real
         units: nondim
         value:
             $OCN_GRID == "gx1v6": 0.06
+            $OCN_GRID == "tx0.25v1": 0.06
             $OCN_GRID == "MISOMIP": 0.06
     USE_JACKSON_PARAM:
         description: |
-          "[Boolean] default = False
-          If true, use the Jackson-Hallberg-Legg (JPO 2008)
-          shear mixing parameterization."
+            "[Boolean] default = False
+            If true, use the Jackson-Hallberg-Legg (JPO 2008)
+            shear mixing parameterization."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
+            $OCN_GRID == "tx0.25v1": True
             $OCN_GRID == "MISOMIP": True
     VELOCITY_TOLERANCE:
         description: |
-          "[m s-1] default = 3.0E+08
-          The tolerance for barotropic velocity discrepancies
-          between the barotropic solution and  the sum of the
-          layer thicknesses."
+            "[m s-1] default = 3.0E+08
+            The tolerance for barotropic velocity discrepancies
+            between the barotropic solution and  the sum of the
+            layer thicknesses."
         datatype: real
         units: m s-1
         value:
             $OCN_GRID == "gx1v6": 1.0E-04
     SMAGORINSKY_AH:
         description: |
-          "[Boolean] default = False
-          If true, use a biharmonic Smagorinsky nonlinear eddy
-          viscosity."
+            "[Boolean] default = False
+            If true, use a biharmonic Smagorinsky nonlinear eddy
+            viscosity."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
+            $OCN_GRID == "tx0.25v1": True
+    BAD_VAL_SSH_MAX:
+        description: |
+            "[m] default = 20.0
+            The value of SSH above which a bad value message is
+            triggered, if CHECK_BAD_SURFACE_VALS is true."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID == "tx0.25v1": 50.0   # TODO
     BAD_VAL_SSS_MAX:
         description: |
-          "default = 45.0
-          The value of SSS above which a bad value message is triggered, if
-          CHECK_BAD_SURFACE_VALS is true."
+            "default = 45.0
+            The value of SSS above which a bad value message is triggered, if
+            CHECK_BAD_SURFACE_VALS is true."
         datatype: real
         units: PPT
         value:
             $OCN_GRID == "tx0.66v1" and $COMP_ICE == "cice" and $COMP_ATM != "cam": 75.0
+            $OCN_GRID == "tx0.25v1": 75.0
+    BAD_VAL_SST_MAX:
+        description: |
+            "[deg C] default = 45.0, PTripp: changed from 55.0 on 12/28/2017
+            The value of SST above which a bad value message is
+            triggered, if CHECK_BAD_SURFACE_VALS is true."
+        datatype: real
+        units: deg C
+        value:
+            $OCN_GRID == "tx0.25v1": 65.0
     BAD_VAL_SST_MIN:
         description: |
-          "default = -2.1
-          The value of SST below which a bad value message is triggered, if
-          CHECK_BAD_SURFACE_VALS is true."
+            "default = -2.1
+            The value of SST below which a bad value message is triggered, if
+            CHECK_BAD_SURFACE_VALS is true."
         datatype: real
         units: degC
         value:
             $OCN_GRID == "tx0.66v1": -2.5
+            $OCN_GRID == "tx0.25v1": -3.0
+    VERTEX_SHEAR:
+        description: |
+            "[Boolean] default = False
+            If true, do the calculations of the shear-driven mixing
+            at the cell vertices (i.e., the vorticity points)."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    RECLAIM_FRAZIL:
+        description: |
+            " [Boolean] default = True
+            If true, try to use any frazil heat deficit to cool any
+            overlying layers down to the freezing point, thereby
+            avoiding the creation of thin ice when the SST is above
+            the freezing point."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    THERMO_SPANS_COUPLING:
+        description: |
+            "[Boolean] default = False
+            If true, the MOM will take thermodynamic and tracer
+            timesteps that can be longer than the coupling timestep.
+            The actual thermodynamic timestep that is used in this
+            case is the largest integer multiple of the coupling
+            timestep that is less than or equal to DT_THERM."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    DO_GEOTHERMAL:
+        description: |
+            "[Boolean] default = False
+            If true, apply geothermal heating."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
+    TOPO_EDITS_FILE:
+        description: |
+            "default =
+            The file from which to read a list of i,j,z topography overrides."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "All_edits.nc"
+    PARALLEL_RESTARTFILES:
+        description: |
+            "[Boolean] default = False
+            If true, each processor writes its own restart file,
+            otherwise a single restart file is generated"
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": True
 
-# MISOMIP variables:
+    # MISOMIP-only variables:
+
     REENTRANT_X:
         description: |
-          "[Boolean] default = True
-          If true, the domain is zonally reentrant."
+            "[Boolean] default = True
+            If true, the domain is zonally reentrant."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
     RHO_0:
         description: |
-          "[kg m-3] default = 1035.0
-          The mean ocean density used with BOUSSINESQ true to
-          calculate accelerations and the mass for conservation
-          properties, or with BOUSSINSEQ false to convert some
-          parameters from vertical units of m to kg m-2."
+            "[kg m-3] default = 1035.0
+            The mean ocean density used with BOUSSINESQ true to
+            calculate accelerations and the mass for conservation
+            properties, or with BOUSSINSEQ false to convert some
+            parameters from vertical units of m to kg m-2."
         datatype: real
         units: kg m-3
         value:
             $OCN_GRID == "MISOMIP": 1028.0
     ANGSTROM:
         description: |
-          "[m] default = 1.0E-10
-          The minumum layer thickness, usually one-Angstrom."
+            "[m] default = 1.0E-10
+            The minumum layer thickness, usually one-Angstrom."
         datatype: real
         units: m
         value:
             $OCN_GRID == "MISOMIP": 1.0E-15
     IC_OUTPUT_FILE:
         description: |
-          "default = 'MOM_IC'
-          The file into which to write the initial conditions."
+            "default = 'MOM_IC'
+            The file into which to write the initial conditions."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "MISOMIP_IC"
     TRIMMING_USES_REMAPPING:
         description: |
-          "[Boolean] default = False
-          When trimming the column, also remap T and S."
+            "[Boolean] default = False
+            When trimming the column, also remap T and S."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
     ISOMIP_S_SUR_SPONGE:
         description: |
-          "[not defined] default = 35.0
-          Surface salinity in sponge layer."
+            "[not defined] default = 35.0
+            Surface salinity in sponge layer."
         datatype: real
         units: not defined
         value:
             $OCN_GRID == "MISOMIP": 33.8
     ISOMIP_S_BOT_SPONGE:
         description: |
-          "[not defined] default = 35.0
-          Bottom salinity in sponge layer."
+            "[not defined] default = 35.0
+            Bottom salinity in sponge layer."
         datatype: real
         units: not defined
         value:
             $OCN_GRID == "MISOMIP": 34.7
     ISOMIP_T_BOT_SPONGE:
         description: |
-          "[not defined] default = -1.9
-          Bottom temperature in sponge layer."
+            "[not defined] default = -1.9
+            Bottom temperature in sponge layer."
         datatype: real
         units: not defined
         value:
             $OCN_GRID == "MISOMIP": 1.0
     EQN_OF_STATE:
         description: |
-          "default = 'WRIGHT'
-          EQN_OF_STATE determines which ocean equation of state
-          should be used.  Currently, the valid choices are
-          'LINEAR', 'UNESCO', and 'WRIGHT'.
-          This is only used if USE_EOS is true."
+            "default = 'WRIGHT'
+            EQN_OF_STATE determines which ocean equation of state
+            should be used.  Currently, the valid choices are
+            'LINEAR', 'UNESCO', and 'WRIGHT'.
+            This is only used if USE_EOS is true."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "LINEAR"
     RHO_T0_S0:
         description: |
-          "[kg m-3] default = 1000.0
-          When EQN_OF_STATE=LINEAR,
-          this is the density at T=0, S=0."
+            "[kg m-3] default = 1000.0
+            When EQN_OF_STATE=LINEAR,
+            this is the density at T=0, S=0."
         datatype: real
         units: kg m-3
         value:
             $OCN_GRID == "MISOMIP": 999.910681
     DRHO_DT:
         description: |
-          "[kg m-3 K-1] default = -0.2
-          When EQN_OF_STATE=LINEAR,
-          this is the partial derivative of density with
-          temperature."
+            "[kg m-3 K-1] default = -0.2
+            When EQN_OF_STATE=LINEAR,
+            this is the partial derivative of density with
+            temperature."
         datatype: real
         units: kg m-3 K-1
         value:
             $OCN_GRID == "MISOMIP": -0.038357
     DRHO_DS:
         description: |
-          "[kg m-3 PSU-1] default = 0.8
-          When EQN_OF_STATE=LINEAR,
-          this is the partial derivative of density with
-          salinity."
+            "[kg m-3 PSU-1] default = 0.8
+            When EQN_OF_STATE=LINEAR,
+            this is the partial derivative of density with
+            salinity."
         datatype: real
         units: kg m-3 PSU-1
         value:
             $OCN_GRID == "MISOMIP": 0.805876
     TFREEZE_S0_P0:
         description: |
-          "TODO"
+            "TODO"
         datatype: real
         value:
             $OCN_GRID == "MISOMIP": 0.0832
     DTFREEZE_DS:
         description: |
-          "TODO"
+            "TODO"
         datatype: real
         value:
             $OCN_GRID == "MISOMIP": -0.0573
     USE_ISOMIP_TRACER:
         description: |
-          "[Boolean] default = False
-          If true, use the ISOMIP_tracer tracer package."
+            "[Boolean] default = False
+            If true, use the ISOMIP_tracer tracer package."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
     AXIS_UNITS:
         description: |
-          "default = 'degrees'
-          The units for the Cartesian axes. Valid entries are:
-          degrees - degrees of latitude and longitude
-          m - meters
-          k - kilometers"
+            "default = 'degrees'
+            The units for the Cartesian axes. Valid entries are:
+            degrees - degrees of latitude and longitude
+            m - meters
+            k - kilometers"
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "k"
     SOUTHLAT:
         description: |
-          "[k]
-          The southern latitude of the domain or the equivalent
-          starting value for the y-axis."
+            "[k]
+            The southern latitude of the domain or the equivalent
+            starting value for the y-axis."
         datatype: real
         units: k
         value:
             $OCN_GRID == "MISOMIP": 0.0
     LENLAT:
         description: |
-          "[k]
-          The latitudinal or y-direction length of the domain."
+            "[k]
+            The latitudinal or y-direction length of the domain."
         datatype: real
         units: k
         value:
             $OCN_GRID == "MISOMIP": 80.0
     WESTLON:
         description: |
-          "[k] default = 0.0
-          The western longitude of the domain or the equivalent
-          starting value for the x-axis."
+            "[k] default = 0.0
+            The western longitude of the domain or the equivalent
+            starting value for the x-axis."
         datatype: real
         units: k
         value:
             $OCN_GRID == "MISOMIP": -2.0
     LENLON:
         description: |
-          "[k]
-          The longitudinal or x-direction length of the domain."
+            "[k]
+            The longitudinal or x-direction length of the domain."
         datatype: real
         units: k
         value:
             $OCN_GRID == "MISOMIP": 802.0
     ROTATION:
         description: |
-          "default = '2omegasinlat'
-          This specifies how the Coriolis parameter is specified:
-          2omegasinlat - Use twice the planetary rotation rate
-          times the sine of latitude.
-          betaplane - Use a beta-plane or f-plane.
-          USER - call a user modified routine."
+            "default = '2omegasinlat'
+            This specifies how the Coriolis parameter is specified:
+            2omegasinlat - Use twice the planetary rotation rate
+            times the sine of latitude.
+            betaplane - Use a beta-plane or f-plane.
+            USER - call a user modified routine."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "beta"
     F_0:
         description: |
-          "[s-1] default = 0.0
-          The reference value of the Coriolis parameter with the
-          betaplane option."
+            "[s-1] default = 0.0
+            The reference value of the Coriolis parameter with the
+            betaplane option."
         datatype: real
         units: s-1
         value:
             $OCN_GRID == "MISOMIP": -1.40871E-04
     LIGHTEST_DENSITY:
         description: |
-          "[kg m-3] default = 1027.0
-          The reference potential density used for the surface
-          interface."
+            "[kg m-3] default = 1027.0
+            The reference potential density used for the surface
+            interface."
         datatype: real
         units: kg m-3
         value:
             $OCN_GRID == "MISOMIP": 1027.1524
     DENSITY_RANGE:
         description: |
-          "[kg m-3] default = 2.0
-          The range of reference potential densities across
-          all interfaces."
+            "[kg m-3] default = 2.0
+            The range of reference potential densities across
+            all interfaces."
         datatype: real
         units: kg m-3
         value:
             $OCN_GRID == "MISOMIP": 0.7438856
     THICKNESS_CONFIG:
         description: |
-          "A string that determines how the initial layer
-          thicknesses are specified for a new run:
-          file - read interface heights from the file specified
-          thickness_file - read thicknesses from the file specified
-          by (THICKNESS_FILE).
-          coord - determined by ALE coordinate.
-          uniform - uniform thickness layers evenly distributed
-          between the surface and MAXIMUM_DEPTH.
-          DOME - use a slope and channel configuration for the
-          DOME sill-overflow test case.
-          ISOMIP - use a configuration for the
-          ISOMIP test case.
-          benchmark - use the benchmark test case thicknesses.
-          search - search a density profile for the interface
-          densities. This is not yet implemented.
-          circle_obcs - the circle_obcs test case is used.
-          DOME2D - 2D version of DOME initialization.
-          adjustment2d - TBD AJA.
-          sloshing - TBD AJA.
-          seamount - TBD AJA.
-          rossby_front - a mixed layer front in thermal wind balance.
-          USER - call a user modified routine."
+            "A string that determines how the initial layer
+            thicknesses are specified for a new run:
+            file - read interface heights from the file specified
+            thickness_file - read thicknesses from the file specified
+            by (THICKNESS_FILE).
+            coord - determined by ALE coordinate.
+            uniform - uniform thickness layers evenly distributed
+            between the surface and MAXIMUM_DEPTH.
+            DOME - use a slope and channel configuration for the
+            DOME sill-overflow test case.
+            ISOMIP - use a configuration for the
+            ISOMIP test case.
+            benchmark - use the benchmark test case thicknesses.
+            search - search a density profile for the interface
+            densities. This is not yet implemented.
+            circle_obcs - the circle_obcs test case is used.
+            DOME2D - 2D version of DOME initialization.
+            adjustment2d - TBD AJA.
+            sloshing - TBD AJA.
+            seamount - TBD AJA.
+            rossby_front - a mixed layer front in thermal wind balance.
+            USER - call a user modified routine."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "ISOMIP"
     SPONGE_CONFIG:
         description: |
-          "default = 'file'
-          A string that sets how the sponges are configured:
-          ISOMIP - use a configuration for the
-          ISOMIP test case.
-          USER - call a user modified routine."
+            "default = 'file'
+            A string that sets how the sponges are configured:
+            ISOMIP - use a configuration for the
+            ISOMIP test case.
+            USER - call a user modified routine."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "ISOMIP"
     MIN_THICKNESS:
         description: |
-          "[m] default = 0.001
-          Minimum layer thickness"
+            "[m] default = 0.001
+            Minimum layer thickness"
         datatype: real
         units: m
         value:
             $OCN_GRID == "MISOMIP": 1.0E-12
     ISOMIP_TNUDG:
         description: |
-          "default = 0.0 (days)
-          Nudging time scale for sponge layers"
+            "default = 0.0 (days)
+            Nudging time scale for sponge layers"
         datatype: real
         value:
             $OCN_GRID == "MISOMIP": 0.1
     TS_CONFIG:
         description: |
-          "A string that determines how the initial tempertures
-          and salinities are specified for a new run:
-          file - read velocities from the file specified
-          by (TS_FILE).
-          fit - find the temperatures that are consistent with
-          the layer densities and salinity S_REF.
-          TS_profile - use temperature and salinity profiles
-          (read from TS_FILE) to set layer densities.
-          benchmark - use the benchmark test case T & S.
-          linear - linear in logical layer space.
-          DOME2D - 2D DOME initialization.
-          ISOMIP - ISOMIP initialization.
-          adjustment2d - TBD AJA.
-          sloshing - TBD AJA.
-          seamount - TBD AJA.
-          rossby_front - a mixed layer front in thermal wind balance.
-          SCM_ideal_hurr - used in the SCM idealized hurricane test.
-          USER - call a user modified routine."
+            "A string that determines how the initial tempertures
+            and salinities are specified for a new run:
+            file - read velocities from the file specified
+            by (TS_FILE).
+            fit - find the temperatures that are consistent with
+            the layer densities and salinity S_REF.
+            TS_profile - use temperature and salinity profiles
+            (read from TS_FILE) to set layer densities.
+            benchmark - use the benchmark test case T & S.
+            linear - linear in logical layer space.
+            DOME2D - 2D DOME initialization.
+            ISOMIP - ISOMIP initialization.
+            adjustment2d - TBD AJA.
+            sloshing - TBD AJA.
+            seamount - TBD AJA.
+            rossby_front - a mixed layer front in thermal wind balance.
+            SCM_ideal_hurr - used in the SCM idealized hurricane test.
+            USER - call a user modified routine."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "ISOMIP"
     T_REF:
         description: |
-          "[degC]
-          A reference temperature used in initialization."
+            "[degC]
+            A reference temperature used in initialization."
         datatype: real
         units: degC
         value:
             $OCN_GRID == "MISOMIP": -1.9
     FIT_SALINITY:
         description: |
-          "[Boolean] default = False
-          If true, accept the prescribed temperature and fit the
-          salinity; otherwise take salinity and fit temperature."
+            "[Boolean] default = False
+            If true, accept the prescribed temperature and fit the
+            salinity; otherwise take salinity and fit temperature."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
     TRIM_IC_FOR_P_SURF:
         description: |
-          "[Boolean] default = False
-          If true, cuts way the top of the column for initial conditions
-          at the depth where the hydrostatic presure matches the imposed
-          surface pressure which is read from file."
+            "[Boolean] default = False
+            If true, cuts way the top of the column for initial conditions
+            at the depth where the hydrostatic presure matches the imposed
+            surface pressure which is read from file."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
     SURFACE_PRESSURE_FILE:
         description: |
-          "The initial condition file for the surface height."
+            "The initial condition file for the surface height."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "MISOMIP_181108.nc"
     SURFACE_PRESSURE_VAR:
         description: |
-          "[kg m-2] default = ''
-          The initial condition variable for the surface height."
+            "[kg m-2] default = ''
+            The initial condition variable for the surface height."
         datatype: string
         units: kg m-2
         value:
             $OCN_GRID == "MISOMIP": "thick"
     SURFACE_PRESSURE_SCALE:
         description: |
-          "[file dependent] default = 1.0
-          A scaling factor to convert SURFACE_PRESSURE_VAR from
-          file SURFACE_PRESSURE_FILE into a surface pressure."
+            "[file dependent] default = 1.0
+            A scaling factor to convert SURFACE_PRESSURE_VAR from
+            file SURFACE_PRESSURE_FILE into a surface pressure."
         datatype: real
         units: file dependent
         value:
             $OCN_GRID == "MISOMIP": 8996.40
     SPONGE:
         description: |
-          "[Boolean] default = False
-          If true, sponges may be applied anywhere in the domain.
-          The exact location and properties of those sponges are
-          specified via SPONGE_CONFIG."
+            "[Boolean] default = False
+            If true, sponges may be applied anywhere in the domain.
+            The exact location and properties of those sponges are
+            specified via SPONGE_CONFIG."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
-    Z_OUTPUT_GRID_FILE:
-        description: |
-          "default = ''
-          The file that specifies the vertical grid for
-          depth-space diagnostics, or blank to disable
-          depth-space output."
-        datatype: string
-        value:
-            $OCN_GRID == "MISOMIP": "MISOMIP_zgrid_181106.nc"
     HTBL_SHELF_MIN:
         description: |
-          "[m] default = 2.0
-          The minimum top boundary layer thickness that can be
-          used with BOTTOMDRAGLAW. This might be
-          Kv / (cdrag * drag_bg_vel) to give Kv as the minimum
-          near-top viscosity."
+            "[m] default = 2.0
+            The minimum top boundary layer thickness that can be
+            used with BOTTOMDRAGLAW. This might be
+            Kv / (cdrag * drag_bg_vel) to give Kv as the minimum
+            near-top viscosity."
         datatype: real
         units: m
         value:
             $OCN_GRID == "MISOMIP": 20.0
-    KV_TBL_MIN:
+    KV_BBL_MIN:
         description: |
-          "[m2 s-1] default = 1.0E-04
-          The minimum viscosities in the top boundary layer."
+            "[m2 s-1] default = 1.0E-04
+            The minimum viscosities in the bottom boundary layer."
         datatype: real
         units: m2 s-1
         value:
+            $OCN_GRID == "tx0.25v1": 0.0
+    KV_TBL_MIN:
+        description: |
+            "[m2 s-1] default = 1.0E-04
+            The minimum viscosities in the top boundary layer."
+        datatype: real
+        units: m2 s-1
+        value:
+            $OCN_GRID == "tx0.25v1": 0.0
             $OCN_GRID == "MISOMIP": 0.01
     BE:
         description: |
-          "[nondim] default = 0.6
-          If SPLIT is true, BE determines the relative weighting
-          of a  2nd-order Runga-Kutta baroclinic time stepping
-          scheme (0.5) and a backward Euler scheme (1) that is
-          used for the Coriolis and inertial terms.  BE may be
-          from 0.5 to 1, but instability may occur near 0.5.
-          BE is also applicable if SPLIT is false and USE_RK2
-          is true."
+            "[nondim] default = 0.6
+            If SPLIT is true, BE determines the relative weighting
+            of a  2nd-order Runga-Kutta baroclinic time stepping
+            scheme (0.5) and a backward Euler scheme (1) that is
+            used for the Coriolis and inertial terms.  BE may be
+            from 0.5 to 1, but instability may occur near 0.5.
+            BE is also applicable if SPLIT is false and USE_RK2
+            is true."
         datatype: real
         units: nondim
         value:
             $OCN_GRID == "MISOMIP": 0.7
+    CORIOLIS_SCHEME:
+        description: |
+            "default = 'SADOURNY75_ENERGY'
+            CORIOLIS_SCHEME selects the discretization for the
+            Coriolis terms. Valid values are:
+            SADOURNY75_ENERGY - Sadourny, 1975; energy cons.
+            ARAKAWA_HSU90     - Arakawa & Hsu, 1990
+            SADOURNY75_ENSTRO - Sadourny, 1975; enstrophy cons.
+            ARAKAWA_LAMB81    - Arakawa & Lamb, 1981; En. + Enst.
+            ARAKAWA_LAMB_BLEND - A blend of Arakawa & Lamb with
+            Arakawa & Hsu and Sadourny energy"
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "SADOURNY75_ENSTRO"
     CORIOLIS_EN_DIS:
         description: |
-          "[Boolean] default = False
-          If true, two estimates of the thickness fluxes are used
-          to estimate the Coriolis term, and the one that
-          dissipates energy relative to the other one is used."
+            "[Boolean] default = False
+            If true, two estimates of the thickness fluxes are used
+            to estimate the Coriolis term, and the one that
+            dissipates energy relative to the other one is used."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
-            $OCN_GRID == "MISOMIP": 0.06
     HARMONIC_BL_SCALE:
         description: |
-          "[nondim] default = 0.0
-          A scale to determine when water is in the boundary
-          layers based solely on harmonic mean thicknesses for
-          the purpose of determining the extent to which the
-          thicknesses used in the viscosities are upwinded."
+            "[nondim] default = 0.0
+            A scale to determine when water is in the boundary
+            layers based solely on harmonic mean thicknesses for
+            the purpose of determining the extent to which the
+            thicknesses used in the viscosities are upwinded."
         datatype: real
         units: nondim
         value:
             $OCN_GRID == "MISOMIP": 1.0
     KVML:
         description: |
-          "[m2 s-1] default = 1.0E-04
-          The kinematic viscosity in the mixed layer.  A typical
-          value is ~1e-2 m2 s-1. KVML is not used if
-          BULKMIXEDLAYER is true.  The default is set by KV."
+            "[m2 s-1] default = 1.0E-04
+            The kinematic viscosity in the mixed layer.  A typical
+            value is ~1e-2 m2 s-1. KVML is not used if
+            BULKMIXEDLAYER is true.  The default is set by KV."
         datatype: real
         units: m2 s-1
         value:
             $OCN_GRID == "MISOMIP": 0.01
     DYNAMIC_SURFACE_PRESSURE:
         description: |
-          "[Boolean] default = False
-          If true, add a dynamic pressure due to a viscous ice
-          shelf, for instance."
+            "[Boolean] default = False
+            If true, add a dynamic pressure due to a viscous ice
+            shelf, for instance."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
+            $OCN_GRID == "tx0.25v1": True
     CORRECT_DENSITY:
         description: |
-          "[Boolean] default = True
-          If true, and USE_EOS is true, the layer densities are
-          restored toward their target values by the diapycnal
-          mixing, as described in Hallberg (MWR, 2000)."
+            "[Boolean] default = True
+            If true, and USE_EOS is true, the layer densities are
+            restored toward their target values by the diapycnal
+            mixing, as described in Hallberg (MWR, 2000)."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
     BBL_EFFIC:
         description: |
-          "[nondim] default = 0.2
-          The efficiency with which the energy extracted by
-          bottom drag drives BBL diffusion.  This is only
-          used if BOTTOMDRAGLAW is true."
+            "[nondim] default = 0.2
+            The efficiency with which the energy extracted by
+            bottom drag drives BBL diffusion.  This is only
+            used if BOTTOMDRAGLAW is true."
         datatype: real
         units: nondim
         value:
             $OCN_GRID == "MISOMIP": 0.0
     IGNORE_FLUXES_OVER_LAND:
         description: |
-          "[Boolean] default = False
-          If true, the model does not check if fluxes are being applied
-          over land points. This is needed when the ocean is coupled
-          with ice shelves and sea ice, since the sea ice mask needs to
-          be different than the ocean mask to avoid sea ice formation
-          under ice shelves. This flag only works when use_ePBL = True."
+            "[Boolean] default = False
+            If true, the model does not check if fluxes are being applied
+            over land points. This is needed when the ocean is coupled
+            with ice shelves and sea ice, since the sea ice mask needs to
+            be different than the ocean mask to avoid sea ice formation
+            under ice shelves. This flag only works when use_ePBL = True."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
     VARIABLE_WINDS:
         description: |
-          "[Boolean] default = True
-          If true, the winds vary in time after the initialization."
+            "[Boolean] default = True
+            If true, the winds vary in time after the initialization."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
     VARIABLE_BUOYFORCE:
         description: |
-          "[Boolean] default = True
-          If true, the buoyancy forcing varies in time after the
-          initialization of the model."
+            "[Boolean] default = True
+            If true, the buoyancy forcing varies in time after the
+            initialization of the model."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
     BUOY_CONFIG:
         description: |
-          "The character string that indicates how buoyancy forcing
-          is specified. Valid options include (file), (zero),
-          (linear), (USER), and (NONE)."
+            "The character string that indicates how buoyancy forcing
+            is specified. Valid options include (file), (zero),
+            (linear), (USER), and (NONE)."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "zero"
     WIND_CONFIG:
         description: |
-          "The character string that indicates how wind forcing
-          is specified. Valid options include (file), (2gyre),
-          (1gyre), (gyres), (zero), and (USER)."
+            "The character string that indicates how wind forcing
+            is specified. Valid options include (file), (2gyre),
+            (1gyre), (gyres), (zero), and (USER)."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "zero"
     ICE_SHELF:
         description: |
-          "[Boolean] default = False
-          If true, enables the ice shelf model."
+            "[Boolean] default = False
+            If true, enables the ice shelf model."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
     SHELF_THERMO:
         description: |
-          "[Boolean] default = False
-          If true, use a thermodynamically interactive ice shelf."
+            "[Boolean] default = False
+            If true, use a thermodynamically interactive ice shelf."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
     MELTING_CUTOFF_DEPTH:
         description: |
-          "[not defined] default = 0.0
-          Depth above which the melt is set to zero (it must be >= 0)
-          Default value won't affect the solution."
+            "[not defined] default = 0.0
+            Depth above which the melt is set to zero (it must be >= 0)
+            Default value won't affect the solution."
         datatype: real
         units: not defined
         value:
             $OCN_GRID == "MISOMIP": 90.0
     DENSITY_ICE:
         description: |
-          "[kg m-3] default = 900.0
-          A typical density of ice."
+            "[kg m-3] default = 900.0
+            A typical density of ice."
         datatype: real
         units: kg m-3
         value:
             $OCN_GRID == "MISOMIP": 918.0
     SHELF_INSULATOR:
         description: |
-          "TODO"
+            "TODO"
         datatype: logical
         value:
             $OCN_GRID == "MISOMIP": True
     SHELF_3EQ_GAMMA:
         description: |
-          "TODO"
+            "TODO"
         datatype: logical
         value:
             $OCN_GRID == "MISOMIP": True
     SHELF_3EQ_GAMMA_T:
         description: |
-          "TODO"
+            "TODO"
         datatype: real
         value:
             $OCN_GRID == "MISOMIP": 0.087
     SHELF_S_ROOT:
         description: |
-          "TODO"
+            "TODO"
         datatype: logical
         value:
             $OCN_GRID == "MISOMIP": True
     SHELF_2EQ_GAMMA_T:
         description: |
-          "[m s-1]
-          If SHELF_THREE_EQN is false, this the fixed turbulent
-          exchange velocity at the ice-ocean interface."
+            "[m s-1]
+            If SHELF_THREE_EQN is false, this the fixed turbulent
+            exchange velocity at the ice-ocean interface."
         datatype: real
         units: m s-1
         value:
             $OCN_GRID == "MISOMIP": 0.0
     ICE_SHELF_TEMPERATURE:
         description: |
-          "[degC] default = -15.0
-          The temperature at the center of the ice shelf."
+            "[degC] default = -15.0
+            The temperature at the center of the ice shelf."
         datatype: real
         units: degC
         value:
             $OCN_GRID == "MISOMIP": -20.0
     DT_FORCING:
         description: |
-          "[s] default = 0.0
-          The time step for changing forcing, coupling with other
-          components, or potentially writing certain diagnostics.
-          The default value is given by DT."
+            "[s] default = 0.0
+            The time step for changing forcing, coupling with other
+            components, or potentially writing certain diagnostics.
+            The default value is given by DT."
         datatype: real
         units: s
         value:
             $OCN_GRID == "MISOMIP": 300.0
     COL_THICK_MELT_THRESHOLD:
         description: |
-          "[m] default = 0.0
-          The minimum ML thickness where melting is allowed."
+            "[m] default = 0.0
+            The minimum ML thickness where melting is allowed."
         datatype: real
         units: m
         value:
             $OCN_GRID == "MISOMIP": 10.0
     WRITE_OUTPUT_TO_FILE:
         description: |
-          "[Boolean] default = False
-          for debugging purposes"
+            "[Boolean] default = False
+            for debugging purposes"
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
     UTIDE:
         description: |
-          "[m s-1] default = 0.0"
+            "[m s-1] default = 0.0"
         datatype: real
         units: m s-1
         value:
             $OCN_GRID == "MISOMIP": 0.01
     ICE_PROFILE_CONFIG:
         description: |
-          "This specifies how the initial ice profile is specified.
-          Valid values are: CHANNEL, FILE, and USER."
+            "This specifies how the initial ice profile is specified.
+            Valid values are: CHANNEL, FILE, and USER."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "FILE"
     ICE_THICKNESS_FILE:
         description: |
-          "default = 'ice_shelf_h.nc'
-          The file from which the bathymetry is read."
+            "default = 'ice_shelf_h.nc'
+            The file from which the bathymetry is read."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "MISOMIP_181108.nc"
     ICE_THICKNESS_VARNAME:
         description: |
-          "default = 'h_shelf'
-          The name of the thickness variable in ICE_THICKNESS_FILE."
+            "default = 'h_shelf'
+            The name of the thickness variable in ICE_THICKNESS_FILE."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "thick"
     ICE_AREA_VARNAME:
         description: |
-          "default = 'area_shelf_h'
-          The name of the area variable in ICE_THICKNESS_FILE."
+            "default = 'area_shelf_h'
+            The name of the area variable in ICE_THICKNESS_FILE."
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "area"
     CALCULATE_APE:
         description: |
-          "[Boolean] default = True
-          If true, calculate the available potential energy of
-          the interfaces.  Setting this to false reduces the
-          memory footprint of high-PE-count models dramatically."
+            "[Boolean] default = True
+            If true, calculate the available potential energy of
+            the interfaces.  Setting this to false reduces the
+            memory footprint of high-PE-count models dramatically."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
     DATE_STAMPED_STDOUT:
         description: |
-          "[Boolean] default = True
-          If true, use dates (not times) in messages to stdout"
+            "[Boolean] default = True
+            If true, use dates (not times) in messages to stdout"
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
     DAYMAX:
         description: |
-          "[days]
-          The final time of the whole simulation, in units of
-          TIMEUNIT seconds.  This also sets the potential end
-          time of the present run segment if the end time is
-          not set via ocean_solo_nml in input.nml."
+            "[days]
+            The final time of the whole simulation, in units of
+            TIMEUNIT seconds.  This also sets the potential end
+            time of the present run segment if the end time is
+            not set via ocean_solo_nml in input.nml."
         datatype: real
         units: days
         value:
             $OCN_GRID == "MISOMIP": 2.0
     INTERPOLATION_SCHEME:
         description: |
-          "TODO"
+            "TODO"
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "PPM_H4"
     MLE_USE_PBL_MLD:
         description: |
-          "TODO"
+            "TODO"
         datatype: logical
         value:
+            $OCN_GRID == "tx0.25v1": True
             $OCN_GRID == "MISOMIP": True
+    EPBL_IS_ADDITIVE:
+        description: |
+            "[Boolean] default = True
+            If true, the diffusivity from ePBL is added to all
+            other diffusivities. Otherwise, the larger of kappa-
+            shear and ePBL diffusivities are used."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.25v1": False
+    GEOTHERMAL_SCALE:
+        description: |
+            "[W m-2 or various] default = 0.0
+            The constant geothermal heat flux, a rescaling
+            factor for the heat flux read from GEOTHERMAL_FILE, or
+            0 to disable the geothermal heating."
+        datatype: real
+        units: W m-2 or various
+        value:
+            $OCN_GRID == "tx0.25v1": 1.0
+    GEOTHERMAL_FILE:
+        description: |
+            "default = ''
+            The file from which the geothermal heating is to be
+            read, or blank to use a constant heating rate."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "geothermal_davies2013_v1.nc"
+    GEOTHERMAL_VARNAME:
+        description: |
+            "default = 'geo_heat'
+            The name of the geothermal heating variable in
+            GEOTHERMAL_FILE."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.25v1": "geothermal_hf"
 
 KPP:
     N_SMOOTH:
@@ -2336,3 +3009,5 @@ KPP:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": False
+
+...
