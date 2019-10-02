@@ -856,7 +856,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 200.0,
+            "$OCN_GRID == \"tx0.66v1\"": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0
          }
       },
@@ -865,7 +865,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 2592000.0,
+            "$OCN_GRID == \"tx0.66v1\"": 345600.0,
             "$OCN_GRID == \"tx0.25v1\"": 2592000.0
          }
       },

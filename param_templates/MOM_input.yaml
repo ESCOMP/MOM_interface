@@ -1200,7 +1200,7 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "tx0.66v1": 200.0
+            $OCN_GRID == "tx0.66v1": 1000.0
             $OCN_GRID == "tx0.25v1": 500.0
     MLE_MLD_DECAY_TIME:
         description: |
@@ -1212,7 +1212,7 @@ Global:
         datatype: real
         units: s
         value:
-            $OCN_GRID == "tx0.66v1": 2.592E+06
+            $OCN_GRID == "tx0.66v1": 3.45600E+05
             $OCN_GRID == "tx0.25v1": 2.592E+06
     USE_CVMix_CONVECTION:
         description: |
