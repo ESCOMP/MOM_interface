@@ -9,7 +9,9 @@ git:
 install:
   - chmod ugo+x ./tests/check_default_params.py
   - pip install pyyaml
+  - pip install yamllint
 
 script: 
   - ./tests/check_default_params.py
+  - yamllint param_templates/*.y*ml -c tests/yamllint_config.yaml
 

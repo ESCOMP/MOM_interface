@@ -23,8 +23,16 @@ def get_str_type():
 
 def is_logical_expr(string):
     """ returns true if a string is a logical expression """
-    logical_keywords = [' and ',' or ', ' not ', '==', '=', '>', '<', 'true', 'false']
-    return len([key for key in logical_keywords if key in string.lower()])>0
+
+    evaluated_val = None
+    if string.strip() == "else":
+        evaluated_val = True
+    else:
+        try:
+            evaluated_val = eval(string)
+        except (NameError):
+            pass # not a string to evaluate.
+    return type(evaluated_val) == type(True)
 
 def has_param_to_expand(entry):
     """ Checks if a given entry of type string has cime parameter to expand"""
@@ -40,8 +48,6 @@ def expand_cime_parameter(entry, case):
     assert has_param_to_expand(entry)
     str_type = get_str_type()
 
-    entry_is_logical_str = isinstance(entry,str_type) and is_logical_expr(entry)
-
     # first, infer ${*}
     cime_params = re.findall(r'\$\{.+?\}',entry)
     for cime_param in cime_params:
@@ -50,8 +56,6 @@ def expand_cime_parameter(entry, case):
         if cime_param_expanded==None:
             raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
                                " variable for this case")
-        if isinstance(cime_param_expanded,str_type) and entry_is_logical_str:
-            cime_param_expanded = '"'+cime_param_expanded+'"'
         entry = entry.replace(cime_param,cime_param_expanded)
 
     # now infer $*
@@ -62,7 +66,7 @@ def expand_cime_parameter(entry, case):
             if cime_param_expanded==None:
                 raise RuntimeError("The guard "+cime_param+" is not a CIME xml"
                                    " variable for this case")
-            if isinstance(cime_param_expanded,str_type) and entry_is_logical_str:
+            if isinstance(cime_param_expanded,str_type):
                 cime_param_expanded = '"'+cime_param_expanded+'"'
             entry = entry.replace(word,str(cime_param_expanded))
 

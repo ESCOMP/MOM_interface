@@ -2,7 +2,7 @@
 # Section 1: (Reusable) List of Fields
 #   Field lists to be added in Files defined in Section 2.
 ###############################################################################
-
+---
 FieldLists:
     - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "rhoinsitu", "KE", "rhopot0"]
 
@@ -31,7 +31,7 @@ FieldLists:
 
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
                          "geolon_v", "geolat_v", "area_t", "depth_ocean", "wet", "wet_c", "wet_u",
-                          "wet_v", "Coriolis"]
+                         "wet_v", "Coriolis"]
 
     - &transports       ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
 
@@ -156,7 +156,6 @@ Files:
                   packing:  2             # single precision
                   lists:    [ *surface_flds,
                               *kpp_diags ]
-
     forcing_daily_avg:
         suffix: "frc%4yr"
         output_freq: 1
@@ -183,7 +182,6 @@ Files:
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-        fields:
             $OCN_DIAG_MODE == "development":
                 - module:   "ocean_model"  # native
                   packing:  1            # double precision
@@ -194,15 +192,15 @@ Files:
         output_freq: -1
         output_freq_units: "days"
         time_axis_units: "days"
-        reduction_method: ".false." # instantaneous
-        regional_section: "none"    # global
+        reduction_method: ".false."     # instantaneous
+        regional_section: "none"        # global
         fields:
-            - module:   "ocean_model"  # native
-              packing:  1            # double precision
+            - module:   "ocean_model"   # native
+              packing:  1               # double precision
               lists:    [ *static_flds ]
 
 
-# Sections ------------------------------------
+    # Sections ------------------------------------
 
     Agulhas:
         suffix: "agulhas_section%4yr"
@@ -599,4 +597,4 @@ Files:
                 - module:   "ocean_model"  # native
                   packing:  2            # single precision
                   lists:    [ *vert_sections_v ]
-
+...
