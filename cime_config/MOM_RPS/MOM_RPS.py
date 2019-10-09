@@ -3,7 +3,7 @@ from collections import OrderedDict
 import os
 import abc
 import re
-from utils import get_str_type, is_logical_expr, has_param_to_expand, expand_cime_parameter
+from rps_utils import get_str_type, is_logical_expr, has_param_to_expand, expand_cime_parameter
 
 ### MOM Runtime Parameter System Module =======================================
 
@@ -52,10 +52,9 @@ class MOM_RPS(object,):
 
             try:
                 result = eval(guard_inferred)
+                assert type(result)==type(True), "Guard is not boolean: "+str(guard)
             except:
                 raise RuntimeError("Cannot evaluate guard: "+guard+" in file: "+self.input_path)
-
-            assert type(result)==type(True), "Guard is not boolean: "+str(guard)
 
             return result
 
@@ -64,30 +63,18 @@ class MOM_RPS(object,):
                 with guards, returns the last entry whose guards are satisfied
                 by the case"""
 
-            assert _is_multi_option_entry(multi_option_dict)
+            assert _is_guarded_entry(multi_option_dict)
             assert type(multi_option_dict)==OrderedDict
 
             val = None
-            for value_guards in multi_option_dict:
-                if value_guards == "else":
+            for value_guard in multi_option_dict:
+                if value_guard == "else":
                     pass # for now
-
-                # multiple guard pairs in value_guards
-                elif ',' in value_guards:
-                    agrees = True
-                    for guard_pair in value_guards.split(','):
-                        agrees = agrees and _guard_satisfied(guard_pair, case)
-                    if agrees: # with all guards:
-                        val = multi_option_dict[value_guards]
-
-                # a single guard pair in value_guards:
-                elif ('==' in value_guards) or\
-                     ('!=' in value_guards):
-                    if _guard_satisfied(value_guards, case):
-                        val = multi_option_dict[value_guards]
-
-                # not a multi-option entry
-                else:
+                elif is_logical_expr(value_guard):
+                    if _guard_satisfied(value_guard, case):
+                        val = multi_option_dict[value_guard]
+                else: # invalid guard
+                    print("Options:", multi_option_dict)
                     raise RuntimeError("Error while determining guards")
 
             # If no other guard evaluates to true, get the value prefixed by "else":
@@ -97,15 +84,18 @@ class MOM_RPS(object,):
             return val
 
 
-        def _is_multi_option_entry(entry):
+        def _is_guarded_entry(entry):
             """ returns true if a given dictionary has entries that consist of
-                multi-option (alternative) guarded entries"""
+                conditional (possibly with alternatives), i.e., guarded entries"""
 
             assert type(entry)==OrderedDict
 
-            options = [child for child in entry if is_logical_expr(child)]
-            if (len(options)>0):
+            entry_logical = [is_logical_expr(child) for child in entry]
+            if all(entry_logical):
                 return True
+            elif any(entry_logical):
+                print("Entry: ", entry)
+                raise RuntimeError("Not all members of the above entry is conditional:")
             else:
                 return False
 
@@ -117,7 +107,7 @@ class MOM_RPS(object,):
                 if (isinstance(child,list)):
                     continue
                 elif (type(entry[child])==OrderedDict):
-                    if (_is_multi_option_entry(entry[child])):
+                    if (_is_guarded_entry(entry[child])):
                         entry[child] = _do_determine_value(entry[child])
                     else:
                         _determine_value_recursive(entry[child])
@@ -128,25 +118,34 @@ class MOM_RPS(object,):
             _determine_value_recursive(self.data[entry])
 
 
-    def expand_cime_params_in_vals(self, case):
-        """ Expands cime parameters in values of key:value pairs"""
+    def expand_cime_params(self, case):
+        """ Expands cime parameters in key:value pairs"""
 
-        def _expand_cime_params_in_vals_recursive(entry):
-            """ Recursively expands cime parameters in values of key:value pairs"""
+        def _expand_cime_params_recursive(entry):
+            """ Recursively expands cime parameters in key:value pairs"""
 
-            for child in entry:
+            children = [child for child in entry]
+            for child in children:
+
+                # first, values
                 if (isinstance(child,list)):
-                    continue
+                    pass
                 elif (type(entry[child])==OrderedDict):
-                    _expand_cime_params_in_vals_recursive(entry[child])
+                    _expand_cime_params_recursive(entry[child])
                 else:
                     if (has_param_to_expand(entry[child])):
                         entry[child] = expand_cime_parameter(entry[child],case)
                     else:
-                        continue
+                        pass
+
+                # now, keys:
+                if has_param_to_expand(child):
+                    child_expanded = expand_cime_parameter(child, case)
+                    entry[child_expanded] = entry[child]
+                    entry.pop(child)
 
         for entry in self.data:
-            _expand_cime_params_in_vals_recursive(self.data[entry])
+            _expand_cime_params_recursive(self.data[entry])
 
     @abc.abstractmethod
     def check_consistency(self):

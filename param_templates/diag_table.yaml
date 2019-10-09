@@ -2,7 +2,7 @@
 # Section 1: (Reusable) List of Fields
 #   Field lists to be added in Files defined in Section 2.
 ###############################################################################
-
+---
 FieldLists:
     - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "rhoinsitu", "KE", "rhopot0"]
 
@@ -18,7 +18,7 @@ FieldLists:
                          "zooC", "spChl", "spC", "spP", "spFe", "spCaCO3", "diatChl", "diatC",
                          "diatP", "diatFe", "diatSi", "diazChl", "diazC", "diazP", "diazFe"]
 
-    - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint", 
+    - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint",
                          "somint", "Rd_dx", "speed", "mlotst"]
 
     - &kpp_diags        ["KPP_OBLdepth:oml"]
@@ -29,17 +29,17 @@ FieldLists:
                          "hflso", "pso", "seaice_melt_heat", "Heat_PmE", "salt_flux_added"]
 
     - &forcing_flds_dev ["net_heat_coupler", "hfds", "LwLatSens", "heat_content_lrunoff",
-                         "heat_content_frunoff", "heat_content_icemelt", "heat_content_lprec", 
-                         "heat_content_fprec", "heat_content_vprec", "heat_content_cond", 
-                         "hfevapds", "heat_content_massin", "heat_content_surfwater", 
+                         "heat_content_frunoff", "heat_content_icemelt", "heat_content_lprec",
+                         "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
+                         "hfevapds", "heat_content_massin", "heat_content_surfwater",
                          "vprec_global_adjustment", "net_fresh_water_global_adjustment",
-                         "salt_flux_global_restoring_adjustment", "net_massout", "net_massin"] 
+                         "salt_flux_global_restoring_adjustment", "net_massout", "net_massin"]
 
     - &visc_flds        ["volcello", "diftrelo", "diftrblo", "difmxybo", "difmxylo", "vhGM", "uhGM"]
 
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
                          "geolon_v", "geolat_v", "area_t", "depth_ocean", "wet", "wet_c", "wet_u",
-                          "wet_v", "Coriolis"]
+                         "wet_v", "Coriolis"]
 
     - &vert_sections_u  ["volcello", "thetao", "so", "umo", "uo"]
 
@@ -135,8 +135,8 @@ Files:
         regional_section: "none"    # global
         fields:
             $OCN_DIAG_MODE == "production" and $TEST == "False":
-                - module:   "ocean_model" # native
-                  packing:  1             # double precision
+                - module:   "ocean_model"   # native
+                  packing:  1               # double precision
                   lists:    [ *surface_flds ]
 
     forcing_daily_avg:
@@ -165,7 +165,6 @@ Files:
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-        fields:
             $OCN_DIAG_MODE == "development":
                 - module:   "ocean_model"  # native
                   packing:  1            # double precision
@@ -176,15 +175,15 @@ Files:
         output_freq: -1
         output_freq_units: "days"
         time_axis_units: "days"
-        reduction_method: ".false." # instantaneous
-        regional_section: "none"    # global
+        reduction_method: ".false."     # instantaneous
+        regional_section: "none"        # global
         fields:
-            - module:   "ocean_model"  # native
-              packing:  1            # double precision
+            - module:   "ocean_model"   # native
+              packing:  1               # double precision
               lists:    [ *static_flds ]
 
 
-# Sections ------------------------------------
+    # Sections ------------------------------------
 
     Agulhas:
         suffix: "agulhas_section%4yr"
@@ -258,7 +257,7 @@ Files:
         new_file_freq: 365
         new_file_freq_units: "days"
         reduction_method: ".true."  # time average
-        regional_section: 
+        regional_section:
             $OCN_GRID == "tx0.66v1": "-53.5 -45.3 69.5 69.5 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and $OCN_DIAG_MODE != "spinup" and $TEST == False:
@@ -473,4 +472,4 @@ Files:
                 - module:   "ocean_model"  # native
                   packing:  2            # single precision
                   lists:    [ *vert_sections_v ]
-
+...
