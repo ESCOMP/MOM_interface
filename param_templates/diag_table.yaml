@@ -64,9 +64,9 @@ Files:
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-              - module:   "ocean_model_rho2"
-                packing:  2                 # single precision
-                lists:    [ *transports ]
+            - module:   "ocean_model_rho2"
+              packing:  2                 # single precision
+              lists:    [ *transports ]
 
     # native grid
     hist:
@@ -137,8 +137,8 @@ Files:
     surface_avg:
         suffix: "sfc%4yr"
         output_freq:
-           $OCN_DIAG_MODE == "spinup": 5
-           else: 1
+            $OCN_DIAG_MODE == "spinup": 5
+            else: 1
         output_freq_units: "days"
         time_axis_units: "days"
         new_file_freq: 1
@@ -147,13 +147,13 @@ Files:
         regional_section: "none"    # global
         fields:
             $OCN_DIAG_MODE == "production" and $TEST == False:
-                - module:   "ocean_model" # native
-                  packing:  1             # double precision
+                - module:   "ocean_model"    # native
+                  packing:  1                # double precision
                   lists:    [ *surface_flds,
                               *kpp_diags ]
             $OCN_DIAG_MODE == "spinup" and $TEST == False:
-                - module:   "ocean_model" # native
-                  packing:  2             # single precision
+                - module:   "ocean_model"    # native
+                  packing:  2                # single precision
                   lists:    [ *surface_flds,
                               *kpp_diags ]
     forcing_daily_avg:
