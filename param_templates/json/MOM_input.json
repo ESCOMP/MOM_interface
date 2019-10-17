@@ -370,6 +370,16 @@
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
+      "DEPTH_SCALED_KHTH": {
+         "description": "\"[Boolean] default = False\n If true,  KHTH is scaled away when the depth is shallower\n than a reference depth: KHTH = MIN(1,H/H0)**N * KHTH,\n where H0 is a reference depth, controlled via\n DEPTH_SCALED_KHTH_H0, and theexponent (N) is\n controlled via DEPTH_SCALED_KHTH_EXP.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"gx1v6\"": false,
+            "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"tx0.25v1\"": false
+         }
+      },
       "KHTR_SLOPE_CFF": {
          "description": "\"[nondim] default = 0.0\nThe nondimensional coefficient in the Visbeck formula\nfor the epipycnal tracer diffusivity\"\n",
          "datatype": "real",

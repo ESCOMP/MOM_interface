@@ -523,6 +523,20 @@ Global:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx0.25v1": True
+    DEPTH_SCALED_KHTH:
+        description: |
+            "[Boolean] default = False
+             If true,  KHTH is scaled away when the depth is shallower
+             than a reference depth: KHTH = MIN(1,H/H0)**N * KHTH,
+             where H0 is a reference depth, controlled via
+             DEPTH_SCALED_KHTH_H0, and theexponent (N) is
+             controlled via DEPTH_SCALED_KHTH_EXP."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "gx1v6": False
+            $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": False
     KHTR_SLOPE_CFF:
         description: |
             "[nondim] default = 0.0
