@@ -672,6 +672,7 @@
          "description": "\" The number of diagnostic vertical coordinates to use.\nFor each coordinate, an entry in DIAG_COORDS must be provided.\"\n",
          "datatype": "integer",
          "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 2,
             "$OCN_GRID == \"tx0.25v1\"": 1
          }
       },
@@ -679,7 +680,15 @@
          "description": "\"A list of string tuples associating diag_table modules to\na coordinate definition used for diagnostics. Each string\nis of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME.\"\n",
          "datatype": "string",
          "value": {
+            "$OCN_GRID == \"tx0.66v1\"": "\"z Z ZSTAR\", \"rho2 RHO2 RHO\"",
             "$OCN_GRID == \"tx0.25v1\"": "\"z Z ZSTAR\""
+         }
+      },
+      "DIAG_COORD_DEF_RHO2": {
+         "description": "\" default = 'WOA09'\nDetermines how to specify the coordinate resolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_RHO2\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
+         "datatype": "string",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": "\"FILE:ocean_rho2_190917.nc,interfaces=rho2\""
          }
       },
       "DIAG_MISVAL": {
