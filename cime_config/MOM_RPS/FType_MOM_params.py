@@ -138,13 +138,6 @@ class FType_MOM_params(MOM_RPS):
                     if val==None:
                         continue
 
-                    # eval
-                    if (isinstance(val,str_type) and val[0]=='='):
-                        try:
-                            val = eval(val[1:])
-                        except:
-                            raise RuntimeError("Cannot evaluate value: "+val+" for variable "+var)
-
                     # write "variable = value" pair
                     MOM_input.write(var+" = "+ str(val) +"\n")
 

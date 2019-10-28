@@ -52,6 +52,7 @@ class MOM_RPS(object,):
         import yaml
         with open(self.input_path) as yaml_file:
             self.data = yaml.safe_load(yaml_file)
+
         self.input_file_read = True
 
     def _check_json_consistency(self):
@@ -89,7 +90,7 @@ class MOM_RPS(object,):
                 by the case"""
 
             assert _is_guarded_entry(multi_option_dict)
-            assert type(multi_option_dict)==OrderedDict
+            assert type(multi_option_dict) in [dict, OrderedDict]
 
             val = None
             for value_guard in multi_option_dict:
@@ -113,7 +114,7 @@ class MOM_RPS(object,):
             """ returns true if a given dictionary has entries that consist of
                 conditional (possibly with alternatives), i.e., guarded entries"""
 
-            assert type(entry)==OrderedDict
+            assert type(entry) in [dict, OrderedDict]
 
             entry_logical = [is_logical_expr(child) for child in entry]
             if all(entry_logical):
@@ -131,7 +132,7 @@ class MOM_RPS(object,):
             for child in entry:
                 if (isinstance(child,list)):
                     continue
-                elif (type(entry[child])==OrderedDict):
+                elif (type(entry[child]) in [dict, OrderedDict]):
                     if (_is_guarded_entry(entry[child])):
                         entry[child] = _do_determine_value(entry[child])
                     else:
@@ -146,6 +147,8 @@ class MOM_RPS(object,):
     def expand_cime_params(self, case):
         """ Expands cime parameters in key:value pairs"""
 
+        str_type = get_str_type()
+
         def _expand_cime_params_recursive(entry):
             """ Recursively expands cime parameters in key:value pairs"""
 
@@ -155,7 +158,7 @@ class MOM_RPS(object,):
                 # first, values
                 if (isinstance(child,list)):
                     pass
-                elif (type(entry[child])==OrderedDict):
+                elif (type(entry[child]) in [dict, OrderedDict]):
                     _expand_cime_params_recursive(entry[child])
                 else:
                     if (has_param_to_expand(entry[child])):
@@ -168,6 +171,17 @@ class MOM_RPS(object,):
                     child_expanded = expand_cime_parameter(child, case)
                     entry[child_expanded] = entry[child]
                     entry.pop(child)
+                else:
+                    child_expanded = child
+
+                # now, evaluate formulas, if any:
+                if (not isinstance(child_expanded,list)):
+                    formula = entry[child_expanded]
+                    if (isinstance(formula,str_type) and len(formula)>0 and formula[0]=='='):
+                        try:
+                            entry[child_expanded] = eval(formula[1:])
+                        except:
+                            raise RuntimeError("Cannot evaluate formula: "+formula+" for variable "+child_expanded)
 
         for entry in self.data:
             _expand_cime_params_recursive(self.data[entry])

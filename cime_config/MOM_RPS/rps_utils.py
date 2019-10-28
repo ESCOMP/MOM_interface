@@ -36,7 +36,7 @@ def is_logical_expr(string):
 
 def has_param_to_expand(entry):
     """ Checks if a given entry of type string has cime parameter to expand"""
-    assert type(entry)!=OrderedDict
+    assert type(entry)!=OrderedDict and type(entry)!=dict
     if isinstance(entry,get_str_type()) and "$" in entry:
         return True
     else:
