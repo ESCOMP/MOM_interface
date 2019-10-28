@@ -22,9 +22,8 @@ class FType_MOM_params(MOM_RPS):
     def read(self):
         if self.input_format == "MOM_input":
             self._read_MOM_input()
-        elif self.input_format == "json":
-            self._read_json()
-            self._check_json_consistency()
+        else:
+            super(FType_MOM_params, self).read()
 
 
     def _read_MOM_input(self):

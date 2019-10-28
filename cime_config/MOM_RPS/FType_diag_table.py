@@ -4,10 +4,6 @@ from MOM_RPS import MOM_RPS
 class FType_diag_table(MOM_RPS):
     """Encapsulates data and read/write methods for MOM6 diag_table input file."""
 
-    def read(self):
-        assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
-        self._read_json()
-
     def write(self, output_path, case, add_params=dict()):
         assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
 

@@ -4,11 +4,6 @@ from MOM_RPS import MOM_RPS
 class FType_input_nml(MOM_RPS):
     """Encapsulates data and read/write methods for MOM6 (FMS) input.nml file"""
 
-    def read(self):
-        assert self.input_format=="json", "input.nml file defaults can only be read from a json file."
-        self._read_json()
-        self._check_json_consistency()
-
     def write(self, output_path, case):
         assert self.input_format=="json", "input.nml file can only be generated from a json input file."
 
