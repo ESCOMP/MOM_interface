@@ -8,7 +8,7 @@ class FType_input_data_list(MOM_RPS):
         assert self.input_format=="json", "input_data_list file defaults can only be read from a json file."
 
         # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
-        self.expand_cime_params(case)
+        self.expand_case_vars(case)
 
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)

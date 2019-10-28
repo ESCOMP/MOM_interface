@@ -42,7 +42,7 @@ def has_param_to_expand(entry):
     else:
         return False
 
-def expand_cime_parameter(entry, case):
+def expand_case_var(entry, case):
     """ Returns the version of an entry where cime parameters are expanded"""
 
     assert has_param_to_expand(entry)

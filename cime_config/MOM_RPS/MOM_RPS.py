@@ -3,12 +3,13 @@ from collections import OrderedDict
 import os
 import abc
 import re
-from rps_utils import get_str_type, is_logical_expr, has_param_to_expand, expand_cime_parameter
+from rps_utils import get_str_type, is_logical_expr, has_param_to_expand, expand_case_var
 
 ### MOM Runtime Parameter System Module =======================================
 
 class MOM_RPS(object,):
-    """ Base class for MOM6 (R)untime Parameter System manager to provide the following
+    """
+    Base class for MOM6 (R)untime Parameter System manager to provide the following
     three main functionalities:
         * Read in an input file to generate self.data dictionary
         * Determine the values of expandable variables and evaluate formulas involving them.
@@ -18,6 +19,13 @@ class MOM_RPS(object,):
     ----------
     input_format : str
         The format of input file to be read in to generate the data
+
+    Methods
+    -------
+    expand_case_vars(case)
+        Replaces case variables (e.g., $OCN_GRID) in self.data entries (both in keys and values)
+        with their values (e.g, tx0.66v1)
+
     """
 
     def __init__(self, input_path, input_format=None, output_path=None, output_format=None):
@@ -59,6 +67,58 @@ class MOM_RPS(object,):
         #TODO
         pass
 
+    def expand_case_vars(self, case):
+        """
+        Replaces case variables (e.g., $OCN_GRID) in self.data entries (both in keys and values)
+        with their values (e.g, tx0.66v1). Also evaluates formulas in values and replaces them
+        with the outcome of their evaluations.
+
+        Parameters
+        ----------
+        case: CIME.case.case.Case
+            A cime case object whose parameter values are to be adopted.
+        """
+
+        str_type = get_str_type()
+
+        def _expand_case_var_recursive(entry):
+            """ Recursively expands cime parameters in key:value pairs"""
+
+            children = [child for child in entry]
+            for child in children:
+
+                # first, expand values
+                if (isinstance(child,list)):
+                    pass
+                elif (type(entry[child]) in [dict, OrderedDict]):
+                    _expand_case_var_recursive(entry[child])
+                else:
+                    if (has_param_to_expand(entry[child])):
+                        entry[child] = expand_case_var(entry[child],case)
+                    else:
+                        pass
+
+                # now, expand keys:
+                if has_param_to_expand(child):
+                    child_expanded = expand_case_var(child, case)
+                    entry[child_expanded] = entry[child]
+                    entry.pop(child)
+                else:
+                    child_expanded = child
+
+                # now, evaluate formulas, if any:
+                if (not isinstance(child_expanded,list)):
+                    formula = entry[child_expanded]
+                    if (isinstance(formula,str_type) and len(formula)>0 and formula[0]=='='):
+                        try:
+                            entry[child_expanded] = eval(formula[1:])
+                        except:
+                            raise RuntimeError("Cannot evaluate formula: "+formula+\
+                                                " for variable "+child_expanded)
+
+        for entry in self.data:
+            _expand_case_var_recursive(self.data[entry])
+
     def infer_guarded_vals(self, case):
         """ For a variable, if multiple values are provided in a value list, this function
             determines the appropriate value for the case by looking at guards
@@ -72,7 +132,7 @@ class MOM_RPS(object,):
             " Checks if a given value guard agrees with the case settings."
 
             if has_param_to_expand(guard):
-                guard_inferred = expand_cime_parameter(guard, case)
+                guard_inferred = expand_case_var(guard, case)
             else:
                 guard_inferred = guard
 
@@ -142,49 +202,6 @@ class MOM_RPS(object,):
 
         for entry in self.data:
             _determine_value_recursive(self.data[entry])
-
-
-    def expand_cime_params(self, case):
-        """ Expands cime parameters in key:value pairs"""
-
-        str_type = get_str_type()
-
-        def _expand_cime_params_recursive(entry):
-            """ Recursively expands cime parameters in key:value pairs"""
-
-            children = [child for child in entry]
-            for child in children:
-
-                # first, values
-                if (isinstance(child,list)):
-                    pass
-                elif (type(entry[child]) in [dict, OrderedDict]):
-                    _expand_cime_params_recursive(entry[child])
-                else:
-                    if (has_param_to_expand(entry[child])):
-                        entry[child] = expand_cime_parameter(entry[child],case)
-                    else:
-                        pass
-
-                # now, keys:
-                if has_param_to_expand(child):
-                    child_expanded = expand_cime_parameter(child, case)
-                    entry[child_expanded] = entry[child]
-                    entry.pop(child)
-                else:
-                    child_expanded = child
-
-                # now, evaluate formulas, if any:
-                if (not isinstance(child_expanded,list)):
-                    formula = entry[child_expanded]
-                    if (isinstance(formula,str_type) and len(formula)>0 and formula[0]=='='):
-                        try:
-                            entry[child_expanded] = eval(formula[1:])
-                        except:
-                            raise RuntimeError("Cannot evaluate formula: "+formula+" for variable "+child_expanded)
-
-        for entry in self.data:
-            _expand_cime_params_recursive(self.data[entry])
 
     @abc.abstractmethod
     def check_consistency(self):

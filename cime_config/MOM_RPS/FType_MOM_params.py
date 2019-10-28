@@ -102,7 +102,7 @@ class FType_MOM_params(MOM_RPS):
         str_type = get_str_type()
 
         # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
-        self.expand_cime_params(case)
+        self.expand_case_vars(case)
 
         # Apply the guards on the general data to get the targeted values
         self.infer_guarded_vals(case)
