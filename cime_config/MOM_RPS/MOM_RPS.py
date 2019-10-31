@@ -207,8 +207,8 @@ class MOM_RPS(object,):
                 else:
                     continue
 
-        for entry in self.data:
-            _determine_value_recursive(self.data[entry])
+        # Recursive determine the values to be picked
+        _determine_value_recursive(self.data)
 
     @abc.abstractmethod
     def check_consistency(self):
