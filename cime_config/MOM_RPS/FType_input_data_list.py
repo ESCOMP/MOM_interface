@@ -4,7 +4,7 @@ from MOM_RPS import MOM_RPS
 class FType_input_data_list(MOM_RPS):
     """Encapsulates data and read/write methods for MOM6 input_data_list file."""
 
-    def write(self, output_path, case, add_params=dict()):
+    def write(self, output_path, case):
         assert self.input_format=="json", "input_data_list file defaults can only be read from a json file."
 
         # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
