@@ -3,7 +3,7 @@ from collections import OrderedDict
 import os
 import abc
 import re
-from rps_utils import get_str_type, is_logical_expr, has_param_to_expand, expand_case_var
+from rps_utils import get_str_type, is_logical_expr
 
 ### MOM Runtime Parameter System Module =======================================
 
@@ -71,6 +71,15 @@ class MOM_RPS(object,):
         #TODO
         pass
 
+    @staticmethod
+    def _has_expandable_case_var(entry):
+        """ Checks if a given entry of type string has case parameter to expand"""
+        assert type(entry)!=OrderedDict and type(entry)!=dict
+        if isinstance(entry,get_str_type()) and "$" in entry:
+            return True
+        else:
+            return False
+
     def expand_case_vars(self, case):
         """
         Replaces case variables (e.g., $OCN_GRID) in self._data entries (both in keys and values)
@@ -84,6 +93,36 @@ class MOM_RPS(object,):
         """
 
         str_type = get_str_type()
+
+        def _expand_case_var(entry, case):
+            """ Returns the version of an entry where cime parameters are expanded"""
+
+            assert self._has_expandable_case_var(entry)
+            str_type = get_str_type()
+
+            # first, infer ${*}
+            cime_params = re.findall(r'\$\{.+?\}',entry)
+            for cime_param in cime_params:
+                cime_param_strip = cime_param.replace("${","").replace("}","")
+                cime_param_expanded = case.get_value(cime_param_strip)
+                if cime_param_expanded==None:
+                    raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
+                                       " variable for this case")
+                entry = entry.replace(cime_param,cime_param_expanded)
+
+            # now infer $*
+            for word in entry.split():
+                if word[0] == '$':
+                    cime_param = word[1:]
+                    cime_param_expanded = case.get_value(cime_param)
+                    if cime_param_expanded==None:
+                        raise RuntimeError("The guard "+cime_param+" is not a CIME xml"
+                                           " variable for this case")
+                    if isinstance(cime_param_expanded,str_type):
+                        cime_param_expanded = '"'+cime_param_expanded+'"'
+                    entry = entry.replace(word,str(cime_param_expanded))
+
+            return entry
 
         def _eval_formula(formula):
             if (isinstance(formula,str_type) and len(formula)>0 and formula[0]=='='):
@@ -101,8 +140,8 @@ class MOM_RPS(object,):
             elif isinstance(val, list):
                 pass
             else:
-                if has_param_to_expand(val):
-                    val_expanded = expand_case_var(val, case)
+                if self._has_expandable_case_var(val):
+                    val_expanded = _expand_case_var(val, case)
                     val_computed = _eval_formula(val_expanded)
                     return val_computed
 
@@ -115,8 +154,8 @@ class MOM_RPS(object,):
                 for key_, val_ in data_copy.items():
                     val.pop(key_)
                     val[_expand_key(key_, val_)] = val_
-            if has_param_to_expand(key):
-                    return expand_case_var(key, case)
+            if self._has_expandable_case_var(key):
+                    return _expand_case_var(key, case)
             return key
 
         # Step 1: Expand values:
@@ -142,8 +181,11 @@ class MOM_RPS(object,):
         def _guard_satisfied(guard, case):
             " Checks if a given value guard agrees with the case settings."
 
-            if has_param_to_expand(guard):
-                guard_inferred = expand_case_var(guard, case)
+            if self._has_expandable_case_var(guard):
+                raise RuntimeError("The guard "+guard+" has an expandable case variable! "+\
+                                   "expand_case_vars method must be called before "+\
+                                   "infer_guarded_vals method is called!")
+                guard_inferred = _expand_case_var(guard, case)
             else:
                 guard_inferred = guard
 
