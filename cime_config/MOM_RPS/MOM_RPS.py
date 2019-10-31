@@ -81,43 +81,50 @@ class MOM_RPS(object,):
 
         str_type = get_str_type()
 
-        def _expand_case_var_recursive(entry):
-            """ Recursively expands cime parameters in key:value pairs"""
+        def _eval_formula(formula):
+            if (isinstance(formula,str_type) and len(formula)>0 and formula[0]=='='):
+                try:
+                    formula = eval(formula[1:])
+                except:
+                    raise RuntimeError("Cannot evaluate formula: "+formula)
+            return formula
 
-            children = [child for child in entry]
-            for child in children:
+        def _expand_val(val):
 
-                # first, expand values
-                if (isinstance(child,list)):
-                    pass
-                elif (type(entry[child]) in [dict, OrderedDict]):
-                    _expand_case_var_recursive(entry[child])
-                else:
-                    if (has_param_to_expand(entry[child])):
-                        entry[child] = expand_case_var(entry[child],case)
-                    else:
-                        pass
+            if type(val) in [dict, OrderedDict]:
+                for key_, val_ in val.items():
+                    val[key_] = _expand_val(val_)
+            elif isinstance(val, list):
+                pass
+            else:
+                if has_param_to_expand(val):
+                    val_expanded = expand_case_var(val, case)
+                    val_computed = _eval_formula(val_expanded)
+                    return val_computed
 
-                # now, expand keys:
-                if has_param_to_expand(child):
-                    child_expanded = expand_case_var(child, case)
-                    entry[child_expanded] = entry[child]
-                    entry.pop(child)
-                else:
-                    child_expanded = child
+            return val
 
-                # now, evaluate formulas, if any:
-                if (not isinstance(child_expanded,list)):
-                    formula = entry[child_expanded]
-                    if (isinstance(formula,str_type) and len(formula)>0 and formula[0]=='='):
-                        try:
-                            entry[child_expanded] = eval(formula[1:])
-                        except:
-                            raise RuntimeError("Cannot evaluate formula: "+formula+\
-                                                " for variable "+child_expanded)
+        def _expand_key(key, val):
 
-        for entry in self.data:
-            _expand_case_var_recursive(self.data[entry])
+            if type(val) in [dict, OrderedDict]:
+                data_copy = val.copy() # a copy to iterate over while making changes in original dict
+                for key_, val_ in data_copy.items():
+                    val.pop(key_)
+                    val[_expand_key(key_, val_)] = val_
+            if has_param_to_expand(key):
+                    return expand_case_var(key, case)
+            return key
+
+        # Step 1: Expand values:
+        for key, val in self.data.items():
+            self.data[key] = _expand_val(val)
+
+        # Step 2: Expand keys:
+        data_copy = self.data.copy() # a copy to iterate over while making changes in original dict
+        for key, val in data_copy.items():
+            self.data.pop(key)
+            self.data[_expand_key(key, val)] = val
+
 
     def infer_guarded_vals(self, case):
         """ For a variable, if multiple values are provided in a value list, this function
