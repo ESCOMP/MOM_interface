@@ -6,17 +6,17 @@ class FType_MOM_params(MOM_RPS):
     """ Encapsulates data and read/write methods for MOM6 case parameter files: MOM_input, user_nl.
     """
 
-    supported_formats_in    = ["MOM_input", "json"]
+    supported_formats_in    = ["MOM_input", "json", "yaml"]
     supported_formats_out   = ["MOM_input", "MOM_override"]
 
-    def __init__(self, input_path, input_format="json", output_format="MOM_input"):
+    def __init__(self, input_path, input_format=None, output_format="MOM_input"):
         MOM_RPS.__init__(self, input_path, input_format=input_format, output_format=output_format)
 
         if self.input_format not in FType_MOM_params.supported_formats_in:
-            raise RuntimeError("File format "+input_format+\
+            raise RuntimeError("File format "+self.input_format+\
                                 " is not a supported input format for FType_MOM_params")
         if self.output_format not in FType_MOM_params.supported_formats_out:
-            raise RuntimeError("File format "+output_format+\
+            raise RuntimeError("File format "+self.output_format+\
                                 " is not a supported output format for FType_MOM_params")
 
     def read(self):
@@ -95,10 +95,11 @@ class FType_MOM_params(MOM_RPS):
             self._write_MOM_override(output_path, def_params)
 
     def _write_MOM_input(self, output_path, case):
-        """ writes a MOM_input file from a given json parameter file in accordance with
+        """ writes a MOM_input file from a given json or yaml parameter file in accordance with
             the guards and additional parameters that are passed. """
 
-        assert self.input_format=="json", "MOM_input file can only be generated from a json input file."
+        assert self.input_format=="json" or self.input_format=="yaml", \
+             "MOM_input file can only be generated from a json input file."
         str_type = get_str_type()
 
         # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
