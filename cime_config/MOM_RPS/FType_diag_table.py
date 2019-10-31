@@ -22,15 +22,15 @@ class FType_diag_table(MOM_RPS):
             filename = lambda suffix : '"'+casename+'.mom6.'+suffix+'"'
 
             # max filename length:
-            mfl = max([len(filename(self.data['Files'][file_block_name]['suffix']))\
-                              for file_block_name in self.data['Files']])\
+            mfl = max([len(filename(self._data['Files'][file_block_name]['suffix']))\
+                              for file_block_name in self._data['Files']])\
                   + 4 # quotation marks and tabbing
 
             # Section 1: File section
             diag_table.write('### Section-1: File List\n')
             diag_table.write('#========================\n')
-            for file_block_name in self.data['Files']:
-                file_block = self.data['Files'][file_block_name]
+            for file_block_name in self._data['Files']:
+                file_block = self._data['Files'][file_block_name]
                 fname = filename(file_block['suffix'])
 
                 if file_block['fields']==None:
@@ -55,8 +55,8 @@ class FType_diag_table(MOM_RPS):
             ## Field section (per file):
             diag_table.write('### Section-2: Fields List\n')
             diag_table.write('#=========================\n')
-            for file_block_name in self.data['Files']:
-                file_block = self.data['Files'][file_block_name]
+            for file_block_name in self._data['Files']:
+                file_block = self._data['Files'][file_block_name]
                 fname = filename(file_block['suffix'])
 
                 if file_block['fields']==None:

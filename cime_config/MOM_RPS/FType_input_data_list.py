@@ -14,9 +14,9 @@ class FType_input_data_list(MOM_RPS):
         self.infer_guarded_vals(case)
 
         with open(os.path.join(output_path), 'w') as input_data_list:
-            for module in self.data:
-                for var in self.data[module]:
-                    val = self.data[module][var]
+            for module in self._data:
+                for var in self._data[module]:
+                    val = self._data[module][var]
                     if val != None:
                         input_data_list.write(var+" = "+str(val)+"\n")
 

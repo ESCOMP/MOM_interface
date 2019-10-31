@@ -31,7 +31,7 @@ class FType_MOM_params(MOM_RPS):
            read in MOM_override and user_nl_mom too, since the syntax is the same, but
            write methods for MOM_input and MOM_override are different."""
 
-        self.data = dict()
+        self._data = dict()
         with open(self.input_path,'r') as param_file:
             within_comment_block = False
             curr_module = "Global"
@@ -68,15 +68,15 @@ class FType_MOM_params(MOM_RPS):
                                     val_str = val_str.split("!")[0] # discard the comment in val str, if there is
 
                                 # add this module if not added before:
-                                if not curr_module in self.data:
-                                    self.data[curr_module] = dict()
+                                if not curr_module in self._data:
+                                    self._data[curr_module] = dict()
 
                                 # check if param already provided:
-                                if param_str in self.data[curr_module]:
+                                if param_str in self._data[curr_module]:
                                     raise SystemExit('ERROR: '+param_str+' listed more than once in '+file_name)
 
                                 # enter the parameter in the dictionary:
-                                self.data[curr_module][param_str] = {'value':val_str}
+                                self._data[curr_module][param_str] = {'value':val_str}
                             else:
                                 raise SystemExit('ERROR: Cannot parse the following line in user_nl_mom: '+line)
 
@@ -127,14 +127,14 @@ class FType_MOM_params(MOM_RPS):
             MOM_input.write(MOM_input_header)
 
             tab = " "*32
-            for module in self.data:
+            for module in self._data:
 
                 # Begin module block:
                 if module != "Global":
                     MOM_input.write(module+"%\n")
 
-                for var in self.data[module]:
-                    val = self.data[module][var]["value"]
+                for var in self._data[module]:
+                    val = self._data[module][var]["value"]
                     if val==None:
                         continue
 
@@ -142,7 +142,7 @@ class FType_MOM_params(MOM_RPS):
                     MOM_input.write(var+" = "+ str(val) +"\n")
 
                     # Write the variable description:
-                    var_comments = self.data[module][var]["description"].split('\n')
+                    var_comments = self._data[module][var]["description"].split('\n')
                     if len(var_comments[-1])==0:
                         var_comments.pop()
                     for line in var_comments:
@@ -169,13 +169,13 @@ class FType_MOM_params(MOM_RPS):
 
            MOM_override.write(MOM_override_header)
 
-           for module in self.data:
+           for module in self._data:
                 #Begin module block:
                 if module != "Global":
                     MOM_override.write("\n"+module+"%\n")
 
-                for var in self.data[module]:
-                    val = self.data[module][var]["value"]
+                for var in self._data[module]:
+                    val = self._data[module][var]["value"]
 
                     # parameter is provided in both MOM_input and user_nl_mom
                     if module in def_params.data and var in def_params.data[module]:

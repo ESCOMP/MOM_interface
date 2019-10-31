@@ -11,7 +11,7 @@ class MOM_RPS(object,):
     """
     Base class for MOM6 (R)untime Parameter System manager to provide the following
     three main functionalities:
-        * Read in an input file to generate self.data dictionary
+        * Read in an input file to generate data dictionary
         * Determine the values of expandable variables and evaluate formulas involving them.
         * Infer the final values of parameters for a given CIME case instance
 
@@ -33,9 +33,13 @@ class MOM_RPS(object,):
         self.input_path = input_path
         self._input_format = input_format
         self.output_format = output_format
-        self.data = None
+        self._data = None
 
         self.read()
+
+    @property
+    def data(self):
+        return self._data
 
     @property
     def input_format(self):
@@ -49,17 +53,17 @@ class MOM_RPS(object,):
         return self._input_format
 
     def _read_json(self):
-        """ Read in the json input file to initialize self.data. """
+        """ Read in the json input file to initialize self._data. """
         import json
         with open(self.input_path) as json_file:
-            self.data = json.load(json_file, object_pairs_hook=OrderedDict)
+            self._data = json.load(json_file, object_pairs_hook=OrderedDict)
         self.input_file_read = True
 
     def _read_yaml(self):
-        """ Read in the yaml input file to initialize self.data. """
+        """ Read in the yaml input file to initialize self._data. """
         import yaml
         with open(self.input_path) as yaml_file:
-            self.data = yaml.safe_load(yaml_file)
+            self._data = yaml.safe_load(yaml_file)
 
         self.input_file_read = True
 
@@ -69,7 +73,7 @@ class MOM_RPS(object,):
 
     def expand_case_vars(self, case):
         """
-        Replaces case variables (e.g., $OCN_GRID) in self.data entries (both in keys and values)
+        Replaces case variables (e.g., $OCN_GRID) in self._data entries (both in keys and values)
         with their values (e.g, tx0.66v1). Also evaluates formulas in values and replaces them
         with the outcome of their evaluations.
 
@@ -116,14 +120,14 @@ class MOM_RPS(object,):
             return key
 
         # Step 1: Expand values:
-        for key, val in self.data.items():
-            self.data[key] = _expand_val(val)
+        for key, val in self._data.items():
+            self._data[key] = _expand_val(val)
 
         # Step 2: Expand keys:
-        data_copy = self.data.copy() # a copy to iterate over while making changes in original dict
+        data_copy = self._data.copy() # a copy to iterate over while making changes in original dict
         for key, val in data_copy.items():
-            self.data.pop(key)
-            self.data[_expand_key(key, val)] = val
+            self._data.pop(key)
+            self._data[_expand_key(key, val)] = val
 
 
     def infer_guarded_vals(self, case):
@@ -132,7 +136,7 @@ class MOM_RPS(object,):
             to the left of values in yaml file and by comparing them against
             the xml variable of the case, e.g. OCN_GRID."""
 
-        if not self.data:
+        if not self._data:
             raise RuntimeError("Cannot apply the guards. No data found.")
 
         def _guard_satisfied(guard, case):
@@ -208,7 +212,7 @@ class MOM_RPS(object,):
                     continue
 
         # Recursive determine the values to be picked
-        _determine_value_recursive(self.data)
+        _determine_value_recursive(self._data)
 
     @abc.abstractmethod
     def check_consistency(self):
