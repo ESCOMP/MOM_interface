@@ -88,7 +88,7 @@ class MOM_RPS(object,):
         def _expand_case_var(entry, case):
             """ Returns the version of an entry where cime parameters are expanded"""
 
-            assert self.has_expandable_var(entry)
+            assert has_expandable_var(entry)
             str_type = get_str_type()
 
             # first, infer ${*}
@@ -132,7 +132,7 @@ class MOM_RPS(object,):
             elif isinstance(val, list):
                 pass
             else:
-                if self.has_expandable_var(val):
+                if has_expandable_var(val):
                     val_eval = _expand_case_var(val, case)
                     if (isinstance(val_eval, str_type) and len(val_eval)>0 and val_eval[0]=='='):
                         val_eval = eval_formula(val_eval[1:])
@@ -147,7 +147,7 @@ class MOM_RPS(object,):
                 for key_, val_ in data_copy.items():
                     val.pop(key_)
                     val[_expand_key(key_, val_)] = val_
-            if self.has_expandable_var(key):
+            if has_expandable_var(key):
                     return _expand_case_var(key, case)
             return key
 
@@ -174,7 +174,7 @@ class MOM_RPS(object,):
         def _check_guard_satisfied(guard, case):
             " Checks if a given value guard agrees with the case settings."
 
-            if self.has_expandable_var(guard):
+            if has_expandable_var(guard):
                 raise RuntimeError("The guard "+guard+" has an expandable case variable! "+\
                                    "expand_case_vars method must be called before "+\
                                    "infer_guarded_vals method is called!")
