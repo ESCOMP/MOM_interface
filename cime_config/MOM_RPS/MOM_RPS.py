@@ -115,15 +115,6 @@ class MOM_RPS(object,):
 
             return entry
 
-        def _eval_formula(formula):
-            if (isinstance(formula,str_type) and len(formula)>0 and formula[0]=='='):
-                check_comparison_types(formula[1:])
-                try:
-                    formula = eval(formula[1:])
-                except:
-                    raise RuntimeError("Cannot evaluate formula: "+formula)
-            return formula
-
         def _expand_val(val):
 
             if type(val) in [dict, OrderedDict]:
