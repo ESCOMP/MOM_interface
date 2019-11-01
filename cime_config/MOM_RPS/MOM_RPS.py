@@ -3,7 +3,7 @@ from collections import OrderedDict
 import os
 import abc
 import re
-from rps_utils import get_str_type, is_logical_expr
+from rps_utils import get_str_type, is_logical_expr, has_expandable_var, eval_formula
 
 ### MOM Runtime Parameter System Module =======================================
 
@@ -71,15 +71,6 @@ class MOM_RPS(object,):
         #TODO
         pass
 
-    @staticmethod
-    def _has_expandable_case_var(entry):
-        """ Checks if a given entry of type string has case parameter to expand"""
-        assert type(entry)!=OrderedDict and type(entry)!=dict
-        if isinstance(entry,get_str_type()) and "$" in entry:
-            return True
-        else:
-            return False
-
     def expand_case_vars(self, case):
         """
         Replaces case variables (e.g., $OCN_GRID) in self._data entries (both in keys and values)
@@ -97,7 +88,7 @@ class MOM_RPS(object,):
         def _expand_case_var(entry, case):
             """ Returns the version of an entry where cime parameters are expanded"""
 
-            assert self._has_expandable_case_var(entry)
+            assert self.has_expandable_var(entry)
             str_type = get_str_type()
 
             # first, infer ${*}
@@ -126,6 +117,7 @@ class MOM_RPS(object,):
 
         def _eval_formula(formula):
             if (isinstance(formula,str_type) and len(formula)>0 and formula[0]=='='):
+                check_comparison_types(formula[1:])
                 try:
                     formula = eval(formula[1:])
                 except:
@@ -140,10 +132,11 @@ class MOM_RPS(object,):
             elif isinstance(val, list):
                 pass
             else:
-                if self._has_expandable_case_var(val):
-                    val_expanded = _expand_case_var(val, case)
-                    val_computed = _eval_formula(val_expanded)
-                    return val_computed
+                if self.has_expandable_var(val):
+                    val_eval = _expand_case_var(val, case)
+                    if (isinstance(val_eval, str_type) and len(val_eval)>0 and val_eval[0]=='='):
+                        val_eval = eval_formula(val_eval[1:])
+                    return val_eval
 
             return val
 
@@ -154,7 +147,7 @@ class MOM_RPS(object,):
                 for key_, val_ in data_copy.items():
                     val.pop(key_)
                     val[_expand_key(key_, val_)] = val_
-            if self._has_expandable_case_var(key):
+            if self.has_expandable_var(key):
                     return _expand_case_var(key, case)
             return key
 
@@ -178,23 +171,18 @@ class MOM_RPS(object,):
         if not self._data:
             raise RuntimeError("Cannot apply the guards. No data found.")
 
-        def _guard_satisfied(guard, case):
+        def _check_guard_satisfied(guard, case):
             " Checks if a given value guard agrees with the case settings."
 
-            if self._has_expandable_case_var(guard):
+            if self.has_expandable_var(guard):
                 raise RuntimeError("The guard "+guard+" has an expandable case variable! "+\
                                    "expand_case_vars method must be called before "+\
                                    "infer_guarded_vals method is called!")
-                guard_inferred = _expand_case_var(guard, case)
             else:
                 guard_inferred = guard
 
-            try:
-                result = eval(guard_inferred)
-                assert type(result)==type(True), "Guard is not boolean: "+str(guard)
-            except:
-                raise RuntimeError("Cannot evaluate guard: "+guard+" in file: "+self.input_path)
-
+            result = eval_formula(guard_inferred)
+            assert type(result)==type(True), "Guard is not boolean: "+str(guard)
             return result
 
         def _do_determine_value(multi_option_dict):
@@ -210,7 +198,7 @@ class MOM_RPS(object,):
                 if value_guard == "else":
                     pass # for now
                 elif is_logical_expr(value_guard):
-                    if _guard_satisfied(value_guard, case):
+                    if _check_guard_satisfied(value_guard, case):
                         val = multi_option_dict[value_guard]
                 else: # invalid guard
                     print("Options:", multi_option_dict)
