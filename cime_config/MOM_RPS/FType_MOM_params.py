@@ -1,38 +1,38 @@
 import os
 from MOM_RPS import MOM_RPS
 from rps_utils import get_str_type
+from collections import OrderedDict
 
 class FType_MOM_params(MOM_RPS):
     """ Encapsulates data and read/write methods for MOM6 case parameter files: MOM_input, user_nl.
     """
 
-    supported_formats_in    = ["MOM_input", "json", "yaml"]
     supported_formats_out   = ["MOM_input", "MOM_override"]
 
-    def __init__(self, input_path, input_format=None, output_format="MOM_input"):
-        MOM_RPS.__init__(self, input_path, input_format=input_format, output_format=output_format)
+    @classmethod
+    def from_MOM_input(cls, input_path):
+        """
+        Reads in a given MOM_input file (or user_nl_mom) and initializes an FType_MOM_params
+        object. This method is an alternative to from_yaml(input_path) and from_json(input_path)
+        methods already available from the base MOM_RPS class.
 
-        if self.input_format not in FType_MOM_params.supported_formats_in:
-            raise RuntimeError("File format "+self.input_format+\
-                                " is not a supported input format for FType_MOM_params")
-        if self.output_format not in FType_MOM_params.supported_formats_out:
-            raise RuntimeError("File format "+self.output_format+\
-                                " is not a supported output format for FType_MOM_params")
+        Parameters
+        ----------
+        input_path: str
+            Path to MOM_input file to read in and generate a FType_MOM_params object.
+        """
 
-    def read(self):
-        if self.input_format == "MOM_input":
-            self._read_MOM_input()
-        else:
-            super(FType_MOM_params, self).read()
+        _data = FType_MOM_params._read_MOM_input(input_path)
+        return FType_MOM_params(_data)
 
-
-    def _read_MOM_input(self):
+    @staticmethod
+    def _read_MOM_input(input_path):
         """Reads in input files in MOM_input syntax. Note that this method may be used to
            read in MOM_override and user_nl_mom too, since the syntax is the same, but
            write methods for MOM_input and MOM_override are different."""
 
-        self._data = dict()
-        with open(self.input_path,'r') as param_file:
+        _data = OrderedDict()
+        with open(input_path,'r') as param_file:
             within_comment_block = False
             curr_module = "Global"
             for line in param_file:
@@ -68,15 +68,15 @@ class FType_MOM_params(MOM_RPS):
                                     val_str = val_str.split("!")[0] # discard the comment in val str, if there is
 
                                 # add this module if not added before:
-                                if not curr_module in self._data:
-                                    self._data[curr_module] = dict()
+                                if not curr_module in _data:
+                                    _data[curr_module] = dict()
 
                                 # check if param already provided:
-                                if param_str in self._data[curr_module]:
+                                if param_str in _data[curr_module]:
                                     raise SystemExit('ERROR: '+param_str+' listed more than once in '+file_name)
 
                                 # enter the parameter in the dictionary:
-                                self._data[curr_module][param_str] = {'value':val_str}
+                                _data[curr_module][param_str] = {'value':val_str}
                             else:
                                 raise SystemExit('ERROR: Cannot parse the following line in user_nl_mom: '+line)
 
@@ -86,11 +86,13 @@ class FType_MOM_params(MOM_RPS):
             if curr_module!="Global":
                 raise SystemExit('ERROR: faulty module block!')
 
-    def write(self, output_path, case=None, def_params=None):
-        if self.output_format == "MOM_input":
+        return _data
+
+    def write(self, output_path, output_format, case=None, def_params=None):
+        if output_format == "MOM_input":
             assert case!=None, "Must provide a case object to write out MOM_input"
             self._write_MOM_input(output_path, case)
-        elif self.output_format == "MOM_override":
+        elif output_format == "MOM_override":
             assert def_params!=None, "Must provide a def_params object to write out MOM_override"
             self._write_MOM_override(output_path, def_params)
 
@@ -98,8 +100,6 @@ class FType_MOM_params(MOM_RPS):
         """ writes a MOM_input file from a given json or yaml parameter file in accordance with
             the guards and additional parameters that are passed. """
 
-        assert self.input_format=="json" or self.input_format=="yaml", \
-             "MOM_input file can only be generated from a json input file."
         str_type = get_str_type()
 
         # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
