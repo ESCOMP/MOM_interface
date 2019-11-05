@@ -9,67 +9,82 @@ from rps_utils import get_str_type, is_logical_expr, has_expandable_var, eval_fo
 
 class MOM_RPS(object,):
     """
-    Base class for MOM6 (R)untime Parameter System manager to provide the following
+    Base class for MOM6 Runtime Parameter System manager that provides the following
     three main functionalities:
-        * Read in an input file to generate data dictionary
-        * Determine the values of expandable variables and evaluate formulas involving them.
-        * Infer the final values of parameters for a given CIME case instance
+    * Read in an input file to generate data dictionary.
+    * Determine the values of expandable variables and evaluate formulas involving them.
+    * Infer the final values of parameters for a given CIME case instance
 
     Attributes
     ----------
-    input_format : str
-        The format of input file to be read in to generate the data
+    data : dict or OrderedDict
+        The data attribute to operate over. See Methods for the list of operations.
 
     Methods
     -------
+    from_json(input_path)
+        Reads in a given json input file and initializes a MOM_RPS object.
+    from_yaml(input_path)
+        Reads in a given yalm input file and initializes a MOM_RPS object.
     expand_case_vars(case)
         Replaces case variables (e.g., $OCN_GRID) in self.data entries (both in keys and values)
-        with their values (e.g, tx0.66v1)
-
+        with their values (e.g, tx0.66v1) and evaluates formulas
+    infer_guarded_vals(case)
+        Determines the final values of all parameters in self.data by evaluating the
+        conditional formulas preceding each option.
     """
 
-    def __init__(self, input_path, input_format=None, output_path=None, output_format=None):
-        self.input_file_read = False
-        self.input_path = input_path
-        self._input_format = input_format
-        self.output_format = output_format
-        self._data = None
-
-        self.read()
+    def __init__(self, data_dict):
+        assert type(data_dict) in [dict, OrderedDict], \
+            "MOM_RPS class requires a dict or OrderedDict as the initial data."
+        self._data = data_dict
 
     @property
     def data(self):
+        """Returns the data attribute of the MOM_RPS instance."""
         return self._data
 
-    @property
-    def input_format(self):
-        if self._input_format == None:
-            if self.input_path.endswith('.json'):
-                self._input_format = 'json'
-            elif self.input_path.endswith(('.yml', 'yaml')):
-                self._input_format = 'yaml'
-            else:
-                raise RuntimeError("Cannot infer input format")
-        return self._input_format
+    @classmethod
+    def from_json(cls, input_path):
+        """
+        Reads in a given json input file and initializes a MOM_RPS object.
 
-    def _read_json(self):
-        """ Read in the json input file to initialize self._data. """
+        Parameters
+        ----------
+        input_path: str
+            Path to json input file containing the defaults.
+
+        Returns
+        -------
+        MOM_RPS
+            A MOM_RPS object with the data read from input_path.
+        """
+
         import json
-        with open(self.input_path) as json_file:
-            self._data = json.load(json_file, object_pairs_hook=OrderedDict)
-        self.input_file_read = True
+        with open(input_path) as json_file:
+            _data = json.load(json_file, object_pairs_hook=OrderedDict)
+        return cls(_data)
 
-    def _read_yaml(self):
-        """ Read in the yaml input file to initialize self._data. """
+    @classmethod
+    def from_yaml(cls, input_path):
+        """
+        Reads in a given yaml input file and initializes a MOM_RPS object.
+
+        Parameters
+        ----------
+        input_path: str
+            Path to yaml input file containing the defaults.
+
+        Returns
+        -------
+        MOM_RPS
+            A MOM_RPS object with the data read from input_path.
+        """
+
         import yaml
-        with open(self.input_path) as yaml_file:
-            self._data = yaml.safe_load(yaml_file)
-
-        self.input_file_read = True
-
-    def _check_json_consistency(self):
-        #TODO
-        pass
+        with open(input_path) as yaml_file:
+            _data = yaml.safe_load(yaml_file)
+        return cls(_data)
 
     def expand_case_vars(self, case):
         """
@@ -238,12 +253,3 @@ class MOM_RPS(object,):
     @abc.abstractmethod
     def check_consistency(self):
         pass
-
-    def read(self):
-        if self.input_format == "json":
-            self._read_json()
-        elif self.input_format == "yaml":
-            self._read_yaml()
-        else:
-            raise NotImplementedError("Unknown input format: "+self.input_format+\
-                                "\nMay need to implement a read() method in derived class")
