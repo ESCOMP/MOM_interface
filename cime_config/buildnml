@@ -49,25 +49,25 @@ def prep_input(case):
     # Create MOM_input:
     MOM_input_src = os.path.join(json_templates_dir, "MOM_input.json")
     MOM_input_dest = os.path.join(rundir,"MOM_input")
-    MOM_input = FType_MOM_params(MOM_input_src)
-    MOM_input.write(MOM_input_dest, case)
+    MOM_input = FType_MOM_params.from_json(MOM_input_src)
+    MOM_input.write(output_path=MOM_input_dest, output_format="MOM_input", case=case)
 
     # Create input.nml:
     input_nml_src = os.path.join(json_templates_dir, "input_nml.json")
     input_nml_dest = os.path.join(rundir,"input.nml")
-    input_nml = FType_input_nml(input_nml_src)
+    input_nml = FType_input_nml.from_json(input_nml_src)
     input_nml.write(input_nml_dest, case)
 
     # Create mom.input_data_list:
     input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
     input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
-    input_data_list = FType_input_data_list(input_data_list_src)
+    input_data_list = FType_input_data_list.from_json(input_data_list_src)
     input_data_list.write(input_data_list_dest, case)
 
     # Create diag_table:
     diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
     diag_table_dest = os.path.join(rundir,"diag_table")
-    diag_table = FType_diag_table(diag_table_src)
+    diag_table = FType_diag_table.from_json(diag_table_src)
     diag_table.write(diag_table_dest, case)
 
     # Create an empty MOM_override:
@@ -100,9 +100,7 @@ def process_user_nl_mom(case):
     # parse the parameters in user_nl_mom:
     sys.path.append(os.path.join(srcroot,"components","mom","cime_config","MOM_RPS"))
     from FType_MOM_params import FType_MOM_params
-    user_nl_mom = FType_MOM_params(os.path.join(caseroot,"user_nl_mom"),
-                                    input_format="MOM_input", output_format="MOM_override")
-    user_nl_mom.read()
+    user_nl_mom = FType_MOM_params.from_MOM_input(os.path.join(caseroot,"user_nl_mom"))
 
     # copy the user_nl_mom parameters into MOM_override:
     if len(user_nl_mom.data)>0:
@@ -116,7 +114,9 @@ def process_user_nl_mom(case):
         MOM_input_rundir = FType_MOM_params(os.path.join(rundir,"MOM_input"),input_format="MOM_input")
 
         # Write MOM_override (based on data from user_nl_mom)
-        user_nl_mom.write(os.path.join(rundir,"MOM_override"), def_params=MOM_input_rundir)
+        user_nl_mom.write(output_path = os.path.join(rundir,"MOM_override"),
+                          output_format = "MOM_override",
+                          def_params = MOM_input_rundir)
 
 
 # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
