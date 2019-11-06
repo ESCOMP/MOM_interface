@@ -4,6 +4,7 @@ import os
 import abc
 import re
 from rps_utils import get_str_type, is_logical_expr, has_expandable_var, eval_formula
+from rps_utils import is_formula, eval_formula
 
 ### MOM Runtime Parameter System Module =======================================
 
@@ -29,7 +30,7 @@ class MOM_RPS(object,):
     expand_case_vars(case)
         Replaces case variables (e.g., $OCN_GRID) in self.data entries (both in keys and values)
         with their values (e.g, tx0.66v1) and evaluates formulas
-    infer_guarded_vals(case)
+    infer_values(case)
         Determines the final values of all parameters in self.data by evaluating the
         conditional formulas preceding each option.
     """
@@ -114,7 +115,7 @@ class MOM_RPS(object,):
                 if cime_param_expanded==None:
                     raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
                                        " variable for this case")
-                entry = entry.replace(cime_param,cime_param_expanded)
+                entry = entry.replace(cime_param, str(cime_param_expanded))
 
             # now infer $*
             for word in entry.split():
@@ -140,8 +141,6 @@ class MOM_RPS(object,):
             else:
                 if has_expandable_var(val):
                     val_eval = _expand_case_var(val, case)
-                    if (isinstance(val_eval, str_type) and len(val_eval)>0 and val_eval[0]=='='):
-                        val_eval = eval_formula(val_eval[1:])
                     return val_eval
 
             return val
@@ -168,7 +167,7 @@ class MOM_RPS(object,):
             self._data[_expand_key(key, val)] = val
 
 
-    def infer_guarded_vals(self, case):
+    def infer_values(self, case):
         """ For a variable, if multiple values are provided in a value list, this function
             determines the appropriate value for the case by looking at guards
             to the left of values in yaml file and by comparing them against
@@ -183,7 +182,7 @@ class MOM_RPS(object,):
             if has_expandable_var(guard):
                 raise RuntimeError("The guard "+guard+" has an expandable case variable! "+\
                                    "expand_case_vars method must be called before "+\
-                                   "infer_guarded_vals method is called!")
+                                   "infer_values method is called!")
             else:
                 guard_inferred = guard
 
@@ -247,8 +246,24 @@ class MOM_RPS(object,):
                 else:
                     continue
 
-        # Recursive determine the values to be picked
+        def _eval_formula_recursive(val):
+            if type(val) in [dict, OrderedDict]:
+                for key_, val_ in val.items():
+                    val[key_] = _eval_formula_recursive(val_)
+            elif isinstance(val, list):
+                pass
+            else:
+                if is_formula(val):
+                    val = eval_formula(val[1:])
+            return val
+
+        # Step 1: Recursively determine the values to be picked
         _determine_value_recursive(self._data)
+
+        # Step 2: Evaluate the formulas, if any:
+        for key, val in self._data.items():
+            self._data[key] = _eval_formula_recursive(val)
+
 
     @abc.abstractmethod
     def check_consistency(self):
