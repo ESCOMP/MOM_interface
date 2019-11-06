@@ -47,7 +47,7 @@ def get_str_type():
 
 def is_logical_expr(expr):
     """
-    Returns true if a string is a logical expression.
+    Returns True if a string is a logical expression.
 
     Parameters
     ----------
@@ -71,6 +71,29 @@ def is_logical_expr(expr):
         except (NameError):
             pass # not an expr to evaluate.
     return type(evaluated_val) == type(True)
+
+def is_formula(expr):
+    """
+    Returns True if expr is a MOM_RPS formula to evaluate. This is determined by
+    checking whether expr is a string with a length of 1 or greater and if the
+    first character of expr is '='.
+
+    Parameters
+    ----------
+    expr: str
+        expression to check whether formula or not
+
+    Returns
+    -------
+    True or False
+
+    >>> is_formula("3*5")
+    False
+    >>> is_formula("= 3*5")
+    True
+    """
+
+    return (isinstance(expr, get_str_type()) and len(expr)>0 and expr[0]=='=')
 
 def has_expandable_var(expr):
     """
