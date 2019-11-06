@@ -10,7 +10,7 @@ class FType_diag_table(MOM_RPS):
         self.expand_case_vars(case)
 
         # Apply the guards on the general data to get the targeted values
-        self.infer_guarded_vals(case)
+        self.infer_values(case)
 
         with open(os.path.join(output_path), 'w') as diag_table:
 

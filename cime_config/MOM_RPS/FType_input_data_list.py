@@ -10,7 +10,7 @@ class FType_input_data_list(MOM_RPS):
         self.expand_case_vars(case)
 
         # Apply the guards on the general data to get the targeted values
-        self.infer_guarded_vals(case)
+        self.infer_values(case)
 
         with open(os.path.join(output_path), 'w') as input_data_list:
             for module in self._data:
