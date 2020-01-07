@@ -10,4 +10,5 @@ sys.path.append(os.path.join("../","cime_config","MOM_RPS"))
 import rps_utils
 
 if __name__ == '__main__': 
-    testmod(rps_utils, verbose=True)
+    testmod(rps_utils, verbose=False)
+    print("Done running doctests.")
