@@ -4,18 +4,13 @@ from MOM_RPS import MOM_RPS
 class FType_diag_table(MOM_RPS):
     """Encapsulates data and read/write methods for MOM6 diag_table input file."""
 
-    def read(self):
-        assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
-        self._read_json()
-
-    def write(self, output_path, case, add_params=dict()):
-        assert self.input_format=="json", "diag_table file defaults can only be read from a json file."
+    def write(self, output_path, case):
 
         # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
-        self.expand_cime_params(case)
+        self.expand_case_vars(case)
 
         # Apply the guards on the general data to get the targeted values
-        self.infer_guarded_vals(case)
+        self.infer_values(case)
 
         with open(os.path.join(output_path), 'w') as diag_table:
 
@@ -26,15 +21,15 @@ class FType_diag_table(MOM_RPS):
             filename = lambda suffix : '"'+casename+'.mom6.'+suffix+'"'
 
             # max filename length:
-            mfl = max([len(filename(self.data['Files'][file_block_name]['suffix']))\
-                              for file_block_name in self.data['Files']])\
+            mfl = max([len(filename(self._data['Files'][file_block_name]['suffix']))\
+                              for file_block_name in self._data['Files']])\
                   + 4 # quotation marks and tabbing
 
             # Section 1: File section
             diag_table.write('### Section-1: File List\n')
             diag_table.write('#========================\n')
-            for file_block_name in self.data['Files']:
-                file_block = self.data['Files'][file_block_name]
+            for file_block_name in self._data['Files']:
+                file_block = self._data['Files'][file_block_name]
                 fname = filename(file_block['suffix'])
 
                 if file_block['fields']==None:
@@ -59,8 +54,8 @@ class FType_diag_table(MOM_RPS):
             ## Field section (per file):
             diag_table.write('### Section-2: Fields List\n')
             diag_table.write('#=========================\n')
-            for file_block_name in self.data['Files']:
-                file_block = self.data['Files'][file_block_name]
+            for file_block_name in self._data['Files']:
+                file_block = self._data['Files'][file_block_name]
                 fname = filename(file_block['suffix'])
 
                 if file_block['fields']==None:

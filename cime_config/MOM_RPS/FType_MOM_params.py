@@ -1,39 +1,38 @@
 import os
 from MOM_RPS import MOM_RPS
 from rps_utils import get_str_type
+from collections import OrderedDict
 
 class FType_MOM_params(MOM_RPS):
     """ Encapsulates data and read/write methods for MOM6 case parameter files: MOM_input, user_nl.
     """
 
-    supported_formats_in    = ["MOM_input", "json"]
     supported_formats_out   = ["MOM_input", "MOM_override"]
 
-    def __init__(self, input_path, input_format="json", output_format="MOM_input"):
-        MOM_RPS.__init__(self, input_path, input_format=input_format, output_format=output_format)
+    @classmethod
+    def from_MOM_input(cls, input_path):
+        """
+        Reads in a given MOM_input file (or user_nl_mom) and initializes an FType_MOM_params
+        object. This method is an alternative to from_yaml(input_path) and from_json(input_path)
+        methods already available from the base MOM_RPS class.
 
-        if self.input_format not in FType_MOM_params.supported_formats_in:
-            raise RuntimeError("File format "+input_format+\
-                                " is not a supported input format for FType_MOM_params")
-        if self.output_format not in FType_MOM_params.supported_formats_out:
-            raise RuntimeError("File format "+output_format+\
-                                " is not a supported output format for FType_MOM_params")
+        Parameters
+        ----------
+        input_path: str
+            Path to MOM_input file to read in and generate a FType_MOM_params object.
+        """
 
-    def read(self):
-        if self.input_format == "MOM_input":
-            self._read_MOM_input()
-        elif self.input_format == "json":
-            self._read_json()
-            self._check_json_consistency()
+        _data = FType_MOM_params._read_MOM_input(input_path)
+        return FType_MOM_params(_data)
 
-
-    def _read_MOM_input(self):
+    @staticmethod
+    def _read_MOM_input(input_path):
         """Reads in input files in MOM_input syntax. Note that this method may be used to
            read in MOM_override and user_nl_mom too, since the syntax is the same, but
            write methods for MOM_input and MOM_override are different."""
 
-        self.data = dict()
-        with open(self.input_path,'r') as param_file:
+        _data = OrderedDict()
+        with open(input_path,'r') as param_file:
             within_comment_block = False
             curr_module = "Global"
             for line in param_file:
@@ -69,15 +68,15 @@ class FType_MOM_params(MOM_RPS):
                                     val_str = val_str.split("!")[0] # discard the comment in val str, if there is
 
                                 # add this module if not added before:
-                                if not curr_module in self.data:
-                                    self.data[curr_module] = dict()
+                                if not curr_module in _data:
+                                    _data[curr_module] = dict()
 
                                 # check if param already provided:
-                                if param_str in self.data[curr_module]:
+                                if param_str in _data[curr_module]:
                                     raise SystemExit('ERROR: '+param_str+' listed more than once in '+file_name)
 
                                 # enter the parameter in the dictionary:
-                                self.data[curr_module][param_str] = {'value':val_str}
+                                _data[curr_module][param_str] = {'value':val_str}
                             else:
                                 raise SystemExit('ERROR: Cannot parse the following line in user_nl_mom: '+line)
 
@@ -87,70 +86,63 @@ class FType_MOM_params(MOM_RPS):
             if curr_module!="Global":
                 raise SystemExit('ERROR: faulty module block!')
 
-    def write(self, output_path, case=None, def_params=None):
-        if self.output_format == "MOM_input":
+        return _data
+
+    def write(self, output_path, output_format, case=None, def_params=None):
+        if output_format == "MOM_input":
             assert case!=None, "Must provide a case object to write out MOM_input"
             self._write_MOM_input(output_path, case)
-        elif self.output_format == "MOM_override":
+        elif output_format == "MOM_override":
             assert def_params!=None, "Must provide a def_params object to write out MOM_override"
             self._write_MOM_override(output_path, def_params)
 
     def _write_MOM_input(self, output_path, case):
-        """ writes a MOM_input file from a given json parameter file in accordance with
+        """ writes a MOM_input file from a given json or yaml parameter file in accordance with
             the guards and additional parameters that are passed. """
 
-        assert self.input_format=="json", "MOM_input file can only be generated from a json input file."
         str_type = get_str_type()
 
         # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
-        self.expand_cime_params(case)
+        self.expand_case_vars(case)
 
         # Apply the guards on the general data to get the targeted values
-        self.infer_guarded_vals(case)
+        self.infer_values(case)
 
         # 2. Now, write MOM_input
 
         MOM_input_header =\
-        """/* WARNING: DO NOT EDIT this file. Any changes you make will be overriden. To make
-        changes in MOM6 parameters within CESM framework, use SourceMods or
-        user_nl_mom mechanisms.
+        """/* WARNING: DO NOT EDIT this file. Any changes you make will be
+        overriden. To make changes in MOM6 parameters within CESM
+        framework, use SourceMods or user_nl_mom mechanisms.
 
-        This input file provides the adjustable run-time parameters for version 6 of
-        the Modular Ocean Model (MOM6), a numerical ocean model developed at NOAA-GFDL.
-        Where appropriate, parameters use usually given in MKS units.
-
-        This MOM_input file contains the default configuration for CESM. A full list of
-        parameters for this example can be found in the corresponding
-        MOM_parameter_doc.all file which is generated by the model at run-time. */\n\n"""
+        This input file provides the adjustable run-time parameters
+        for version 6 of the Modular Ocean Model (MOM6). By default,
+        this file contains the out-of-the-box CESM configuration. A
+        full list of parameters for this case can be found in the
+        corresponding MOM_parameter_doc.all file which is generated
+        by the model at runtime. */\n\n"""
 
         with open(os.path.join(output_path), 'w') as MOM_input:
 
             MOM_input.write(MOM_input_header)
 
             tab = " "*32
-            for module in self.data:
+            for module in self._data:
 
                 # Begin module block:
                 if module != "Global":
                     MOM_input.write(module+"%\n")
 
-                for var in self.data[module]:
-                    val = self.data[module][var]["value"]
+                for var in self._data[module]:
+                    val = self._data[module][var]["value"]
                     if val==None:
                         continue
-
-                    # eval
-                    if (isinstance(val,str_type) and val[0]=='='):
-                        try:
-                            val = eval(val[1:])
-                        except:
-                            raise RuntimeError("Cannot evaluate value: "+val+" for variable "+var)
 
                     # write "variable = value" pair
                     MOM_input.write(var+" = "+ str(val) +"\n")
 
                     # Write the variable description:
-                    var_comments = self.data[module][var]["description"].split('\n')
+                    var_comments = self._data[module][var]["description"].split('\n')
                     if len(var_comments[-1])==0:
                         var_comments.pop()
                     for line in var_comments:
@@ -177,13 +169,13 @@ class FType_MOM_params(MOM_RPS):
 
            MOM_override.write(MOM_override_header)
 
-           for module in self.data:
+           for module in self._data:
                 #Begin module block:
                 if module != "Global":
                     MOM_override.write("\n"+module+"%\n")
 
-                for var in self.data[module]:
-                    val = self.data[module][var]["value"]
+                for var in self._data[module]:
+                    val = self._data[module][var]["value"]
 
                     # parameter is provided in both MOM_input and user_nl_mom
                     if module in def_params.data and var in def_params.data[module]:
