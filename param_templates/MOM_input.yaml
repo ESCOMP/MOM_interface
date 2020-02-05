@@ -1296,12 +1296,11 @@ Global:
             $OCN_GRID == "gx1v6": 0.1
             $OCN_GRID == "tx0.66v1": 0.1
             $OCN_GRID == "tx0.25v1": 0.1
-    HENYEY_IGW_BACKGROUND:
+    HORIZ_VARYING_BACKGROUND:
         description: |
             "[Boolean] default = False
-            If true, use a latitude-dependent scaling for the near
-            surface background diffusivity, as described in
-            Harrison & Hallberg, JPO 2008."
+             If true, apply vertically uniform, latitude-dependent background diffusivity,
+             as described in Danabasoglu et al., 2012."
         datatype: logical
         units: Boolean
         value:

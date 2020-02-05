@@ -926,8 +926,8 @@
             "$OCN_GRID == \"tx0.25v1\"": 0.1
          }
       },
-      "HENYEY_IGW_BACKGROUND": {
-         "description": "\"[Boolean] default = False\nIf true, use a latitude-dependent scaling for the near\nsurface background diffusivity, as described in\nHarrison & Hallberg, JPO 2008.\"\n",
+      "HORIZ_VARYING_BACKGROUND": {
+         "description": "\"[Boolean] default = False\n If true, apply vertically uniform, latitude-dependent background diffusivity,\n as described in Danabasoglu et al., 2012.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
