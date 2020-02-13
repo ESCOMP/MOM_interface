@@ -531,6 +531,20 @@ Global:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx0.25v1": True
+    DEPTH_SCALED_KHTH:
+        description: |
+            "[Boolean] default = False
+             If true,  KHTH is scaled away when the depth is shallower
+             than a reference depth: KHTH = MIN(1,H/H0)**N * KHTH,
+             where H0 is a reference depth, controlled via
+             DEPTH_SCALED_KHTH_H0, and theexponent (N) is
+             controlled via DEPTH_SCALED_KHTH_EXP."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "gx1v6": False
+            $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.25v1": False
     KHTR_SLOPE_CFF:
         description: |
             "[nondim] default = 0.0
@@ -932,6 +946,7 @@ Global:
             For each coordinate, an entry in DIAG_COORDS must be provided."
         datatype: integer
         value:
+            $OCN_GRID == "tx0.66v1": 2
             $OCN_GRID == "tx0.25v1": 1
     DIAG_COORDS:
         description: |
@@ -940,7 +955,27 @@ Global:
             is of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME."
         datatype: string
         value:
+            $OCN_GRID == "tx0.66v1": '"z Z ZSTAR", "rho2 RHO2 RHO"'
             $OCN_GRID == "tx0.25v1": '"z Z ZSTAR"'
+    DIAG_COORD_DEF_RHO2:
+        description: |
+            " default = 'WOA09'
+            Determines how to specify the coordinate resolution. Valid options are:
+            PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+            UNIFORM[:N] - uniformly distributed
+            FILE:string - read from a file. The string specifies
+            the filename and variable name, separated
+            by a comma or space, e.g. FILE:lev.nc,dz
+            or FILE:lev.nc,interfaces=zw
+            WOA09[:N]   - the WOA09 vertical grid (approximately)
+            FNC1:string - FNC1:dz_min,H_total,power,precision
+            HYBRID:string - read from a file. The string specifies
+            the filename and two variable names, separated
+            by a comma or space, for sigma-2 and dz. e.g.
+            HYBRID:vgrid.nc,sigma2,dz"
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.66v1": '"FILE:ocean_rho2_190917.nc,interfaces=rho2"'
     DIAG_MISVAL:
         description: |
             "TODO"
@@ -1269,12 +1304,11 @@ Global:
             $OCN_GRID == "gx1v6": 0.1
             $OCN_GRID == "tx0.66v1": 0.1
             $OCN_GRID == "tx0.25v1": 0.1
-    HENYEY_IGW_BACKGROUND:
+    HORIZ_VARYING_BACKGROUND:
         description: |
             "[Boolean] default = False
-            If true, use a latitude-dependent scaling for the near
-            surface background diffusivity, as described in
-            Harrison & Hallberg, JPO 2008."
+             If true, apply vertically uniform, latitude-dependent background diffusivity,
+             as described in Danabasoglu et al., 2012."
         datatype: logical
         units: Boolean
         value:

@@ -13,5 +13,6 @@ install:
 
 script: 
   - ./tests/check_default_params.py
+  - ./tests/doctests.py
   - yamllint param_templates/*.y*ml -c tests/yamllint_config.yaml
 
