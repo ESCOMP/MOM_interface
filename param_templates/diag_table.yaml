@@ -110,6 +110,7 @@ Files:
                               *forcing_flds,
                               *surface_flds,
                               *visc_flds,
+                              *transports,
                               *tracers,
                               *MARBL ]
             else:
