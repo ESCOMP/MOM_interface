@@ -111,7 +111,7 @@ def process_user_nl_mom(case):
             raise SystemExit("ERROR: Cannot provide parameter changes via both SourceMods and user_nl_mom!")
 
         # parse the MOM_input file staged in rundir:
-        MOM_input_rundir = FType_MOM_params(os.path.join(rundir,"MOM_input"),input_format="MOM_input")
+        MOM_input_rundir = FType_MOM_params.from_MOM_input(os.path.join(rundir,"MOM_input"))
 
         # Write MOM_override (based on data from user_nl_mom)
         user_nl_mom.write(output_path = os.path.join(rundir,"MOM_override"),
