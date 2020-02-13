@@ -285,14 +285,10 @@
                      [
                         "soga",
                         "thetaoga",
-                        "umo",
-                        "vmo",
                         "uh",
                         "vh",
                         "vhbt",
-                        "uhbt",
-                        "uhml",
-                        "vhml"
+                        "uhbt"
                      ],
                      [
                         "KPP_OBLdepth:oml"
@@ -336,13 +332,10 @@
                         "mlotst"
                      ],
                      [
-                        "volcello",
                         "diftrelo",
                         "diftrblo",
                         "difmxybo",
-                        "difmxylo",
-                        "vhGM",
-                        "uhGM"
+                        "difmxylo"
                      ],
                      [
                         "agessc",
