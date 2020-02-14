@@ -155,8 +155,6 @@ class FType_MOM_params(MOM_RPS):
 
     def _write_MOM_override(self, output_path, def_params):
 
-        assert self.input_format=="MOM_input", "MOM_override file can only be generated from a user_nl_mom file."
-        # ^ Note: user_nl_mom is assumed to have the same input syntax as MOM_input
         str_type = get_str_type()
 
         MOM_override_header =\
