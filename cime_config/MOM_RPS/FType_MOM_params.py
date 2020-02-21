@@ -139,7 +139,13 @@ class FType_MOM_params(MOM_RPS):
                         continue
 
                     # write "variable = value" pair
-                    MOM_input.write(var+" = "+ str(val) +"\n")
+                    if isinstance(val, float):
+                        val_str = '%.16g' % val
+                        if ('.' not in val_str) and ('e' not in val_str.lower()):
+                            val_str  += '.0'
+                        MOM_input.write(var+" = "+ val_str +"\n")
+                    else:
+                        MOM_input.write(var+" = "+ str(val) +"\n")
 
                     # Write the variable description:
                     var_comments = self._data[module][var]["description"].split('\n')
