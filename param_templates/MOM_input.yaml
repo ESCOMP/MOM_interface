@@ -128,7 +128,6 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
     USE_REGRIDDING:
         description: |
             "[Boolean] default = False
