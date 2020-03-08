@@ -128,6 +128,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
+            $OCN_GRID == "tx0.66v1": True
     USE_REGRIDDING:
         description: |
             "[Boolean] default = False
@@ -170,7 +171,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 1800.0
             $OCN_GRID == "tx0.25v1": 900.0
-            $OCN_GRID == "tx0.66v1": 1800.0
+            $OCN_GRID == "tx0.66v1": 1200.0
             $OCN_GRID == "MISOMIP": 600.0
     DT_THERM:
         description: |
@@ -187,7 +188,6 @@ Global:
         units: s
         value:
             $OCN_GRID == "MISOMIP": 1800.0
-            $OCN_GRID == "tx0.66v1": 7200.0
             else: >
                 = ( ( $NCPL_BASE_PERIOD =="decade") * 86400.0 * 3650 +
                     ( $NCPL_BASE_PERIOD =="year") * 86400.0 * 365 +
@@ -2276,7 +2276,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": True
     DO_GEOTHERMAL:
         description: |
