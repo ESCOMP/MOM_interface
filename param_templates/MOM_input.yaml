@@ -1876,6 +1876,12 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 900.0
             $OCN_GRID == "tx0.66v1": 900.0
+    DEBUG:
+        description: |
+            "If true, write out verbose debugging data."
+        datatype: logical
+        units: Boolean
+        value: $DEBUG
     CHECK_DIFFUSIVE_CFL:
         description: |
             "[Boolean] default = False
