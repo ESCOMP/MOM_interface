@@ -139,7 +139,13 @@ class FType_MOM_params(MOM_RPS):
                         continue
 
                     # write "variable = value" pair
-                    MOM_input.write(var+" = "+ str(val) +"\n")
+                    if isinstance(val, float):
+                        val_str = '%.16g' % val
+                        if ('.' not in val_str) and ('e' not in val_str.lower()):
+                            val_str  += '.0'
+                        MOM_input.write(var+" = "+ val_str +"\n")
+                    else:
+                        MOM_input.write(var+" = "+ str(val) +"\n")
 
                     # Write the variable description:
                     var_comments = self._data[module][var]["description"].split('\n')
@@ -155,8 +161,6 @@ class FType_MOM_params(MOM_RPS):
 
     def _write_MOM_override(self, output_path, def_params):
 
-        assert self.input_format=="MOM_input", "MOM_override file can only be generated from a user_nl_mom file."
-        # ^ Note: user_nl_mom is assumed to have the same input syntax as MOM_input
         str_type = get_str_type()
 
         MOM_override_header =\

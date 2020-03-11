@@ -5,6 +5,25 @@
     <hist_file_extension>hm.?[_\d+]+.nc$</hist_file_extension>
     <hist_file_extension>frc.?[_\d+]+.nc$</hist_file_extension>
     <hist_file_extension>sfc.?[_\d+]+.nc$</hist_file_extension>
+    <hist_file_extension>rho2.?[_\d+]+.nc$</hist_file_extension>
+    <hist_file_extension>agulhas_section.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Bab_al_mandeb_Strait.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Barents_opening.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Bering_Strait.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Davis_Strait.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Denmark_Strait.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Drake_Passage.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>English_Channel.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Fram_Strait.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Florida_Bahamas.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Gibraltar_Strait.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Hormuz_Strait.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Iceland_Norway.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Indonesian_Throughflow.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Mozambique_Channel.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Pacific_undercurrent.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Taiwan_Luzon.?[_\d+]+.nc</hist_file_extension>
+    <hist_file_extension>Windward_Passage.?[_\d+]+.nc</hist_file_extension>
     <hist_file_extension>static.nc$</hist_file_extension>
     <rpointer>
       <rpointer_file>rpointer.ocn$NINST_STRING</rpointer_file>

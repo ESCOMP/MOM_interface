@@ -1,5 +1,58 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  altuntas
+Tag Date:    09 Mar 2020
+Tag Name:    mi_20200309
+
+MOM_interface Updates Summary:
+- Misc updates: (1) Turn on MOM6 DEBUG parameter when CESM DEBUG flag is on.
+(2) Adds a new xml variables OCN_DIAG_SECTIONS to control sections diagnostics.
+(3) Saves copies of MOM6 input files in CASEROOT/Buildconf/momconf. (4)Archive
+section files. (5) Update testlists.
+
+MOM6 Updates Summary:
+- Fix OMP race conditions and some chkcsum calls
+
+Testing: aux_mom on cheyenne/intel
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  gmarques, altuntas, et al.
+Tag Date:    21 Feb 2020
+Tag Name:    mi_20200221
+
+MOM_interface Updates Summary:
+- Miscellaneous fixes and updates
+- Fixes user nl generator and adds Prandtl_bckgrd
+- Change option for background diffusivity
+- Adds documentation and testing
+- Add parameters that define RHO2 coordindate in tx0.66v1
+- Sets DEPTH_SCALED_KHTH=True for tx0.66v1
+- Adds diagnostic in sigma2 space
+- Updates parameters in the MLE parameterization
+
+MOM6 Updates Summary:
+- Fix bugs caught by GNU compiler
+- Fix latest travis errors
+- Update the lateral diffusion module
+- Add ocean_model_data_get back into config_src/coupled_driver
+- Merge dev master candidate 2019 12 17
+- Merge Lateral Boundary Diffusion module
+- Fix bugs in Leith add new input parameter
+- Delete calls to ocean_model_data_get* from all the caps
+- cmeps compatability
+- Create a separate param for MEKE bottom drag
+- Feature/runoff optional
+- Fixes in MEKE that allows GME to work properly
+- Adds option to scale KHTH with depth
+- further changes for doxygen ncar fork
+- Fix the NUOPC cap doxygen to use HTML style formatting
+- further doxygen changes
+
+Testing: aux_mom on cheyenne/intel
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  altuntas, gmarques
 Tag Date:    27 Sep 2019
 Tag Name:    mi_20190927

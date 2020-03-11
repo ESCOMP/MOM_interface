@@ -1337,8 +1337,19 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "tx0.25v1": 1.5E-05
-            $OCN_GRID == "MISOMIP": 5.0E-5
+            $OCN_GRID == "MISOMIP": 5.0E-05
             else: 2.0E-05
+    PRANDTL_BKGND:
+        description: |
+            "[nondim] default = 1.0
+            Turbulent Prandtl number used to convert vertical background diffusivities
+            into viscosities."
+        datatype: real
+        units: m2 s-1
+        value: # KV/KD:
+            $OCN_GRID == "tx0.25v1": = 1.0E-04 / 1.5E-05
+            $OCN_GRID == "MISOMIP": = 1.0E-04 / 5.0E-05
+            else: = 1.0E-04 / 2.0E-05
     KD_MIN:
         description: |
             "[m2 s-1] default = 2.0E-07
@@ -1873,6 +1884,12 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 900.0
             $OCN_GRID == "tx0.66v1": 900.0
+    DEBUG:
+        description: |
+            "If true, write out verbose debugging data."
+        datatype: logical
+        units: Boolean
+        value: $DEBUG
     CHECK_DIFFUSIVE_CFL:
         description: |
             "[Boolean] default = False
