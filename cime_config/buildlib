@@ -86,6 +86,9 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(srcroot,"components","mom","MOM6","src","tracer"),
                      os.path.join(srcroot,"components","mom","MOM6","src","user")]
             # Eventually if statement should boil down to "if we want MARBL enabled"
+            # Note that the -D_USE_MARBL_TRACERS flag is currently hard-coded into
+            # $CIMEROOT/config/cesm/machines/config_compilers.xml
+            # Not sure how to restrict when it is enabled
             if True:
                 # If MARBL is not found, abort
                 expect(os.path.exists(marbl_srcdir), "MARBL external not found")
