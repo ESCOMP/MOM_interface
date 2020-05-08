@@ -155,23 +155,25 @@
          },
          "reduction_method": "mean",
          "regional_section": "none",
-         "fields": [
-            {
-               "module": "ocean_model_rho2",
-               "packing": 2,
-               "lists": [
-                  [
-                     "volcello",
-                     "vmo",
-                     "vhGM",
-                     "vhml",
-                     "umo",
-                     "uhGM",
-                     "uhml"
+         "fields": {
+            "$OCN_DIAG_MODE != \"none\"": [
+               {
+                  "module": "ocean_model_rho2",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "volcello",
+                        "vmo",
+                        "vhGM",
+                        "vhml",
+                        "umo",
+                        "uhGM",
+                        "uhml"
+                     ]
                   ]
-               ]
-            }
-         ]
+               }
+            ]
+         }
       },
       "hist": {
          "suffix": {
@@ -232,7 +234,7 @@
                   ]
                }
             ],
-            "else": [
+            "$OCN_DIAG_MODE not in [\"spinup\", \"none\"]": [
                {
                   "module": "ocean_model",
                   "packing": 1,
@@ -364,7 +366,7 @@
                   ]
                }
             ],
-            "else": [
+            "$OCN_DIAG_MODE not in [\"spinup\", \"none\"]": [
                {
                   "module": "ocean_model_z",
                   "packing": 1,
