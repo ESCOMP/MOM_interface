@@ -64,9 +64,10 @@ Files:
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-            - module:   "ocean_model_rho2"
-              packing:  2                 # single precision
-              lists:    [ *transports ]
+            $OCN_DIAG_MODE != "none":
+                - module:   "ocean_model_rho2"
+                  packing:  2                 # single precision
+                  lists:    [ *transports ]
 
     # native grid
     hist:
@@ -94,7 +95,7 @@ Files:
                               *tracers,
                               *visc_flds,
                               *transports ]
-            else:
+            $OCN_DIAG_MODE not in ["spinup", "none"]:
                 - module:   "ocean_model"
                   packing:  1                 # double precision
                   lists:    [ *prognostic,
@@ -129,7 +130,7 @@ Files:
                 - module:   "ocean_model_z"   # z_space
                   packing:  2                 # single precision
                   lists:    [ *prognostic ]
-            else:
+            $OCN_DIAG_MODE not in ["spinup", "none"]:
                 - module:   "ocean_model_z"   # z_space
                   packing:  1                 # double precision
                   lists:    [ *prognostic ]

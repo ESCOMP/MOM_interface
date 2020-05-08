@@ -73,7 +73,7 @@ class FType_MOM_params(MOM_RPS):
 
                                 # check if param already provided:
                                 if param_str in _data[curr_module]:
-                                    raise SystemExit('ERROR: '+param_str+' listed more than once in '+file_name)
+                                    raise SystemExit('ERROR: '+param_str+' listed more than once in '+input_path)
 
                                 # enter the parameter in the dictionary:
                                 _data[curr_module][param_str] = {'value':val_str}
