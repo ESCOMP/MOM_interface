@@ -15,7 +15,8 @@ FieldLists:
     - &MARBL            ["PO4", "NO3", "SiO3", "NH4", "Fe", "Lig", "O2", "DIC", "DIC_ALT_CO2",
                          "ALK", "ALK_ALT_CO2", "DOC", "DON", "DOP", "DOPr", "DONr", "DOCr",
                          "zooC", "spChl", "spC", "spP", "spFe", "spCaCO3", "diatChl", "diatC",
-                         "diatP", "diatFe", "diatSi", "diazChl", "diazC", "diazP", "diazFe"]
+                         "diatP", "diatFe", "diatSi", "diazChl", "diazC", "diazP", "diazFe",
+                         "PV_CO2"]
 
     - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint",
                          "somint", "Rd_dx", "speed", "mlotst"]
@@ -101,18 +102,6 @@ Files:
                               *tracers,
                               *visc_flds,
                               *transports ]
-            $OCN_BGC_CONFIG != "none":
-                - module:   "ocean_model"
-                  packing:  1                 # double precision
-                  lists:    [ *prognostic,
-                              *hist_additional,
-                              *kpp_diags,
-                              *forcing_flds,
-                              *surface_flds,
-                              *visc_flds,
-                              *transports,
-                              *tracers,
-                              *MARBL ]
             else:
                 - module:   "ocean_model"
                   packing:  1                 # double precision
@@ -124,6 +113,24 @@ Files:
                               *visc_flds,
                               *transports,
                               *tracers ]
+
+    # BGC output
+    hist:
+        suffix:
+            else: "hm_bgc%4yr-%2mo"
+        output_freq: 1
+        output_freq_units: "months"
+        time_axis_units: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
+        reduction_method: "mean"    # time average
+        regional_section: "none"    # global
+        fields:
+            $OCN_BGC_CONFIG != "none":
+                - module:   "ocean_model"
+                  packing:  1                 # double precision
+                  lists:    [ *MARBL,
+                              *transports ]
 
     # essential variable mapped to z_space
     hist_z_space:
