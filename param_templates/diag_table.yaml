@@ -115,9 +115,8 @@ Files:
                               *tracers ]
 
     # BGC output
-    hist:
-        suffix:
-            else: "hm_bgc%4yr-%2mo"
+    hist_bgc:
+        suffix: "hm_bgc%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"

@@ -210,8 +210,157 @@
       },
       "hist": {
          "suffix": {
-            "else": "hm_bgc%4yr-%2mo"
+            "$OCN_DIAG_MODE == \"spinup\"": "hm%4yr",
+            "else": "hm%4yr-%2mo"
          },
+         "output_freq": 1,
+         "output_freq_units": {
+            "$OCN_DIAG_MODE == \"spinup\"": "years",
+            "$TEST == True": "days",
+            "else": "months"
+         },
+         "time_axis_units": "days",
+         "new_file_freq": 1,
+         "new_file_freq_units": {
+            "$OCN_DIAG_MODE == \"spinup\"": "years",
+            "$TEST == True": "days",
+            "else": "months"
+         },
+         "reduction_method": "mean",
+         "regional_section": "none",
+         "fields": {
+            "$OCN_DIAG_MODE == \"spinup\"": [
+               {
+                  "module": "ocean_model",
+                  "packing": 2,
+                  "lists": [
+                     [
+                        "soga",
+                        "thetaoga",
+                        "uh",
+                        "vh",
+                        "vhbt",
+                        "uhbt"
+                     ],
+                     [
+                        "agessc",
+                        "T_ady_2d",
+                        "T_adx_2d",
+                        "T_diffy_2d",
+                        "T_diffx_2d"
+                     ],
+                     [
+                        "diftrelo",
+                        "diftrblo",
+                        "difmxybo",
+                        "difmxylo"
+                     ],
+                     [
+                        "volcello",
+                        "vmo",
+                        "vhGM",
+                        "vhml",
+                        "umo",
+                        "uhGM",
+                        "uhml"
+                     ]
+                  ]
+               }
+            ],
+            "else": [
+               {
+                  "module": "ocean_model",
+                  "packing": 1,
+                  "lists": [
+                     [
+                        "uo",
+                        "vo",
+                        "h",
+                        "e",
+                        "thetao",
+                        "so",
+                        "rhoinsitu",
+                        "KE",
+                        "rhopot0"
+                     ],
+                     [
+                        "soga",
+                        "thetaoga",
+                        "uh",
+                        "vh",
+                        "vhbt",
+                        "uhbt"
+                     ],
+                     [
+                        "KPP_OBLdepth:oml"
+                     ],
+                     [
+                        "tauuo",
+                        "tauvo",
+                        "friver",
+                        "prsn",
+                        "prlq",
+                        "evs",
+                        "hfsso",
+                        "rlntds",
+                        "hfsnthermds",
+                        "sfdsi",
+                        "rsntds",
+                        "hfds",
+                        "ustar",
+                        "hfsifrazil",
+                        "wfo",
+                        "vprec",
+                        "ficeberg",
+                        "fsitherm",
+                        "hflso",
+                        "pso",
+                        "seaice_melt_heat",
+                        "Heat_PmE",
+                        "salt_flux_added"
+                     ],
+                     [
+                        "SSH",
+                        "tos",
+                        "sos",
+                        "SSU",
+                        "SSV",
+                        "mass_wt",
+                        "opottempmint",
+                        "somint",
+                        "Rd_dx",
+                        "speed",
+                        "mlotst"
+                     ],
+                     [
+                        "diftrelo",
+                        "diftrblo",
+                        "difmxybo",
+                        "difmxylo"
+                     ],
+                     [
+                        "volcello",
+                        "vmo",
+                        "vhGM",
+                        "vhml",
+                        "umo",
+                        "uhGM",
+                        "uhml"
+                     ],
+                     [
+                        "agessc",
+                        "T_ady_2d",
+                        "T_adx_2d",
+                        "T_diffy_2d",
+                        "T_diffx_2d"
+                     ]
+                  ]
+               }
+            ]
+         }
+      },
+      "hist_bgc": {
+         "suffix": "hm_bgc%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
