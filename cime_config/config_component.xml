@@ -18,9 +18,22 @@
     <desc>MOM6 ocean component</desc>
   </entry>
 
+  <entry id="MOM6_MEMORY_MODE">
+    <type>char</type>
+    <valid_values>dynamic,dynamic_symmetric</valid_values>
+    <default_value>dynamic</default_value>
+    <group>build_component_mom</group>
+    <file>env_build.xml</file>
+    <desc> This variable controls MOM6 memory mode. In non-symmetric mode (default), all arrays are
+           given the same shape. In symmetric mode, declarations are dependent on the variables
+           staggered location on the Arakawa C grid. This allows loops to be symmetric and stencils
+           to be applied more uniformly.
+    </desc>
+  </entry>
+
   <entry id="OCN_DIAG_MODE">
     <type>char</type>
-    <valid_values>spinup,production,development</valid_values>
+    <valid_values>spinup,production,development,none</valid_values>
     <default_value>production</default_value>
     <group>run_component_mom</group>
     <file>env_run.xml</file>

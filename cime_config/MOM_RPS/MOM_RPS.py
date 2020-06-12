@@ -5,6 +5,7 @@ import abc
 import re
 from rps_utils import get_str_type, is_logical_expr, has_expandable_var, eval_formula
 from rps_utils import is_formula, eval_formula
+import copy
 
 ### MOM Runtime Parameter System Module =======================================
 
@@ -38,7 +39,7 @@ class MOM_RPS(object,):
     def __init__(self, data_dict):
         assert type(data_dict) in [dict, OrderedDict], \
             "MOM_RPS class requires a dict or OrderedDict as the initial data."
-        self._data = data_dict
+        self._data = copy.deepcopy(data_dict)
 
     @property
     def data(self):
