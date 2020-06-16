@@ -230,6 +230,14 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    MIN_SALINITY:
+        description: |
+            "[PPT] default = 0.01
+             The minimum value of salinity when BOUND_SALINITY=True. The default is 0.01
+             for backward compatibility but ideally should be 0."
+        datatype: real
+        units: PPT
+        value: 0.0
     BOUND_SALINITY:
         description: |
             "[Boolean] default = False
@@ -253,6 +261,14 @@ Global:
             $OCN_GRID == "tx0.66v1": 3992.0
             $OCN_GRID == "tx0.25v1": 3992.0
             $OCN_GRID == "MISOMIP": 3974.0
+    USE_PSURF_IN_EOS:
+        description: |
+            "[Boolean] default = True
+            If true, always include the surface pressure contributions in equation of
+            state calculations."
+        datatype: logical
+        units: Boolean
+        value: True
     CHECK_BAD_SURFACE_VALS:
         description: |
             "[Boolean] default = False
@@ -326,6 +342,15 @@ Global:
             $OCN_GRID == "tx0.66v1": "none"
             $OCN_GRID == "tx0.25v1": "file"
             $OCN_GRID == "MISOMIP": "linear"
+    REMAP_UV_USING_OLD_ALG:
+        description: |
+            "[Boolean] default = True
+            If true, uses the old remapping-via-a-delta-z method for remapping u and v. If
+            false, uses the new method that remaps between grids described by an old and
+            new thickness."
+        datatype: logical
+        units: Boolean
+        value: False
     COORD_FILE:
         description: |
             "The file from which the coordinate densities are read."
@@ -497,6 +522,14 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "SALT"
             $OCN_GRID == "tx0.66v1": "SALT"
+    Z_INIT_REMAP_OLD_ALG:
+        description: |
+            "[Boolean] default = True
+            If false, uses the preferred remapping algorithm for initialization. If true,
+            use an older, less robust algorithm for remapping."
+        datatype: logical
+        units: Boolean
+        value: False
     USE_VARIABLE_MIXING:
         description: |
             "[Boolean] default = False
@@ -567,6 +600,14 @@ Global:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx0.25v1": True
+    USE_GM_WORK_BUG:
+        description: |
+            "[Boolean] default = True
+            If true, compute the top-layer work tendency on the u-grid with the incorrect
+            sign, for legacy reproducibility."
+        datatype: logical
+        units: Boolean
+        value: False
     USE_STORED_SLOPES:
         description: |
             "[Boolean] default = False
@@ -828,8 +869,7 @@ Global:
             for new experiments."
         datatype: logical
         units: Boolean
-        value:
-            $OCN_GRID == "tx0.66v1": True
+        value: True
     HMIX_FIXED:
         description: |
             "[m]
@@ -846,14 +886,22 @@ Global:
             "[Boolean] default = False
             If true, the bottom drag is exerted directly on each
             layer proportional to the fraction of the bottom it
-            overlies.
-            If true, use a bulk Richardson number criterion to
-            determine the mixed layer thickness for viscosity."
+            overlies."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
             else: True
+    HBBL:
+        description: |
+            "[m]
+             The thickness of a bottom boundary layer with a viscosity of KVBBL if
+             BOTTOMDRAGLAW is not defined, or the thickness over which near-bottom
+             velocities are averaged for the drag law if BOTTOMDRAGLAW is defined but
+             LINEAR_DRAG is not."
+        datatype: real
+        units: m
+        value: 10.0
     PRANDTL_TURB:
         description: |
             "[nondim] default = 0.0
@@ -983,10 +1031,7 @@ Global:
             function independently at each point."
         datatype: logical
         units: Boolean
-        value:
-            $OCN_GRID == "gx1v6": False
-            $OCN_GRID == "tx0.66v1": False
-            $OCN_GRID == "tx0.25v1": False
+        value: False
     GILL_EQUATORIAL_LD:
         description: |
             "[Boolean] default = False
@@ -1997,6 +2042,21 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": True
+    GUST_CONST:
+        description: |
+            "[Pa] default = 0.02
+             The background gustiness in the winds."
+        datatype: real
+        units: Pa
+        value: 0.0
+    FIX_USTAR_GUSTLESS_BUG:
+        description: |
+            "[Boolean] default = False
+            If true correct a bug in the time-averaging of the gustless wind
+            friction velocity."
+        datatype: logical
+        units: Boolean
+        value: True
     RESTART_CONTROL:
         description: |
             "default = 1
@@ -2187,6 +2247,24 @@ Global:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.25v1": True
             $OCN_GRID == "MISOMIP": True
+    KAPPA_SHEAR_ITER_BUG:
+        description:
+            "[Boolean] default = True
+            If true, use an older, dimensionally inconsistent estimate of the derivative
+            of diffusivity with energy in the Newton's method iteration.  The bug causes
+            undercorrections when dz > 1 m."
+        datatype: logical
+        units: Boolean
+        value: False
+    KAPPA_SHEAR_ALL_LAYER_TKE_BUG:
+        description:
+            "[Boolean] default = True
+            If true, report back the latest estimate of TKE instead of the time average
+            TKE when there is mass in all layers.  Otherwise always report the time
+            averaged TKE, as is currently done when there are some massless layers."
+        datatype: logical
+        units: Boolean
+        value: False
     VELOCITY_TOLERANCE:
         description: |
             "[m s-1] default = 3.0E+08
@@ -2245,6 +2323,13 @@ Global:
         value:
             $OCN_GRID == "tx0.66v1": -2.5
             $OCN_GRID == "tx0.25v1": -3.0
+    DEFAULT_2018_ANSWERS:
+        description: |
+            "[Boolean] default = True
+            This sets the default value for the various _2018_ANSWERS parameters."
+        datatype: logical
+        units: Boolean
+        value: False
     VERTEX_SHEAR:
         description: |
             "[Boolean] default = False
