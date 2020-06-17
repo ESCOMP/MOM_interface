@@ -637,7 +637,7 @@
          }
       },
       "HBBL": {
-         "description": "\"[m]\nThe thickness of a bottom boundary layer with a\nviscosity of KVBBL if BOTTOMDRAGLAW is not defined, or\nthe thickness over which near-bottom velocities are\naveraged for the drag law if BOTTOMDRAGLAW is defined\nbut LINEAR_DRAG is not.\"\n",
+         "description": "\"[m]\n The thickness of a bottom boundary layer with a viscosity of KVBBL if\n BOTTOMDRAGLAW is not defined, or the thickness over which near-bottom\n velocities are averaged for the drag law if BOTTOMDRAGLAW is defined but\n LINEAR_DRAG is not.\"\n",
          "datatype": "real",
          "units": "m",
          "value": 10.0
@@ -1062,12 +1062,6 @@
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.0018
          }
-      },
-      "GUST_CONST": {
-         "description": "\"[Pa] default = 0.02\n The background gustiness in the winds.\"\n",
-         "datatype": "real",
-         "units": "Pa",
-         "value": 0.0
       },
       "USE_RIGID_SEA_ICE": {
          "description": "\"[Boolean] default = False\nIf true, sea-ice is rigid enough to exert a\nnonhydrostatic pressure that resist vertical motion.\"\n",
@@ -1551,6 +1545,12 @@
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": true
          }
+      },
+      "GUST_CONST": {
+         "description": "\"[Pa] default = 0.02\n The background gustiness in the winds.\"\n",
+         "datatype": "real",
+         "units": "Pa",
+         "value": 0.0
       },
       "FIX_USTAR_GUSTLESS_BUG": {
          "description": "\"[Boolean] default = False\nIf true correct a bug in the time-averaging of the gustless wind\nfriction velocity.\"\n",
