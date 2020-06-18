@@ -390,8 +390,16 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": false,
+            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
+         }
+      },
+      "KHTH_SLOPE_CFF": {
+         "description": "\"[nondim] default = 0.0\nThe nondimensional coefficient in the Visbeck formula for the interface depth\ndiffusivity\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 0.01
          }
       },
       "DEPTH_SCALED_KHTH": {
@@ -402,6 +410,14 @@
             "$OCN_GRID == \"gx1v6\"": false,
             "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx0.25v1\"": false
+         }
+      },
+      "DEPTH_SCALED_KHTH_H0": {
+         "description": "\"[m] default = 1000.0\nThe depth above which KHTH is scaled away.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 250.0
          }
       },
       "KHTR_SLOPE_CFF": {
@@ -426,7 +442,7 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": false,
+            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -442,7 +458,7 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"gx1v6\"": false,
-            "$OCN_GRID == \"tx0.66v1\"": false,
+            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -469,6 +485,30 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"gx1v6\"": true,
+            "$OCN_GRID == \"tx0.66v1\"": true
+         }
+      },
+      "NDIFF_INTERIOR_ONLY": {
+         "description": "\"[Boolean] default = False\nIf true, only applies neutral diffusion in the ocean interior. That is, the\nalgorithm will exclude the surface and bottomboundary layers.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": true
+         }
+      },
+      "USE_LATERAL_BOUNDARY_DIFFUSION": {
+         "description": "\"[Boolean] default = False\nIf true, enables the lateral boundary tracer's diffusion module.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": true
+         }
+      },
+      "LBD_LINEAR_TRANSITION": {
+         "description": "\"[Boolean] default = False\nIf True, apply a linear transition at the base/top of the boundary.\nThe flux will be fully applied at k=k_min and zero at k=k_max.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -562,7 +602,6 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1000.0,
             "$OCN_GRID == \"MISOMIP\"": 6.0
          }
       },
@@ -573,6 +612,7 @@
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.0,
+            "$OCN_GRID == \"tx0.66v1\"": 0.0,
             "else": 0.01
          }
       },
@@ -601,15 +641,38 @@
             "$OCN_GRID == \"MISOMIP\"": false
          }
       },
+      "AH": {
+         "description": "\"[m4 s-1] default = 0.0\nThe background biharmonic horizontal viscosity.\"\n",
+         "datatype": "real",
+         "units": "m4 s-1",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 1000000000000.0
+         }
+      },
       "AH_VEL_SCALE": {
          "description": "\"[m s-1] default = 0.0\nThe velocity scale which is multiplied by the cube of\nthe grid spacing to calculate the biharmonic viscosity.\nThe final viscosity is the largest of this scaled\nviscosity, the Smagorinsky and Leith viscosities, and AH.\"\n",
          "datatype": "real",
          "units": "m s-1",
          "value": {
             "$OCN_GRID == \"gx1v6\"": 0.05,
-            "$OCN_GRID == \"tx0.66v1\"": 0.1,
             "$OCN_GRID == \"tx0.25v1\"": 0.01,
             "$OCN_GRID == \"MISOMIP\"": 0.001
+         }
+      },
+      "LEITH_AH": {
+         "description": "\"[Boolean] default = False\nIf true, use a biharmonic Leith nonlinear eddy viscosity.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": true
+         }
+      },
+      "LEITH_BI_CONST": {
+         "description": "\"[nondim] default = 0.0\nThe nondimensional biharmonic Leith constant, typical values are thus far\nundetermined.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 128.0
          }
       },
       "USE_LAND_MASK_FOR_HVISC": {
@@ -836,7 +899,7 @@
          "units": "m2 s-1",
          "value": {
             "$OCN_GRID == \"gx1v6\"": 600.0,
-            "$OCN_GRID == \"tx0.66v1\"": 800.0,
+            "$OCN_GRID == \"tx0.66v1\"": 0.0,
             "$OCN_GRID == \"MISOMIP\"": 0.0
          }
       },
@@ -845,8 +908,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 900.0,
-            "$OCN_GRID == \"tx0.66v1\"": 900.0
+            "$OCN_GRID == \"gx1v6\"": 900.0
          }
       },
       "KHTH_MAX_CFL": {
@@ -855,6 +917,14 @@
          "units": "nondimensional",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.1
+         }
+      },
+      "USE_KH_IN_MEKE": {
+         "description": "\"[Boolean] default = False\nIf true, uses the thickness diffusivity calculated here to diffuse MEKE.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
       "KHTH_USE_FGNV_STREAMFUNCTION": {
@@ -1001,12 +1071,11 @@
          }
       },
       "INT_TIDE_DECAY_SCALE": {
-         "description": "\"[m] default = 0.0\nThe decay scale away from the bottom for tidal TKE with\nthe new coding when INT_TIDE_DISSIPATION is used.\"\n",
+         "description": "\"[m] default = 500.0\nThe decay scale away from the bottom for tidal TKE with\nthe new coding when INT_TIDE_DISSIPATION is used.\"\n",
          "datatype": "real",
          "units": "m",
          "value": {
             "$OCN_GRID == \"gx1v6\"": "300.3003003003003",
-            "$OCN_GRID == \"tx0.66v1\"": "300.3003003003003",
             "$OCN_GRID == \"tx0.25v1\"": "300.3003003003003"
          }
       },
@@ -1429,7 +1498,6 @@
          "units": "m2 s-1",
          "value": {
             "$OCN_GRID == \"gx1v6\"": 600.0,
-            "$OCN_GRID == \"tx0.66v1\"": 800.0,
             "$OCN_GRID == \"MISOMIP\"": 1.0
          }
       },
@@ -1447,8 +1515,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 900.0,
-            "$OCN_GRID == \"tx0.66v1\"": 900.0
+            "$OCN_GRID == \"gx1v6\"": 900.0
          }
       },
       "DEBUG": {
@@ -1612,7 +1679,8 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
       "MEKE_GMCOEFF": {
@@ -1621,7 +1689,8 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"gx1v6\"": 1.0,
-            "$OCN_GRID == \"tx0.25v1\"": 1.0
+            "$OCN_GRID == \"tx0.25v1\"": 1.0,
+            "$OCN_GRID == \"tx0.66v1\"": 0.0
          }
       },
       "MEKE_BGSRC": {
@@ -1654,6 +1723,54 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.15
+         }
+      },
+      "MEKE_GEOMETRIC": {
+         "description": "\"[Boolean] default = False\nIf MEKE_GEOMETRIC is true, uses the GM coefficient formulation from the\nGEOMETRIC framework (Marshall et al., 2012).\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": true
+         }
+      },
+      "MEKE_GEOMETRIC_ALPHA": {
+         "description": "\"[nondim] default = 0.05\nThe nondimensional coefficient governing the efficiency of the GEOMETRIC\nthickness diffusion.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 0.07
+         }
+      },
+      "MEKE_EQUILIBRIUM_ALT": {
+         "description": "\"[Boolean] default = False\nIf true, use an alternative formula for computing the (equilibrium)initial\nvalue of MEKE.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": true
+         }
+      },
+      "MEKE_EQUILIBRIUM_RESTORING": {
+         "description": "\"[Boolean] default = False\nIf true, restore MEKE back to its equilibrium value, which is calculated\nat each time step.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": true
+         }
+      },
+      "MEKE_RESTORING_TIMESCALE": {
+         "description": "\"[s] default = 1.0E+06\nThe timescale used to nudge MEKE toward its equilibrium value.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 10000000.0
+         }
+      },
+      "MEKE_ADVECTION_FACTOR": {
+         "description": "\"[nondim] default = 0.0\nA scale factor in front of advection of eddy energy. Zero turns advection off.\nUsing unity would be normal but other values could accommodate a mismatch\nbetween the advecting barotropic flow and the vertical structure of MEKE.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 1.0
          }
       },
       "DIAG_COORD_DEF_Z": {
@@ -1767,7 +1884,7 @@
          "datatype": "real",
          "units": "degC",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": -2.5,
+            "$OCN_GRID == \"tx0.66v1\"": -3.0,
             "$OCN_GRID == \"tx0.25v1\"": -3.0
          }
       },

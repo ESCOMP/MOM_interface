@@ -554,8 +554,17 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": True
+    KHTH_SLOPE_CFF:
+        description: |
+            "[nondim] default = 0.0
+            The nondimensional coefficient in the Visbeck formula for the interface depth
+            diffusivity"
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 0.01
     DEPTH_SCALED_KHTH:
         description: |
             "[Boolean] default = False
@@ -570,6 +579,14 @@ Global:
             $OCN_GRID == "gx1v6": False
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": False
+    DEPTH_SCALED_KHTH_H0:
+        description: |
+            "[m] default = 1000.0
+            The depth above which KHTH is scaled away."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 250.0
     KHTR_SLOPE_CFF:
         description: |
             "[nondim] default = 0.0
@@ -598,7 +615,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": True
     USE_GM_WORK_BUG:
         description: |
@@ -618,7 +635,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": False
-            $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": True
     ETA_TOLERANCE:
         description: |
@@ -654,6 +671,32 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
+            $OCN_GRID == "tx0.66v1": True
+    NDIFF_INTERIOR_ONLY:
+        description: |
+            "[Boolean] default = False
+            If true, only applies neutral diffusion in the ocean interior. That is, the
+            algorithm will exclude the surface and bottomboundary layers."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": True
+    USE_LATERAL_BOUNDARY_DIFFUSION:
+        description: |
+            "[Boolean] default = False
+            If true, enables the lateral boundary tracer's diffusion module."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": True
+    LBD_LINEAR_TRANSITION:
+        description: |
+            "[Boolean] default = False
+            If True, apply a linear transition at the base/top of the boundary.
+            The flux will be fully applied at k=k_min and zero at k=k_max."
+        datatype: logical
+        units: Boolean
+        value:
             $OCN_GRID == "tx0.66v1": True
     SIMPLE_TKE_TO_KD:
         description: |
@@ -802,7 +845,6 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "tx0.66v1": 1000.0
             $OCN_GRID == "MISOMIP": 6.0
     KH_VEL_SCALE:
         description: |
@@ -816,6 +858,7 @@ Global:
         value:
             $OCN_GRID == "MISOMIP": 0.0
             $OCN_GRID == "tx0.25v1": 0.0
+            $OCN_GRID == "tx0.66v1": 0.0
             else: 0.01
     KH_SIN_LAT:
         description: |
@@ -845,6 +888,14 @@ Global:
         value:
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "MISOMIP": False
+    AH:
+        description: |
+            "[m4 s-1] default = 0.0
+            The background biharmonic horizontal viscosity."
+        datatype: real
+        units: m4 s-1
+        value:
+            $OCN_GRID == "tx0.66v1": 1.0E+12
     AH_VEL_SCALE:
         description: |
             "[m s-1] default = 0.0
@@ -856,9 +907,25 @@ Global:
         units: m s-1
         value:
             $OCN_GRID == "gx1v6": 0.05
-            $OCN_GRID == "tx0.66v1": 0.1
             $OCN_GRID == "tx0.25v1": 0.01
             $OCN_GRID == "MISOMIP": 0.001
+    LEITH_AH:
+        description: |
+            "[Boolean] default = False
+            If true, use a biharmonic Leith nonlinear eddy viscosity."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": True
+    LEITH_BI_CONST:
+        description: |
+            "[nondim] default = 0.0
+            The nondimensional biharmonic Leith constant, typical values are thus far
+            undetermined."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 128.0
     USE_LAND_MASK_FOR_HVISC:
         description: |
             "[Boolean] default = False
@@ -1182,7 +1249,7 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "gx1v6": 600.0
-            $OCN_GRID == "tx0.66v1": 800.0
+            $OCN_GRID == "tx0.66v1": 0.0
             $OCN_GRID == "MISOMIP": 0.0
     KHTH_MAX:
         description: |
@@ -1192,7 +1259,6 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "gx1v6": 900.0
-            $OCN_GRID == "tx0.66v1": 900.0
     KHTH_MAX_CFL:
         description: |
             "[nondimensional] default = 0.8
@@ -1205,6 +1271,14 @@ Global:
         units: nondimensional
         value:
             $OCN_GRID == "tx0.25v1": 0.1
+    USE_KH_IN_MEKE:
+        description: |
+            "[Boolean] default = False
+            If true, uses the thickness diffusivity calculated here to diffuse MEKE."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": True
     KHTH_USE_FGNV_STREAMFUNCTION:
         description: |
             "[Boolean] default = False
@@ -1391,14 +1465,13 @@ Global:
             $OCN_GRID == "tx0.25v1": 2.0E-06
     INT_TIDE_DECAY_SCALE:
         description: |
-            "[m] default = 0.0
+            "[m] default = 500.0
             The decay scale away from the bottom for tidal TKE with
             the new coding when INT_TIDE_DISSIPATION is used."
         datatype: real
         units: m
         value:
             $OCN_GRID == "gx1v6": "300.3003003003003"
-            $OCN_GRID == "tx0.66v1": "300.3003003003003"
             $OCN_GRID == "tx0.25v1": "300.3003003003003"
     KAPPA_ITIDES:
         description: |
@@ -1882,7 +1955,6 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "gx1v6": 600.0
-            $OCN_GRID == "tx0.66v1": 800.0
             $OCN_GRID == "MISOMIP": 1.0
     KHTR_MIN:
         description: |
@@ -1901,7 +1973,6 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "gx1v6": 900.0
-            $OCN_GRID == "tx0.66v1": 900.0
     DEBUG:
         description: |
             "If true, write out verbose debugging data."
@@ -2105,6 +2176,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.25v1": True
+            $OCN_GRID == "tx0.66v1": True
     MEKE_GMCOEFF:
         description: |
             "[nondim] default = -1.0
@@ -2117,6 +2189,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 1.0
             $OCN_GRID == "tx0.25v1": 1.0
+            $OCN_GRID == "tx0.66v1": 0.0
     MEKE_BGSRC:
         description: |
             "[W kg-1] default = 0.0
@@ -2151,6 +2224,60 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 0.15
+    MEKE_GEOMETRIC:
+        description: |
+            "[Boolean] default = False
+            If MEKE_GEOMETRIC is true, uses the GM coefficient formulation from the
+            GEOMETRIC framework (Marshall et al., 2012)."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": True
+    MEKE_GEOMETRIC_ALPHA:
+        description: |
+            "[nondim] default = 0.05
+            The nondimensional coefficient governing the efficiency of the GEOMETRIC
+            thickness diffusion."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 0.07
+    MEKE_EQUILIBRIUM_ALT:
+        description: |
+            "[Boolean] default = False
+            If true, use an alternative formula for computing the (equilibrium)initial
+            value of MEKE."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": True
+    MEKE_EQUILIBRIUM_RESTORING:
+        description: |
+            "[Boolean] default = False
+            If true, restore MEKE back to its equilibrium value, which is calculated
+            at each time step."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": True
+    MEKE_RESTORING_TIMESCALE:
+        description: |
+            "[s] default = 1.0E+06
+            The timescale used to nudge MEKE toward its equilibrium value."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 1.0E+07
+    MEKE_ADVECTION_FACTOR:
+        description: |
+            "[nondim] default = 0.0
+            A scale factor in front of advection of eddy energy. Zero turns advection off.
+            Using unity would be normal but other values could accommodate a mismatch
+            between the advecting barotropic flow and the vertical structure of MEKE."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 1.0
     DIAG_COORD_DEF_Z:
         description: |
             "default = WOA09
@@ -2302,7 +2429,7 @@ Global:
         datatype: real
         units: degC
         value:
-            $OCN_GRID == "tx0.66v1": -2.5
+            $OCN_GRID == "tx0.66v1": -3.0
             $OCN_GRID == "tx0.25v1": -3.0
     DEFAULT_2018_ANSWERS:
         description: |
