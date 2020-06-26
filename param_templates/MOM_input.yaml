@@ -106,7 +106,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "gx1v6": 60
-            $OCN_GRID == "tx0.66v1": 63
+            $OCN_GRID == "tx0.66v1": 65
             $OCN_GRID == "tx0.25v1": 75
             $OCN_GRID == "MISOMIP": 36
     USE_LEGACY_DIABATIC_DRIVER:
@@ -501,7 +501,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "gx1v6": "WOA05_pottemp_salt.nc"
-            $OCN_GRID == "tx0.66v1": "WOA05_pottemp_salt_180829.nc"
+            $OCN_GRID == "tx0.66v1": "woa18_04_initial_conditions.nc"
             $OCN_GRID == "tx0.25v1": "MOM6_IC_TS.nc"
     Z_INIT_FILE_PTEMP_VAR:
         description: |
@@ -511,7 +511,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "gx1v6": "PTEMP"
-            $OCN_GRID == "tx0.66v1": "PTEMP"
+            $OCN_GRID == "tx0.66v1": "theta0"
             $OCN_GRID == "tx0.25v1": "temp"
     Z_INIT_FILE_SALT_VAR:
         description: |
@@ -521,7 +521,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "gx1v6": "SALT"
-            $OCN_GRID == "tx0.66v1": "SALT"
+            $OCN_GRID == "tx0.66v1": "s_an"
     Z_INIT_REMAP_OLD_ALG:
         description: |
             "[Boolean] default = True
@@ -749,7 +749,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "gx1v6": '"FILE:ocean_vgrid.nc,dz"'
-            $OCN_GRID == "tx0.66v1": '"FILE:ocean_vgrid_190320.nc,dz"'
+            $OCN_GRID == "tx0.66v1": '"FILE:vgrid_65L_20200626.nc,dz"'
             $OCN_GRID == "tx0.25v1": '"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"'
     REGRID_COMPRESSIBILITY_FRACTION:
         description: |
@@ -2067,7 +2067,7 @@ Global:
             A file in which to find the surface salinity to use for restoring."
         datatype: string
         value:
-            $OCN_GRID == "tx0.66v1": "salt_restore_tx0.66v1_180828.nc"
+            $OCN_GRID == "tx0.66v1": "state_restore_tx0.66v1_20200616.nc"
     ADJUST_NET_FRESH_WATER_TO_ZERO:
         description: |
             "[Boolean] default = False
@@ -2326,6 +2326,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "global_1deg"
             $OCN_GRID == "tx0.25v1": "list"
+            $OCN_GRID == "tx0.66v1": "list"
     CHANNEL_LIST_FILE:
         description: |
             "default = MOM_channel_list
@@ -2333,6 +2334,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.25v1": "MOM_channels_global_025"
+            $OCN_GRID == "tx0.66v1": "MOM_channels_global_tx06v1"
     SMAG_BI_CONST:
         description: |
             "[nondim] default = 0.0
