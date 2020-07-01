@@ -293,7 +293,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"gx1v6\"": "ocean_topog.nc",
-            "$OCN_GRID == \"tx0.66v1\"": "ocean_topog_190314.nc",
+            "$OCN_GRID == \"tx0.66v1\"": "ocean_topog_200701.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc"
          }
       },
