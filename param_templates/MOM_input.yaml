@@ -2206,6 +2206,26 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 1.0
+            $OCN_GRID == "tx0.66v1": 0.5
+    MEKE_VISCOSITY_COEFF_KU:
+        description: |
+            "[nondim] default = 0.0
+            If non-zero, is the scaling coefficient in the expression forviscosity used to
+            parameterize harmonic lateral momentum mixing byunresolved eddies represented
+            by MEKE. Can be negative torepresent backscatter from the unresolved eddies."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 0.2
+    MEKE_MIN_LSCALE:
+        description: |
+            "[Boolean] default = False
+            If true, use a strict minimum of provided length scales rather than harmonic
+            mean."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": True
     MEKE_ALPHA_RHINES:
         description: |
             "[nondim] default = 0.05
@@ -2215,6 +2235,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 0.15
+            $OCN_GRID == "tx0.66v1": 1.0
     MEKE_ALPHA_EADY:
         description: |
             "[nondim] default = 0.05
@@ -2224,6 +2245,62 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 0.15
+            $OCN_GRID == "tx0.66v1": 1.0
+    MEKE_ALPHA_DEFORM:
+        description: |
+            "[nondim] default = 0.0
+            If positive, is a coefficient weighting the deformation scale in the
+            expression for mixing length used in MEKE-derived diffusivity."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 1.0
+    MEKE_ALPHA_FRICT:
+        description: |
+            "[nondim] default = 0.0
+            If positive, is a coefficient weighting the frictional arrest scale in the
+            expression for mixing length used in MEKE-derived diffusivity."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 1.0
+    MEKE_ALPHA_GRID:
+        description: |
+            "[nondim] default = 0.0
+            If positive, is a coefficient weighting the grid-spacing as a scale in the
+            expression for mixing length used in MEKE-derived diffusivity."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 1.0
+    MEKE_FRCOEFF:
+        description: |
+            "[nondim] default = -1.0
+            If positive, is a coefficient weighting the grid-spacing as a scale in the
+            expression for mixing length used in MEKE-derived diffusivity."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": -1.0
+    KH_RES_SCALE_COEF:
+        description: |
+            "[nondim] default = 1.0
+            A coefficient that determines how KhTh is scaled away if RESOLN_SCALED_... is
+            true, as F = 1 / (1 + (KH_RES_SCALE_COEF*Rd/dx)^KH_RES_FN_POWER)."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 0.4
+    VISC_RES_SCALE_COEF:
+        description: |
+            "[nondim] default = 1.0
+            A coefficient that determines how Kh is scaled away if RESOLN_SCALED_... is
+            true, as F = 1 / (1 + (KH_RES_SCALE_COEF*Rd/dx)^KH_RES_FN_POWER). This
+            function affects lateral viscosity, Kh, and not KhTh."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 0.4
     MEKE_GEOMETRIC:
         description: |
             "[Boolean] default = False
@@ -2242,6 +2319,22 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.66v1": 0.07
+    MEKE_KHTH_FAC:
+        description: |
+            "[nondim] default = 0.0
+            A factor that maps MEKE%Kh to KhTh."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 1.0
+    MEKE_KHTR_FAC:
+        description: |
+            "[nondim] default = 0.0
+            A factor that maps MEKE%Kh to KhTr."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx0.66v1": 1.0
     MEKE_EQUILIBRIUM_ALT:
         description: |
             "[Boolean] default = False
@@ -2251,6 +2344,14 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": True
+    MEKE_VISC_DRAG:
+        description: |
+            "[Boolean] default = True
+            If true, use the vertvisc_type to calculate the bottom drag acting on MEKE."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx0.66v1": False
     MEKE_EQUILIBRIUM_RESTORING:
         description: |
             "[Boolean] default = False

@@ -1706,7 +1706,24 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 1.0
+            "$OCN_GRID == \"tx0.25v1\"": 1.0,
+            "$OCN_GRID == \"tx0.66v1\"": 0.5
+         }
+      },
+      "MEKE_VISCOSITY_COEFF_KU": {
+         "description": "\"[nondim] default = 0.0\nIf non-zero, is the scaling coefficient in the expression forviscosity used to\nparameterize harmonic lateral momentum mixing byunresolved eddies represented\nby MEKE. Can be negative torepresent backscatter from the unresolved eddies.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 0.2
+         }
+      },
+      "MEKE_MIN_LSCALE": {
+         "description": "\"[Boolean] default = False\nIf true, use a strict minimum of provided length scales rather than harmonic\nmean.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
       "MEKE_ALPHA_RHINES": {
@@ -1714,7 +1731,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.15
+            "$OCN_GRID == \"tx0.25v1\"": 0.15,
+            "$OCN_GRID == \"tx0.66v1\"": 1.0
          }
       },
       "MEKE_ALPHA_EADY": {
@@ -1722,7 +1740,56 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.15
+            "$OCN_GRID == \"tx0.25v1\"": 0.15,
+            "$OCN_GRID == \"tx0.66v1\"": 1.0
+         }
+      },
+      "MEKE_ALPHA_DEFORM": {
+         "description": "\"[nondim] default = 0.0\nIf positive, is a coefficient weighting the deformation scale in the\nexpression for mixing length used in MEKE-derived diffusivity.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 1.0
+         }
+      },
+      "MEKE_ALPHA_FRICT": {
+         "description": "\"[nondim] default = 0.0\nIf positive, is a coefficient weighting the frictional arrest scale in the\nexpression for mixing length used in MEKE-derived diffusivity.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 1.0
+         }
+      },
+      "MEKE_ALPHA_GRID": {
+         "description": "\"[nondim] default = 0.0\nIf positive, is a coefficient weighting the grid-spacing as a scale in the\nexpression for mixing length used in MEKE-derived diffusivity.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 1.0
+         }
+      },
+      "MEKE_FRCOEFF": {
+         "description": "\"[nondim] default = -1.0\nIf positive, is a coefficient weighting the grid-spacing as a scale in the\nexpression for mixing length used in MEKE-derived diffusivity.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": -1.0
+         }
+      },
+      "KH_RES_SCALE_COEF": {
+         "description": "\"[nondim] default = 1.0\nA coefficient that determines how KhTh is scaled away if RESOLN_SCALED_... is\ntrue, as F = 1 / (1 + (KH_RES_SCALE_COEF*Rd/dx)^KH_RES_FN_POWER).\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 0.4
+         }
+      },
+      "VISC_RES_SCALE_COEF": {
+         "description": "\"[nondim] default = 1.0\nA coefficient that determines how Kh is scaled away if RESOLN_SCALED_... is\ntrue, as F = 1 / (1 + (KH_RES_SCALE_COEF*Rd/dx)^KH_RES_FN_POWER). This\nfunction affects lateral viscosity, Kh, and not KhTh.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 0.4
          }
       },
       "MEKE_GEOMETRIC": {
@@ -1741,12 +1808,36 @@
             "$OCN_GRID == \"tx0.66v1\"": 0.07
          }
       },
+      "MEKE_KHTH_FAC": {
+         "description": "\"[nondim] default = 0.0\nA factor that maps MEKE%Kh to KhTh.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 1.0
+         }
+      },
+      "MEKE_KHTR_FAC": {
+         "description": "\"[nondim] default = 0.0\nA factor that maps MEKE%Kh to KhTr.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": 1.0
+         }
+      },
       "MEKE_EQUILIBRIUM_ALT": {
          "description": "\"[Boolean] default = False\nIf true, use an alternative formula for computing the (equilibrium)initial\nvalue of MEKE.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": true
+         }
+      },
+      "MEKE_VISC_DRAG": {
+         "description": "\"[Boolean] default = True\nIf true, use the vertvisc_type to calculate the bottom drag acting on MEKE.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx0.66v1\"": false
          }
       },
       "MEKE_EQUILIBRIUM_RESTORING": {
