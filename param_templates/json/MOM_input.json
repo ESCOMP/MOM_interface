@@ -111,7 +111,7 @@
          "value": {
             "$OCN_GRID == \"gx1v6\"": 1800.0,
             "$OCN_GRID == \"tx0.25v1\"": 900.0,
-            "$OCN_GRID == \"tx0.66v1\"": 1200.0,
+            "$OCN_GRID == \"tx0.66v1\"": 1800.0,
             "$OCN_GRID == \"MISOMIP\"": 600.0
          }
       },
