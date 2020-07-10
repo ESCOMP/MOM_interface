@@ -38,7 +38,8 @@ def buildlib(caseroot, libroot, bldroot):
 
         # CVMix source code is brought in as a git submodule (or my manage_externals)
         logger.info("Making sure CVMix code is available...")
-        cvmix_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","CVMix-src","src","shared")
+        comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
+        cvmix_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","CVMix-src","src","shared")
         # If CVMix is not found, abort
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")
@@ -47,7 +48,7 @@ def buildlib(caseroot, libroot, bldroot):
         if False:
             # MARBL source code is brought in as a git submodule (or my manage_externals)
             logger.info("Making sure MARBL code is available...")
-            marbl_srcdir = os.path.join(srcroot,"components","mom","MOM6","pkg","MARBL","src")
+            marbl_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","MARBL","src")
             # If MARBL is not found, abort
             if not os.path.exists(marbl_srcdir):
                 expect(False, "MARBL external not found")
@@ -73,25 +74,25 @@ def buildlib(caseroot, libroot, bldroot):
             driver = case.get_value("COMP_INTERFACE")+"_driver"
             os.environ["CPPDEFS"] = " -Duse_libMPI -Duse_netCDF -DSPMD"
             paths = [os.path.join(caseroot,"SourceMods","src.mom"),
-                     os.path.join(srcroot,"components","mom","MOM6","config_src",driver),
-                     os.path.join(srcroot,"components","mom","MOM6","config_src",memory_mode),
-                     os.path.join(srcroot,"components","mom","MOM6","src","ALE"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","core"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","diagnostics"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","equation_of_state"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","equation_of_state","TEOS10"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","framework"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","ice_shelf"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","initialization"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "core"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","ocean_data_assim", "geoKdTree"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","config_src",driver),
+                     os.path.join(comp_root_dir_ocn,"MOM6","config_src",memory_mode),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","ALE"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","core"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","diagnostics"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","equation_of_state"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","equation_of_state","TEOS10"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","framework"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","ice_shelf"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","initialization"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","ocean_data_assim"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","ocean_data_assim", "core"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","ocean_data_assim", "geoKdTree"),
                      cvmix_srcdir,
 #                     marbl_srcdir,
-                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","lateral"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","parameterizations","vertical"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","tracer"),
-                     os.path.join(srcroot,"components","mom","MOM6","src","user")]
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","lateral"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","vertical"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","tracer"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","user")]
 
             with open(filepath_file, "w") as filepath:
                 filepath.write("\n".join(paths))
