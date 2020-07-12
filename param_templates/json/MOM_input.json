@@ -66,7 +66,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": false
+            "$OCN_GRID == \"tx0.66v1\"": false,
+            "$OCN_GRID == \"gx1v6\"": false
          }
       },
       "DIABATIC_FIRST": {
@@ -129,6 +130,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 10.0,
             "$OCN_GRID == \"tx0.66v1\"": 10.0,
             "$OCN_GRID == \"tx0.25v1\"": 20.0
          }
@@ -166,7 +168,7 @@
          "datatype": "real",
          "units": "J kg-1 K-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 3925.0,
+            "$OCN_GRID == \"gx1v6\"": 3992.0,
             "$OCN_GRID == \"tx0.66v1\"": 3992.0,
             "$OCN_GRID == \"tx0.25v1\"": 3992.0,
             "$OCN_GRID == \"MISOMIP\"": 3974.0
@@ -199,6 +201,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": false,
             "$OCN_GRID == \"tx0.66v1\"": false,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
@@ -208,6 +211,7 @@
          "datatype": "real",
          "units": "deg C Pa-1",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": -7.75e-08,
             "$OCN_GRID == \"tx0.66v1\"": -7.75e-08,
             "$OCN_GRID == \"tx0.25v1\"": -7.75e-08,
             "$OCN_GRID == \"MISOMIP\"": -7.53e-08
@@ -399,7 +403,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.01
+            "$OCN_GRID == \"tx0.66v1\"": 0.01,
+            "$OCN_GRID == \"gx1v6\"": 0.01
          }
       },
       "DEPTH_SCALED_KHTH": {
@@ -433,7 +438,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"gx1v6\"": true
          }
       },
       "RESOLN_SCALED_KHTH": {
@@ -457,7 +463,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": false,
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -493,6 +499,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -501,6 +508,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -509,6 +517,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -613,6 +622,7 @@
             "$OCN_GRID == \"MISOMIP\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.0,
             "$OCN_GRID == \"tx0.66v1\"": 0.0,
+            "$OCN_GRID == \"gx1v6\"": 0.0,
             "else": 0.01
          }
       },
@@ -646,7 +656,8 @@
          "datatype": "real",
          "units": "m4 s-1",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1000000000000.0
+            "$OCN_GRID == \"tx0.66v1\"": 1000000000000.0,
+            "$OCN_GRID == \"gx1v6\"": 1000000000000.0
          }
       },
       "AH_VEL_SCALE": {
@@ -654,7 +665,7 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.05,
+            "$OCN_GRID == \"gx1v6\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.01,
             "$OCN_GRID == \"MISOMIP\"": 0.001
          }
@@ -664,7 +675,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"gx1v6\"": true
          }
       },
       "LEITH_BI_CONST": {
@@ -672,6 +684,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 128.0,
             "$OCN_GRID == \"tx0.66v1\"": 128.0
          }
       },
@@ -898,7 +911,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 600.0,
+            "$OCN_GRID == \"gx1v6\"": 0.0,
             "$OCN_GRID == \"tx0.66v1\"": 0.0,
             "$OCN_GRID == \"MISOMIP\"": 0.0
          }
@@ -908,7 +921,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 900.0
+            "$OCN_GRID == \"gx1v6\"": 0.0
          }
       },
       "KHTH_MAX_CFL": {
@@ -924,7 +937,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"gx1v6\"": true
          }
       },
       "KHTH_USE_FGNV_STREAMFUNCTION": {
@@ -959,7 +973,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 20.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0,
             "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0
          }
@@ -969,6 +983,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 1000.0,
             "$OCN_GRID == \"tx0.66v1\"": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0
          }
@@ -978,6 +993,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 345600.0,
             "$OCN_GRID == \"tx0.66v1\"": 345600.0,
             "$OCN_GRID == \"tx0.25v1\"": 2592000.0
          }
@@ -987,6 +1003,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -1160,6 +1177,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -1206,6 +1224,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -1214,6 +1233,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -1222,6 +1242,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -1267,6 +1288,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 15.0,
             "$OCN_GRID == \"tx0.66v1\"": 15.0
          }
       },
@@ -1275,6 +1297,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 0.42,
             "$OCN_GRID == \"tx0.66v1\"": 0.42
          }
       },
@@ -1283,6 +1306,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
@@ -1497,7 +1521,6 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 600.0,
             "$OCN_GRID == \"MISOMIP\"": 1.0
          }
       },
@@ -1515,7 +1538,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 900.0
+            "$OCN_GRID == \"gx1v6\"": 0.0
          }
       },
       "DEBUG": {
@@ -1529,6 +1552,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -1538,6 +1562,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 2.0,
             "$OCN_GRID == \"tx0.66v1\"": 2.0
          }
       },
@@ -1560,6 +1585,7 @@
          "description": "\"default = 'C'\nA case-insensitive character string to indicate the\nstaggering of the surface velocity field that is\nreturned to the coupler.  Valid values include\n'A', 'B', or 'C'.\"\n",
          "datatype": "string",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": "A",
             "$OCN_GRID == \"tx0.66v1\"": "A",
             "$OCN_GRID == \"tx0.25v1\"": "A"
          }
@@ -1649,7 +1675,7 @@
          "datatype": "real",
          "units": "days",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.01,
+            "$OCN_GRID == \"gx1v6\"": 1.0,
             "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.25,
             "$OCN_GRID == \"MISOMIP\"": 1.0
@@ -1660,7 +1686,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true,
             "$OCN_GRID == \"MISOMIP\"": true
          }
@@ -1688,7 +1713,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
             "$OCN_GRID == \"tx0.66v1\"": 0.0
          }
@@ -1707,7 +1732,8 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
-            "$OCN_GRID == \"tx0.66v1\"": 0.5
+            "$OCN_GRID == \"tx0.66v1\"": 0.5,
+            "$OCN_GRID == \"gx1v6\"": 0.5
          }
       },
       "MEKE_VISCOSITY_COEFF_KU": {
@@ -1715,7 +1741,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.2
+            "$OCN_GRID == \"tx0.66v1\"": 0.2,
+            "$OCN_GRID == \"gx1v6\"": 0.2
          }
       },
       "MEKE_MIN_LSCALE": {
@@ -1723,7 +1750,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"gx1v6\"": true
          }
       },
       "MEKE_ALPHA_RHINES": {
@@ -1732,7 +1760,8 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.15,
-            "$OCN_GRID == \"tx0.66v1\"": 1.0
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0
          }
       },
       "MEKE_ALPHA_EADY": {
@@ -1741,7 +1770,8 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.15,
-            "$OCN_GRID == \"tx0.66v1\"": 1.0
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0
          }
       },
       "MEKE_ALPHA_DEFORM": {
@@ -1749,7 +1779,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0
          }
       },
       "MEKE_ALPHA_FRICT": {
@@ -1757,7 +1788,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0
          }
       },
       "MEKE_ALPHA_GRID": {
@@ -1765,7 +1797,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0
          }
       },
       "MEKE_FRCOEFF": {
@@ -1781,7 +1814,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.4
+            "$OCN_GRID == \"tx0.66v1\"": 0.4,
+            "$OCN_GRID == \"gx1v6\"": 0.4
          }
       },
       "VISC_RES_SCALE_COEF": {
@@ -1789,7 +1823,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.4
+            "$OCN_GRID == \"tx0.66v1\"": 0.4,
+            "$OCN_GRID == \"gx1v6\"": 0.4
          }
       },
       "MEKE_GEOMETRIC": {
@@ -1797,7 +1832,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"gx1v6\"": true
          }
       },
       "MEKE_GEOMETRIC_ALPHA": {
@@ -1813,7 +1849,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0
          }
       },
       "MEKE_KHTR_FAC": {
@@ -1821,7 +1858,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0
          }
       },
       "MEKE_EQUILIBRIUM_ALT": {
@@ -1829,7 +1867,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"gx1v6\"": true
          }
       },
       "MEKE_VISC_DRAG": {
@@ -1837,7 +1876,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": false
+            "$OCN_GRID == \"tx0.66v1\"": false,
+            "$OCN_GRID == \"gx1v6\"": false
          }
       },
       "MEKE_EQUILIBRIUM_RESTORING": {
@@ -1845,7 +1885,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"gx1v6\"": true
          }
       },
       "MEKE_RESTORING_TIMESCALE": {
@@ -1853,6 +1894,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 10000000.0,
             "$OCN_GRID == \"tx0.66v1\"": 10000000.0
          }
       },
@@ -1861,7 +1903,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0
+            "$OCN_GRID == \"tx0.66v1\"": 1.0,
+            "$OCN_GRID == \"gx1v6\"": 1.0
          }
       },
       "DIAG_COORD_DEF_Z": {
@@ -1913,7 +1956,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true,
             "$OCN_GRID == \"MISOMIP\"": true
          }
@@ -1943,7 +1985,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -2649,6 +2690,7 @@
          "description": "\"default = 0\nThe number of times the 1-1-4-1-1 Laplacian filter is applied on\nOBL depth.\npurely for diagnostic purposes.\"\n",
          "datatype": "integer",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": 3,
             "$OCN_GRID == \"tx0.66v1\"": 3
          }
       },
@@ -2656,6 +2698,7 @@
          "description": "\"default = 'SimpleShapes'\nCVMix method to set profile function for diffusivity and NLT,\nas well as matching across OBL base. Allowed values are:\nSimpleShapes      = sigma*(1-sigma)^2 for both diffusivity and NLT\nMatchGradient     = sigma*(1-sigma)^2 for NLT; diffusivity profile from matching\nMatchBoth         = match gradient for both diffusivity and NLT\nParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT\"\n",
          "datatype": "string",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": "MatchGradient",
             "$OCN_GRID == \"tx0.66v1\"": "MatchGradient"
          }
       },
@@ -2663,6 +2706,7 @@
          "description": "\"Type of interpolation to compute diff and visc at OBL_depth\nAllowed types are: linear, quadratic, cubic or LMD94.\"\n",
          "datatype": "string",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": "LMD94",
             "$OCN_GRID == \"tx0.66v1\"": "LMD94"
          }
       },
@@ -2671,6 +2715,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"gx1v6\"": false,
             "$OCN_GRID == \"tx0.66v1\"": false
          }
       }
