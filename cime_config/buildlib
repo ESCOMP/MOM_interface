@@ -39,7 +39,11 @@ def buildlib(caseroot, libroot, bldroot):
         # CVMix source code is brought in as a git submodule (or my manage_externals)
         logger.info("Making sure CVMix code is available...")
         comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
-        cvmix_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","CVMix-src","src","shared")
+        if "MOM6" in comp_root_dir_ocn:
+            cvmix_srcdir = os.path.join(comp_root_dir_ocn,"pkg","CVMix-src","src","shared")
+        else:
+            cvmix_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","CVMix-src","src","shared")
+    
         # If CVMix is not found, abort
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")

@@ -39,13 +39,17 @@ def prep_input(case):
     Buildconf       = case.get_value("CASEBUILD")
     rundir          = case.get_value("RUNDIR")
     comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
+    if os.path.exists(os.path.join(comp_root_dir_ocn,"cime_config")):
+        config_root = comp_root_dir_ocn
+    else:
+        config_root = os.path.join(comp_root_dir_ocn,"cime")
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
         os.makedirs(rundir)
 
     # Parse json files and create MOM6 input files in rundir
-    json_templates_dir = os.path.join(comp_root_dir_ocn,"param_templates","json")
+    json_templates_dir = os.path.join(config_root,"param_templates","json")
 
     # Create MOM_input:
     MOM_input_src = os.path.join(json_templates_dir, "MOM_input.json")
