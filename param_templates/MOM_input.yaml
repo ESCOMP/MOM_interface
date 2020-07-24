@@ -2126,7 +2126,7 @@ Global:
              The background gustiness in the winds."
         datatype: real
         units: Pa
-        value: 0.0
+        value: 0.02
     FIX_USTAR_GUSTLESS_BUG:
         description: |
             "[Boolean] default = False

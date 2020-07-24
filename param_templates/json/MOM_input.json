@@ -1643,7 +1643,7 @@
          "description": "\"[Pa] default = 0.02\n The background gustiness in the winds.\"\n",
          "datatype": "real",
          "units": "Pa",
-         "value": 0.0
+         "value": 0.02
       },
       "FIX_USTAR_GUSTLESS_BUG": {
          "description": "\"[Boolean] default = False\nIf true correct a bug in the time-averaging of the gustless wind\nfriction velocity.\"\n",
