@@ -86,7 +86,7 @@ def prep_input(case):
 
     # 5. Create mom.input_data_list:
     if "mom.input_data_list" in os.listdir(SourceMods_dir):
-        run_cmd("cp "+os.path.join(SourceMods_dir,"input.nml")+" "+Buildconf)
+        run_cmd("cp "+os.path.join(SourceMods_dir,"mom.input_data_list")+" "+Buildconf)
     else:
         input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
         input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
