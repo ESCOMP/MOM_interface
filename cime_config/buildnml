@@ -85,13 +85,10 @@ def prep_input(case):
         input_nml.write(input_nml_dest, case)
 
     # 5. Create mom.input_data_list:
-    if "mom.input_data_list" in os.listdir(SourceMods_dir):
-        run_cmd("cp "+os.path.join(SourceMods_dir,"mom.input_data_list")+" "+Buildconf)
-    else:
-        input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
-        input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
-        input_data_list = FType_input_data_list.from_json(input_data_list_src)
-        input_data_list.write(input_data_list_dest, case, MOM_input_final)
+    input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
+    input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
+    input_data_list = FType_input_data_list.from_json(input_data_list_src)
+    input_data_list.write(input_data_list_dest, case, MOM_input_final)
 
     # 6. Create diag_table:
     if "diag_table" in os.listdir(SourceMods_dir):
