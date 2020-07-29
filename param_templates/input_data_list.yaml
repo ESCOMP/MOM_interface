@@ -20,9 +20,12 @@ mom.input_data_list:
     ocean_topo_edit:
         $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/All_edits.nc"
     tempsalt:
-        $OCN_GRID == "gx1v6":    "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt.nc"
-        $OCN_GRID == "tx0.66v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt_180829.nc"
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/MOM6_IC_TS.nc"
+        $INIT_LAYERS_FROM_Z_FILE == "True" and $OCN_GRID == "gx1v6":
+            "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt.nc"
+        $INIT_LAYERS_FROM_Z_FILE == "True" and $OCN_GRID == "tx0.66v1":
+            "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt_180829.nc"
+        $INIT_LAYERS_FROM_Z_FILE == "True" and $OCN_GRID == "tx0.25v1":
+            "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/MOM6_IC_TS.nc"
     saltrestore:
         $OCN_GRID == "tx0.66v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/salt_restore_tx0.66v1_180828.nc"
     tidal:
