@@ -4,7 +4,7 @@ import os
 import abc
 import re
 from rps_utils import get_str_type, is_logical_expr, has_expandable_var, eval_formula
-from rps_utils import is_formula, eval_formula
+from rps_utils import is_formula, eval_formula, search_nested_dict
 import copy
 
 ### MOM Runtime Parameter System Module =======================================
@@ -88,7 +88,7 @@ class MOM_RPS(object,):
             _data = yaml.safe_load(yaml_file)
         return cls(_data)
 
-    def expand_case_vars(self, case):
+    def expand_case_vars(self, case, aux_rps_obj=None):
         """
         Replaces case variables (e.g., $OCN_GRID) in self._data entries (both in keys and values)
         with their values (e.g, tx0.66v1). Also evaluates formulas in values and replaces them
@@ -97,7 +97,9 @@ class MOM_RPS(object,):
         Parameters
         ----------
         case: CIME.case.case.Case
-            A cime case object whose parameter values are to be adopted.
+            A cime case object whose parameter values are to be acquired when expanding parameters.
+        aux_rps_obj: MOM_RPS
+            An auxiliary MOM_RPS object to search when attempting to expand an expandable parameter
         """
 
         str_type = get_str_type()
@@ -105,30 +107,62 @@ class MOM_RPS(object,):
         def _expand_case_var(entry, case):
             """ Returns the version of an entry where cime parameters are expanded"""
 
+            def is_cime_param(param_str):
+                """ Returns True if the parameter to expand is a CIME parameter, e.g., OCN_GRIDi."""
+                cime_param = case.get_value(param_str)
+                if cime_param==None:
+                    return False
+                return True
+
+            def aux_rps_param(param_str):
+                """ Returns True if the parameter to expand is a variable in the given aux_rps_obj data."""
+                assert (isinstance(aux_rps_obj, MOM_RPS))
+                vals = search_nested_dict(aux_rps_obj._data, param_str)
+                if len(vals) > 1:
+                    raise RuntimeError("Multiple entries of "+param_str+" found in aux_rps_obj")
+                elif len(vals) == 0:
+                    return None
+                else:
+                    val = vals[0]
+                    if "value" in val:
+                        val = val['value']
+                    assert not isinstance(val, str_type) or "$" not in val, \
+                        "Nested expandable parameters detected when inferring "+entry
+                    return str(val).strip()
+
             assert has_expandable_var(entry)
             str_type = get_str_type()
 
             # first, infer ${*}
-            cime_params = re.findall(r'\$\{.+?\}',entry)
-            for cime_param in cime_params:
-                cime_param_strip = cime_param.replace("${","").replace("}","")
-                cime_param_expanded = case.get_value(cime_param_strip)
-                if cime_param_expanded==None:
-                    raise RuntimeError("The guard "+cime_param_strip+" is not a CIME xml"
+            expandable_params = re.findall(r'\$\{.+?\}',entry)
+            for word in expandable_params:
+                expandable_param = word.replace("${","").replace("}","")
+                param_expanded = None
+                if is_cime_param(expandable_param):
+                    param_expanded = case.get_value(expandable_param)
+                elif aux_rps_obj!=None:
+                    param_expanded = aux_rps_param(expandable_param)
+                if param_expanded == None:
+                    raise RuntimeError("The param "+expandable_param+" is not a CIME xml"
                                        " variable for this case")
-                entry = entry.replace(cime_param, str(cime_param_expanded))
+                entry = entry.replace(word, str(param_expanded))
 
             # now infer $*
             for word in entry.split():
                 if word[0] == '$':
-                    cime_param = word[1:]
-                    cime_param_expanded = case.get_value(cime_param)
-                    if cime_param_expanded==None:
-                        raise RuntimeError("The guard "+cime_param+" is not a CIME xml"
+                    expandable_param = word[1:]
+                    param_expanded = None
+                    if is_cime_param(expandable_param):
+                        param_expanded = case.get_value(expandable_param)
+                    elif aux_rps_obj!=None:
+                        param_expanded = aux_rps_param(expandable_param)
+                    if param_expanded == None:
+                        raise RuntimeError("The param "+expandable_param+" is not a CIME xml"
                                            " variable for this case")
-                    if isinstance(cime_param_expanded,str_type):
-                        cime_param_expanded = '"'+cime_param_expanded+'"'
-                    entry = entry.replace(word,str(cime_param_expanded))
+
+                    if isinstance(param_expanded,str_type):
+                        param_expanded = '"'+param_expanded+'"'
+                    entry = entry.replace(word,str(param_expanded))
 
             return entry
 
@@ -265,6 +299,23 @@ class MOM_RPS(object,):
         for key, val in self._data.items():
             self._data[key] = _eval_formula_recursive(val)
 
+    def append(self, rps_obj):
+        """ Adds the data of given rps_obj to the self data. If a data entry already exists in self,
+            the value is overriden. Otherwise, the new data entry is simply added to self.
+        """
+
+        def update_recursive(old_dict,new_dict):
+            for key, val in new_dict.items():
+                if key in old_dict:
+                    old_val = old_dict[key]
+                    if type(val) in [dict, OrderedDict] and type(old_val) in [dict, OrderedDict]:
+                        update_recursive(old_dict[key], new_dict[key])
+                    else:
+                        old_dict[key] = new_dict[key]
+                else:
+                    old_dict[key] = new_dict[key]
+
+        update_recursive(self._data, rps_obj._data)
 
     @abc.abstractmethod
     def check_consistency(self):
