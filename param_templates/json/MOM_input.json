@@ -1620,7 +1620,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"tx0.66v1\" and $COMP_ATM == \"datm\"": true,
+            "else": false
          }
       },
       "MAX_DELTA_SRESTORE": {

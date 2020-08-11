@@ -2102,7 +2102,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx0.66v1" and $COMP_ATM == "datm": True  # for C and G compsets on tx0.66v1
+            else: False
     MAX_DELTA_SRESTORE:
         description: |
             "[PSU or g kg-1] default = 999.0
