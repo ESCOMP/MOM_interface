@@ -1620,7 +1620,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\" and $COMP_ATM == \"datm\"": true,
+            "$COMP_ATM == \"datm\"": true,
             "else": false
          }
       },
