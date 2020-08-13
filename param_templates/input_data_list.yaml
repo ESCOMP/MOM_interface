@@ -2,36 +2,35 @@
 ---
 mom.input_data_list:
     ocean_hgrid:
-        $OCN_GRID == "gx1v6":    "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_hgrid.nc"
-        $OCN_GRID == "tx0.66v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_hgrid_180829.nc"
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_hgrid.nc"
+        $OCN_GRID == "gx1v6":    "${INPUTDIR}/ocean_hgrid.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_hgrid_180829.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/ocean_hgrid.nc"
     ocean_vgrid1:
-        $OCN_GRID == "gx1v6":    "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_vgrid.nc"
-        $OCN_GRID == "tx0.66v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_vgrid_180829.nc"
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/hycom1_75_800m.nc"
+        $OCN_GRID == "gx1v6":    "${INPUTDIR}/ocean_vgrid.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_vgrid_180829.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/hycom1_75_800m.nc"
     ocean_vgrid2:
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/interpolate_zgrid_40L.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/interpolate_zgrid_40L.nc"
     ocean_vgrid3:
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/layer_coord.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/layer_coord.nc"
     ocean_topog:
-        $OCN_GRID == "gx1v6":    "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_topog.nc"
-        $OCN_GRID == "tx0.66v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_topog_190314.nc"
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/ocean_topog.nc"
+        $OCN_GRID == "gx1v6":    "${INPUTDIR}/ocean_topog.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_topog_190314.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/ocean_topog.nc"
     ocean_topo_edit:
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/All_edits.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/All_edits.nc"
     tempsalt:
-        $OCN_GRID == "gx1v6":    "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt.nc"
-        $OCN_GRID == "tx0.66v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/WOA05_pottemp_salt_180829.nc"
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/MOM6_IC_TS.nc"
+        $INIT_LAYERS_FROM_Z_FILE == "True" and $OCN_GRID in ["gx1v6", "tx0.66v1", "tx0.25v1"]:
+            "${INPUTDIR}/${TEMP_SALT_Z_INIT_FILE}"
     saltrestore:
-        $OCN_GRID == "tx0.66v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/salt_restore_tx0.66v1_180828.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/salt_restore_tx0.66v1_180828.nc"
     tidal:
-        $OCN_GRID == "tx0.66v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/energy_new_t0.66v1_conserve_180608.nc"
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/tidal_amplitude.v20140616.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/energy_new_t0.66v1_conserve_180608.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/tidal_amplitude.v20140616.nc"
     ocean_channel:
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/MOM_channels_global_025"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/MOM_channels_global_025"
     ocean_geothermal:
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/geothermal_davies2013_v1.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/geothermal_davies2013_v1.nc"
     ocean_seaw:
-        $OCN_GRID == "tx0.25v1": "${DIN_LOC_ROOT}/ocn/mom/${OCN_GRID}/seawifs-clim-1997-2010.1440x1080.v20180328.nc"
+        $OCN_GRID == "tx0.25v1": "${INPUTDIR}/seawifs-clim-1997-2010.1440x1080.v20180328.nc"
 ...

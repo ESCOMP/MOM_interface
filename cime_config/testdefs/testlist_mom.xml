@@ -33,6 +33,7 @@
   <test name="SMS" grid="T62_t061" compset="GMOM">
     <machines>
       <machine name="cheyenne" compiler="gnu" category="aux_mom"/>
+      <machine name="cheyenne" compiler="intel" category="prealpha"/>
     </machines>
     <options>
       <option name="wallclock">00:30:00</option>

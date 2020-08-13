@@ -1,5 +1,33 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  gmarques, altuntas, et al.
+Tag Date:    24 Jul 2020
+Tag Name:    mi_20200724
+
+MOM_interface Updates Summary:
+- Changes for CESM2.2
+- Cleanup and generalizations in buildlib
+- Add option to compile MOM6 using dynamic_symmetric
+- Add the option of turning off diagnostics
+
+MOM6 Updates Summary:
+- Improvements when applying lateral boundary diffusion
+- Fix bugs when restarting a run with NUOPC
+- Add calls time_interp_external_init
+- Add new diagnostics
+- Merge dev master candidate 2020 05 15
+- OpenMP and KPP performance changes
+- Add tidal diffusivities into Kd_int
+- Improve Leith schemes
+- Add option to control Biharmonic coeff. via grid Reynolds number
+- Fix thread-unsafe computations of advective tracer flux vertical sums
+- Updates GME by removing dependency on MEKE
+- Fix a bug in GM when using MEKE_GEOMETRIC
+
+Testing: aux_mom on cheyenne/intel
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  altuntas
 Tag Date:    09 Mar 2020
 Tag Name:    mi_20200309

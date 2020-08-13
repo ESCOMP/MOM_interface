@@ -190,6 +190,38 @@ def eval_formula(formula):
 
     return result
 
+def search_nested_dict(nested_dict, key):
+    """
+    Given a nested dictionary and a key to search for, returns all instances of values of that
+    particular key within the the nested dictionary
+
+    Parameters
+    ----------
+    nested_dict: dict or OrderedDict
+        The nested dictionary that may contain the "key".
+    key:
+        The key to search for
+
+    Returns
+    ------
+    A list of variables paired with all instances of "key".
+
+    >>> mydict = {"A":1, "B":2, "C":{"B":3}}
+    >>> search_nested_dict(mydict,"B")
+    [2, 3]
+    """
+
+    vals = []
+    def find_key_recursive(dict_obj):
+        for key_, val_ in dict_obj.items():
+            if key_ == key:
+                vals.append(dict_obj[key_])
+            if type(val_) in [dict, OrderedDict]:
+                find_key_recursive(val_)
+    find_key_recursive(nested_dict)
+    return(vals)
+
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
