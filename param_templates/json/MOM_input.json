@@ -2002,7 +2002,7 @@
          "datatype": "real",
          "units": "PPT",
          "value": {
-            "$COMP_ATM == \"cam\"": 75.0
+            "$OCN_GRID == \"tx0.66v1\" or $COMP_ATM == \"cam\"": 75.0
          }
       },
       "BAD_VAL_SST_MAX": {
