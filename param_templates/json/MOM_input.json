@@ -2001,7 +2001,9 @@
          "description": "\"default = 45.0\nThe value of SSS above which a bad value message is triggered, if\nCHECK_BAD_SURFACE_VALS is true.\"\n",
          "datatype": "real",
          "units": "PPT",
-         "value": 75.0
+         "value": {
+            "$COMP_ATM == \"cam\"": 75.0
+         }
       },
       "BAD_VAL_SST_MAX": {
          "description": "\"[deg C] default = 45.0, PTripp: changed from 55.0 on 12/28/2017\nThe value of SST above which a bad value message is\ntriggered, if CHECK_BAD_SURFACE_VALS is true.\"\n",
