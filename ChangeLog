@@ -1,5 +1,22 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  altuntas, gmarques, jedwards
+Tag Date:    20 Aug 2020
+Tag Name:    mi_20200820
+
+MOM_interface Updates Summary:
+- Remove BMOM compset definition.
+- Set BAD_VAL_SSS_MAX=75.0.
+- Do not adjust net fresh-water forcing in B-compsets.
+- MOM_RPS support for expandable vars from other templates.
+
+MOM6 Updates Summary:
+- Fix multi-restart files in NUOPC cap
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  gmarques, altuntas, et al.
 Tag Date:    24 Jul 2020
 Tag Name:    mi_20200724
