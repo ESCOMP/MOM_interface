@@ -14,8 +14,12 @@ class FType_input_data_list(MOM_RPS):
 
         with open(os.path.join(output_path), 'w') as input_data_list:
             for module in self._data:
-                for var in self._data[module]:
-                    val = self._data[module][var]
-                    if val != None:
-                        input_data_list.write(var+" = "+str(val)+"\n")
+                for file_category in self._data[module]:
+                    file_path = self._data[module][file_category]
+                    if file_path != None:
+                        file_path = file_path.replace('"','').replace("'","")
+                        if os.path.isabs(file_path):
+                            input_data_list.write(file_category+" = "+file_path+"\n")
+                        else:
+                            pass # skip if custom INPUTDIR is used.
 
