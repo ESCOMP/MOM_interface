@@ -19,6 +19,7 @@ sys.path.append(os.path.join(CIMEROOT, "scripts", "Tools"))
 # The scope of the following path expansion is limited to this script only,
 # and is needed to import MOM6 input file classes:
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),"MOM_RPS"))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),"MARBL_scripts"))
 
 from standard_script_setup import *
 from CIME.case import Case

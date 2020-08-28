@@ -59,7 +59,9 @@
          "diazC",
          "diazP",
          "diazFe",
-         "PV_CO2"
+         "PV_CO2",
+         "ECOSYS_ATM_PRESS",
+         "ECOSYS_IFRAC"
       ],
       [
          "SSH",
@@ -409,7 +411,9 @@
                         "diazC",
                         "diazP",
                         "diazFe",
-                        "PV_CO2"
+                        "PV_CO2",
+                        "ECOSYS_ATM_PRESS",
+                        "ECOSYS_IFRAC"
                      ],
                      [
                         "volcello",
