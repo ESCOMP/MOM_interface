@@ -7,7 +7,7 @@ mom.input_data_list:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/ocean_hgrid.nc"
     ocean_vgrid1:
         $OCN_GRID == "gx1v6":    "${INPUTDIR}/ocean_vgrid.nc"
-        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_vgrid_180829.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/vgrid_65L_20200626.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/hycom1_75_800m.nc"
     ocean_vgrid2:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/interpolate_zgrid_40L.nc"
@@ -15,7 +15,7 @@ mom.input_data_list:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/layer_coord.nc"
     ocean_topog:
         $OCN_GRID == "gx1v6":    "${INPUTDIR}/ocean_topog.nc"
-        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_topog_190314.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_topog_200701.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/ocean_topog.nc"
     ocean_topo_edit:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/All_edits.nc"
@@ -23,12 +23,13 @@ mom.input_data_list:
         $INIT_LAYERS_FROM_Z_FILE == "True" and $OCN_GRID in ["gx1v6", "tx0.66v1", "tx0.25v1"]:
             "${INPUTDIR}/${TEMP_SALT_Z_INIT_FILE}"
     saltrestore:
-        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/salt_restore_tx0.66v1_180828.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/state_restore_tx0.66v1_20200616.nc"
     tidal:
-        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/energy_new_t0.66v1_conserve_180608.nc"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/energy_new_t0.66v1_conserve_190315.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/tidal_amplitude.v20140616.nc"
     ocean_channel:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/MOM_channels_global_025"
+        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/MOM_channels_global_tx06v1"
     ocean_geothermal:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/geothermal_davies2013_v1.nc"
     ocean_seaw:
