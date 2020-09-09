@@ -35,7 +35,8 @@
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/tidal_amplitude.v20140616.nc"
       },
       "ocean_channel": {
-         "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/MOM_channels_global_tx06v1"
+         "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/MOM_channels_global_025",
+         "$OCN_GRID == \"tx0.66v1\"": "${INPUTDIR}/MOM_channels_global_tx06v1"
       },
       "ocean_geothermal": {
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/geothermal_davies2013_v1.nc"
