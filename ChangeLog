@@ -1,6 +1,17 @@
 ===============================================================================
 Tag Creator: altuntas
 Developers:  altuntas
+Tag Date:    8 Sep 2020
+Tag Name:    mi_20200908
+
+MOM_interface Updates Summary:
+- Fix file list in mom.input_data_list
+
+Testing: aux_mom on cheyenne. GMOM and CMOM on izumi/gnu
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  altuntas
 Tag Date:    26 Aug 2020
 Tag Name:    mi_20200826
 
@@ -8,7 +19,6 @@ MOM_interface Updates Summary:
 - Fix mom.input_data_list for custom INPUTDIRs
 
 Testing: pr_mom on cheyenne
-
 ===============================================================================
 Tag Creator: altuntas
 Developers:  altuntas, gmarques, jedwards
