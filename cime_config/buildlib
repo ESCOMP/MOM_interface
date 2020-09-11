@@ -30,8 +30,7 @@ def buildlib(caseroot, libroot, bldroot):
         fmsbuildlib = os.path.join(srcroot,"libraries","FMS","buildlib")
         fmsbuilddir = os.path.join(bldroot,"FMS")
         if not os.path.exists(fmsbuildlib):
-            #todo: call checkout_externals to get this component
-            expect(False, "FMS external not found")
+            expect(os.path.exists(os.path.join(libroot,"libfms.a")), "FMS external not found")
         else:
             stat, _, err = run_cmd("{} {} {} {}".format(fmsbuildlib, bldroot, fmsbuilddir, caseroot), verbose=True)
             expect(stat==0, "FMS build Failed {}".format(err))
@@ -42,7 +41,7 @@ def buildlib(caseroot, libroot, bldroot):
         cvmix_srcdir = os.path.join(comp_root_dir_ocn,"src","pkg","CVMix-src","src","shared")
         if not os.path.exists(cvmix_srcdir):
             cvmix_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","CVMix-src","src","shared")
-    
+
         # If CVMix is not found, abort
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")
