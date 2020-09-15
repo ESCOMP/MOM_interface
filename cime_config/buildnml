@@ -33,7 +33,27 @@ from FType_diag_table import FType_diag_table
 
 logger = logging.getLogger(__name__)
 
-def prep_input(case):
+# returns active components
+def active_components(case):
+    # query compset
+    compset = case.get_value("COMPSET")
+    # parse compset
+    components = compset.split("_")[1:]
+    # remove stub components
+    components = [ x for x in components if "S" not in x[0] ]
+
+    return components
+
+def date_yyyymmddhh(case):
+    run_start_date = case.get_value('RUN_STARTDATE').split('-')
+    yyyy = int(run_start_date[0])
+    mm = int(run_start_date[1])
+    dd = int(run_start_date[2])
+    run_start_tod = case.get_value('START_TOD')
+    hh = int(run_start_tod)//3600
+    return yyyy, mm, dd, hh
+
+def prep_input(case, app):
     """ Generates out-of-the-box versions of MOM6 input files including MOM_input, MOM_override, diag_table
     input.nml.mom, and mom.input_data_list, inside the run directory. If any of these input files are provided
     in SourceMods, those versions will be copied to run directory instead."""
@@ -59,7 +79,10 @@ def prep_input(case):
 
     # 1. Create MOM_input:
     if "MOM_input" in os.listdir(SourceMods_dir):
-        run_cmd("cp "+os.path.join(SourceMods_dir,"MOM_input")+" "+rundir)
+        if 's2s' in app:
+            run_cmd("cp "+os.path.join(SourceMods_dir,"MOM_input")+" "+os.path.join(rundir,"INPUT"))
+        else:
+            run_cmd("cp "+os.path.join(SourceMods_dir,"MOM_input")+" "+rundir)
     else:
         MOM_input_src = os.path.join(json_templates_dir, "MOM_input.json")
         MOM_input_dest = os.path.join(rundir,"MOM_input")
@@ -70,16 +93,24 @@ def prep_input(case):
     user_nl_mom = FType_MOM_params.from_MOM_input(os.path.join(caseroot,"user_nl_mom"))
     if "MOM_override" in os.listdir(SourceMods_dir):
         assert len(user_nl_mom.data)==0, "Cannot provide parameter changes via both SourceMods and user_nl_mom!"
-        run_cmd("cp "+os.path.join(SourceMods_dir,"MOM_override")+" "+rundir)
+        if 's2s' in app:
+            run_cmd("cp "+os.path.join(SourceMods_dir,"MOM_override")+" "+os.path.join(rundir,"INPUT"))
+        else:
+            run_cmd("cp "+os.path.join(SourceMods_dir,"MOM_override")+" "+rundir)
     else:
         init_MOM_override(rundir)
         process_user_nl_mom(case)
 
     # 3. Read in final versions of MOM_input and MOM_override, so as to use them when inferring
     #    values of expandable variables in the templates of below MOM6 input files.
-    MOM_input_final = FType_MOM_params.from_MOM_input(os.path.join(rundir,"MOM_input"))
-    MOM_override_final = FType_MOM_params.from_MOM_input(os.path.join(rundir,"MOM_override"))
-    MOM_input_final.append(MOM_override_final)
+    if 's2s' in app and os.path.isfile(os.path.join(rundir,"INPUT","MOM_input")):
+        MOM_input_final = FType_MOM_params.from_MOM_input(os.path.join(rundir,"INPUT","MOM_input"))
+        MOM_override_final = FType_MOM_params.from_MOM_input(os.path.join(rundir,"INPUT","MOM_override"))
+        MOM_input_final.append(MOM_override_final)
+    else:
+        MOM_input_final = FType_MOM_params.from_MOM_input(os.path.join(rundir,"MOM_input"))
+        MOM_override_final = FType_MOM_params.from_MOM_input(os.path.join(rundir,"MOM_override"))
+        MOM_input_final.append(MOM_override_final)
 
     # 4. Create input.nml.mom:
     if "input.nml.mom" in os.listdir(SourceMods_dir):
@@ -91,14 +122,45 @@ def prep_input(case):
         input_nml.write(input_nml_dest, case)
 
     # 5. Create mom.input_data_list:
-    input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
-    input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
-    input_data_list = FType_input_data_list.from_json(input_data_list_src)
-    input_data_list.write(input_data_list_dest, case, MOM_input_final)
+    if 's2s' in app:
+        din_loc_ic = case.get_value("DIN_LOC_IC")
+        rundir = case.get_value("RUNDIR")
+
+        # Query date and time
+        yyyy, mm, dd, hh = date_yyyymmddhh(case)
+
+        # Set data directory
+        icdir = os.path.join(din_loc_ic,"{:04d}{:02d}".format(yyyy,mm),"{:04d}{:02d}{:02d}".format(yyyy,mm,dd))
+
+        f_lst = ['All_edits.nc',
+                 'geothermal_davies2013_v1.nc',
+                 'hycom1_75_800m.nc',
+                 'interpolate_zgrid_40L.nc',
+                 'layer_coord.nc',
+                 'MOM6_IC_TS.nc',
+                 'MOM_channels_global_025',
+                 'ocean_hgrid.nc',
+                 'ocean_mask.nc',
+                 'ocean_mosaic.nc',
+                 'ocean_topog.nc',
+                 'runoff.daitren.clim.1440x1080.v20180328.nc',
+                 'seawifs-clim-1997-2010.1440x1080.v20180328.nc',
+                 'tidal_amplitude.v20140616.nc',
+                 'topog.nc',
+                 'MOM_layout']
+        for f in f_lst:
+            print os.path.join(icdir,f)
+            if os.path.isfile(os.path.join(icdir,f)):
+                safe_copy(os.path.join(icdir,f),os.path.join(rundir,"INPUT",f))
+    else:
+        input_data_list_src = os.path.join(json_templates_dir, "input_data_list.json")
+        input_data_list_dest = os.path.join(Buildconf,"mom.input_data_list")
+        input_data_list = FType_input_data_list.from_json(input_data_list_src)
+        input_data_list.write(input_data_list_dest, case, MOM_input_final)
 
     # 6. Create diag_table:
     if "diag_table" in os.listdir(SourceMods_dir):
-        run_cmd("cp "+os.path.join(SourceMods_dir,"diag_table")+" "+rundir)
+        run_cmd("cp "+os.path.join(SourceMods_dir,"diag_table.mom")+" "+rundir)
     else:
         diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
         diag_table_dest = os.path.join(rundir,"diag_table.mom")
@@ -137,7 +199,7 @@ def process_user_nl_mom(case):
                           output_format = "MOM_override",
                           def_params = MOM_input_rundir)
 
-def _copy_files_to_momconf(case):
+def _copy_files_to_momconf(case, app):
     """ Saves copies of MOM6 input files in momconf directory for the record."""
     caseroot = case.get_value("CASEROOT")
     rundir   = case.get_value("RUNDIR")
@@ -145,9 +207,15 @@ def _copy_files_to_momconf(case):
     if not os.path.isdir(momconfdir):
         os.makedirs(momconfdir)
 
-    for filename in ["MOM_input", "MOM_override", "diag_table.mom", "input.nml.mom"]:
-        shutil.copy(os.path.join(rundir,filename), momconfdir)
+    for filename in ["MOM_input", "MOM_override"]:
+        if 's2s' in app:
+            if os.path.isfile(os.path.join(rundir,"INPUT",filename)):
+                shutil.copy(os.path.join(rundir,"INPUT",filename), momconfdir)
+        else:
+            shutil.copy(os.path.join(rundir,filename), momconfdir)
 
+    for filename in ["diag_table.mom", "input.nml.mom"]:
+        shutil.copy(os.path.join(rundir,filename), momconfdir)
 
 # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
 ###############################################################################
@@ -159,11 +227,18 @@ def buildnml(case, caseroot, compname):
     if compname != "mom":
         raise AttributeError
 
+    # Set app name
+    components = active_components(case)
+    if any('ufsatm' in x for x in components):
+        app = "s2s"
+    else:
+        app = "cesm"
+
     # prepare all input files
-    prep_input(case)
+    prep_input(case, app)
 
     # save copies of input files in momconf
-    _copy_files_to_momconf(case)
+    _copy_files_to_momconf(case, app)
 
     return
 
