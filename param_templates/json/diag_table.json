@@ -61,7 +61,8 @@
          "diazFe",
          "PV_CO2",
          "ECOSYS_ATM_PRESS",
-         "ECOSYS_IFRAC"
+         "ECOSYS_IFRAC",
+         "PH"
       ],
       [
          "SSH",
@@ -366,10 +367,18 @@
       "hist_bgc": {
          "suffix": "hm_bgc%4yr-%2mo",
          "output_freq": 1,
-         "output_freq_units": "months",
+         "output_freq_units": {
+            "$OCN_DIAG_MODE == \"spinup\"": "years",
+            "$TEST == True": "days",
+            "else": "months"
+         },
          "time_axis_units": "days",
          "new_file_freq": 1,
-         "new_file_freq_units": "months",
+         "new_file_freq_units": {
+            "$OCN_DIAG_MODE == \"spinup\"": "years",
+            "$TEST == True": "days",
+            "else": "months"
+         },
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
@@ -413,7 +422,8 @@
                         "diazFe",
                         "PV_CO2",
                         "ECOSYS_ATM_PRESS",
-                        "ECOSYS_IFRAC"
+                        "ECOSYS_IFRAC",
+                        "PH"
                      ],
                      [
                         "volcello",

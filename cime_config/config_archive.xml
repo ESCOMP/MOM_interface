@@ -3,6 +3,7 @@
     <rest_file_extension>r</rest_file_extension>
     <hist_file_extension>h.?[_\d+]+.nc$</hist_file_extension>
     <hist_file_extension>hm.?[_\d+]+.nc$</hist_file_extension>
+    <hist_file_extension>hm_bgc.?[_\d+]+.nc$</hist_file_extension>
     <hist_file_extension>frc.?[_\d+]+.nc$</hist_file_extension>
     <hist_file_extension>sfc.?[_\d+]+.nc$</hist_file_extension>
     <hist_file_extension>rho2.?[_\d+]+.nc$</hist_file_extension>
