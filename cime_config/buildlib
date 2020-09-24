@@ -30,7 +30,8 @@ def buildlib(caseroot, libroot, bldroot):
         fmsbuildlib = os.path.join(srcroot,"libraries","FMS","buildlib")
         fmsbuilddir = os.path.join(bldroot,"FMS")
         if not os.path.exists(fmsbuildlib):
-            expect(os.path.exists(os.path.join(libroot,"libfms.a")), "FMS external not found")
+            print("THe file is {}".format(os.path.isfile(os.path.join(libroot,"libfms.a"))))
+            expect(os.path.isfile(os.path.join(libroot,"libfms.a")), "FMS external not found in {}".format(libroot))
         else:
             stat, _, err = run_cmd("{} {} {} {}".format(fmsbuildlib, bldroot, fmsbuilddir, caseroot), verbose=True)
             expect(stat==0, "FMS build Failed {}".format(err))
