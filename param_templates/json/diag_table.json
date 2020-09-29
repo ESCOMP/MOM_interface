@@ -62,7 +62,9 @@
          "PV_CO2",
          "ECOSYS_ATM_PRESS",
          "ECOSYS_IFRAC",
-         "PH"
+         "PH",
+         "DUST_FLUX",
+         "IRON_FLUX"
       ],
       [
          "SSH",
@@ -423,7 +425,9 @@
                         "PV_CO2",
                         "ECOSYS_ATM_PRESS",
                         "ECOSYS_IFRAC",
-                        "PH"
+                        "PH",
+                        "DUST_FLUX",
+                        "IRON_FLUX"
                      ],
                      [
                         "volcello",

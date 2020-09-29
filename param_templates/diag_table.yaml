@@ -16,7 +16,8 @@ FieldLists:
                          "ALK", "ALK_ALT_CO2", "DOC", "DON", "DOP", "DOPr", "DONr", "DOCr",
                          "zooC", "spChl", "spC", "spP", "spFe", "spCaCO3", "diatChl", "diatC",
                          "diatP", "diatFe", "diatSi", "diazChl", "diazC", "diazP", "diazFe",
-                         "PV_CO2", "ECOSYS_ATM_PRESS", "ECOSYS_IFRAC", "PH"]
+                         "PV_CO2", "ECOSYS_ATM_PRESS", "ECOSYS_IFRAC", "PH", "DUST_FLUX",
+                         "IRON_FLUX"]
 
     - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint",
                          "somint", "Rd_dx", "speed", "mlotst"]
