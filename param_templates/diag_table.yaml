@@ -17,7 +17,7 @@ FieldLists:
                          "zooC", "spChl", "spC", "spP", "spFe", "spCaCO3", "diatChl", "diatC",
                          "diatP", "diatFe", "diatSi", "diazChl", "diazC", "diazP", "diazFe",
                          "PV_CO2", "ECOSYS_ATM_PRESS", "ECOSYS_IFRAC", "PH", "DUST_FLUX",
-                         "IRON_FLUX"]
+                         "IRON_FLUX", "NOx_FLUX", "NHy_FLUX"]
 
     - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint",
                          "somint", "Rd_dx", "speed", "mlotst"]

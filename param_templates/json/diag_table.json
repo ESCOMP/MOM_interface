@@ -64,7 +64,9 @@
          "ECOSYS_IFRAC",
          "PH",
          "DUST_FLUX",
-         "IRON_FLUX"
+         "IRON_FLUX",
+         "NOx_FLUX",
+         "NHy_FLUX"
       ],
       [
          "SSH",
@@ -427,7 +429,9 @@
                         "ECOSYS_IFRAC",
                         "PH",
                         "DUST_FLUX",
-                        "IRON_FLUX"
+                        "IRON_FLUX",
+                        "NOx_FLUX",
+                        "NHy_FLUX"
                      ],
                      [
                         "volcello",
