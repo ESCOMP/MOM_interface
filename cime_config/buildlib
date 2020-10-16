@@ -78,8 +78,6 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src",memory_mode),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","GFDL_ocean_BGC"),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","ODA_hooks"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","pkg","GSW-Fortran","ODA_hooks"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","ODA_hooks"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","ALE"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","core"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","diagnostics"),
