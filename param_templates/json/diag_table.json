@@ -66,7 +66,8 @@
          "DUST_FLUX",
          "IRON_FLUX",
          "NOx_FLUX",
-         "NHy_FLUX"
+         "NHy_FLUX",
+         "FESEDFLUX"
       ],
       [
          "SSH",
@@ -431,7 +432,8 @@
                         "DUST_FLUX",
                         "IRON_FLUX",
                         "NOx_FLUX",
-                        "NHy_FLUX"
+                        "NHy_FLUX",
+                        "FESEDFLUX"
                      ],
                      [
                         "volcello",
