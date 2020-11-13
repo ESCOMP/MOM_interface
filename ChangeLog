@@ -1,5 +1,20 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  gmarques, altuntas, et al.
+Tag Date:    12 Nov 2020
+Tag Name:    mi_20201112
+
+MOM_interface Updates Summary:
+- Update MOM_interface for the main candidate (091820) merge
+
+MOM6 Updates Summary:
+- Merge main candidate from 09/18/2020
+- Adding option to output u^2, v^2 and u*v
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  altuntas
 Tag Date:    8 Sep 2020
 Tag Name:    mi_20200908
