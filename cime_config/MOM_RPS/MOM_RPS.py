@@ -114,9 +114,8 @@ class MOM_RPS(object,):
                 string is either the key or the value of yaml entries, i.e., 'key': 'val'
             defer_expansion: bool
                 If True, defer the expansion of expandable variables whose values cannot be
-                determined. defer_expansion should always be False for 'key' entries, but may
-                be True for 'val' entries, provided thay they are dropped after the 'key's, i.e.,
-                the guards are evaluated.
+                determined. defer_expansion may be True for 'key' and 'val' entries, provided
+                thay they are dropped after the 'key's, i.e., the guards are evaluated.
             """
 
             def is_cime_param(param_str):
@@ -210,7 +209,7 @@ class MOM_RPS(object,):
                     val.pop(key_)
                     val[_expand_key(key_, val_)] = val_
             if has_expandable_var(key):
-                    return _expand_case_var(key)
+                    return _expand_case_var(key, defer_expansion=True)
             return key
 
         # Step 1: Expand values:
@@ -237,9 +236,10 @@ class MOM_RPS(object,):
             " Checks if a given value guard agrees with the case settings."
 
             if has_expandable_var(guard):
-                raise RuntimeError("The guard "+guard+" has an expandable case variable! "+\
-                                   "expand_case_vars method must be called before "+\
-                                   "infer_values method is called!")
+                raise RuntimeError("The guard "+guard+" has an expandable case variable "+\
+                                   "that couldn't be determined. Make sure that the expandable "+\
+                                   "variable(s) is defined for this case configuration and that "
+                                   "expand_case_vars is called before infer_values method.")
             else:
                 guard_inferred = guard
 
@@ -302,6 +302,9 @@ class MOM_RPS(object,):
                 elif (type(entry[child]) in [dict, OrderedDict]):
                     if (_is_guarded_entry(entry[child])):
                         entry[child] = _do_determine_value(entry[child])
+                        # if nested guards, call the _determine_value_recursive again
+                        if (type(entry[child]) in [dict, OrderedDict]):
+                            _determine_value_recursive(entry)
                     else:
                         _determine_value_recursive(entry[child])
                 else:
