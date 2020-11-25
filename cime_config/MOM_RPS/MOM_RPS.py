@@ -104,11 +104,23 @@ class MOM_RPS(object,):
 
         str_type = get_str_type()
 
-        def _expand_case_var(entry, case):
-            """ Returns the version of an entry where cime parameters are expanded"""
+        def _expand_case_var(entry, defer_expansion=False):
+            """ Returns the version of an entry where cime parameters are expanded
+
+            Parameters
+            ----------
+            entry: string
+                A string that includes expandable case vars, e.g., $OCN_GRID. This
+                string is either the key or the value of yaml entries, i.e., 'key': 'val'
+            defer_expansion: bool
+                If True, defer the expansion of expandable variables whose values cannot be
+                determined. defer_expansion should always be False for 'key' entries, but may
+                be True for 'val' entries, provided thay they are dropped after the 'key's, i.e.,
+                the guards are evaluated.
+            """
 
             def is_cime_param(param_str):
-                """ Returns True if the parameter to expand is a CIME parameter, e.g., OCN_GRIDi."""
+                """ Returns True if the parameter to expand is a CIME parameter, e.g., OCN_GRID."""
                 cime_param = case.get_value(param_str)
                 if cime_param==None:
                     return False
@@ -143,8 +155,13 @@ class MOM_RPS(object,):
                 elif aux_rps_obj!=None:
                     param_expanded = aux_rps_param(expandable_param)
                 if param_expanded == None:
-                    raise RuntimeError("The param "+expandable_param+" is not a CIME xml"
-                                       " variable for this case")
+                    if defer_expansion==False:
+                        raise RuntimeError("The param "+expandable_param+" is not a CIME xml"
+                                           " variable for this case")
+                    else:
+                        param_expanded = word # do not expand this variable whose value couldn't
+                                              # be found. This entry must later be dropped when
+                                              # guards are evaluated.
                 entry = entry.replace(word, str(param_expanded))
 
             # now infer $*
@@ -157,8 +174,13 @@ class MOM_RPS(object,):
                     elif aux_rps_obj!=None:
                         param_expanded = aux_rps_param(expandable_param)
                     if param_expanded == None:
-                        raise RuntimeError("The param "+expandable_param+" is not a CIME xml"
-                                           " variable for this case")
+                        if defer_expansion==False:
+                            raise RuntimeError("The param "+expandable_param+" is not a CIME xml"
+                                               " variable for this case")
+                        else:
+                            param_expanded = word # do not expand this variable whose value couldn't
+                                                  # be found. This entry must later be dropped when
+                                                  # guards are evaluated.
 
                     if isinstance(param_expanded,str_type):
                         param_expanded = '"'+param_expanded+'"'
@@ -175,7 +197,7 @@ class MOM_RPS(object,):
                 pass
             else:
                 if has_expandable_var(val):
-                    val_eval = _expand_case_var(val, case)
+                    val_eval = _expand_case_var(val, defer_expansion=True)
                     return val_eval
 
             return val
@@ -188,7 +210,7 @@ class MOM_RPS(object,):
                     val.pop(key_)
                     val[_expand_key(key_, val_)] = val_
             if has_expandable_var(key):
-                    return _expand_case_var(key, case)
+                    return _expand_case_var(key)
             return key
 
         # Step 1: Expand values:
@@ -247,6 +269,10 @@ class MOM_RPS(object,):
             # If no other guard evaluates to true, get the value prefixed by "else":
             if val==None and "else" in multi_option_dict:
                 val = multi_option_dict["else"]
+
+            if has_expandable_var(val):
+                raise RuntimeError("Couldn't determine the value of the expanded variables ($) "
+                                   "in the following entry of the param template file: "+val)
 
             return val
 
