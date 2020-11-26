@@ -20,8 +20,9 @@ mom.input_data_list:
     ocean_topo_edit:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/All_edits.nc"
     tempsalt:
-        $INIT_LAYERS_FROM_Z_FILE == "True" and $OCN_GRID in ["gx1v6", "tx0.66v1", "tx0.25v1"]:
-            "${INPUTDIR}/${TEMP_SALT_Z_INIT_FILE}"
+        $OCN_GRID in ["gx1v6", "tx0.66v1", "tx0.25v1"]:
+            $INIT_LAYERS_FROM_Z_FILE == "True":
+                "${INPUTDIR}/${TEMP_SALT_Z_INIT_FILE}"
     saltrestore:
         $OCN_GRID == "tx0.66v1": "${INPUTDIR}/state_restore_tx0.66v1_20200616.nc"
     tidal:
