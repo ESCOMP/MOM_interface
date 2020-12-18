@@ -820,18 +820,6 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
-    TIDE_SAL_SCALAR_VALUE:
-        description: |
-            "[m m-1]
-            The constant of proportionality between sea surface
-            height (really it should be bottom pressure) anomalies
-            and bottom geopotential anomalies. This is only used if
-            TIDES and TIDE_USE_SAL_SCALAR are true."
-        datatype: real
-        units: m m-1
-        value:
-            $OCN_GRID == "gx1v6": 0.094
-            $OCN_GRID == "tx0.66v1": 0.094
     MASS_WEIGHT_IN_PRESSURE_GRADIENT:
         description: |
             "[Boolean] default = False
@@ -879,15 +867,6 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "tx0.66v1": 0.0
-    KH_PWR_OF_SINE:
-        description: |
-            "[nondim] default = 4.0
-            The power used to raise SIN(LAT) when using a latidutinally-
-            dependent background viscosity."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "tx0.66v1": 4.0
     BIHARMONIC:
         description: |
             "[Boolean] default = True
@@ -1432,18 +1411,6 @@ Global:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": True
-    N2_FLOOR_IOMEGA2:
-        description: |
-            "[nondim] default = 1.0
-            The floor applied to N2(k) scaled by Omega^2:
-            If =0., N2(k) is simply positive definite.
-            If =1., N2(k) > Omega^2 everywhere."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "gx1v6": 0.0
-            $OCN_GRID == "tx0.66v1": 0.0
-            $OCN_GRID == "tx0.25v1": 0.0
     KD:
         description: |
             "[m2 s-1]
@@ -1490,42 +1457,6 @@ Global:
         value:
             $OCN_GRID == "gx1v6": "300.3003003003003"
             $OCN_GRID == "tx0.25v1": "300.3003003003003"
-    KAPPA_ITIDES:
-        description: |
-            "[m-1] default = 6.283185307179586E-04
-            A topographic wavenumber used with INT_TIDE_DISSIPATION.
-            The default is 2pi/10 km, as in St.Laurent et al. 2002."
-        datatype: real
-        units: m-1
-        value:
-            $OCN_GRID == "gx1v6": 6.28319E-04
-            $OCN_GRID == "tx0.66v1": 6.28319E-04
-            $OCN_GRID == "tx0.25v1": 6.28319E-04
-    KAPPA_H2_FACTOR:
-        description: |
-            "[nondim] default = 1.0
-            A scaling factor for the roughness amplitude with nINT_TIDE_DISSIPATION."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "gx1v6": 0.75
-            $OCN_GRID == "tx0.66v1": 0.75
-            $OCN_GRID == "tx0.25v1": 0.84
-    TKE_ITIDE_MAX:
-        description: |
-            "[W m-2] default = 1000.0
-            The maximum internal tide energy source availble to mix
-            above the bottom boundary layer with INT_TIDE_DISSIPATION.
-            If true, read a file (given by TIDEAMP_FILE) containing
-            the tidal amplitude with INT_TIDE_DISSIPATION.
-            The path to the file containing the sub-grid-scale
-            topographic roughness amplitude with INT_TIDE_DISSIPATION."
-        datatype: real
-        units: W m-2
-        value:
-            $OCN_GRID == "gx1v6": 0.1
-            $OCN_GRID == "tx0.66v1": 0.1
-            $OCN_GRID == "tx0.25v1": 0.1
     READ_TIDEAMP:
         description: |
             "[Boolean] default = False
@@ -1680,17 +1611,6 @@ Global:
             $OCN_GRID == "gx1v6": 1.0E-05
             $OCN_GRID == "tx0.66v1": 1.0E-05
             $OCN_GRID == "MISOMIP": 1.0E-08
-    BULK_RI_ML:
-        description: |
-            "[nondim]
-            The efficiency with which mean kinetic energy released
-            by mechanically forced entrainment of the mixed layer
-            is converted to turbulent kinetic energy."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "gx1v6": 0.05
-            $OCN_GRID == "tx0.66v1": 0.05
     HMIX_MIN:
         description: |
             "[m] default = 0.0
@@ -2039,20 +1959,6 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 100000
             else: 5000
-    MAXCPU:
-        description: |
-            "[wall-clock seconds] default = -1.0
-            The maximum amount of cpu time per processor for which
-            MOM should run before saving a restart file and
-            quitting with a return value that indicates that a
-            further run is required to complete the simulation.
-            If automatic restarts are not desired, use a negative
-            value for MAXCPU.  MAXCPU has units of wall-clock
-            seconds, so the actual CPU time used is larger by a
-            factor of the number of processors used."
-        datatype: real
-        units: wall-clock seconds
-        value: 2.88E+04
     OCEAN_SURFACE_STAGGER:
         description: |
             "default = 'C'
@@ -2159,8 +2065,6 @@ Global:
         units: days
         value:
             $OCN_GRID == "MISOMIP": 0.0
-            $OCN_GRID == "tx0.25v1": 0.0
-            else: 365.0
     ENERGYSAVEDAYS:
         description: |
             "[days] default = 1.0
