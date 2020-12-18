@@ -1958,7 +1958,7 @@ Global:
         units: truncations save_interval-1
         value:
             $OCN_GRID == "tx0.25v1": 100000
-            else: 5000
+            else: 0
     OCEAN_SURFACE_STAGGER:
         description: |
             "default = 'C'
