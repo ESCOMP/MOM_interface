@@ -1417,14 +1417,16 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
       "CHL_FILE": {
          "description": "",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "seawifs-clim-1997-2010.1440x1080.v20180328.nc"
+            "$OCN_GRID == \"tx0.25v1\"": "seawifs-clim-1997-2010.1440x1080.v20180328.nc",
+            "$OCN_GRID == \"tx0.66v1\"": "seawifs-clim-1997-2010-tx0.66v1.nc"
          }
       },
       "CHL_VARNAME": {
@@ -1438,7 +1440,8 @@
          "description": "\"default = 1\nThe number of bands of penetrating shortwave radiation.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 3
+            "$OCN_GRID == \"tx0.25v1\"": 3,
+            "$OCN_GRID == \"tx0.66v1\"": 3
          }
       },
       "TRACER_ADVECTION_SCHEME": {
