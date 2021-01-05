@@ -1642,7 +1642,6 @@ Global:
         units: m
         value:
             $OCN_GRID == "gx1v6": 15.0
-            $OCN_GRID == "tx0.66v1": 15.0
     PEN_SW_FRAC:
         description: |
             "[nondim] default = 0.0
@@ -1652,7 +1651,6 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "gx1v6": 0.42
-            $OCN_GRID == "tx0.66v1": 0.42
     PRESSURE_DEPENDENT_FRAZIL:
         description: |
             "[Boolean] default = False
