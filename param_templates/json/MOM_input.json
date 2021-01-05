@@ -585,6 +585,14 @@
             "$OCN_GRID == \"gx1v6\"": true
          }
       },
+      "TIDE_SAL_SCALAR_VALUE": {
+         "description": "\"[m m-1]\nThe constant of proportionality between sea surface\nheight (really it should be bottom pressure) anomalies\nand bottom geopotential anomalies. This is only used if\nTIDES and TIDE_USE_SAL_SCALAR are true.\"\n",
+         "datatype": "real",
+         "units": "m m-1",
+         "value": {
+            "$OCN_GRID == \"gx1v6\"": 0.094
+         }
+      },
       "MASS_WEIGHT_IN_PRESSURE_GRADIENT": {
          "description": "\"[Boolean] default = False\nIf true, use mass weighting when interpolation T/S for\ntop/bottom integrals in AFV pressure gradient calculation.\"\n",
          "datatype": "logical",

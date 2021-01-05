@@ -820,6 +820,17 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
+    TIDE_SAL_SCALAR_VALUE:
+        description: |
+            "[m m-1]
+            The constant of proportionality between sea surface
+            height (really it should be bottom pressure) anomalies
+            and bottom geopotential anomalies. This is only used if
+            TIDES and TIDE_USE_SAL_SCALAR are true."
+        datatype: real
+        units: m m-1
+        value:
+            $OCN_GRID == "gx1v6": 0.094
     MASS_WEIGHT_IN_PRESSURE_GRADIENT:
         description: |
             "[Boolean] default = False
