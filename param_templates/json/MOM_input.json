@@ -590,8 +590,7 @@
          "datatype": "real",
          "units": "m m-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.094,
-            "$OCN_GRID == \"tx0.66v1\"": 0.094
+            "$OCN_GRID == \"gx1v6\"": 0.094
          }
       },
       "MASS_WEIGHT_IN_PRESSURE_GRADIENT": {
@@ -632,14 +631,6 @@
          "units": "m2 s-1",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": 0.0
-         }
-      },
-      "KH_PWR_OF_SINE": {
-         "description": "\"[nondim] default = 4.0\nThe power used to raise SIN(LAT) when using a latidutinally-\ndependent background viscosity.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 4.0
          }
       },
       "BIHARMONIC": {
@@ -1047,16 +1038,6 @@
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
-      "N2_FLOOR_IOMEGA2": {
-         "description": "\"[nondim] default = 1.0\nThe floor applied to N2(k) scaled by Omega^2:\nIf =0., N2(k) is simply positive definite.\nIf =1., N2(k) > Omega^2 everywhere.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.0,
-            "$OCN_GRID == \"tx0.66v1\"": 0.0,
-            "$OCN_GRID == \"tx0.25v1\"": 0.0
-         }
-      },
       "KD": {
          "description": "\"[m2 s-1]\nThe background diapycnal diffusivity of density in the\ninterior. Zero or the molecular value, ~1e-7 m2 s-1,\nmay be used.\"\n",
          "datatype": "real",
@@ -1094,36 +1075,6 @@
          "value": {
             "$OCN_GRID == \"gx1v6\"": "300.3003003003003",
             "$OCN_GRID == \"tx0.25v1\"": "300.3003003003003"
-         }
-      },
-      "KAPPA_ITIDES": {
-         "description": "\"[m-1] default = 6.283185307179586E-04\nA topographic wavenumber used with INT_TIDE_DISSIPATION.\nThe default is 2pi/10 km, as in St.Laurent et al. 2002.\"\n",
-         "datatype": "real",
-         "units": "m-1",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.000628319,
-            "$OCN_GRID == \"tx0.66v1\"": 0.000628319,
-            "$OCN_GRID == \"tx0.25v1\"": 0.000628319
-         }
-      },
-      "KAPPA_H2_FACTOR": {
-         "description": "\"[nondim] default = 1.0\nA scaling factor for the roughness amplitude with nINT_TIDE_DISSIPATION.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.75,
-            "$OCN_GRID == \"tx0.66v1\"": 0.75,
-            "$OCN_GRID == \"tx0.25v1\"": 0.84
-         }
-      },
-      "TKE_ITIDE_MAX": {
-         "description": "\"[W m-2] default = 1000.0\nThe maximum internal tide energy source availble to mix\nabove the bottom boundary layer with INT_TIDE_DISSIPATION.\nIf true, read a file (given by TIDEAMP_FILE) containing\nthe tidal amplitude with INT_TIDE_DISSIPATION.\nThe path to the file containing the sub-grid-scale\ntopographic roughness amplitude with INT_TIDE_DISSIPATION.\"\n",
-         "datatype": "real",
-         "units": "W m-2",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.1,
-            "$OCN_GRID == \"tx0.66v1\"": 0.1,
-            "$OCN_GRID == \"tx0.25v1\"": 0.1
          }
       },
       "READ_TIDEAMP": {
@@ -1264,15 +1215,6 @@
             "$OCN_GRID == \"MISOMIP\"": 1e-08
          }
       },
-      "BULK_RI_ML": {
-         "description": "\"[nondim]\nThe efficiency with which mean kinetic energy released\nby mechanically forced entrainment of the mixed layer\nis converted to turbulent kinetic energy.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.05,
-            "$OCN_GRID == \"tx0.66v1\"": 0.05
-         }
-      },
       "HMIX_MIN": {
          "description": "\"[m] default = 0.0\nThe minimum mixed layer depth if the mixed layer depth\nis determined dynamically.\"\n",
          "datatype": "real",
@@ -1288,8 +1230,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 15.0,
-            "$OCN_GRID == \"tx0.66v1\"": 15.0
+            "$OCN_GRID == \"gx1v6\"": 15.0
          }
       },
       "PEN_SW_FRAC": {
@@ -1297,8 +1238,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.42,
-            "$OCN_GRID == \"tx0.66v1\"": 0.42
+            "$OCN_GRID == \"gx1v6\"": 0.42
          }
       },
       "PRESSURE_DEPENDENT_FRAZIL": {
@@ -1483,14 +1423,16 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
       "CHL_FILE": {
          "description": "",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "seawifs-clim-1997-2010.1440x1080.v20180328.nc"
+            "$OCN_GRID == \"tx0.25v1\"": "seawifs-clim-1997-2010.1440x1080.v20180328.nc",
+            "$OCN_GRID == \"tx0.66v1\"": "seawifs-clim-1997-2010-tx0.66v1.nc"
          }
       },
       "CHL_VARNAME": {
@@ -1504,7 +1446,8 @@
          "description": "\"default = 1\nThe number of bands of penetrating shortwave radiation.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 3
+            "$OCN_GRID == \"tx0.25v1\"": 3,
+            "$OCN_GRID == \"tx0.66v1\"": 3
          }
       },
       "TRACER_ADVECTION_SCHEME": {
@@ -1572,14 +1515,8 @@
          "units": "truncations save_interval-1",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 100000,
-            "else": 5000
+            "else": 0
          }
-      },
-      "MAXCPU": {
-         "description": "\"[wall-clock seconds] default = -1.0\nThe maximum amount of cpu time per processor for which\nMOM should run before saving a restart file and\nquitting with a return value that indicates that a\nfurther run is required to complete the simulation.\nIf automatic restarts are not desired, use a negative\nvalue for MAXCPU.  MAXCPU has units of wall-clock\nseconds, so the actual CPU time used is larger by a\nfactor of the number of processors used.\"\n",
-         "datatype": "real",
-         "units": "wall-clock seconds",
-         "value": 28800.0
       },
       "OCEAN_SURFACE_STAGGER": {
          "description": "\"default = 'C'\nA case-insensitive character string to indicate the\nstaggering of the surface velocity field that is\nreturned to the coupler.  Valid values include\n'A', 'B', or 'C'.\"\n",
@@ -1666,9 +1603,7 @@
          "datatype": "real",
          "units": "days",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": 0.0,
-            "$OCN_GRID == \"tx0.25v1\"": 0.0,
-            "else": 365.0
+            "$OCN_GRID == \"MISOMIP\"": 0.0
          }
       },
       "ENERGYSAVEDAYS": {
