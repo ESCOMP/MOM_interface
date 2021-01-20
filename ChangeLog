@@ -1,6 +1,59 @@
 ===============================================================================
 Tag Creator: altuntas
 Developers:  gmarques, altuntas, et al.
+Tag Date:    12 Nov 2020
+Tag Name:    mi_20201112
+
+MOM_interface Updates Summary:
+- Update MOM_interface for the main candidate (091820) merge
+
+MOM6 Updates Summary:
+- Merge main candidate from 09/18/2020
+- Adding option to output u^2, v^2 and u*v
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  altuntas
+Tag Date:    8 Sep 2020
+Tag Name:    mi_20200908
+
+MOM_interface Updates Summary:
+- Fix file list in mom.input_data_list
+
+Testing: aux_mom on cheyenne. GMOM and CMOM on izumi/gnu
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  altuntas
+Tag Date:    26 Aug 2020
+Tag Name:    mi_20200826
+
+MOM_interface Updates Summary:
+- Fix mom.input_data_list for custom INPUTDIRs
+
+Testing: pr_mom on cheyenne
+===============================================================================
+Tag Creator: altuntas
+Developers:  altuntas, gmarques, jedwards
+Tag Date:    20 Aug 2020
+Tag Name:    mi_20200820
+
+MOM_interface Updates Summary:
+- Remove BMOM compset definition.
+- Set BAD_VAL_SSS_MAX=75.0.
+- Do not adjust net fresh-water forcing in B-compsets.
+- MOM_RPS support for expandable vars from other templates.
+
+MOM6 Updates Summary:
+- Fix multi-restart files in NUOPC cap
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  gmarques, altuntas, et al.
 Tag Date:    24 Jul 2020
 Tag Name:    mi_20200724
 
