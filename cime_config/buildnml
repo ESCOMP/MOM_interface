@@ -48,11 +48,17 @@ def prep_input(case):
     ocn_grid        = case.get_value("OCN_GRID")
     run_type        = case.get_value("RUN_TYPE")
     continue_run    = case.get_value("CONTINUE_RUN")
+    momconfdir  = os.path.join(caseroot, "Buildconf", "momconf")
     SourceMods_dir = os.path.join(caseroot,"SourceMods","src.mom")
+    use_MARBL = (ocn_bgc_config != "none")
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
         os.makedirs(rundir)
+
+    # Make sure that momconfdir exists. If not, make it:
+    if not os.path.exists(momconfdir) and use_MARBL:
+        os.makedirs(momconfdir)
 
     # Parse json files and create MOM6 input files in rundir
     json_templates_dir = os.path.join(comp_root_dir_ocn,"param_templates","json")
@@ -91,7 +97,7 @@ def prep_input(case):
         input_nml.write(input_nml_dest, case)
 
     # 5. Create marbl_in (if case is set up with ocean BGC)
-    if  ocn_bgc_config != "none":
+    if  use_MARBL:
         MARBL_dir = os.path.join(srcroot, "components", "mom", "MOM6", "pkg", "MARBL")
         from MARBL_settings import MARBL_settings_for_MOM
         MARBL_settings = MARBL_settings_for_MOM(MARBL_dir, caseroot, ocn_grid, run_type,
@@ -111,11 +117,11 @@ def prep_input(case):
         diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
         diag_table_dest = os.path.join(rundir,"diag_table")
         diag_table = FType_diag_table.from_json(diag_table_src)
-        if ocn_bgc_config != "none":
+        if use_MARBL:
             # 7b. add ocean BGC diagnostics to diag_table
             # TODO: instead of copying json file here, python script should generate it based on ecosys_diagnostics
             diag_table_src = os.path.join(json_templates_dir, "diag_table_MARBL.json")
-            diag_table_buildconf = os.path.join(Buildconf, "momconf", "diag_table_MARBL.json")
+            diag_table_buildconf = os.path.join(momconfdir, "diag_table_MARBL.json")
             shutil.copy(diag_table_src, diag_table_buildconf)
             diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
         diag_table.write(diag_table_dest, case)
