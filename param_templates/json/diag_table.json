@@ -27,49 +27,6 @@
          "T_diffx_2d"
       ],
       [
-         "PO4",
-         "NO3",
-         "SiO3",
-         "NH4",
-         "Fe",
-         "Lig",
-         "O2",
-         "DIC",
-         "DIC_ALT_CO2",
-         "ALK",
-         "ALK_ALT_CO2",
-         "DOC",
-         "DON",
-         "DOP",
-         "DOPr",
-         "DONr",
-         "DOCr",
-         "zooC",
-         "spChl",
-         "spC",
-         "spP",
-         "spFe",
-         "spCaCO3",
-         "diatChl",
-         "diatC",
-         "diatP",
-         "diatFe",
-         "diatSi",
-         "diazChl",
-         "diazC",
-         "diazP",
-         "diazFe",
-         "PV_CO2",
-         "ECOSYS_ATM_PRESS",
-         "ECOSYS_IFRAC",
-         "PH",
-         "DUST_FLUX",
-         "IRON_FLUX",
-         "NOx_FLUX",
-         "NHy_FLUX",
-         "FESEDFLUX"
-      ],
-      [
          "SSH",
          "tos",
          "sos",
@@ -363,86 +320,6 @@
                         "T_adx_2d",
                         "T_diffy_2d",
                         "T_diffx_2d"
-                     ]
-                  ]
-               }
-            ]
-         }
-      },
-      "hist_bgc": {
-         "suffix": "hm_bgc%4yr-%2mo",
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "$TEST == True": "days",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "$TEST == True": "days",
-            "else": "months"
-         },
-         "reduction_method": "mean",
-         "regional_section": "none",
-         "fields": {
-            "$OCN_BGC_CONFIG != \"none\"": [
-               {
-                  "module": "ocean_model",
-                  "packing": 1,
-                  "lists": [
-                     [
-                        "PO4",
-                        "NO3",
-                        "SiO3",
-                        "NH4",
-                        "Fe",
-                        "Lig",
-                        "O2",
-                        "DIC",
-                        "DIC_ALT_CO2",
-                        "ALK",
-                        "ALK_ALT_CO2",
-                        "DOC",
-                        "DON",
-                        "DOP",
-                        "DOPr",
-                        "DONr",
-                        "DOCr",
-                        "zooC",
-                        "spChl",
-                        "spC",
-                        "spP",
-                        "spFe",
-                        "spCaCO3",
-                        "diatChl",
-                        "diatC",
-                        "diatP",
-                        "diatFe",
-                        "diatSi",
-                        "diazChl",
-                        "diazC",
-                        "diazP",
-                        "diazFe",
-                        "PV_CO2",
-                        "ECOSYS_ATM_PRESS",
-                        "ECOSYS_IFRAC",
-                        "PH",
-                        "DUST_FLUX",
-                        "IRON_FLUX",
-                        "NOx_FLUX",
-                        "NHy_FLUX",
-                        "FESEDFLUX"
-                     ],
-                     [
-                        "volcello",
-                        "vmo",
-                        "vhGM",
-                        "vhml",
-                        "umo",
-                        "uhGM",
-                        "uhml"
                      ]
                   ]
                }
