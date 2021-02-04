@@ -119,11 +119,39 @@ def prep_input(case):
         diag_table = FType_diag_table.from_json(diag_table_src)
         if use_MARBL:
             # 7b. add ocean BGC diagnostics to diag_table
-            # TODO: instead of copying json file here, python script should generate it based on ecosys_diagnostics
-            diag_table_src = os.path.join(json_templates_dir, "diag_table_MARBL.json")
+            srcmods_version = os.path.join(SourceMods_dir, "diag_table_MARBL.json")
             diag_table_buildconf = os.path.join(momconfdir, "diag_table_MARBL.json")
-            shutil.copy(diag_table_src, diag_table_buildconf)
-            diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
+            if os.path.isfile(srcmods_version):
+                shutil.copy(srcmods_version, diag_table_buildconf)
+            else:
+                srcmods_version = os.path.join(SourceMods_dir, "ecosys_diagnostics")
+                ecosys_diags_buildconf = os.path.join(momconfdir, "ecosys_diagnostics")
+                if os.path.isfile(srcmods_version):
+                    shutil.copy(srcmods_version, ecosys_diags_buildconf)
+                else:
+                    # Create ecosys_diagnostics with MOM-generated diagnostics
+                    from MOM_ecosys_diagnostics import write_ecosys_diagnostics_file
+                    from MARBL_diagnostics import MARBL_diagnostics_for_MOM
+                    write_ecosys_diagnostics_file(MARBL_settings.get_tracer_names(),
+                                                  MARBL_settings.get_autotroph_names(),
+                                                  MARBL_settings.get_zooplankton_names(),
+                                                  MARBL_settings.get_autotroph_names(calcifier_only=True),
+                                                  MARBL_settings.ladjust_bury_coeff(),
+                                                  ecosys_diags_buildconf,
+                                                 )
+                    # (iii) Generate MARBL_diagnostics_for_MOM object
+                    MARBL_diagnostics = MARBL_diagnostics_for_MOM(MARBL_dir, caseroot, MARBL_settings)
+
+                    # (iv) append MARBL diagnostics to ecosys_diagnostics
+                    #      This also creates marbl_diagnostics_list to help track which
+                    #      diagnostics came from MARBL
+                    MARBL_diagnostics.write_diagnostics_file(ecosys_diags_buildconf,
+                                                            os.path.join(momconfdir, "marbl_diagnostics_list"),
+                                                            append=True)
+                # TODO: instead of copying json file here, python script should generate it based on ecosys_diagnostics
+                diag_table_src = os.path.join(json_templates_dir, "diag_table_MARBL.json")
+                shutil.copy(diag_table_src, diag_table_buildconf)
+                diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
         diag_table.write(diag_table_dest, case)
 
 def init_MOM_override(rundir):

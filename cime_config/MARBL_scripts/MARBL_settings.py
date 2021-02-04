@@ -72,9 +72,40 @@ class MARBL_settings_for_MOM(object):
 
     #######################################
 
+    def get_autotroph_names(self, calcifier_only=False):
+        """ Returns a list of all autotrophs in current configuration
+        """
+        autotroph_list = []
+        for n in range(1, self._MARBL_settings.settings_dict['autotroph_cnt']+1):
+            autotroph_name = self._MARBL_settings.settings_dict['autotroph_settings(%d)%%sname' % n].strip('"')
+            imp_calcifier = (self._MARBL_settings.settings_dict['autotroph_settings(%d)%%imp_calcifier' % n].strip('"') == '.true.')
+            exp_calcifier = (self._MARBL_settings.settings_dict['autotroph_settings(%d)%%exp_calcifier' % n].strip('"') == '.true.')
+            if imp_calcifier or exp_calcifier or (not calcifier_only):
+                autotroph_list.append(autotroph_name)
+        return autotroph_list
+
+    #######################################
+
+    def get_zooplankton_names(self):
+        """ Returns a list of all zooplankton in current configuration
+        """
+        zooplankton_list = []
+        for n in range(1, self._MARBL_settings.settings_dict['zooplankton_cnt']+1):
+            zooplankton_name = self._MARBL_settings.settings_dict['zooplankton_settings(%d)%%sname' % n].strip('"')
+            zooplankton_list.append(zooplankton_name)
+        return zooplankton_list
+
+    #######################################
+
+    def ladjust_bury_coeff(self):
+        """ Returns True if ladjust_bury_coeff = .true.
+        """
+        return (self._MARBL_settings.settings_dict['ladjust_bury_coeff'].strip('"') == '.true.')
+
+    #######################################
+
     def write_settings_file(self, settings_file_out):
         """ Write a settings file containing all MARBL settings
         """
         from MARBL_tools import generate_settings_file
         generate_settings_file(self._MARBL_settings, settings_file_out)
-
