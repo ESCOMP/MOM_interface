@@ -117,7 +117,6 @@ def prep_input(case):
         diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
         diag_table_dest = os.path.join(rundir,"diag_table")
         diag_table = FType_diag_table.from_json(diag_table_src)
-        diag_table.write(diag_table_dest, case)
         if use_MARBL:
             generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir)
             # TODO: instead of copying json file here, python script should generate it based on ecosys_diagnostics
@@ -125,6 +124,7 @@ def prep_input(case):
             diag_table_buildconf = os.path.join(momconfdir, "diag_table_MARBL.json")
             shutil.copy(diag_table_src, diag_table_buildconf)
             diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
+        diag_table.write(diag_table_dest, case)
 
 def init_MOM_override(rundir):
     # Create an empty MOM_override:
