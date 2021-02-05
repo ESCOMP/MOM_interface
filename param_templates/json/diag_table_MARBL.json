@@ -41,7 +41,9 @@
          "IRON_FLUX",
          "NOx_FLUX",
          "NHy_FLUX",
-         "FESEDFLUX"
+         "FESEDFLUX",
+         "STF_O2",
+         "J_DIC"
       ],
       [
          "volcello",
@@ -118,7 +120,9 @@
                         "IRON_FLUX",
                         "NOx_FLUX",
                         "NHy_FLUX",
-                        "FESEDFLUX"
+                        "FESEDFLUX",
+                        "STF_O2",
+                        "J_DIC"
                      ],
                      [
                         "volcello",
