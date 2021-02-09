@@ -118,12 +118,10 @@ def prep_input(case):
         diag_table_dest = os.path.join(rundir,"diag_table")
         diag_table = FType_diag_table.from_json(diag_table_src)
         if use_MARBL:
-            generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir)
-            # TODO: instead of copying json file here, python script should generate it based on ecosys_diagnostics
-            diag_table_src = os.path.join(json_templates_dir, "diag_table_MARBL.json")
             diag_table_buildconf = os.path.join(momconfdir, "diag_table_MARBL.json")
-            shutil.copy(diag_table_src, diag_table_buildconf)
-            diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
+            generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf)
+            if os.path.isfile(diag_table_buildconf):
+                diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
         diag_table.write(diag_table_dest, case)
 
 def init_MOM_override(rundir):
@@ -169,7 +167,7 @@ def _copy_files_to_momconf(case):
     for filename in ["MOM_input", "MOM_override", "diag_table", "input.nml"]:
         shutil.copy(os.path.join(rundir,filename), momconfdir)
 
-def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir):
+def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf):
     """
     Create Buildconf/momconf/diag_table_MARBL.json
 
@@ -179,7 +177,6 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
     """
     # 1. Check for diag_table_MARBL.json in SourceMods
     srcmods_version = os.path.join(SourceMods_dir, "diag_table_MARBL.json")
-    diag_table_buildconf = os.path.join(momconfdir, "diag_table_MARBL.json")
     if os.path.isfile(srcmods_version):
         shutil.copy(srcmods_version, diag_table_buildconf)
         return
@@ -205,13 +202,12 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
         MARBL_diagnostics = MARBL_diagnostics_for_MOM(MARBL_dir, caseroot, MARBL_settings)
 
         # (iv) append MARBL diagnostics to ecosys_diagnostics
-        #      This also creates marbl_diagnostics_list to help track which
-        #      diagnostics came from MARBL
         MARBL_diagnostics.write_diagnostics_file(ecosys_diags_buildconf,
-                                                os.path.join(momconfdir, "marbl_diagnostics_list"),
                                                 append=True)
 
     # 3. Generate diag_table based on contents of ecosys_diagnostics
+    from MARBL_diags_to_diag_table import diagnostics_to_diag_table
+    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, False, False)
 
 
 # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
