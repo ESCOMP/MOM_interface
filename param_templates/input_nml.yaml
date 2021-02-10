@@ -23,4 +23,14 @@ fms_nml:
 diag_manager_nml:
     flush_nc_files:
         value: .true.
+    max_output_fields:
+        value:
+            $OCN_BGC_CONFIG != "none" and $TEST != True: 600
+            $OCN_BGC_CONFIG != "none" and $TEST == True: 1200
+            else: 300
+    max_num_axis_sets:
+        value:
+            $OCN_BGC_CONFIG != "none" and $TEST != True: 27
+            $OCN_BGC_CONFIG != "none" and $TEST == True: 25
+            else: 24
 ...
