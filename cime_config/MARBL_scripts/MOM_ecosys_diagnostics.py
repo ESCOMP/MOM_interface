@@ -4,7 +4,7 @@
 
 def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_list, calcifier_list, ladjust_bury_coeff, ecosys_diag_filename):
     """ Subroutine to write a file in the same format as marbl_diagnostics containing
-        a list of POP-generated diagnostics that should be included based on the
+        a list of MOM-generated diagnostics that should be included based on the
         MARBL configuration
     """
 
@@ -301,3 +301,41 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         fout.write("#\n########################################\n")
         fout.write("#      MARBL-generated diagnostics     #\n")
         fout.write("########################################\n#\n")
+
+
+def get_2D_vars_from_ecosys_diagnostics(ecosys_diag_filename):
+    """
+    Read in ecosys_diagnostics, return a list of all variables that are 2D
+    whether they are written to a stream or not
+    """
+    varlist = []
+    with open(ecosys_diag_filename,"r") as fin:
+        lines = fin.readlines()
+
+    for line in lines:
+        lstr = line.strip()
+        # if user has modified ecosys_diagnostics and put it in SourceMods,
+        # then file may include MARBL diagnostics. We can stop looking at
+        # variable names when we reach that section
+        if "MARBL-generated diagnostics" in lstr:
+            break
+
+        # if line starts with "#" it is a comment and we can continue to next line
+        if lstr[0] == "#":
+            continue
+
+        # Pull varname out of line, append it to varlist if it is 2D
+        varname = lstr.split(":")[0].strip()
+        if _2D_varcheck(varname):
+            varlist.append(varname)
+
+    return varlist
+
+
+def _2D_varcheck(varname):
+    """
+    Return true if variable is 2D
+    """
+    if varname.startswith("STF_"):
+        return True
+    return False

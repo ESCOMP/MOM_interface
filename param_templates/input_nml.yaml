@@ -30,7 +30,7 @@ diag_manager_nml:
             else: 300
     max_num_axis_sets:
         value:
-            $OCN_BGC_CONFIG != "none" and $TEST != True: 27
-            $OCN_BGC_CONFIG != "none" and $TEST == True: 25
+            $OCN_BGC_CONFIG != "none" and $TEST != True: 30
+            $OCN_BGC_CONFIG != "none" and $TEST == True: 26
             else: 24
 ...

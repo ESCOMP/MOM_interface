@@ -58,10 +58,14 @@ class DiagTableClass(object):
         #       completely different variables from hm_bgc_annual in "regular" mode
         self._diag_table_dict = dict()
 
+        # NOTE: the "_z" in frequency => convert to z-space rather than output on native grid
+
         # "medium" frequency should be treated like "hm" stream -- annual in spinup runs, monthly otherwise
         suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual%4yr", "else": "hm_bgc_monthly%4yr-%2mo"}
         output_freq_units_dict = {'$OCN_DIAG_MODE == "spinup"': "years", "$TEST == True": "days", "else": "months"}
         self._diag_table_dict["medium"] = self._dict_template(suffix_dict, output_freq_units_dict)
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual_z%4yr", "else": "hm_bgc_monthly_z%4yr-%2mo"}
+        self._diag_table_dict["medium_z"] = self._dict_template(suffix_dict, output_freq_units_dict, module="ocean_model_z")
 
         # "high" frequency should be treated like "sfc" stream -- 5-day averages in spinup, daily otherwise
         # unlike "sfc", this stream will write one file per month instead of per year (except in spinup)
@@ -69,13 +73,17 @@ class DiagTableClass(object):
         output_freq_dict = {'$OCN_DIAG_MODE == "spinup"': 5, "else": 1}
         new_file_freq_units_dict = {'$OCN_DIAG_MODE == "spinup"': "years", "else": "months"}
         self._diag_table_dict["high"] = self._dict_template(suffix_dict, "days", new_file_freq_units_dict, output_freq_dict)
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_daily5_z%4yr", "else": "hm_bgc_daily_z%4yr-%2mo"}
+        self._diag_table_dict["high_z"] = self._dict_template(suffix_dict, "days", new_file_freq_units_dict, output_freq_dict, module="ocean_model_z")
 
         # "low" frequency should be treated as annual averages
         suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual2%4yr", "else": "hm_bgc_annual%4yr"}
         self._diag_table_dict["low"] = self._dict_template(suffix_dict, "years")
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual2_z%4yr", "else": "hm_bgc_annual_z%4yr"}
+        self._diag_table_dict["low_z"] = self._dict_template(suffix_dict, "years", module="ocean_model_z")
 
 
-    def update(self, varname, frequency, lMARBL_output_all):
+    def update(self, varname, frequency, is2D, lMARBL_output_all):
         if lMARBL_output_all:
             use_freq = ['medium']
         else:
@@ -87,7 +95,9 @@ class DiagTableClass(object):
         for freq in use_freq:
             if freq == "never":
                 continue
-            self._diag_table_dict[freq]["fields"][0]["lists"][0].append(varname)
+            # append _z to frequency for 3D vars
+            suffix="" if is2D else "_z"
+            self._diag_table_dict[f"{freq}{suffix}"]["fields"][0]["lists"][0].append(varname)
 
 
     def dump_to_json(self, filename):
@@ -95,11 +105,12 @@ class DiagTableClass(object):
 
         out_dict = dict()
         out_dict["Files"] = dict()
-        transports = ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
         for freq in self._diag_table_dict:
             if len(self._diag_table_dict[freq]["fields"][0]["lists"][0]) > 0:
                 out_dict["Files"][freq] = self._diag_table_dict[freq].copy()
-                out_dict["Files"][freq]["fields"][0]["lists"].append(transports)
+                if out_dict["Files"][freq]["fields"][0]["module"] == "ocean_model":
+                    transports = ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
+                    out_dict["Files"][freq]["fields"][0]["lists"].append(transports)
         if out_dict["Files"]:
             with open(filename, "w") as fp:
                 json.dump(out_dict, fp, separators=(',', ': '), sort_keys=False, indent=3)
@@ -107,7 +118,7 @@ class DiagTableClass(object):
             print("WARNING: no JSON file written as no variables were requested")
 
 
-    def _dict_template(self, suffix, output_freq_units, new_file_freq_units=None, output_freq=1, new_file_freq=1, packing=1):
+    def _dict_template(self, suffix, output_freq_units, new_file_freq_units=None, output_freq=1, new_file_freq=1, module="ocean_model", packing=1):
         """
             Return the basic template for MOM6 diag_table dictionary.
             Variables will be added to output file by appending to template["fields"][0]["lists"][0]
@@ -121,8 +132,9 @@ class DiagTableClass(object):
                                        files; if None, will use output_freq_units (default: None)
                 * output_freq: how frequently to output (default: 1)
                 * new_file_freq: how frequently to create new files (default: 1)
-                * packing: integer that is used to determine precision when writing output
-                           (default: 1 => double precision output)
+                * module: string that determines vertical grid; "ocean_model_z" maps to Z space, "ocean_model" stays on native grid, "ocean_model_rho2" is sigma2
+                * packing: integer that is used to determine precision when writing output; 1 => double precision, 2 => single
+                           (default: 1)
         """
         template = dict()
         template["suffix"] = suffix
@@ -136,7 +148,7 @@ class DiagTableClass(object):
         template["time_axis_units"] = "days"
         template["reduction_method"] = "mean"
         template["regional_section"] = "none"
-        template["fields"] = [{"module": "ocean_model", "packing": packing, "lists" : [[]]}]
+        template["fields"] = [{"module": module, "packing": packing, "lists" : [[]]}]
         return template
 
 
@@ -221,6 +233,7 @@ def _parse_line(line_in):
 
 def diagnostics_to_diag_table(ecosys_diagnostics_in,
                               diag_table_out,
+                              diag2D_list,
                               lMARBL_output_all,
                               lMARBL_output_alt_co2):
     """
@@ -270,7 +283,8 @@ def diagnostics_to_diag_table(ecosys_diagnostics_in,
             processed_vars[freq].append(varname)
 
         # iii. Update diag table
-        diag_table.update(varname, frequency, lMARBL_output_all)
+        is2D = varname in diag2D_list
+        diag_table.update(varname, frequency, is2D, lMARBL_output_all)
 
     # File footer
     diag_table.dump_to_json(diag_table_out)

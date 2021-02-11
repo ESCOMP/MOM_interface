@@ -182,32 +182,50 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
         return
 
     # 2. Create ecosys_diagnostics
-    #    (a) Check for file in SourceMods, otherwise generate it
+    #    (a) We need to generate a MARBL_diagnostics_for_MOM object
+    #        It's necessary for generating ecosys_diagnostics, but
+    #        even if we copy ecosys_diagnostics from SourceMods the
+    #        object contains important information about the vertical
+    #        dimension of MARBL's diagnostics
+    from MARBL_diagnostics import MARBL_diagnostics_for_MOM
+    MARBL_diagnostics = MARBL_diagnostics_for_MOM(MARBL_dir, caseroot, MARBL_settings)
+
+    #    (b) Check for file in SourceMods, otherwise generate it
     srcmods_version = os.path.join(SourceMods_dir, "ecosys_diagnostics")
     ecosys_diags_buildconf = os.path.join(momconfdir, "ecosys_diagnostics")
     if os.path.isfile(srcmods_version):
         shutil.copy(srcmods_version, ecosys_diags_buildconf)
     else:
-        # Create ecosys_diagnostics with MOM-generated diagnostics
+        # (i) Create ecosys_diagnostics with MOM-generated diagnostics
         from MOM_ecosys_diagnostics import write_ecosys_diagnostics_file
-        from MARBL_diagnostics import MARBL_diagnostics_for_MOM
-        write_ecosys_diagnostics_file(MARBL_settings.get_tracer_names(),
-                                        MARBL_settings.get_autotroph_names(),
-                                        MARBL_settings.get_zooplankton_names(),
-                                        MARBL_settings.get_autotroph_names(calcifier_only=True),
-                                        MARBL_settings.ladjust_bury_coeff(),
-                                        ecosys_diags_buildconf,
-                                        )
-        # (iii) Generate MARBL_diagnostics_for_MOM object
-        MARBL_diagnostics = MARBL_diagnostics_for_MOM(MARBL_dir, caseroot, MARBL_settings)
-
-        # (iv) append MARBL diagnostics to ecosys_diagnostics
+        MOM6_diags = write_ecosys_diagnostics_file(MARBL_settings.get_tracer_names(),
+                                                   MARBL_settings.get_autotroph_names(),
+                                                   MARBL_settings.get_zooplankton_names(),
+                                                   MARBL_settings.get_autotroph_names(calcifier_only=True),
+                                                   MARBL_settings.ladjust_bury_coeff(),
+                                                   ecosys_diags_buildconf,
+                                                  )
+        # (ii) append MARBL diagnostics to ecosys_diagnostics
         MARBL_diagnostics.write_diagnostics_file(ecosys_diags_buildconf,
                                                 append=True)
 
-    # 3. Generate diag_table based on contents of ecosys_diagnostics
+    # 3. We need a list of all the 2D fields in ecosys_diagnostics
+    #    because those fields use the ocean_model module rather than
+    #    ocean_model_z
+
+    #    (a) get list of 2D diagnostics computed in MOM6
+    from MOM_ecosys_diagnostics import get_2D_vars_from_ecosys_diagnostics
+    diag2D_list = get_2D_vars_from_ecosys_diagnostics(ecosys_diags_buildconf)
+
+    #    (b) append list of 2D diagnostics computed in MARBL
+    for varname in MARBL_diagnostics.MARBL_diagnostic_dict.diagnostics_dict:
+        if MARBL_diagnostics.MARBL_diagnostic_dict.diagnostics_dict[varname]["vertical_grid"] == "none":
+            diag2D_list.append(varname)
+
+    # 4. Generate diag_table based on contents of ecosys_diagnostics
+    #    and knowledge of which diags are 2D
     from MARBL_diags_to_diag_table import diagnostics_to_diag_table
-    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, False, False)
+    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, diag2D_list, False, False)
 
 
 # pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
