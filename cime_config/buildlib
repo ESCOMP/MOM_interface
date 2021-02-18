@@ -46,10 +46,12 @@ def buildlib(caseroot, libroot, bldroot):
 
         # MARBL source code is brought in as a git submodule (or my manage_externals)
         logger.info("Making sure MARBL code is available...")
-        marbl_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","MARBL","src")
-        # If MARBL is not found, abort
+        if case.get_value("MOM6_BUILD_MARBL") == "TRUE":
+            marbl_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","MARBL","src")
+        else:
+            marbl_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","MARBL")
         if not os.path.exists(marbl_srcdir):
-            expect(False, "MARBL external not found")
+            expect(False, f"MARBL external not found in {marbl_srcdir}")
 
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
