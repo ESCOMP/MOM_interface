@@ -31,6 +31,12 @@
       "flush_nc_files": {
          "value": ".true."
       },
+      "max_input_fields": {
+         "value": {
+            "$OCN_BGC_CONFIG != \"none\" and $TEST == True": 900,
+            "else": 600
+         }
+      },
       "max_output_fields": {
          "value": {
             "$OCN_BGC_CONFIG != \"none\" and $TEST != True": 600,
