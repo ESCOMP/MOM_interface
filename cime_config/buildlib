@@ -71,11 +71,12 @@ def buildlib(caseroot, libroot, bldroot):
         filepath_file = os.path.join(bldroot,"Filepath")
         if not os.path.isfile(filepath_file):
 #todo: are these needed in mom or only for fms?
-            driver = case.get_value("COMP_INTERFACE")+"_driver"
+            driver = case.get_value("COMP_INTERFACE")+"_cap"
             os.environ["CPPDEFS"] = " -Duse_libMPI -Duse_netCDF -DSPMD"
             paths = [os.path.join(caseroot,"SourceMods","src.mom"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src",driver),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src",memory_mode),
+                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","drivers", driver),
+                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","memory", memory_mode),
+                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","infra", "FMS1"),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","GFDL_ocean_BGC"),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","ODA_hooks"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","ALE"),
@@ -93,6 +94,16 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","vertical"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","tracer"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","user")]
+
+            # Check if any of the source paths is empty, which may indicate incompatible MOM_interface
+            # and MOM6 versions.
+            for path in paths:
+                expect(os.path.isdir(path), "{} is not a valid path within MOM6 source tree! This may be "
+                                    "due to incompatible MOM_interface and MOM6 versions.".format(path))
+                path_dir = os.listdir(path)
+                expect(len(path_dir)>0, "Source directory {} is empty! This may be due to incompatible "
+                                    "MOM_interface and MOM6 versions.".format(path))
+
 
             with open(filepath_file, "w") as filepath:
                 filepath.write("\n".join(paths))
