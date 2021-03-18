@@ -63,6 +63,11 @@
     <lname>2000_DATM%JRA_SLND_DICE%SSMI_MOM6_DROF%JRA_SGLC_SWAV</lname>
   </compset>
 
+  <compset>
+    <alias>C1850MOMECO_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_DICE%SSMI_MOM6%ECO_DROF%JRA_SGLC_SWAV</lname>
+  </compset>
+
   <!-- G compsets -->
 
   <compset>
@@ -88,6 +93,11 @@
   <compset>
     <alias>GMOM_JRA</alias>
     <lname>2000_DATM%JRA_SLND_CICE_MOM6_DROF%JRA_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>G1850MOMECO_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_CICE_MOM6%ECO_DROF%JRA_SGLC_SWAV</lname>
   </compset>
 
   <!-- Ocean-Only compsets -->
