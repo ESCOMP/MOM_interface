@@ -458,10 +458,10 @@
       <pes pesize="any" compset="_DATM.+_CICE.*_MOM6%ECO.+_SWAV">
         <comment>none</comment>
         <ntasks>
-          <ntasks_atm>108</ntasks_atm>
-          <ntasks_rof>108</ntasks_rof>
-          <ntasks_cpl>108</ntasks_cpl>
-          <ntasks_ice>108</ntasks_ice>
+          <ntasks_atm>36</ntasks_atm>
+          <ntasks_rof>36</ntasks_rof>
+          <ntasks_cpl>36</ntasks_cpl>
+          <ntasks_ice>36</ntasks_ice>
           <ntasks_ocn>864</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
@@ -524,10 +524,10 @@
       <pes pesize="any" compset="_DATM.+_DICE.*_MOM6%ECO.+_SWAV">
         <comment>none</comment>
         <ntasks>
-          <ntasks_atm>72</ntasks_atm>
-          <ntasks_rof>72</ntasks_rof>
-          <ntasks_cpl>72</ntasks_cpl>
-          <ntasks_ice>72</ntasks_ice>
+          <ntasks_atm>36</ntasks_atm>
+          <ntasks_rof>36</ntasks_rof>
+          <ntasks_cpl>36</ntasks_cpl>
+          <ntasks_ice>36</ntasks_ice>
           <ntasks_ocn>864</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>

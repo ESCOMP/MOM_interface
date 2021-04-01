@@ -78,11 +78,9 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
 
             # Some diagnostics are not defined for all tracers; diagnostics with 'none'
             # are not added to diagnostics file and will not show up in tavg_contents
-            # TODO: can MOM6 compute these values?
+            # TODO: once MOM has river flux forcing, include it in diagnostic output
             if False:
                 per_tracer_dict['diags']['%s_RIV_FLUX' % tracer_short_name] = 'none'
-                per_tracer_dict['diags']['FvPER_%s' % tracer_short_name] = 'none'
-                per_tracer_dict['diags']['FvICE_%s' % tracer_short_name] = 'none'
             full_diag_dict[tracer_short_name] = dict(per_tracer_dict)
 
         # TODO: turn on some of these diagnostics once they are properly defined
@@ -264,9 +262,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
                 value = "never_average"
 
             # These diagnostics should be included by default for tracers requested budget terms
-            # TODO: need MOM6 equivalent of the following POP variables:
-            # ['DIA_IMPVF', 'HDIFE', 'HDIFN', 'HDIFB', 'RF_TEND']
-            for key in ['adx', 'ady', 'tendency_vert_remap', 'tendency']:
+            for key in ['adx', 'ady', 'dfx', 'dfy', 'tendency_vert_remap', 'tendency']:
                 specific_key = '%s_%s' % (tracer_short_name, key)
                 if specific_key not in full_diag_dict[tracer_short_name]['diags'].keys():
                     full_diag_dict[tracer_short_name]['diags'][specific_key] = value
@@ -276,11 +272,11 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             else:
                 value = "never_average"
 
-            # TODO: more variables to figure out MOM6 equivalent of
+            # TODO: one more variable to figure out MOM6 equivalent of
             if False:
-                # These diagnostics should be included by default for tracers requested budget terms
+                # This diagnostic should be included by default for tracers requested budget terms
                 # ONLY for tracers that have non-zero surface fluxes
-                for key in ['KPP_SRC']:
+                for key in ['KPP_NLtransport_']:
                     specific_key = '%s_%s' % (key, tracer_short_name)
                     if specific_key not in full_diag_dict[tracer_short_name]['diags'].keys():
                         full_diag_dict[tracer_short_name]['diags'][specific_key] = value
