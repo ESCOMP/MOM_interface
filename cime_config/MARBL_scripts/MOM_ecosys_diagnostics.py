@@ -33,14 +33,12 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         fout.write("#       MOM-generated diagnostics      #\n")
         fout.write("########################################\n#\n")
 
-        # TODO: get these forcing fields into history buffer
-        # # Add tracer-agnostic forcing fields to requested diagnostics
-        # fout.write("# Dust and Carbon Fluxes from the Coupler\n#\n")
-        # fout.write("ATM_FINE_DUST_FLUX_CPL : medium_average\n")
-        # fout.write("ATM_COARSE_DUST_FLUX_CPL : medium_average\n")
-        # fout.write("SEAICE_DUST_FLUX_CPL : medium_average\n")
-        # fout.write("ATM_BLACK_CARBON_FLUX_CPL : medium_average\n")
-        # fout.write("SEAICE_BLACK_CARBON_FLUX_CPL : medium_average\n")
+        fout.write("# Dust and Carbon Fluxes from the Coupler\n#\n")
+        fout.write("ATM_FINE_DUST_FLUX_CPL : medium_average\n")
+        fout.write("ATM_COARSE_DUST_FLUX_CPL : medium_average\n")
+        fout.write("SEAICE_DUST_FLUX_CPL : medium_average\n")
+        fout.write("ATM_BLACK_CARBON_FLUX_CPL : medium_average\n")
+        fout.write("SEAICE_BLACK_CARBON_FLUX_CPL : medium_average\n")
 
         # TODO: add running means, and then define these diagnostics
         # If adjusting bury coefficients, add running means to requested diagnostics
@@ -328,6 +326,4 @@ def _2D_varcheck(varname):
     """
     Return true if variable is 2D
     """
-    if varname.startswith("STF_"):
-        return True
-    return False
+    return varname.startswith("STF_") or varname.endswith("_FLUX_CPL")
