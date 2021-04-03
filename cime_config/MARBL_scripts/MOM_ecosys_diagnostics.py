@@ -76,9 +76,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
 
             # Some diagnostics are not defined for all tracers; diagnostics with 'none'
             # are not added to diagnostics file and will not show up in tavg_contents
-            # TODO: once MOM has river flux forcing, include it in diagnostic output
-            if False:
-                per_tracer_dict['diags']['%s_RIV_FLUX' % tracer_short_name] = 'none'
+            per_tracer_dict['diags']['%s_RIV_FLUX' % tracer_short_name] = 'none'
             full_diag_dict[tracer_short_name] = dict(per_tracer_dict)
 
         # TODO: turn on some of these diagnostics once they are properly defined
@@ -87,21 +85,21 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         #    configured to run with that particular tracer
         # PO4
         if 'PO4' in full_diag_dict.keys():
-            # full_diag_dict['PO4']['diags']['PO4_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['PO4']['diags']['PO4_RIV_FLUX'] = 'medium_average'
             full_diag_dict['PO4']['diags']['J_PO4'] = 'low_average'
             full_diag_dict['PO4']['diags']['Jint_100m_PO4'] = 'medium_average'
             # full_diag_dict['PO4']['diags']['tend_zint_100m_PO4'] = 'medium_average'
             full_diag_dict['PO4']['properties']['has surface flux'] = True
         # NO3
         if 'NO3' in full_diag_dict.keys():
-            # full_diag_dict['NO3']['diags']['NO3_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['NO3']['diags']['NO3_RIV_FLUX'] = 'medium_average'
             full_diag_dict['NO3']['diags']['J_NO3'] = 'low_average'
             full_diag_dict['NO3']['diags']['Jint_100m_NO3'] = 'medium_average'
             # full_diag_dict['NO3']['diags']['tend_zint_100m_NO3'] = 'medium_average'
             full_diag_dict['NO3']['properties']['has surface flux'] = True
         # SiO3
         if 'SiO3' in full_diag_dict.keys():
-            # full_diag_dict['SiO3']['diags']['SiO3_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['SiO3']['diags']['SiO3_RIV_FLUX'] = 'medium_average'
             full_diag_dict['SiO3']['diags']['J_SiO3'] = 'low_average'
             full_diag_dict['SiO3']['diags']['Jint_100m_SiO3'] = 'medium_average'
             # full_diag_dict['SiO3']['diags']['tend_zint_100m_SiO3'] = 'medium_average'
@@ -114,7 +112,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             full_diag_dict['NH4']['properties']['has surface flux'] = True
         # Fe
         if 'Fe' in full_diag_dict.keys():
-            # full_diag_dict['Fe']['diags']['Fe_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['Fe']['diags']['Fe_RIV_FLUX'] = 'medium_average'
             full_diag_dict['Fe']['diags']['J_Fe'] = 'low_average'
             full_diag_dict['Fe']['diags']['Jint_100m_Fe'] = 'medium_average'
             # full_diag_dict['Fe']['diags']['tend_zint_100m_Fe'] = 'medium_average'
@@ -132,70 +130,62 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             full_diag_dict['O2']['properties']['has surface flux'] = True
         # DIC
         if 'DIC' in full_diag_dict.keys():
-            # full_diag_dict['DIC']['diags']['DIC_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['DIC']['diags']['DIC_RIV_FLUX'] = 'medium_average'
             full_diag_dict['DIC']['diags']['J_DIC'] = 'medium_average'
             full_diag_dict['DIC']['diags']['Jint_100m_DIC'] = 'medium_average'
             # full_diag_dict['DIC']['diags']['tend_zint_100m_DIC'] = 'medium_average'
-            # full_diag_dict['DIC']['diags']['FvPER_DIC'] = 'medium_average'
-            # full_diag_dict['DIC']['diags']['FvICE_DIC'] = 'medium_average'
             full_diag_dict['DIC']['properties']['include budget terms'] = True
             full_diag_dict['DIC']['properties']['has surface flux'] = True
         # DIC_ALT_CO2
         if 'DIC_ALT_CO2' in full_diag_dict.keys():
-            # full_diag_dict['DIC_ALT_CO2']['diags']['DIC_ALT_CO2_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['DIC_ALT_CO2']['diags']['DIC_ALT_CO2_RIV_FLUX'] = 'medium_average'
             full_diag_dict['DIC_ALT_CO2']['diags']['J_DIC_ALT_CO2'] = 'medium_average'
             full_diag_dict['DIC_ALT_CO2']['diags']['Jint_100m_DIC_ALT_CO2'] = 'medium_average'
             # full_diag_dict['DIC_ALT_CO2']['diags']['tend_zint_100m_DIC_ALT_CO2'] = 'medium_average'
-            # full_diag_dict['DIC_ALT_CO2']['diags']['FvPER_DIC_ALT_CO2'] = 'medium_average'
-            # full_diag_dict['DIC_ALT_CO2']['diags']['FvICE_DIC_ALT_CO2'] = 'medium_average'
             full_diag_dict['DIC_ALT_CO2']['properties']['include budget terms'] = True
             full_diag_dict['DIC_ALT_CO2']['properties']['has surface flux'] = True
         # ALK
         if 'ALK' in full_diag_dict.keys():
-            # full_diag_dict['ALK']['diags']['ALK_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['ALK']['diags']['ALK_RIV_FLUX'] = 'medium_average'
             full_diag_dict['ALK']['diags']['STF_ALK'] = 'medium_average'
             full_diag_dict['ALK']['diags']['J_ALK'] = 'low_average'
             full_diag_dict['ALK']['diags']['Jint_100m_ALK'] = 'medium_average'
             # full_diag_dict['ALK']['diags']['tend_zint_100m_ALK'] = 'medium_average'
-            # full_diag_dict['ALK']['diags']['FvPER_ALK'] = 'medium_average'
-            # full_diag_dict['ALK']['diags']['FvICE_ALK'] = 'medium_average'
             full_diag_dict['ALK']['properties']['has surface flux'] = True
         # ALK_ALT_CO2
         if 'ALK_ALT_CO2' in full_diag_dict.keys():
-            # full_diag_dict['ALK_ALT_CO2']['diags']['ALK_ALT_CO2_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['ALK_ALT_CO2']['diags']['ALK_ALT_CO2_RIV_FLUX'] = 'medium_average'
             full_diag_dict['ALK_ALT_CO2']['diags']['STF_ALK_ALT_CO2'] = 'medium_average'
             full_diag_dict['ALK_ALT_CO2']['diags']['J_ALK_ALT_CO2'] = 'low_average'
             full_diag_dict['ALK_ALT_CO2']['diags']['Jint_100m_ALK_ALT_CO2'] = 'medium_average'
             # full_diag_dict['ALK_ALT_CO2']['diags']['tend_zint_100m_ALK_ALT_CO2'] = 'medium_average'
-            # full_diag_dict['ALK_ALT_CO2']['diags']['FvPER_ALK_ALT_CO2'] = 'medium_average'
-            # full_diag_dict['ALK_ALT_CO2']['diags']['FvICE_ALK_ALT_CO2'] = 'medium_average'
             full_diag_dict['ALK_ALT_CO2']['properties']['has surface flux'] = True
         # DOC
         if 'DOC' in full_diag_dict.keys():
-            # full_diag_dict['DOC']['diags']['DOC_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['DOC']['diags']['DOC_RIV_FLUX'] = 'medium_average'
             full_diag_dict['DOC']['diags']['Jint_100m_DOC'] = 'medium_average'
             # full_diag_dict['DOC']['diags']['tend_zint_100m_DOC'] = 'medium_average'
             full_diag_dict['DOC']['properties']['include budget terms'] = True
             full_diag_dict['DOC']['properties']['has surface flux'] = False # this should be True if EBM is off
         # DON
         if 'DON' in full_diag_dict.keys():
-            # full_diag_dict['DON']['diags']['DON_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['DON']['diags']['DON_RIV_FLUX'] = 'medium_average'
             full_diag_dict['DON']['properties']['has surface flux'] = True
         # DOP
         if 'DOP' in full_diag_dict.keys():
-            # full_diag_dict['DOP']['diags']['DOP_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['DOP']['diags']['DOP_RIV_FLUX'] = 'medium_average'
             full_diag_dict['DOP']['properties']['has surface flux'] = True
         # DOPr
         if 'DOPr' in full_diag_dict.keys():
-            # full_diag_dict['DOPr']['diags']['DOPr_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['DOPr']['diags']['DOPr_RIV_FLUX'] = 'medium_average'
             full_diag_dict['DOPr']['properties']['has surface flux'] = True
         # DONr
         if 'DONr' in full_diag_dict.keys():
-            # full_diag_dict['DONr']['diags']['DONr_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['DONr']['diags']['DONr_RIV_FLUX'] = 'medium_average'
             full_diag_dict['DONr']['properties']['has surface flux'] = True
         # DOCr
         if 'DOCr' in full_diag_dict.keys():
-            # full_diag_dict['DOCr']['diags']['DOCr_RIV_FLUX'] = 'medium_average'
+            full_diag_dict['DOCr']['diags']['DOCr_RIV_FLUX'] = 'medium_average'
             full_diag_dict['DOCr']['diags']['Jint_100m_DOCr'] = 'medium_average'
             # full_diag_dict['DOCr']['diags']['tend_zint_100m_DOCr'] = 'medium_average'
             full_diag_dict['DOCr']['properties']['include budget terms'] = True
@@ -206,8 +196,6 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             full_diag_dict['DI13C']['diags']['J_DI13C'] = 'medium_average'
             full_diag_dict['DI13C']['diags']['Jint_100m_DI13C'] = 'medium_average'
             # full_diag_dict['DI13C']['diags']['tend_zint_100m_DI13C'] = 'medium_average'
-            # full_diag_dict['DI13C']['diags']['FvPER_DI13C'] = 'medium_average'
-            # full_diag_dict['DI13C']['diags']['FvICE_DI13C'] = 'medium_average'
             full_diag_dict['DI13C']['properties']['has surface flux'] = True
         # DO13Ctot
         if 'DO13Ctot' in full_diag_dict.keys():
@@ -221,8 +209,6 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             full_diag_dict['DI14C']['diags']['J_DI14C'] = 'medium_average'
             full_diag_dict['DI14C']['diags']['Jint_100m_DI14C'] = 'medium_average'
             # full_diag_dict['DI14C']['diags']['tend_zint_100m_DI14C'] = 'medium_average'
-            # full_diag_dict['DI14C']['diags']['FvPER_DI14C'] = 'medium_average'
-            # full_diag_dict['DI14C']['diags']['FvICE_DI14C'] = 'medium_average'
             full_diag_dict['DI14C']['properties']['has surface flux'] = True
         # DO14Ctot
         if 'DO14Ctot' in full_diag_dict.keys():
@@ -326,4 +312,7 @@ def _2D_varcheck(varname):
     """
     Return true if variable is 2D
     """
-    return varname.startswith("STF_") or varname.endswith("_FLUX_CPL")
+    return (varname.startswith("STF_") or
+            varname.endswith("_FLUX_CPL") or
+            varname.endswith("_RIV_FLUX")
+           )
