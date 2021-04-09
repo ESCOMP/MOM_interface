@@ -1,5 +1,19 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  jedwards
+Tag Date:    09 Apr 2021
+Tag Name:    mi_20210409
+
+MOM_interface Updates Summary:
+- none
+
+MOM6 Updates Summary:
+- add support for threading in cmeps
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  gmarques, altuntas, et al.
 Tag Date:    29 Mar 2021
 Tag Name:    mi_20210329
