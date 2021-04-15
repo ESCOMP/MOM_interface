@@ -30,6 +30,9 @@
    "diag_manager_nml": {
       "flush_nc_files": {
          "value": ".true."
+      },
+      "use_mpp_io": {
+         "value": ".true."
       }
    }
 }
