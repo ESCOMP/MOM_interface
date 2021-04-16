@@ -1,5 +1,45 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  jedwards
+Tag Date:    09 Apr 2021
+Tag Name:    mi_20210409
+
+MOM_interface Updates Summary:
+- none
+
+MOM6 Updates Summary:
+- add support for threading in cmeps
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  gmarques, altuntas, et al.
+Tag Date:    29 Mar 2021
+Tag Name:    mi_20210329
+
+MOM_interface Updates Summary:
+- Updates for main merge (NOAA-GFDL#1342)
+- Remove unused parameters and provide CHLA dataset for SW absorption
+- Discard undetermined expandable vars to be dropped
+
+MOM6 Updates Summary:
+- Implements flux area correction factors in the NUOPC cap
+- Sync with main to bring in new file layout
+- Add med2mod_areacor and move where area correction is applied
+- Merge main candidate 2021-02-19
+- Fixes latent heat contribution from fprec and frunoff (MCT and NUOPC)
+- Fix OMP PET tests
+- Added a counter-based PRNG to MOM_random
+- Fixes inconsistency in the calculation of tendency due to lateral diffusion
+- Make long character variables deferred length
+- Major updates to the LBD module
+- Introduce a controllable stdout unit in MOM_io
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  gmarques, altuntas, et al.
 Tag Date:    12 Nov 2020
 Tag Name:    mi_20201112

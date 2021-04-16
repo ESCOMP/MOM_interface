@@ -20,8 +20,8 @@
 
   <entry id="MOM6_MEMORY_MODE">
     <type>char</type>
-    <valid_values>dynamic,dynamic_symmetric</valid_values>
-    <default_value>dynamic</default_value>
+    <valid_values>dynamic_nonsymmetric,dynamic_symmetric</valid_values>
+    <default_value>dynamic_nonsymmetric</default_value>
     <group>build_component_mom</group>
     <file>env_build.xml</file>
     <desc> This variable controls MOM6 memory mode. In non-symmetric mode (default), all arrays are
