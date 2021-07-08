@@ -9,7 +9,7 @@
 # Disable these because this is our standard setup
 # pylint: disable=wildcard-import,unused-wildcard-import,wrong-import-position
 
-import os, shutil, sys, glob, stat, filecmp, imp
+import os, shutil, sys
 
 CIMEROOT = os.environ.get("CIMEROOT")
 if CIMEROOT is None:
@@ -22,9 +22,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),"MOM_RPS
 
 from standard_script_setup import *
 from CIME.case import Case
-from CIME.nmlgen import NamelistGenerator
-from CIME.utils import expect
-from CIME.buildnml import create_namelist_infile, parse_input
+from CIME.buildnml import parse_input
 from CIME.utils import run_cmd
 from FType_MOM_params import FType_MOM_params
 from FType_input_nml import FType_input_nml
@@ -143,7 +141,7 @@ def _copy_files_to_momconf(case):
         shutil.copy(os.path.join(rundir,filename), momconfdir)
 
 
-# pylint: disable=too-many-arguments,too-many-locals,too-many-branches,too-many-statements
+# pylint: disable=unused-argument
 ###############################################################################
 def buildnml(case, caseroot, compname):
 ###############################################################################
