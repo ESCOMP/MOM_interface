@@ -59,27 +59,28 @@ class DiagTableClass(object):
         self._diag_table_dict = dict()
 
         # NOTE: the "_z" in frequency => convert to z-space rather than output on native grid
+        # NOTE: "hm" => 3D vars on model grid, "h" => interpolated
 
         # "medium" frequency should be treated like "hm" stream -- annual in spinup runs, monthly otherwise
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual%4yr", "$TEST == True": "hm_bgc_daily%4yr-%2mo-%2dy", "else": "hm_bgc_monthly%4yr-%2mo"}
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual%4yr", "$TEST == True": "h_bgc_daily%4yr-%2mo-%2dy", "else": "h_bgc_monthly%4yr-%2mo"}
         output_freq_units_dict = {'$OCN_DIAG_MODE == "spinup"': "years", "$TEST == True": "days", "else": "months"}
         self._diag_table_dict["medium"] = self._dict_template(suffix_dict, output_freq_units_dict)
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual_z%4yr", "$TEST == True": "hm_bgc_daily_z%4yr-%2mo-%2dy", "else": "hm_bgc_monthly_z%4yr-%2mo"}
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual_z%4yr", "$TEST == True": "h_bgc_daily_z%4yr-%2mo-%2dy", "else": "h_bgc_monthly_z%4yr-%2mo"}
         self._diag_table_dict["medium_z"] = self._dict_template(suffix_dict, output_freq_units_dict, module="ocean_model_z")
 
         # "high" frequency should be treated like "sfc" stream -- 5-day averages in spinup, daily otherwise
         # unlike "sfc", this stream will write one file per month instead of per year (except in spinup)
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_daily5%4yr", "else": "hm_bgc_daily%4yr-%2mo"}
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_daily5%4yr", "else": "h_bgc_daily%4yr-%2mo"}
         output_freq_dict = {'$OCN_DIAG_MODE == "spinup"': 5, "else": 1}
         new_file_freq_units_dict = {'$OCN_DIAG_MODE == "spinup"': "years", "else": "months"}
         self._diag_table_dict["high"] = self._dict_template(suffix_dict, "days", new_file_freq_units_dict, output_freq_dict)
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_daily5_z%4yr", "else": "hm_bgc_daily_z%4yr-%2mo"}
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_daily5_z%4yr", "else": "h_bgc_daily_z%4yr-%2mo"}
         self._diag_table_dict["high_z"] = self._dict_template(suffix_dict, "days", new_file_freq_units_dict, output_freq_dict, module="ocean_model_z")
 
         # "low" frequency should be treated as annual averages
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual2%4yr", "else": "hm_bgc_annual%4yr"}
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual2%4yr", "else": "h_bgc_annual%4yr"}
         self._diag_table_dict["low"] = self._dict_template(suffix_dict, "years")
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual2_z%4yr", "else": "hm_bgc_annual_z%4yr"}
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual2_z%4yr", "else": "h_bgc_annual_z%4yr"}
         self._diag_table_dict["low_z"] = self._dict_template(suffix_dict, "years", module="ocean_model_z")
 
 
@@ -108,6 +109,9 @@ class DiagTableClass(object):
         for freq in self._diag_table_dict:
             if len(self._diag_table_dict[freq]["fields"][0]["lists"][0]) > 0:
                 out_dict["Files"][freq] = self._diag_table_dict[freq].copy()
+                if out_dict["Files"][freq]["fields"][0]["module"] == "ocean_model" and freq[-2:] == "_z":
+                    transports = ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
+                    out_dict["Files"][freq]["fields"][0]["lists"].append(transports)
         if out_dict["Files"]:
             with open(filename, "w") as fp:
                 json.dump(out_dict, fp, separators=(',', ': '), sort_keys=False, indent=3)

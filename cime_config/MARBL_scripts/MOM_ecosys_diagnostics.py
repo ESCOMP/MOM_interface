@@ -40,6 +40,9 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         fout.write("ATM_BLACK_CARBON_FLUX_CPL : medium_average\n")
         fout.write("SEAICE_BLACK_CARBON_FLUX_CPL : medium_average\n")
 
+        fout.write("# Bottom Flux to Tendency Conversion\n#\n")
+        fout.write("BOT_FLUX_TO_TEND : medium_average\n")
+
         # TODO: add running means, and then define these diagnostics
         # If adjusting bury coefficients, add running means to requested diagnostics
         if ladjust_bury_coeff:
