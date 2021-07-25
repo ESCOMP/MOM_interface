@@ -3282,6 +3282,15 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.25v1": "geothermal_hf"
+    MIX_BOUNDARY_TRACER_ALE:
+        description: |
+            "[Boolean] default = True
+            If true and in ALE mode, mix the passive tracers in massless layers at the
+            bottom into the interior as though a diffusivity of KD_MIN_TR were operating."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_BGC_CONFIG != "none": True
 
 KPP:
     N_SMOOTH:
