@@ -35,4 +35,12 @@ mom.input_data_list:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/geothermal_davies2013_v1.nc"
     ocean_seaw:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/seawifs-clim-1997-2010.1440x1080.v20180328.nc"
-...
+    marbl_tracers_ic_file:
+        $OCN_BGC_CONFIG != "None":
+            $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ecosys_jan_IC_omip_MOM_tx0.66v1_c190925.nc"
+    marbl_fesedflux_file:
+        $OCN_BGC_CONFIG != "None":
+            $OCN_GRID == "tx0.66v1": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx0.66v1.c201204.nc"
+    marbl_feventflux_file:
+        $OCN_BGC_CONFIG != "None":
+            $OCN_GRID == "tx0.66v1": "${INPUTDIR}/feventflux_5gmol_tx0.66v1.c201204.nc"
