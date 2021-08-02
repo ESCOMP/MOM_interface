@@ -45,6 +45,11 @@
       },
       "ocean_seaw": {
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/seawifs-clim-1997-2010.1440x1080.v20180328.nc"
+      },
+      "chl_a": {
+         "$OCN_GRID == \"tx0.66v1\"": {
+            "$VAR_PEN_SW == \"True\"": "${INPUTDIR}/${CHL_FILE}"
+         }
       }
    }
 }
