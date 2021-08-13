@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 build mom library
 """
-import sys, os, time, filecmp, shutil, imp, glob
+import sys, os, shutil
 
 _CIMEROOT = os.environ.get("CIMEROOT")
 if _CIMEROOT is None:
@@ -15,7 +15,7 @@ sys.path.append(_LIBDIR)
 from standard_script_setup import *
 from CIME.buildlib import parse_input
 from CIME.case import Case
-from CIME.utils import run_cmd, expect
+from CIME.utils import run_sub_or_cmd, run_cmd, expect
 from CIME.build import get_standard_makefile_args
 
 logger = logging.getLogger(__name__)
@@ -33,8 +33,8 @@ def buildlib(caseroot, libroot, bldroot):
             #todo: call checkout_externals to get this component
             expect(False, "FMS external not found")
         else:
-            stat, _, err = run_cmd("{} {} {} {}".format(fmsbuildlib, bldroot, fmsbuilddir, caseroot), verbose=True)
-            expect(stat==0, "FMS build Failed {}".format(err))
+            run_sub_or_cmd(fmsbuildlib, [bldroot, fmsbuilddir, caseroot], 'buildlib',
+                           [bldroot, fmsbuilddir, case], case=case)
 
         # CVMix source code is brought in as a git submodule (or my manage_externals)
         logger.info("Making sure CVMix code is available...")
@@ -56,12 +56,10 @@ def buildlib(caseroot, libroot, bldroot):
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
         gmake = case.get_value("GMAKE")
-        mach = case.get_value("MACH")
 
         #-------------------------------------------------------
         # create Filepath file for mom
         #-------------------------------------------------------
-        sharedlibroot = case.get_value("SHAREDLIBROOT")
         memory_mode =  case.get_value("MOM6_MEMORY_MODE")
 
         user_incldir = "\"-I{} -I{} -I{}\"".\

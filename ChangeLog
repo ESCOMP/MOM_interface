@@ -1,5 +1,38 @@
 ===============================================================================
 Tag Creator: altuntas
+Developers:  gmarques, altuntas, jedwards
+Tag Date:    07 July 2021
+Tag Name:    mi_20210709
+
+MOM_interface Updates Summary:
+- clean up buildlib and buildnml with cime pylint code_checker
+- build fms as subroutine instead of subprocess
+
+MOM6 Updates Summary:
+- Fix NUOPC import of fields required for the new CFC module
+- * Implements a module to simulate CFCs via NUOPC cap
+- De-allocate Kd_bkgnd and Kv_bkgnd
+- Add isPresent and isSet when retrieving nthreads
+- Merging the main candidate from GFDL 2021-03-26
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  altuntas
+Tag Date:    15 Apr 2021
+Tag Name:    mi_20210415
+
+MOM_interface Updates Summary:
+- set use_mpp_io to .true. so as to keep using FMS1 io with the latest FMS version
+
+MOM6 Updates Summary:
+- none
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  jedwards
 Tag Date:    09 Apr 2021
 Tag Name:    mi_20210409
