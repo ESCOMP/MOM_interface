@@ -3274,6 +3274,25 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.25v1": "geothermal_hf"
+    USE_WAVES:
+        description: |
+            "default = False
+            If true, enables surface wave modules."
+        datatype: logical
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: True
+    WAVE_METHOD:
+        description: |
+            "Choice of wave method, valid options include:
+             TEST_PROFILE  - Prescribed from surface Stokes drift...
+             SURFACE_BANDS - Computed from multiple surface values...
+             DHH85         - Uses Donelan et al. 1985 empirical...
+             LF17          - Infers Stokes drift profile from wind...
+             EFACTOR       - Applies an enhancement factor to the KPP...""
+        datape: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: "EFACTOR"
+
 
 KPP:
     N_SMOOTH:
@@ -3317,5 +3336,42 @@ KPP:
         value:
             $OCN_GRID == "gx1v6": False
             $OCN_GRID == "tx0.66v1": False
+    USE_KPP_LT_K:
+        description: |
+            default = False
+            Flag for Langmuir turbulence enhancement of turbulentmixing coefficient.
+        datatype: logical
+        units: Boolean
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: True
+    USE_KPP_LT_VT2:
+        description: |
+            default = False
+            Flag for Langmuir turbulence enhancement of Vt2in Bulk Richardson Number.
+        datatype: logical
+        units: Boolean
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: True
+    KPP_LT_K_METHOD:
+        description: |
+            default = "CONSTANT"
+            Method to enhance mixing coefficient in KPP. Valid options are:
+               CONSTANT = Constant value (KPP_K_ENH_FAC)
+               VR12     = Function of Langmuir number based on VR12
+               RW16     = Function of Langmuir number based on RW16
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: VR12
+    KPP_LT_VT2_METHOD:
+        description: |
+            default = "CONSTANT"
+            Method to enhance Vt2 in KPP. Valid options are:
+               CONSTANT = Constant value (KPP_VT2_ENH_FAC)
+               VR12     = Function of Langmuir number based on VR12
+               RW16     = Function of Langmuir number based on RW16
+               LF17     = Function of Langmuir number based on LF17
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: VR12
 
 ...
