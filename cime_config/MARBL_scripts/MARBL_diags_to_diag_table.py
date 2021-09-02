@@ -49,7 +49,7 @@ class DiagTableClass(object):
     """
         Class that is used to generate JSON file to extend diag_table from ecosys_diagnostics file
     """
-    def __init__(self):
+    def __init__(self, vert_grid):
         """
             Constructor: creates a dictionary object to eventually dump to JSON
         """
@@ -61,30 +61,51 @@ class DiagTableClass(object):
         # NOTE: the "_z" in frequency => convert to z-space rather than output on native grid
         # NOTE: "hm" => 3D vars on model grid, "h" => interpolated
 
-        # "medium" frequency should be treated like "hm" stream -- annual in spinup runs, monthly otherwise
+        # "medium" frequency should be treated like "mom6.hm" stream -- annual in spinup runs, monthly otherwise
+        # i. 2D vars
         suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual%4yr", "$TEST == True": "h_bgc_daily%4yr-%2mo-%2dy", "else": "h_bgc_monthly%4yr-%2mo"}
         output_freq_units_dict = {'$OCN_DIAG_MODE == "spinup"': "years", "$TEST == True": "days", "else": "months"}
         self._diag_table_dict["medium"] = self._dict_template(suffix_dict, output_freq_units_dict)
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual_z%4yr", "$TEST == True": "h_bgc_daily_z%4yr-%2mo-%2dy", "else": "h_bgc_monthly_z%4yr-%2mo"}
-        self._diag_table_dict["medium_z"] = self._dict_template(suffix_dict, output_freq_units_dict, module="ocean_model_z")
+        # ii. 3D vars on interpolated grid
+        if vert_grid in ["interpolated", "both"]:
+            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual_z%4yr", "$TEST == True": "h_bgc_daily_z%4yr-%2mo-%2dy", "else": "h_bgc_monthly_z%4yr-%2mo"}
+            self._diag_table_dict["medium_z"] = self._dict_template(suffix_dict, output_freq_units_dict, module="ocean_model_z")
+        # iii. 3D vars on native grid
+        if vert_grid in ["native", "both"]:
+            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual_z%4yr", "$TEST == True": "hm_bgc_daily_z%4yr-%2mo-%2dy", "else": "hm_bgc_monthly_z%4yr-%2mo"}
+            self._diag_table_dict["medium_native_z"] = self._dict_template(suffix_dict, output_freq_units_dict, module="ocean_model")
 
-        # "high" frequency should be treated like "sfc" stream -- 5-day averages in spinup, daily otherwise
+        # "high" frequency should be treated like "mom6.sfc" stream -- 5-day averages in spinup, daily otherwise
         # unlike "sfc", this stream will write one file per month instead of per year (except in spinup)
+        # i. 2D vars
         suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_daily5%4yr", "else": "h_bgc_daily%4yr-%2mo"}
         output_freq_dict = {'$OCN_DIAG_MODE == "spinup"': 5, "else": 1}
         new_file_freq_units_dict = {'$OCN_DIAG_MODE == "spinup"': "years", "else": "months"}
         self._diag_table_dict["high"] = self._dict_template(suffix_dict, "days", new_file_freq_units_dict, output_freq_dict)
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_daily5_z%4yr", "else": "h_bgc_daily_z%4yr-%2mo"}
-        self._diag_table_dict["high_z"] = self._dict_template(suffix_dict, "days", new_file_freq_units_dict, output_freq_dict, module="ocean_model_z")
+        # ii. 3D vars on interpolated grid
+        if vert_grid in ["interpolated", "both"]:
+            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_daily5_z%4yr", "else": "h_bgc_daily_z%4yr-%2mo"}
+            self._diag_table_dict["high_z"] = self._dict_template(suffix_dict, "days", new_file_freq_units_dict, output_freq_dict, module="ocean_model_z")
+        # iii. 3D vars on native grid
+        if vert_grid in ["native", "both"]:
+            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_daily5_z%4yr", "else": "hm_bgc_daily_z%4yr-%2mo"}
+            self._diag_table_dict["high_native_z"] = self._dict_template(suffix_dict, "days", new_file_freq_units_dict, output_freq_dict, module="ocean_model")
 
         # "low" frequency should be treated as annual averages
+        # i. 2D vars
         suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual2%4yr", "else": "h_bgc_annual%4yr"}
         self._diag_table_dict["low"] = self._dict_template(suffix_dict, "years")
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual2_z%4yr", "else": "h_bgc_annual_z%4yr"}
-        self._diag_table_dict["low_z"] = self._dict_template(suffix_dict, "years", module="ocean_model_z")
+        # ii. 3D vars on interpolated grid
+        if vert_grid in ["interpolated", "both"]:
+            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual2_z%4yr", "else": "h_bgc_annual_z%4yr"}
+            self._diag_table_dict["low_z"] = self._dict_template(suffix_dict, "years", module="ocean_model_z")
+        # iii. 3D vars on native grid
+        if vert_grid in ["native", "both"]:
+            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual2_z%4yr", "else": "hm_bgc_annual_z%4yr"}
+            self._diag_table_dict["low_native_z"] = self._dict_template(suffix_dict, "years", module="ocean_model")
 
 
-    def update(self, varname, frequency, is2D, lMARBL_output_all):
+    def update(self, varname, frequency, is2D, lMARBL_output_all, vert_grid):
         if lMARBL_output_all:
             use_freq = ['medium']
         else:
@@ -97,8 +118,13 @@ class DiagTableClass(object):
             if freq == "never":
                 continue
             # append _z to frequency for 3D vars
-            suffix="" if is2D else "_z"
-            self._diag_table_dict[f"{freq}{suffix}"]["fields"][0]["lists"][0].append(varname)
+            if is2D:
+                self._diag_table_dict[f"{freq}"]["fields"][0]["lists"][0].append(varname)
+            else:
+                if vert_grid in ["interpolated", "both"]:
+                    self._diag_table_dict[f"{freq}_z"]["fields"][0]["lists"][0].append(varname)
+                if vert_grid in ["native", "both"]:
+                    self._diag_table_dict[f"{freq}_native_z"]["fields"][0]["lists"][0].append(varname)
 
 
     def dump_to_json(self, filename):
@@ -182,6 +208,10 @@ def _parse_args():
     parser.add_argument('-g', '--high_frequency_stream', action='store', dest='high_frequency_stream',
                         type=int, default= 0, help='Stream to put high frequency output into (required if not lMARBL_output_all)')
 
+    parser.add_argument('-v', '--vert_grid', action='store', dest='vert_grid',
+                        default= 'native', choices=['native', 'interpolated', 'both'],
+                        help='BGC history output grid')
+
     # Should all MARBL diagnostics be included in the hm_bgc stream?
     parser.add_argument('--lMARBL_output_all', action='store', dest='lMARBL_output_all',
                         type=bool, default=False, help="Put all MARBL diagnostics in hm_bgc stream")
@@ -235,6 +265,7 @@ def _parse_line(line_in):
 def diagnostics_to_diag_table(ecosys_diagnostics_in,
                               diag_table_out,
                               diag2D_list,
+                              vert_grid,
                               lMARBL_output_all,
                               lMARBL_output_alt_co2):
     """
@@ -258,7 +289,7 @@ def diagnostics_to_diag_table(ecosys_diagnostics_in,
         sys.exit(1)
 
     # 2. Set up diag_table object
-    diag_table = DiagTableClass()
+    diag_table = DiagTableClass(vert_grid)
 
     # 3. Read ecosys_diagnostics_in line by line, convert each line to diag table entry
     with open(ecosys_diagnostics_in, 'r') as file_in:
@@ -285,7 +316,7 @@ def diagnostics_to_diag_table(ecosys_diagnostics_in,
 
         # iii. Update diag table
         is2D = varname in diag2D_list
-        diag_table.update(varname, frequency, is2D, lMARBL_output_all)
+        diag_table.update(varname, frequency, is2D, lMARBL_output_all, vert_grid)
 
     # File footer
     diag_table.dump_to_json(diag_table_out)
@@ -302,5 +333,7 @@ if __name__ == "__main__":
     # call diagnostics_to_diag_table()
     diagnostics_to_diag_table(args.ecosys_diagnostics_in,
                               args.diag_table_out,
+                              args.diag2D_list,
+                              args.vert_grid,
                               args.lMARBL_output_all,
                               args.lMARBL_output_alt_co2)

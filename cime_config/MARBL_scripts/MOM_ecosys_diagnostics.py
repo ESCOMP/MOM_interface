@@ -43,6 +43,18 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         fout.write("# Bottom Flux to Tendency Conversion\n#\n")
         fout.write("BOT_FLUX_TO_TEND : medium_average\n")
 
+        fout.write("# Other physics terms\n#\n")
+        fout.write("h: medium_average\n")
+        fout.write("DICh_tendency: medium_average\n")
+        fout.write("DIC_advection_xy: medium_average\n")
+        fout.write("DIC_tendency_vert_remap: medium_average\n")
+        fout.write("DIC_dfxy_cont_tendency: medium_average\n")
+        fout.write("DIC_lbdxy_cont_tendency: medium_average\n")
+        fout.write("DIC_dfxy_conc_tendency: medium_average\n")
+        fout.write("DIC_lbdxy_conc_tendency: medium_average\n")
+        fout.write("vertdiff_tend_DIC: medium_average\n")
+        fout.write("vertdiff_tend_O2: medium_average\n")
+
         # TODO: add running means, and then define these diagnostics
         # If adjusting bury coefficients, add running means to requested diagnostics
         if ladjust_bury_coeff:

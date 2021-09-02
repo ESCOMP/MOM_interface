@@ -81,6 +81,20 @@
           "none" => run without MARBL tracers.
     </desc>
   </entry>
+
+  <entry id="OCN_BGC_HIST_VERT_GRID">
+    <type>char</type>
+    <valid_values>interpolated,native,both</valid_values>
+    <default_value>interpolated</default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Vertical grid to use in BGC-specific history files that contain 3D variables
+          "native" will output on whatever levels MOM is using (e.g. z*); stream will be mom6.h_bgc*
+          "interpolated" will output will be interpolated to static z levels; stream will be mom6.hm_bgc*
+          "both" will write both mom6.h_bgc and mom6.hm_bgc files
+    </desc>
+  </entry>
+
   <help>
     =========================================
     MOM6 naming conventions

@@ -42,6 +42,7 @@ def prep_input(case):
     comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
     srcroot         = case.get_value("SRCROOT")
     ocn_bgc_config  = case.get_value("OCN_BGC_CONFIG")
+    vert_grid       = case.get_value("OCN_BGC_HIST_VERT_GRID")
     caseroot        = case.get_value("CASEROOT")
     ocn_grid        = case.get_value("OCN_GRID")
     run_type        = case.get_value("RUN_TYPE")
@@ -120,7 +121,7 @@ def prep_input(case):
             # For now, user has no control over lMARBL_output_all
             # TODO: mimic what is done in POP and allow it via user_nl_mom?
             lMARBL_output_all = case.get_value("TEST")
-            generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, lMARBL_output_all)
+            generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all)
             if os.path.isfile(diag_table_buildconf):
                 diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
         diag_table.write(diag_table_dest, case)
@@ -168,7 +169,7 @@ def _copy_files_to_momconf(case):
     for filename in ["MOM_input", "MOM_override", "diag_table", "input.nml"]:
         shutil.copy(os.path.join(rundir,filename), momconfdir)
 
-def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, lMARBL_output_all):
+def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all):
     """
     Create Buildconf/momconf/diag_table_MARBL.json
 
@@ -226,7 +227,7 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
     # 4. Generate diag_table based on contents of ecosys_diagnostics
     #    and knowledge of which diags are 2D
     from MARBL_diags_to_diag_table import diagnostics_to_diag_table
-    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, diag2D_list, lMARBL_output_all, False)
+    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, diag2D_list, vert_grid, lMARBL_output_all, False)
 
 
 # pylint: disable=unused-argument
