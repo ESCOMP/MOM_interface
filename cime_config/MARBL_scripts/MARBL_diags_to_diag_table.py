@@ -63,16 +63,16 @@ class DiagTableClass(object):
 
         # "medium" frequency should be treated like "mom6.hm" stream -- annual in spinup runs, monthly otherwise
         # i. 2D vars
-        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual%4yr", "$TEST == True": "h_bgc_daily%4yr-%2mo-%2dy", "else": "h_bgc_monthly%4yr-%2mo"}
+        suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual%4yr", "$TEST == True": "h_bgc%4yr-%2mo", "else": "h_bgc_monthly%4yr-%2mo"}
         output_freq_units_dict = {'$OCN_DIAG_MODE == "spinup"': "years", "$TEST == True": "days", "else": "months"}
         self._diag_table_dict["medium"] = self._dict_template(suffix_dict, output_freq_units_dict)
         # ii. 3D vars on interpolated grid
         if vert_grid in ["interpolated", "both"]:
-            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual_z%4yr", "$TEST == True": "h_bgc_daily_z%4yr-%2mo-%2dy", "else": "h_bgc_monthly_z%4yr-%2mo"}
+            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "h_bgc_annual_z%4yr", "$TEST == True": "h_bgc_z%4yr-%2mo", "else": "h_bgc_monthly_z%4yr-%2mo"}
             self._diag_table_dict["medium_z"] = self._dict_template(suffix_dict, output_freq_units_dict, module="ocean_model_z")
         # iii. 3D vars on native grid
         if vert_grid in ["native", "both"]:
-            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual_z%4yr", "$TEST == True": "hm_bgc_daily_z%4yr-%2mo-%2dy", "else": "hm_bgc_monthly_z%4yr-%2mo"}
+            suffix_dict = {'$OCN_DIAG_MODE == "spinup"': "hm_bgc_annual_z%4yr", "$TEST == True": "hm_bgc_z%4yr-%2mo", "else": "hm_bgc_monthly_z%4yr-%2mo"}
             self._diag_table_dict["medium_native_z"] = self._dict_template(suffix_dict, output_freq_units_dict, module="ocean_model")
 
         # "high" frequency should be treated like "mom6.sfc" stream -- 5-day averages in spinup, daily otherwise
