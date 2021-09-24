@@ -58,33 +58,13 @@ def prep_input(case):
     json_templates_dir = os.path.join(comp_root_dir_ocn,"param_templates","json")
 
     # 1. Create MOM_input:
-    #    TODO: should we always read from rundir/MOM_input, or only read from
-    #          disk when pulling MOM_input from SourceMods?
     if "MOM_input" in os.listdir(SourceMods_dir):
         run_cmd("cp "+os.path.join(SourceMods_dir,"MOM_input")+" "+rundir)
-        # use_MARBL = False
-        # with open(os.path.join(SourceMods_dir,"MOM_input")) as input_file:
-        #     for line in input_file:
-        #         if line.split('=')[0].strip() == "USE_MARBL_TRACERS":
-        #             use_MARBL = bool(line.split('=')[1])
-        #             break
     else:
         MOM_input_src = os.path.join(json_templates_dir, "MOM_input.json")
         MOM_input_dest = os.path.join(rundir,"MOM_input")
         MOM_input = FType_MOM_params.from_json(MOM_input_src)
         MOM_input.write(output_path=MOM_input_dest, output_format="MOM_input", case=case)
-        # try:
-        #     use_MARBL = MOM_input._data["Global"]["USE_MARBL_TRACERS"]["value"]
-        # except:
-        #     use_MARBL = False
-
-    # Need to know value of USE_MARBL_TRACERS from MOM_input
-    use_MARBL = False
-    with open(os.path.join(rundir,"MOM_input")) as input_file:
-        for line in input_file:
-            if line.split('=')[0].strip() == "USE_MARBL_TRACERS":
-                use_MARBL = bool(line.split('=')[1])
-                break
 
     # 2. Create MOM_override:
     user_nl_mom = FType_MOM_params.from_MOM_input(os.path.join(caseroot,"user_nl_mom"))
@@ -100,6 +80,12 @@ def prep_input(case):
     MOM_input_final = FType_MOM_params.from_MOM_input(os.path.join(rundir,"MOM_input"))
     MOM_override_final = FType_MOM_params.from_MOM_input(os.path.join(rundir,"MOM_override"))
     MOM_input_final.append(MOM_override_final)
+    # Need to know value of USE_MARBL_TRACERS from MOM_input
+    try:
+        use_MARBL = MOM_input_final._data["Global"]["USE_MARBL_TRACERS"]["value"]
+    except:
+        print("NOTE: could not find USE_MARBL_TRACERS in MOM_input_final")
+        use_MARBL = False
 
     # 4. Create input.nml:
     if "input.nml" in os.listdir(SourceMods_dir):
