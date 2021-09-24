@@ -331,7 +331,8 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_BGC_CONFIG != "none": True
+            bool(re.search("MOM6%[^_]*ECO", $COMPSET ))== True: True
+            else: False
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:

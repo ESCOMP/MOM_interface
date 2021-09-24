@@ -232,7 +232,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\"": true
+            "bool(re.search(\"MOM6%[^_]*ECO\", $COMPSET ))== True": true,
+            "else": false
          }
       },
       "COORD_CONFIG": {
