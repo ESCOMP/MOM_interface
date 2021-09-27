@@ -5,8 +5,8 @@
 <entry_id version="3.0">
 
   <description>
-    <desc ocn="MOM6[%ECO]">MOM6 OCEAN </desc>
-    <desc option="ECO">Ecosystem</desc>
+    <desc ocn="MOM6[%MARBL]">MOM6 OCEAN </desc>
+    <desc option="MARBL">MARBL Biogeochemistry Tracer Library</desc>
   </description>
 
   <entry id="COMP_OCN">

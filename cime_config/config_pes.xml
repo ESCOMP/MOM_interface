@@ -455,7 +455,7 @@
       </pes>
     </mach>
     <mach name="cheyenne">
-      <pes pesize="any" compset="_DATM.+_CICE.*_MOM6%ECO.+_SWAV">
+      <pes pesize="any" compset="_DATM.+_CICE.*_MOM6%MARBL.+_SWAV">
         <comment>none</comment>
         <ntasks>
           <ntasks_atm>36</ntasks_atm>
@@ -521,7 +521,7 @@
           <rootpe_glc>0</rootpe_glc>
         </rootpe>
       </pes>
-      <pes pesize="any" compset="_DATM.+_DICE.*_MOM6%ECO.+_SWAV">
+      <pes pesize="any" compset="_DATM.+_DICE.*_MOM6%MARBL.+_SWAV">
         <comment>none</comment>
         <ntasks>
           <ntasks_atm>36</ntasks_atm>
@@ -622,7 +622,7 @@
           <rootpe_glc>0</rootpe_glc>
         </rootpe>
       </pes>
-      <pes pesize="any" compset="_DATM.+_DICE.*_MOM6%ECO.+_SWAV">
+      <pes pesize="any" compset="_DATM.+_DICE.*_MOM6%MARBL.+_SWAV">
         <comment>none</comment>
         <ntasks>
           <ntasks_atm>48</ntasks_atm>

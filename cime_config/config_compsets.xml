@@ -44,8 +44,8 @@
   </compset>
 
   <compset>
-    <alias>C1850MOMECO</alias>
-    <lname>1850_DATM%NYF_SLND_DICE%SSMI_MOM6%ECO_DROF%NYF_SGLC_SWAV</lname>
+    <alias>C1850MOMMARBL</alias>
+    <lname>1850_DATM%NYF_SLND_DICE%SSMI_MOM6%MARBL_DROF%NYF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
@@ -54,8 +54,8 @@
   </compset>
 
   <compset>
-    <alias>C1850MOMECO_IAF</alias>
-    <lname>1850_DATM%IAF_SLND_DICE%IAF_MOM6%ECO_DROF%IAF_SGLC_SWAV</lname>
+    <alias>C1850MOMMARBL_IAF</alias>
+    <lname>1850_DATM%IAF_SLND_DICE%IAF_MOM6%MARBL_DROF%IAF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
@@ -64,8 +64,8 @@
   </compset>
 
   <compset>
-    <alias>C1850MOMECO_JRA</alias>
-    <lname>1850_DATM%JRA_SLND_DICE%SSMI_MOM6%ECO_DROF%JRA_SGLC_SWAV</lname>
+    <alias>C1850MOMMARBL_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_DICE%SSMI_MOM6%MARBL_DROF%JRA_SGLC_SWAV</lname>
   </compset>
 
   <!-- G compsets -->
@@ -76,8 +76,8 @@
   </compset>
 
   <compset>
-    <alias>G1850MOMECO</alias>
-    <lname>1850_DATM%NYF_SLND_CICE_MOM6%ECO_DROF%NYF_SGLC_SWAV</lname>
+    <alias>G1850MOMMARBL</alias>
+    <lname>1850_DATM%NYF_SLND_CICE_MOM6%MARBL_DROF%NYF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
@@ -86,8 +86,8 @@
   </compset>
 
   <compset>
-    <alias>G1850MOMECO_IAF</alias>
-    <lname>1850_DATM%IAF_SLND_CICE_MOM6%ECO_DROF%IAF_SGLC_SWAV</lname>
+    <alias>G1850MOMMARBL_IAF</alias>
+    <lname>1850_DATM%IAF_SLND_CICE_MOM6%MARBL_DROF%IAF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
@@ -96,8 +96,8 @@
   </compset>
 
   <compset>
-    <alias>G1850MOMECO_JRA</alias>
-    <lname>1850_DATM%JRA_SLND_CICE_MOM6%ECO_DROF%JRA_SGLC_SWAV</lname>
+    <alias>G1850MOMMARBL_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_CICE_MOM6%MARBL_DROF%JRA_SGLC_SWAV</lname>
   </compset>
 
   <!-- Ocean-Only compsets -->

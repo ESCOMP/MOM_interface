@@ -82,7 +82,7 @@ def prep_input(case):
     MOM_input_final.append(MOM_override_final)
     # Need to know value of USE_MARBL_TRACERS from MOM_input
     try:
-        use_MARBL = MOM_input_final._data["Global"]["USE_MARBL_TRACERS"]["value"]
+        use_MARBL = (MOM_input_final._data["Global"]["USE_MARBL_TRACERS"]["value"].strip().lower() == "true")
     except:
         print("NOTE: could not find USE_MARBL_TRACERS in MOM_input_final")
         use_MARBL = False

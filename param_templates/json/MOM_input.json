@@ -232,7 +232,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "bool(re.search(\"MOM6%[^_]*ECO\", $COMPSET ))== True": true,
+            "bool(re.search(\"MOM6%[^_]*MARBL\", $COMPSET ))== True": true,
             "else": false
          }
       },
