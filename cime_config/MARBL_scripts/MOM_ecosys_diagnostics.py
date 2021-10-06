@@ -317,5 +317,7 @@ def _2D_varcheck(varname):
     """
     return (varname.startswith("STF_") or
             varname.endswith("_FLUX_CPL") or
-            varname.endswith("_RIV_FLUX")
+            varname.endswith("_RIV_FLUX") or
+            varname.endswith("_SURF") or
+            varname.endswith("_zint_100m")
            )
