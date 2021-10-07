@@ -152,9 +152,9 @@ class DiagTableClass(object):
         for freq in self._diag_table_dict:
             if len(self._diag_table_dict[freq]["fields"][0]["lists"][0]) > 0:
                 out_dict["Files"][freq] = self._diag_table_dict[freq].copy()
+                out_dict["Files"][freq]["fields"][0]["lists"].append(["geolat", "geolon"])
                 if out_dict["Files"][freq]["fields"][0]["module"] == "ocean_model" and freq[-2:] == "_z":
-                    transports = ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
-                    out_dict["Files"][freq]["fields"][0]["lists"].append(transports)
+                    out_dict["Files"][freq]["fields"][0]["lists"].append(["volcello", "h"])
         if out_dict["Files"]:
             with open(filename, "w") as fp:
                 json.dump(out_dict, fp, separators=(',', ': '), sort_keys=False, indent=3)
