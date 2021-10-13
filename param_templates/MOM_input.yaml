@@ -3289,9 +3289,42 @@ Global:
              DHH85         - Uses Donelan et al. 1985 empirical...
              LF17          - Infers Stokes drift profile from wind...
              EFACTOR       - Applies an enhancement factor to the KPP...""
-        datape: string
+        datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: "EFACTOR"
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID != "wtx0.66v1" : "EFACTOR"
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "SURFACE_BANDS"
+    SURFBAND_SOURCE:
+        description: |
+            Choice of SURFACE_BANDS data mode, valid options include:
+            DATAOVERRIDE  - Read from NetCDF using FMS DataOverride.
+            COUPLER       - Look for variables from coupler pass
+            INPUT         - Testing with fixed values.
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "COUPLER"
+    STOKES_DDT:
+        description: |
+            default = False
+            Flag to use Stokes d/dt
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+    STK_BAND_COUPLER:
+        description: |
+            default = 1
+            STK_BAND_COUPLER is the number of Stokes drift bands in the coupler. This has
+            to be consistent with the number of Stokes drift bands in WW3, or the model
+            will fail.
+        datatype: int
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : 3
+    SURFBAND_WAVENUMBERS:
+        description: |
+            [rad/m] default = 0.12566
+            Central wavenumbers for surface Stokes drift bands.
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "0.04, 0.11, 0.33"
 
 
 KPP:
