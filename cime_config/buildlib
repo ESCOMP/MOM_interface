@@ -120,7 +120,7 @@ def buildlib(caseroot, libroot, bldroot):
         # build the library
         makefile = os.path.join(casetools, "Makefile")
         complib = os.path.join(libroot,"libocn.a")
-        cmd = "{} complib -j {} MODEL=mom COMPLIB={} -f {} USER_INCLDIR={} {}"\
+        cmd = "{} complib -j {} COMP_NAME=mom COMPLIB={} -f {} USER_INCLDIR={} {}"\
                 .format(gmake, gmake_j, complib, makefile, user_incldir, get_standard_makefile_args(case))
 
         rc, out, err = run_cmd(cmd)
