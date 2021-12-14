@@ -2648,6 +2648,20 @@
             "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
          }
       },
+      "STOKES_VF": {
+         "description": "default = False\nFlag to use Stokes vortex force\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
+         }
+      },
+      "STOKES_PGF": {
+         "description": "default = False\nFlag to use Stokes pressure gradient force\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
+         }
+      },
       "STK_BAND_COUPLER": {
          "description": "default = 1\nSTK_BAND_COUPLER is the number of Stokes drift bands in the coupler. This has\nto be consistent with the number of Stokes drift bands in WW3, or the model\nwill fail.\n",
          "datatype": "int",

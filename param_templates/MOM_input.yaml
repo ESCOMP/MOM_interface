@@ -3309,6 +3309,20 @@ Global:
         datatype: string
         value:
             $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+    STOKES_VF:
+        description: |
+            default = False
+            Flag to use Stokes vortex force
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+    STOKES_PGF:
+        description: |
+            default = False
+            Flag to use Stokes pressure gradient force
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
     STK_BAND_COUPLER:
         description: |
             default = 1
