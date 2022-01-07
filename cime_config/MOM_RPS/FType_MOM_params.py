@@ -37,6 +37,7 @@ class FType_MOM_params(MOM_RPS):
             within_comment_block = False
             curr_module = "Global"
             for line in param_file:
+                line = line.strip()
                 if len(line)>1:
                     line_s = line.split()
 
@@ -61,7 +62,7 @@ class FType_MOM_params(MOM_RPS):
                             line_j = ' '.join(line_s)
 
                             # now parse the line:
-                            if re.search("^\s*\w*\s*=\s*.", line_j):
+                            if re.search("^\s*\w*\s*=\s*[^ \t\n\r\f\v!]+", line_j):
                                 eq_ix = line_j.index('=')
                                 varname = line_j[:eq_ix].strip()
                                 val_str = line_j[eq_ix+1:].strip()
