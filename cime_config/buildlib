@@ -76,7 +76,7 @@ def buildlib(caseroot, libroot, bldroot):
             paths = [os.path.join(caseroot,"SourceMods","src.mom"),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","drivers", driver),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","memory", memory_mode),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","infra", "FMS1"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","infra","FMS1"),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","GFDL_ocean_BGC"),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","ODA_hooks"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","ALE"),
