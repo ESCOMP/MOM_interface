@@ -27,7 +27,7 @@
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
     <options>
-      <option name="wallclock">00:30:00</option>
+      <option name="wallclock">01:00:00</option>
     </options>
   </test>
   <test name="SMS" grid="T62_t061" compset="GMOM" testmods="mom/rps">
@@ -96,6 +96,14 @@
     </machines>
     <options>
       <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="DIMCS_Ld1" grid="TL319_t061" compset="GMOM_JRA">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">01:00:00</option>
     </options>
   </test>
 </testlist>
