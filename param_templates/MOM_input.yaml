@@ -3390,7 +3390,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: True
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "ww3a" : True
     USE_KPP_LT_VT2:
         description: |
             default = False
@@ -3398,7 +3398,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: True
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "ww3a" : True
     KPP_LT_K_METHOD:
         description: |
             default = "CONSTANT"

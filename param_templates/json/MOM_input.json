@@ -2716,7 +2716,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"]": true
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"ww3a\"": true
          }
       },
       "USE_KPP_LT_VT2": {
@@ -2724,7 +2724,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"]": true
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"ww3a\"": true
          }
       },
       "KPP_LT_K_METHOD": {
