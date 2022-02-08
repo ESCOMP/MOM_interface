@@ -231,10 +231,13 @@
          "description": "\"[Boolean] default = False\nIf true, use the MOM_CFC_cap tracer package.\"\n",
          "datatype": "logical",
          "units": "Boolean",
+         "value": false
+      },
+      "CFC_BC_FILE": {
+         "description": "\"The file in which the CFC-11 and CFC-12 atm concentrations can be found (units\nmust be parts per trillion), or an empty string for internal BC generation\n(TODO).\"\n",
+         "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": false,
-            "$OCN_GRID == \"tx0.66v1\"": false,
-            "$OCN_GRID == \"tx0.25v1\"": false
+            "$OCN_GRID == \"tx0.66v1\"": "CFCs_tx0.66v1_v2_5_210430.nc"
          }
       },
       "COORD_CONFIG": {

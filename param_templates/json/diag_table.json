@@ -132,6 +132,16 @@
          "so",
          "vmo",
          "vo"
+      ],
+      [
+         "cfc11",
+         "cfc12"
+      ],
+      [
+         "cfc11_flux",
+         "cfc12_flux",
+         "ice_fraction",
+         "u10_sqr"
       ]
    ],
    "Files": {

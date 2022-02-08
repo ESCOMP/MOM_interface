@@ -39,6 +39,10 @@ FieldLists:
 
     - &vert_sections_v  ["volcello", "thetao", "so", "vmo", "vo"]
 
+    - &cfc_3d  ["cfc11", "cfc12"]
+
+    - &cfc_2d  ["cfc11_flux", "cfc12_flux", "ice_fraction", "u10_sqr"]
+
 ###############################################################################
 # Section 2: File lists:
 #   List of files to be added in diag_table
