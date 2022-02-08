@@ -324,6 +324,16 @@ Global:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": True
+    USE_CFC_CAP:
+        description: |
+            "[Boolean] default = False
+            If true, use the MOM_CFC_cap tracer package."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "gx1v6": False
+            $OCN_GRID == "tx0.66v1": False
+            $OCN_GRID == "tx0.25v1": False
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:
