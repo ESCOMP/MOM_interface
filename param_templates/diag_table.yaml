@@ -6,7 +6,7 @@
 FieldLists:
     - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "rhoinsitu", "KE", "rhopot0"]
 
-    - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt"]
+    - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt", "ice_fraction"]
 
     - &tracers          ["agessc", "T_ady_2d", "T_adx_2d", "T_diffy_2d", "T_diffx_2d"]
 
@@ -41,7 +41,7 @@ FieldLists:
 
     - &cfc_3d  ["cfc11", "cfc12"]
 
-    - &cfc_2d  ["cfc11_flux", "cfc12_flux", "ice_fraction", "u10_sqr"]
+    - &cfc_2d  ["cfc11_flux", "cfc12_flux", "u10_sqr"]
 
 ###############################################################################
 # Section 2: File lists:

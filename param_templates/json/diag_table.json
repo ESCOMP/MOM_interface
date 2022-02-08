@@ -17,7 +17,8 @@
          "uh",
          "vh",
          "vhbt",
-         "uhbt"
+         "uhbt",
+         "ice_fraction"
       ],
       [
          "agessc",
@@ -140,7 +141,6 @@
       [
          "cfc11_flux",
          "cfc12_flux",
-         "ice_fraction",
          "u10_sqr"
       ]
    ],
@@ -217,7 +217,8 @@
                         "uh",
                         "vh",
                         "vhbt",
-                        "uhbt"
+                        "uhbt",
+                        "ice_fraction"
                      ],
                      [
                         "agessc",
@@ -266,7 +267,8 @@
                         "uh",
                         "vh",
                         "vhbt",
-                        "uhbt"
+                        "uhbt",
+                        "ice_fraction"
                      ],
                      [
                         "KPP_OBLdepth:oml"
