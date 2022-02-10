@@ -95,7 +95,7 @@ def prep_input(case):
         diag_table_src = os.path.join(json_templates_dir, "diag_table.json")
         diag_table_dest = os.path.join(rundir,"diag_table")
         diag_table = FType_diag_table.from_json(diag_table_src)
-        diag_table.write(diag_table_dest, case)
+        diag_table.write(diag_table_dest, case, MOM_input_final)
 
 def init_MOM_override(rundir):
     # Create an empty MOM_override:
