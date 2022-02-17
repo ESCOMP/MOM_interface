@@ -20,7 +20,7 @@ FieldLists:
                          "hfsifrazil", "wfo", "vprec", "ficeberg", "fsitherm",
                          "hflso", "pso", "seaice_melt_heat", "Heat_PmE", "salt_flux_added"]
 
-    - &forcing_flds_dev ["net_heat_coupler", "hfds", "LwLatSens", "heat_content_lrunoff",
+    - &forcing_flds_dev ["net_heat_coupler", "LwLatSens", "heat_content_lrunoff",
                          "heat_content_frunoff", "heat_content_icemelt", "heat_content_lprec",
                          "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
                          "hfevapds", "heat_content_massin", "heat_content_surfwater",
@@ -147,7 +147,7 @@ Files:
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-            $OCN_DIAG_MODE == "production" and $TEST == False:
+            $OCN_DIAG_MODE in ["production", "development"] and $TEST == False:
                 - module:   "ocean_model"    # native
                   packing:  1                # double precision
                   lists:    [ *surface_flds,
