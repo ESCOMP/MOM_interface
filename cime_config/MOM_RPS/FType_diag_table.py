@@ -4,10 +4,10 @@ from MOM_RPS import MOM_RPS
 class FType_diag_table(MOM_RPS):
     """Encapsulates data and read/write methods for MOM6 diag_table input file."""
 
-    def write(self, output_path, case):
+    def write(self, output_path, case, MOM_input_final):
 
         # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
-        self.expand_case_vars(case)
+        self.expand_case_vars(case, MOM_input_final)
 
         # Apply the guards on the general data to get the targeted values
         self.infer_values(case)

@@ -1,4 +1,5 @@
 import os
+import re
 from MOM_RPS import MOM_RPS
 from rps_utils import get_str_type
 from collections import OrderedDict
@@ -36,6 +37,7 @@ class FType_MOM_params(MOM_RPS):
             within_comment_block = False
             curr_module = "Global"
             for line in param_file:
+                line = line.strip()
                 if len(line)>1:
                     line_s = line.split()
 
@@ -60,10 +62,10 @@ class FType_MOM_params(MOM_RPS):
                             line_j = ' '.join(line_s)
 
                             # now parse the line:
-                            if ("=" in line_j):
-                                line_ss     = line_j.split("=")
-                                param_str   = (line_ss[0]).strip()  # the first element is the parameter name
-                                val_str     = ' '.join(line_ss[1:]) # the rest is tha value string
+                            if re.search("^\s*\w*\s*=\s*[^ \t\n\r\f\v!]+", line_j):
+                                eq_ix = line_j.index('=')
+                                varname = line_j[:eq_ix].strip()
+                                val_str = line_j[eq_ix+1:].strip()
                                 if '!' in val_str:
                                     val_str = val_str.split("!")[0] # discard the comment in val str, if there is
 
@@ -72,11 +74,11 @@ class FType_MOM_params(MOM_RPS):
                                     _data[curr_module] = dict()
 
                                 # check if param already provided:
-                                if param_str in _data[curr_module]:
-                                    raise SystemExit('ERROR: '+param_str+' listed more than once in '+input_path)
+                                if varname in _data[curr_module]:
+                                    raise SystemExit('ERROR: '+varname+' listed more than once in '+input_path)
 
                                 # enter the parameter in the dictionary:
-                                _data[curr_module][param_str] = {'value':val_str}
+                                _data[curr_module][varname] = {'value':val_str}
                             else:
                                 raise SystemExit('ERROR: Cannot parse the following line in user_nl_mom: '+line)
 

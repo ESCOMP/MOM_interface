@@ -30,7 +30,7 @@
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
-  <test name="SMS_Vmct" grid="T62_t061" compset="GMOM">
+  <test name="SMS_Vmct" grid="T62_t061" compset="GMOM" testmods="mom/rps">
     <machines>
       <machine name="cheyenne" compiler="gnu" category="aux_mom"/>
       <machine name="cheyenne" compiler="intel" category="prealpha"/>
@@ -100,6 +100,15 @@
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom"/>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="izumi" compiler="intel" category="aux_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="SMS" grid="TL319_t061" compset="GMOM_JRA" testmods="mom/cfc_mods">
+    <machines>
+      <machine name="cheyenne" compiler="intel" category="aux_mom"/>
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
     <options>
