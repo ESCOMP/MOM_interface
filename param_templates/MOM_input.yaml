@@ -324,6 +324,21 @@ Global:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": True
+    USE_CFC_CAP:
+        description: |
+            "[Boolean] default = False
+            If true, use the MOM_CFC_cap tracer package."
+        datatype: logical
+        units: Boolean
+        value: False
+    CFC_BC_FILE:
+        description: |
+            "The file in which the CFC-11 and CFC-12 atm concentrations can be found (units
+            must be parts per trillion), or an empty string for internal BC generation
+            (TODO)."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.66v1": "CFCs_tx0.66v1_v2_5_210430.nc"
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:

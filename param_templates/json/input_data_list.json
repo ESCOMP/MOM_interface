@@ -46,6 +46,9 @@
       "ocean_seaw": {
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/seawifs-clim-1997-2010.1440x1080.v20180328.nc",
          "$OCN_GRID == \"tx0.66v1\"": "${INPUTDIR}/seawifs-clim-1997-2010-tx0.66v1.nc"
+      },
+      "cfcs_forcing": {
+         "$OCN_GRID == \"tx0.66v1\"": "${INPUTDIR}/CFCs_tx0.66v1_v2_5_210430.nc"
       }
    }
 }

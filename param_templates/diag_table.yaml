@@ -39,6 +39,10 @@ FieldLists:
 
     - &vert_sections_v  ["volcello", "thetao", "so", "vmo", "vo"]
 
+    - &cfc_3d  ["cfc11", "cfc12"]
+
+    - &cfc_2d  ["cfc11_flux", "cfc12_flux", "ice_fraction", "u10_sqr"]
+
 ###############################################################################
 # Section 2: File lists:
 #   List of files to be added in diag_table
@@ -96,16 +100,29 @@ Files:
                               *visc_flds,
                               *transports ]
             $OCN_DIAG_MODE not in ["spinup", "none"]:
-                - module:   "ocean_model"
-                  packing:  1                 # double precision
-                  lists:    [ *prognostic,
-                              *hist_additional,
-                              *kpp_diags,
-                              *forcing_flds,
-                              *surface_flds,
-                              *visc_flds,
-                              *transports,
-                              *tracers ]
+                $USE_CFC_CAP == "True":
+                    - module:   "ocean_model"
+                      packing:  1                 # double precision
+                      lists:    [ *prognostic,
+                                  *hist_additional,
+                                  *kpp_diags,
+                                  *forcing_flds,
+                                  *surface_flds,
+                                  *visc_flds,
+                                  *transports,
+                                  *tracers,
+                                  *cfc_2d ]
+                else:
+                    - module:   "ocean_model"
+                      packing:  1                 # double precision
+                      lists:    [ *prognostic,
+                                  *hist_additional,
+                                  *kpp_diags,
+                                  *forcing_flds,
+                                  *surface_flds,
+                                  *visc_flds,
+                                  *transports,
+                                  *tracers ]
 
     # essential variable mapped to z_space
     hist_z_space:
@@ -131,9 +148,15 @@ Files:
                   packing:  2                 # single precision
                   lists:    [ *prognostic ]
             $OCN_DIAG_MODE not in ["spinup", "none"]:
-                - module:   "ocean_model_z"   # z_space
-                  packing:  1                 # double precision
-                  lists:    [ *prognostic ]
+                $USE_CFC_CAP == "True":
+                    - module:   "ocean_model_z"   # z_space
+                      packing:  1                 # double precision
+                      lists:    [ *prognostic,
+                                  *cfc_3d ]
+                else:
+                    - module:   "ocean_model_z"   # z_space
+                      packing:  1                 # double precision
+                      lists:    [ *prognostic ]
 
     surface_avg:
         suffix: "sfc%4yr"

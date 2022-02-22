@@ -1,0 +1,2 @@
+# Set RUN_STARTDATE to ensure atmospheric pCFC forcing is nonzero. The year 1980 is otherwise arbitrary.
+./xmlchange RUN_STARTDATE=1980-01-01

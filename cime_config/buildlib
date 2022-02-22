@@ -78,6 +78,8 @@ def buildlib(caseroot, libroot, bldroot):
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","infra", "FMS1"),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","GFDL_ocean_BGC"),
                      os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","ODA_hooks"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","stochastic_physics"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","drifters"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","ALE"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","core"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","diagnostics"),
@@ -91,6 +93,7 @@ def buildlib(caseroot, libroot, bldroot):
 #                     marbl_srcdir,
                      os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","lateral"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","vertical"),
+                     os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","stochastic"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","tracer"),
                      os.path.join(comp_root_dir_ocn,"MOM6","src","user")]
 

@@ -1,0 +1,9 @@
+! key = value !!! some comment
+
+MIN_THICKNESS = 1e-4  !! the default is 1e-3
+   
+KPP%
+  N_SMOOTH=2
+  USE_KPP_LT_VT2 = False  ! the default is false, so no change
+%KPP
+  
