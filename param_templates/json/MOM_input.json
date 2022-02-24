@@ -2631,6 +2631,63 @@
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "geothermal_hf"
          }
+      },
+      "USE_WAVES": {
+         "description": "\"default = False\nIf true, enables surface wave modules.\"\n",
+         "datatype": "logical",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"]": true
+         }
+      },
+      "WAVE_METHOD": {
+         "description": "\"Choice of wave method, valid options include:\n TEST_PROFILE  - Prescribed from surface Stokes drift...\n SURFACE_BANDS - Computed from multiple surface values...\n DHH85         - Uses Donelan et al. 1985 empirical...\n LF17          - Infers Stokes drift profile from wind...\n EFACTOR       - Applies an enhancement factor to the KPP...\"\"\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID != \"wtx0.66v1\"": "EFACTOR",
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": "SURFACE_BANDS"
+         }
+      },
+      "SURFBAND_SOURCE": {
+         "description": "Choice of SURFACE_BANDS data mode, valid options include:\nDATAOVERRIDE  - Read from NetCDF using FMS DataOverride.\nCOUPLER       - Look for variables from coupler pass\nINPUT         - Testing with fixed values.\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": "COUPLER"
+         }
+      },
+      "STOKES_DDT": {
+         "description": "default = False\nFlag to use Stokes d/dt\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
+         }
+      },
+      "STOKES_VF": {
+         "description": "default = False\nFlag to use Stokes vortex force\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
+         }
+      },
+      "STOKES_PGF": {
+         "description": "default = False\nFlag to use Stokes pressure gradient force\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
+         }
+      },
+      "STK_BAND_COUPLER": {
+         "description": "default = 1\nSTK_BAND_COUPLER is the number of Stokes drift bands in the coupler. This has\nto be consistent with the number of Stokes drift bands in WW3, or the model\nwill fail.\n",
+         "datatype": "int",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": 3
+         }
+      },
+      "SURFBAND_WAVENUMBERS": {
+         "description": "[rad/m] default = 0.12566\nCentral wavenumbers for surface Stokes drift bands.\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": "0.04, 0.11, 0.33"
+         }
       }
    },
    "KPP": {
@@ -2665,6 +2722,36 @@
          "value": {
             "$OCN_GRID == \"gx1v6\"": false,
             "$OCN_GRID == \"tx0.66v1\"": false
+         }
+      },
+      "USE_KPP_LT_K": {
+         "description": "default = False\nFlag for Langmuir turbulence enhancement of turbulentmixing coefficient.\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"ww3a\"": true
+         }
+      },
+      "USE_KPP_LT_VT2": {
+         "description": "default = False\nFlag for Langmuir turbulence enhancement of Vt2in Bulk Richardson Number.\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"ww3a\"": true
+         }
+      },
+      "KPP_LT_K_METHOD": {
+         "description": "default = \"CONSTANT\"\nMethod to enhance mixing coefficient in KPP. Valid options are:\n   CONSTANT = Constant value (KPP_K_ENH_FAC)\n   VR12     = Function of Langmuir number based on VR12\n   RW16     = Function of Langmuir number based on RW16\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"]": "VR12"
+         }
+      },
+      "KPP_LT_VT2_METHOD": {
+         "description": "default = \"CONSTANT\"\nMethod to enhance Vt2 in KPP. Valid options are:\n   CONSTANT = Constant value (KPP_VT2_ENH_FAC)\n   VR12     = Function of Langmuir number based on VR12\n   RW16     = Function of Langmuir number based on RW16\n   LF17     = Function of Langmuir number based on LF17\n",
+         "datatype": "string",
+         "value": {
+            "$COMP_WAV in [\"ww3\", \"ww3dev\"]": "VR12"
          }
       }
    }
