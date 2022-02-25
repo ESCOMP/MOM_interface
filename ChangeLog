@@ -1,5 +1,22 @@
 ===============================================================================
 Tag Creator: altuntas
+Tag Date:    25 Feb 2022
+Tag Name:    mi_220225
+
+MOM_interface Updates Summary:
+- Wave coupling changes
+- Adds option to enable CFCs
+- update buildlib for stochastic physics and drifters modules
+
+MOM6 Updates Summary:
+- Merge with latest main (2022 feb17)
+- Dimensional Consistency fixes
+- Merging main candidate from Dec 20, 2021
+- Add the Stokes Forces Implementation for the Surface Bands wave coupling method
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  altuntas, gmarques, klindsay, mnlevy, et al.
 Tag Date:    07 Jan 2022
 Tag Name:    mi_220107
