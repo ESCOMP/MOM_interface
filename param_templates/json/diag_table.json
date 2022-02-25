@@ -69,7 +69,6 @@
       ],
       [
          "net_heat_coupler",
-         "hfds",
          "LwLatSens",
          "heat_content_lrunoff",
          "heat_content_frunoff",
@@ -533,7 +532,7 @@
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "$OCN_DIAG_MODE == \"production\" and $TEST == False": [
+            "$OCN_DIAG_MODE in [\"production\", \"development\"] and $TEST == False": [
                {
                   "module": "ocean_model",
                   "packing": 1,
@@ -625,7 +624,6 @@
                      ],
                      [
                         "net_heat_coupler",
-                        "hfds",
                         "LwLatSens",
                         "heat_content_lrunoff",
                         "heat_content_frunoff",
