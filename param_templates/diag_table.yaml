@@ -14,6 +14,8 @@ FieldLists:
                          "somint", "Rd_dx", "speed", "mlotst"]
 
     - &kpp_diags        ["KPP_OBLdepth:oml"]
+    - &kpp_diags_test   ["KPP_QminusSW", "KPP_netSalt", "KPP_NLT_dTdt", "KPP_NLT_dSdT",
+                         "KPP_NLT_temp_budget", "KPP_NLT_saln_budget"]
 
     - &forcing_flds     ["tauuo", "tauvo", "friver", "prsn", "prlq", "evs", "hfsso", "rlntds",
                          "hfsnthermds", "sfdsi", "rsntds", "hfds", "ustar",
@@ -101,28 +103,55 @@ Files:
                               *transports ]
             $OCN_DIAG_MODE not in ["spinup", "none"]:
                 $USE_CFC_CAP == "True":
-                    - module:   "ocean_model"
-                      packing:  1                 # double precision
-                      lists:    [ *prognostic,
-                                  *hist_additional,
-                                  *kpp_diags,
-                                  *forcing_flds,
-                                  *surface_flds,
-                                  *visc_flds,
-                                  *transports,
-                                  *tracers,
-                                  *cfc_2d ]
+                    $TEST == False :
+                        - module:   "ocean_model"
+                          packing:  1                 # double precision
+                          lists:    [ *prognostic,
+                                      *hist_additional,
+                                      *kpp_diags,
+                                      *forcing_flds,
+                                      *surface_flds,
+                                      *visc_flds,
+                                      *transports,
+                                      *tracers,
+                                      *cfc_2d ]
+                    else:
+                        - module:   "ocean_model"
+                          packing:  1                 # double precision
+                          lists:    [ *prognostic,
+                                      *hist_additional,
+                                      *kpp_diags,
+                                      *kpp_diags_test,
+                                      *forcing_flds,
+                                      *surface_flds,
+                                      *visc_flds,
+                                      *transports,
+                                      *tracers,
+                                      *cfc_2d ]
                 else:
-                    - module:   "ocean_model"
-                      packing:  1                 # double precision
-                      lists:    [ *prognostic,
-                                  *hist_additional,
-                                  *kpp_diags,
-                                  *forcing_flds,
-                                  *surface_flds,
-                                  *visc_flds,
-                                  *transports,
-                                  *tracers ]
+                    $TEST == False :
+                        - module:   "ocean_model"
+                          packing:  1                 # double precision
+                          lists:    [ *prognostic,
+                                      *hist_additional,
+                                      *kpp_diags,
+                                      *forcing_flds,
+                                      *surface_flds,
+                                      *visc_flds,
+                                      *transports,
+                                      *tracers ]
+                    else:
+                        - module:   "ocean_model"
+                          packing:  1                 # double precision
+                          lists:    [ *prognostic,
+                                      *hist_additional,
+                                      *kpp_diags,
+                                      *kpp_diags_test,
+                                      *forcing_flds,
+                                      *surface_flds,
+                                      *visc_flds,
+                                      *transports,
+                                      *tracers ]
 
     # essential variable mapped to z_space
     hist_z_space:
