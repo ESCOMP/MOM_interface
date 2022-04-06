@@ -79,7 +79,7 @@ class DIMCS(SystemTestsCompareN):
 
     def _common_setup(self):
         nl_contents_common = '''
-            MEKE_ALPHA_RHINES = 1.0 ! this is the same as default. Adding to test common_setup
+            ! DIMCS test changes
         '''
         append_to_user_nl_files(caseroot = self._case.get_value("CASEROOT"),
                                 component = self.comp,

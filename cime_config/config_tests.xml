@@ -15,15 +15,5 @@ This defines various MOM6-specific system tests
     <HIST_OPTION>$STOP_OPTION</HIST_OPTION>
     <HIST_N>$STOP_N</HIST_N>
   </test>
-  <test NAME="MEMCS">
-    <DESC>MOM6 memory mode and domain decomposition consistency</DESC>
-    <INFO_DBUG>1</INFO_DBUG>
-    <DOUT_S>FALSE</DOUT_S>
-    <CONTINUE_RUN>FALSE</CONTINUE_RUN>
-    <STOP_N>2</STOP_N>
-    <REST_OPTION>never</REST_OPTION>
-    <HIST_OPTION>$STOP_OPTION</HIST_OPTION>
-    <HIST_N>$STOP_N</HIST_N>
-  </test>
 
 </config_test>
