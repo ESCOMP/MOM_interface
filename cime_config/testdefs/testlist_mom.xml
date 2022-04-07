@@ -121,7 +121,7 @@
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
     <options>
-      <option name="wallclock">00:30:00</option>
+      <option name="wallclock">01:30:00</option>
     </options>
   </test>
 </testlist>
