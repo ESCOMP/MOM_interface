@@ -20,7 +20,7 @@ FieldLists:
                          "hfsifrazil", "wfo", "vprec", "ficeberg", "fsitherm",
                          "hflso", "pso", "seaice_melt_heat", "Heat_PmE", "salt_flux_added"]
 
-    - &forcing_flds_dev ["net_heat_coupler", "hfds", "LwLatSens", "heat_content_lrunoff",
+    - &forcing_flds_dev ["net_heat_coupler", "LwLatSens", "heat_content_lrunoff",
                          "heat_content_frunoff", "heat_content_icemelt", "heat_content_lprec",
                          "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
                          "hfevapds", "heat_content_massin", "heat_content_surfwater",
@@ -38,6 +38,10 @@ FieldLists:
     - &vert_sections_u  ["volcello", "thetao", "so", "umo", "uo"]
 
     - &vert_sections_v  ["volcello", "thetao", "so", "vmo", "vo"]
+
+    - &cfc_3d  ["cfc11", "cfc12"]
+
+    - &cfc_2d  ["cfc11_flux", "cfc12_flux", "ice_fraction", "u10_sqr"]
 
 ###############################################################################
 # Section 2: File lists:
@@ -96,16 +100,29 @@ Files:
                               *visc_flds,
                               *transports ]
             $OCN_DIAG_MODE not in ["spinup", "none"]:
-                - module:   "ocean_model"
-                  packing:  1                 # double precision
-                  lists:    [ *prognostic,
-                              *hist_additional,
-                              *kpp_diags,
-                              *forcing_flds,
-                              *surface_flds,
-                              *visc_flds,
-                              *transports,
-                              *tracers ]
+                $USE_CFC_CAP == "True":
+                    - module:   "ocean_model"
+                      packing:  1                 # double precision
+                      lists:    [ *prognostic,
+                                  *hist_additional,
+                                  *kpp_diags,
+                                  *forcing_flds,
+                                  *surface_flds,
+                                  *visc_flds,
+                                  *transports,
+                                  *tracers,
+                                  *cfc_2d ]
+                else:
+                    - module:   "ocean_model"
+                      packing:  1                 # double precision
+                      lists:    [ *prognostic,
+                                  *hist_additional,
+                                  *kpp_diags,
+                                  *forcing_flds,
+                                  *surface_flds,
+                                  *visc_flds,
+                                  *transports,
+                                  *tracers ]
 
     # essential variable mapped to z_space
     hist_z_space:
@@ -131,9 +148,15 @@ Files:
                   packing:  2                 # single precision
                   lists:    [ *prognostic ]
             $OCN_DIAG_MODE not in ["spinup", "none"]:
-                - module:   "ocean_model_z"   # z_space
-                  packing:  1                 # double precision
-                  lists:    [ *prognostic ]
+                $USE_CFC_CAP == "True":
+                    - module:   "ocean_model_z"   # z_space
+                      packing:  1                 # double precision
+                      lists:    [ *prognostic,
+                                  *cfc_3d ]
+                else:
+                    - module:   "ocean_model_z"   # z_space
+                      packing:  1                 # double precision
+                      lists:    [ *prognostic ]
 
     surface_avg:
         suffix: "sfc%4yr"
@@ -147,7 +170,7 @@ Files:
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-            $OCN_DIAG_MODE == "production" and $TEST == False:
+            $OCN_DIAG_MODE in ["production", "development"] and $TEST == False:
                 - module:   "ocean_model"    # native
                   packing:  1                # double precision
                   lists:    [ *surface_flds,

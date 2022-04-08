@@ -69,7 +69,6 @@
       ],
       [
          "net_heat_coupler",
-         "hfds",
          "LwLatSens",
          "heat_content_lrunoff",
          "heat_content_frunoff",
@@ -132,6 +131,16 @@
          "so",
          "vmo",
          "vo"
+      ],
+      [
+         "cfc11",
+         "cfc12"
+      ],
+      [
+         "cfc11_flux",
+         "cfc12_flux",
+         "ice_fraction",
+         "u10_sqr"
       ]
    ],
    "Files": {
@@ -234,96 +243,194 @@
                   ]
                }
             ],
-            "$OCN_DIAG_MODE not in [\"spinup\", \"none\"]": [
-               {
-                  "module": "ocean_model",
-                  "packing": 1,
-                  "lists": [
-                     [
-                        "uo",
-                        "vo",
-                        "h",
-                        "e",
-                        "thetao",
-                        "so",
-                        "rhoinsitu",
-                        "KE",
-                        "rhopot0"
-                     ],
-                     [
-                        "soga",
-                        "thetaoga",
-                        "uh",
-                        "vh",
-                        "vhbt",
-                        "uhbt"
-                     ],
-                     [
-                        "KPP_OBLdepth:oml"
-                     ],
-                     [
-                        "tauuo",
-                        "tauvo",
-                        "friver",
-                        "prsn",
-                        "prlq",
-                        "evs",
-                        "hfsso",
-                        "rlntds",
-                        "hfsnthermds",
-                        "sfdsi",
-                        "rsntds",
-                        "hfds",
-                        "ustar",
-                        "hfsifrazil",
-                        "wfo",
-                        "vprec",
-                        "ficeberg",
-                        "fsitherm",
-                        "hflso",
-                        "pso",
-                        "seaice_melt_heat",
-                        "Heat_PmE",
-                        "salt_flux_added"
-                     ],
-                     [
-                        "SSH",
-                        "tos",
-                        "sos",
-                        "SSU",
-                        "SSV",
-                        "mass_wt",
-                        "opottempmint",
-                        "somint",
-                        "Rd_dx",
-                        "speed",
-                        "mlotst"
-                     ],
-                     [
-                        "diftrelo",
-                        "diftrblo",
-                        "difmxybo",
-                        "difmxylo"
-                     ],
-                     [
-                        "volcello",
-                        "vmo",
-                        "vhGM",
-                        "vhml",
-                        "umo",
-                        "uhGM",
-                        "uhml"
-                     ],
-                     [
-                        "agessc",
-                        "T_ady_2d",
-                        "T_adx_2d",
-                        "T_diffy_2d",
-                        "T_diffx_2d"
+            "$OCN_DIAG_MODE not in [\"spinup\", \"none\"]": {
+               "$USE_CFC_CAP == \"True\"": [
+                  {
+                     "module": "ocean_model",
+                     "packing": 1,
+                     "lists": [
+                        [
+                           "uo",
+                           "vo",
+                           "h",
+                           "e",
+                           "thetao",
+                           "so",
+                           "rhoinsitu",
+                           "KE",
+                           "rhopot0"
+                        ],
+                        [
+                           "soga",
+                           "thetaoga",
+                           "uh",
+                           "vh",
+                           "vhbt",
+                           "uhbt"
+                        ],
+                        [
+                           "KPP_OBLdepth:oml"
+                        ],
+                        [
+                           "tauuo",
+                           "tauvo",
+                           "friver",
+                           "prsn",
+                           "prlq",
+                           "evs",
+                           "hfsso",
+                           "rlntds",
+                           "hfsnthermds",
+                           "sfdsi",
+                           "rsntds",
+                           "hfds",
+                           "ustar",
+                           "hfsifrazil",
+                           "wfo",
+                           "vprec",
+                           "ficeberg",
+                           "fsitherm",
+                           "hflso",
+                           "pso",
+                           "seaice_melt_heat",
+                           "Heat_PmE",
+                           "salt_flux_added"
+                        ],
+                        [
+                           "SSH",
+                           "tos",
+                           "sos",
+                           "SSU",
+                           "SSV",
+                           "mass_wt",
+                           "opottempmint",
+                           "somint",
+                           "Rd_dx",
+                           "speed",
+                           "mlotst"
+                        ],
+                        [
+                           "diftrelo",
+                           "diftrblo",
+                           "difmxybo",
+                           "difmxylo"
+                        ],
+                        [
+                           "volcello",
+                           "vmo",
+                           "vhGM",
+                           "vhml",
+                           "umo",
+                           "uhGM",
+                           "uhml"
+                        ],
+                        [
+                           "agessc",
+                           "T_ady_2d",
+                           "T_adx_2d",
+                           "T_diffy_2d",
+                           "T_diffx_2d"
+                        ],
+                        [
+                           "cfc11_flux",
+                           "cfc12_flux",
+                           "ice_fraction",
+                           "u10_sqr"
+                        ]
                      ]
-                  ]
-               }
-            ]
+                  }
+               ],
+               "else": [
+                  {
+                     "module": "ocean_model",
+                     "packing": 1,
+                     "lists": [
+                        [
+                           "uo",
+                           "vo",
+                           "h",
+                           "e",
+                           "thetao",
+                           "so",
+                           "rhoinsitu",
+                           "KE",
+                           "rhopot0"
+                        ],
+                        [
+                           "soga",
+                           "thetaoga",
+                           "uh",
+                           "vh",
+                           "vhbt",
+                           "uhbt"
+                        ],
+                        [
+                           "KPP_OBLdepth:oml"
+                        ],
+                        [
+                           "tauuo",
+                           "tauvo",
+                           "friver",
+                           "prsn",
+                           "prlq",
+                           "evs",
+                           "hfsso",
+                           "rlntds",
+                           "hfsnthermds",
+                           "sfdsi",
+                           "rsntds",
+                           "hfds",
+                           "ustar",
+                           "hfsifrazil",
+                           "wfo",
+                           "vprec",
+                           "ficeberg",
+                           "fsitherm",
+                           "hflso",
+                           "pso",
+                           "seaice_melt_heat",
+                           "Heat_PmE",
+                           "salt_flux_added"
+                        ],
+                        [
+                           "SSH",
+                           "tos",
+                           "sos",
+                           "SSU",
+                           "SSV",
+                           "mass_wt",
+                           "opottempmint",
+                           "somint",
+                           "Rd_dx",
+                           "speed",
+                           "mlotst"
+                        ],
+                        [
+                           "diftrelo",
+                           "diftrblo",
+                           "difmxybo",
+                           "difmxylo"
+                        ],
+                        [
+                           "volcello",
+                           "vmo",
+                           "vhGM",
+                           "vhml",
+                           "umo",
+                           "uhGM",
+                           "uhml"
+                        ],
+                        [
+                           "agessc",
+                           "T_ady_2d",
+                           "T_adx_2d",
+                           "T_diffy_2d",
+                           "T_diffx_2d"
+                        ]
+                     ]
+                  }
+               ]
+            }
          }
       },
       "hist_z_space": {
@@ -366,25 +473,50 @@
                   ]
                }
             ],
-            "$OCN_DIAG_MODE not in [\"spinup\", \"none\"]": [
-               {
-                  "module": "ocean_model_z",
-                  "packing": 1,
-                  "lists": [
-                     [
-                        "uo",
-                        "vo",
-                        "h",
-                        "e",
-                        "thetao",
-                        "so",
-                        "rhoinsitu",
-                        "KE",
-                        "rhopot0"
+            "$OCN_DIAG_MODE not in [\"spinup\", \"none\"]": {
+               "$USE_CFC_CAP == \"True\"": [
+                  {
+                     "module": "ocean_model_z",
+                     "packing": 1,
+                     "lists": [
+                        [
+                           "uo",
+                           "vo",
+                           "h",
+                           "e",
+                           "thetao",
+                           "so",
+                           "rhoinsitu",
+                           "KE",
+                           "rhopot0"
+                        ],
+                        [
+                           "cfc11",
+                           "cfc12"
+                        ]
                      ]
-                  ]
-               }
-            ]
+                  }
+               ],
+               "else": [
+                  {
+                     "module": "ocean_model_z",
+                     "packing": 1,
+                     "lists": [
+                        [
+                           "uo",
+                           "vo",
+                           "h",
+                           "e",
+                           "thetao",
+                           "so",
+                           "rhoinsitu",
+                           "KE",
+                           "rhopot0"
+                        ]
+                     ]
+                  }
+               ]
+            }
          }
       },
       "surface_avg": {
@@ -400,7 +532,7 @@
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "$OCN_DIAG_MODE == \"production\" and $TEST == False": [
+            "$OCN_DIAG_MODE in [\"production\", \"development\"] and $TEST == False": [
                {
                   "module": "ocean_model",
                   "packing": 1,
@@ -492,7 +624,6 @@
                      ],
                      [
                         "net_heat_coupler",
-                        "hfds",
                         "LwLatSens",
                         "heat_content_lrunoff",
                         "heat_content_frunoff",

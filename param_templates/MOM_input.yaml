@@ -324,6 +324,21 @@ Global:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx0.25v1": True
+    USE_CFC_CAP:
+        description: |
+            "[Boolean] default = False
+            If true, use the MOM_CFC_cap tracer package."
+        datatype: logical
+        units: Boolean
+        value: False
+    CFC_BC_FILE:
+        description: |
+            "The file in which the CFC-11 and CFC-12 atm concentrations can be found (units
+            must be parts per trillion), or an empty string for internal BC generation
+            (TODO)."
+        datatype: string
+        value:
+            $OCN_GRID == "tx0.66v1": "CFCs_tx0.66v1_v2_5_210430.nc"
     USE_MARBL_TRACERS:
         description: |
             "[Boolean] default = False
@@ -3292,6 +3307,72 @@ Global:
         units: Boolean
         value:
             $OCN_BGC_CONFIG != "none": True
+    USE_WAVES:
+        description: |
+            "default = False
+            If true, enables surface wave modules."
+        datatype: logical
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: True
+    WAVE_METHOD:
+        description: |
+            "Choice of wave method, valid options include:
+             TEST_PROFILE  - Prescribed from surface Stokes drift...
+             SURFACE_BANDS - Computed from multiple surface values...
+             DHH85         - Uses Donelan et al. 1985 empirical...
+             LF17          - Infers Stokes drift profile from wind...
+             EFACTOR       - Applies an enhancement factor to the KPP...""
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID != "wtx0.66v1" : "EFACTOR"
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "SURFACE_BANDS"
+    SURFBAND_SOURCE:
+        description: |
+            Choice of SURFACE_BANDS data mode, valid options include:
+            DATAOVERRIDE  - Read from NetCDF using FMS DataOverride.
+            COUPLER       - Look for variables from coupler pass
+            INPUT         - Testing with fixed values.
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "COUPLER"
+    STOKES_DDT:
+        description: |
+            default = False
+            Flag to use Stokes d/dt
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+    STOKES_VF:
+        description: |
+            default = False
+            Flag to use Stokes vortex force
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+    STOKES_PGF:
+        description: |
+            default = False
+            Flag to use Stokes pressure gradient force
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+    STK_BAND_COUPLER:
+        description: |
+            default = 1
+            STK_BAND_COUPLER is the number of Stokes drift bands in the coupler. This has
+            to be consistent with the number of Stokes drift bands in WW3, or the model
+            will fail.
+        datatype: int
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : 3
+    SURFBAND_WAVENUMBERS:
+        description: |
+            [rad/m] default = 0.12566
+            Central wavenumbers for surface Stokes drift bands.
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "0.04, 0.11, 0.33"
+
 
 KPP:
     N_SMOOTH:
@@ -3335,5 +3416,42 @@ KPP:
         value:
             $OCN_GRID == "gx1v6": False
             $OCN_GRID == "tx0.66v1": False
+    USE_KPP_LT_K:
+        description: |
+            default = False
+            Flag for Langmuir turbulence enhancement of turbulentmixing coefficient.
+        datatype: logical
+        units: Boolean
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "ww3a" : True
+    USE_KPP_LT_VT2:
+        description: |
+            default = False
+            Flag for Langmuir turbulence enhancement of Vt2in Bulk Richardson Number.
+        datatype: logical
+        units: Boolean
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "ww3a" : True
+    KPP_LT_K_METHOD:
+        description: |
+            default = "CONSTANT"
+            Method to enhance mixing coefficient in KPP. Valid options are:
+               CONSTANT = Constant value (KPP_K_ENH_FAC)
+               VR12     = Function of Langmuir number based on VR12
+               RW16     = Function of Langmuir number based on RW16
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: VR12
+    KPP_LT_VT2_METHOD:
+        description: |
+            default = "CONSTANT"
+            Method to enhance Vt2 in KPP. Valid options are:
+               CONSTANT = Constant value (KPP_VT2_ENH_FAC)
+               VR12     = Function of Langmuir number based on VR12
+               RW16     = Function of Langmuir number based on RW16
+               LF17     = Function of Langmuir number based on LF17
+        datatype: string
+        value:
+            $COMP_WAV in ["ww3", "ww3dev"]: VR12
 
 ...

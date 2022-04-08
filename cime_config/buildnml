@@ -128,7 +128,7 @@ def prep_input(case):
             generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all)
             if os.path.isfile(diag_table_buildconf):
                 diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
-        diag_table.write(diag_table_dest, case)
+        diag_table.write(diag_table_dest, case, MOM_input_final)
 
 def init_MOM_override(rundir):
     # Create an empty MOM_override:

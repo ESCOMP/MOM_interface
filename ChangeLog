@@ -1,5 +1,43 @@
 ===============================================================================
 Tag Creator: altuntas
+Tag Date:    25 Feb 2022
+Tag Name:    mi_220225
+
+MOM_interface Updates Summary:
+- Wave coupling changes
+- Adds option to enable CFCs
+- update buildlib for stochastic physics and drifters modules
+
+MOM6 Updates Summary:
+- Merge with latest main (2022 feb17)
+- Dimensional Consistency fixes
+- Merging main candidate from Dec 20, 2021
+- Add the Stokes Forces Implementation for the Surface Bands wave coupling method
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
+Developers:  altuntas, gmarques, klindsay, mnlevy, et al.
+Tag Date:    07 Jan 2022
+Tag Name:    mi_220107
+
+MOM_interface Updates Summary:
+- Migrate changes in master (from @jedwards4b ) to main.
+- Improve reading in key=value from MOM_input/user_nl_mom files
+- Add tx0.66v1 CHL_FILE to input_data_list
+
+MOM6 Updates Summary:
+- Main to dev/ncar (after #1507 merge)
+- Fix tidal mixing coeff diags when they are unavailable.
+- dimension rescaling fixes and CFC cleanup
+- Introduce the legacy CESM WW3 coupling option (VR12-MA)
+- Merge main from GFDL (210723)
+- Recover answer change from CFC PR
+
+Testing: aux_mom on cheyenne
+
+===============================================================================
+Tag Creator: altuntas
 Developers:  gmarques, altuntas, jedwards
 Tag Date:    07 July 2021
 Tag Name:    mi_20210709
