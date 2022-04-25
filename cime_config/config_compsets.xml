@@ -102,7 +102,7 @@
 
   <compset>
     <alias>G1850MOMMARBL_JRA</alias>
-    <lname>1850_DATM%JRA_SLND_CICE_MOM6%MARBL_DROF%JRA_SGLC_SWAV</lname>
+    <lname>1850_DATM%JRA-1p4-2018_SLND_CICE_MOM6%MARBL_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
   </compset>
 
   <!-- Ocean-Only compsets -->

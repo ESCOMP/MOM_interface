@@ -316,6 +316,7 @@ def _2D_varcheck(varname):
     Return true if variable is 2D
     """
     return (varname.startswith("STF_") or
+            varname.startswith("Jint") or
             varname.endswith("_FLUX_CPL") or
             varname.endswith("_RIV_FLUX") or
             varname.endswith("_SURF") or
