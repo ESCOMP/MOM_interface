@@ -70,7 +70,7 @@ Files:
         fields:
             $OCN_DIAG_MODE != "none":
                 module:   "ocean_model_rho2"
-                packing: = 1 if $TEST else 2
+                packing: = 2
                 lists:    [ *transports ]
 
     # native grid
@@ -150,7 +150,7 @@ Files:
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-            $OCN_DIAG_MODE != "none":
+            $OCN_DIAG_MODE != "none" and $TEST is not True :
                 module:   "ocean_model"    # native
                 packing: = 1 if $TEST else 2
                 lists:    [ *surface_flds,
