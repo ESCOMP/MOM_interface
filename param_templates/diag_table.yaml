@@ -4,7 +4,11 @@
 ###############################################################################
 ---
 FieldLists:
-    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "rhoinsitu", "KE", "rhopot0"]
+    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "rhopot0"]
+
+    - &prognostic_z     ["uo", "vo", "h", "thetao", "so", "agessc", "rhopot0", "N2_int"]
+
+    - &prognostic_rho2  ["thetao", "so", "agessc"]
 
     - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt"]
 
@@ -76,8 +80,11 @@ Files:
             $OCN_DIAG_MODE != "none":
                 module:   "ocean_model_rho2"
                 packing: = 2
-                lists:    [ *transports ]
-
+                lists:    [ *transports,
+                            *prognostic_rho2 ]
+                lists2:
+                    $USE_CFC_CAP == "True":
+                        [ *cfc_3d ]
     # native grid
     hist:
         suffix:
@@ -139,7 +146,8 @@ Files:
                 module:   "ocean_model_z"   # z_space
                 packing: = 1 if $TEST else 2
                 lists:
-                    [ *prognostic ]
+                    [ *prognostic_z,
+                      *transports ]
                 lists2:
                     $USE_CFC_CAP == "True":
                         [ *cfc_3d ]

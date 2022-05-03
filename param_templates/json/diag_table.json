@@ -7,9 +7,23 @@
          "e",
          "thetao",
          "so",
-         "rhoinsitu",
          "KE",
          "rhopot0"
+      ],
+      [
+         "uo",
+         "vo",
+         "h",
+         "thetao",
+         "so",
+         "agessc",
+         "rhopot0",
+         "N2_int"
+      ],
+      [
+         "thetao",
+         "so",
+         "agessc"
       ],
       [
          "soga",
@@ -189,8 +203,21 @@
                      "umo",
                      "uhGM",
                      "uhml"
+                  ],
+                  [
+                     "thetao",
+                     "so",
+                     "agessc"
                   ]
-               ]
+               ],
+               "lists2": {
+                  "$USE_CFC_CAP == \"True\"": [
+                     [
+                        "cfc11",
+                        "cfc12"
+                     ]
+                  ]
+               }
             }
          }
       },
@@ -259,7 +286,6 @@
                         "e",
                         "thetao",
                         "so",
-                        "rhoinsitu",
                         "KE",
                         "rhopot0"
                      ],
@@ -357,12 +383,20 @@
                      "uo",
                      "vo",
                      "h",
-                     "e",
                      "thetao",
                      "so",
-                     "rhoinsitu",
-                     "KE",
-                     "rhopot0"
+                     "agessc",
+                     "rhopot0",
+                     "N2_int"
+                  ],
+                  [
+                     "volcello",
+                     "vmo",
+                     "vhGM",
+                     "vhml",
+                     "umo",
+                     "uhGM",
+                     "uhml"
                   ]
                ],
                "lists2": {
