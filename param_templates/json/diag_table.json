@@ -589,7 +589,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -625,7 +625,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -661,7 +661,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -697,7 +697,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -733,7 +733,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -769,7 +769,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -805,7 +805,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -841,7 +841,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -877,7 +877,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -913,7 +913,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -949,7 +949,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -985,7 +985,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -1021,7 +1021,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -1057,7 +1057,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -1093,7 +1093,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -1129,7 +1129,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -1165,7 +1165,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
@@ -1201,7 +1201,7 @@
          },
          "fields": {
             "$OCN_GRID == \"tx0.66v1\" and  $TEST == False and $OCN_DIAG_SECTIONS == True": {
-               "module": "ocean_model",
+               "module": "ocean_model_z",
                "packing": 2,
                "lists": [
                   [
