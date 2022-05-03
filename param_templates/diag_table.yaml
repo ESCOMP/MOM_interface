@@ -30,8 +30,9 @@ FieldLists:
     - &visc_flds        ["diftrelo", "diftrblo", "difmxybo", "difmxylo"]
 
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
-                         "geolon_v", "geolat_v", "area_t", "depth_ocean", "wet", "wet_c", "wet_u",
-                         "wet_v", "Coriolis"]
+                         "geolon_v", "geolat_v", "deptho", "wet", "wet_c", "wet_u",
+                         "wet_v", "Coriolis", "areacello", "areacello_cu", "areacello_cv",
+                         "areacello_bu", "sin_rot", "cos_rot"]
 
     - &transports       ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
 

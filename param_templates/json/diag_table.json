@@ -101,13 +101,18 @@
          "geolat_u",
          "geolon_v",
          "geolat_v",
-         "area_t",
-         "depth_ocean",
+         "deptho",
          "wet",
          "wet_c",
          "wet_u",
          "wet_v",
-         "Coriolis"
+         "Coriolis",
+         "areacello",
+         "areacello_cu",
+         "areacello_cv",
+         "areacello_bu",
+         "sin_rot",
+         "cos_rot"
       ],
       [
          "volcello",
@@ -498,13 +503,18 @@
                   "geolat_u",
                   "geolon_v",
                   "geolat_v",
-                  "area_t",
-                  "depth_ocean",
+                  "deptho",
                   "wet",
                   "wet_c",
                   "wet_u",
                   "wet_v",
-                  "Coriolis"
+                  "Coriolis",
+                  "areacello",
+                  "areacello_cu",
+                  "areacello_cv",
+                  "areacello_bu",
+                  "sin_rot",
+                  "cos_rot"
                ]
             ]
          }
