@@ -68,17 +68,24 @@
          "salt_flux_added"
       ],
       [
+         "heat_content_lrunoff",
+         "heat_content_frunoff",
+         "heat_content_lprec",
+         "heat_content_fprec",
+         "heat_content_vprec",
+         "heat_content_cond",
+         "heat_content_evap"
+      ],
+      [
          "net_heat_coupler",
          "LwLatSens",
          "heat_content_lrunoff",
          "heat_content_frunoff",
-         "heat_content_icemelt",
          "heat_content_lprec",
          "heat_content_fprec",
          "heat_content_vprec",
          "heat_content_cond",
          "hfevapds",
-         "heat_content_massin",
          "heat_content_surfwater",
          "vprec_global_adjustment",
          "net_fresh_water_global_adjustment",
@@ -285,6 +292,15 @@
                         "salt_flux_added"
                      ],
                      [
+                        "heat_content_lrunoff",
+                        "heat_content_frunoff",
+                        "heat_content_lprec",
+                        "heat_content_fprec",
+                        "heat_content_vprec",
+                        "heat_content_cond",
+                        "heat_content_evap"
+                     ],
+                     [
                         "SSH",
                         "tos",
                         "sos",
@@ -441,13 +457,11 @@
                      "LwLatSens",
                      "heat_content_lrunoff",
                      "heat_content_frunoff",
-                     "heat_content_icemelt",
                      "heat_content_lprec",
                      "heat_content_fprec",
                      "heat_content_vprec",
                      "heat_content_cond",
                      "hfevapds",
-                     "heat_content_massin",
                      "heat_content_surfwater",
                      "vprec_global_adjustment",
                      "net_fresh_water_global_adjustment",

@@ -20,10 +20,14 @@ FieldLists:
                          "hfsifrazil", "wfo", "vprec", "ficeberg", "fsitherm",
                          "hflso", "pso", "seaice_melt_heat", "Heat_PmE", "salt_flux_added"]
 
-    - &forcing_flds_dev ["net_heat_coupler", "LwLatSens", "heat_content_lrunoff",
-                         "heat_content_frunoff", "heat_content_icemelt", "heat_content_lprec",
+    - &enthalpy_flds    [ "heat_content_lrunoff", "heat_content_frunoff", "heat_content_lprec",
                          "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
-                         "hfevapds", "heat_content_massin", "heat_content_surfwater",
+                         "heat_content_evap"]
+
+    - &forcing_flds_dev ["net_heat_coupler", "LwLatSens", "heat_content_lrunoff",
+                         "heat_content_frunoff", "heat_content_lprec",
+                         "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
+                         "hfevapds", "heat_content_surfwater",
                          "vprec_global_adjustment", "net_fresh_water_global_adjustment",
                          "salt_flux_global_restoring_adjustment", "net_massout", "net_massin"]
 
@@ -106,6 +110,7 @@ Files:
                         [ *prognostic,
                           *kpp_diags,
                           *forcing_flds,
+                          *enthalpy_flds,
                           *surface_flds]
                 lists3:
                     $USE_CFC_CAP == "True":
