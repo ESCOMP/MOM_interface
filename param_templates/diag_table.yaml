@@ -4,7 +4,11 @@
 ###############################################################################
 ---
 FieldLists:
-    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "rhoinsitu", "KE", "rhopot0"]
+    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "rhopot0"]
+
+    - &prognostic_z     ["uo", "vo", "h", "thetao", "so", "agessc", "rhopot0", "N2_int"]
+
+    - &prognostic_rho2  ["thetao", "so", "agessc"]
 
     - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt"]
 
@@ -20,18 +24,23 @@ FieldLists:
                          "hfsifrazil", "wfo", "vprec", "ficeberg", "fsitherm",
                          "hflso", "pso", "seaice_melt_heat", "Heat_PmE", "salt_flux_added"]
 
-    - &forcing_flds_dev ["net_heat_coupler", "LwLatSens", "heat_content_lrunoff",
-                         "heat_content_frunoff", "heat_content_icemelt", "heat_content_lprec",
+    - &enthalpy_flds    [ "heat_content_lrunoff", "heat_content_frunoff", "heat_content_lprec",
                          "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
-                         "hfevapds", "heat_content_massin", "heat_content_surfwater",
+                         "heat_content_evap"]
+
+    - &forcing_flds_dev ["net_heat_coupler", "LwLatSens", "heat_content_lrunoff",
+                         "heat_content_frunoff", "heat_content_lprec",
+                         "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
+                         "hfevapds", "heat_content_surfwater",
                          "vprec_global_adjustment", "net_fresh_water_global_adjustment",
                          "salt_flux_global_restoring_adjustment", "net_massout", "net_massin"]
 
     - &visc_flds        ["diftrelo", "diftrblo", "difmxybo", "difmxylo"]
 
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
-                         "geolon_v", "geolat_v", "area_t", "depth_ocean", "wet", "wet_c", "wet_u",
-                         "wet_v", "Coriolis"]
+                         "geolon_v", "geolat_v", "deptho", "wet", "wet_c", "wet_u",
+                         "wet_v", "Coriolis", "areacello", "areacello_cu", "areacello_cv",
+                         "areacello_bu", "sin_rot", "cos_rot"]
 
     - &transports       ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
 
@@ -51,18 +60,14 @@ FieldLists:
 Files:
     # sigma2
     sigma2_hist:
-        suffix:
-            $OCN_DIAG_MODE == "spinup": "rho2%4yr"
-            else: "rho2%4yr-%2mo"
+        suffix: "rho2%4yr-%2mo"
         output_freq: 1
         output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
             $TEST == True : "days"
             else: "months"
         time_axis_units: "days"
         new_file_freq: 1
         new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
             $TEST == True: "days"
             else: "months"
         reduction_method: "mean"    # time average
@@ -70,23 +75,22 @@ Files:
         fields:
             $OCN_DIAG_MODE != "none":
                 module:   "ocean_model_rho2"
-                packing: = 2
-                lists:    [ *transports ]
-
+                packing: = 1 if $TEST else 2
+                lists:    [ *transports,
+                            *prognostic_rho2 ]
+                lists2:
+                    $USE_CFC_CAP == "True":
+                        [ *cfc_3d ]
     # native grid
     hist:
-        suffix:
-            $OCN_DIAG_MODE == "spinup": "hm%4yr"
-            else: "hm%4yr-%2mo"
+        suffix: "hm%4yr-%2mo"
         output_freq: 1
         output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
             $TEST == True : "days"
             else: "months"
         time_axis_units: "days"
         new_file_freq: 1
         new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
             $TEST == True: "days"
             else: "months"
         reduction_method: "mean"    # time average
@@ -105,6 +109,7 @@ Files:
                         [ *prognostic,
                           *kpp_diags,
                           *forcing_flds,
+                          *enthalpy_flds,
                           *surface_flds]
                 lists3:
                     $USE_CFC_CAP == "True":
@@ -112,18 +117,14 @@ Files:
 
     # essential variable mapped to z_space
     hist_z_space:
-        suffix:
-            $OCN_DIAG_MODE == "spinup": "h%4yr"
-            else: "h%4yr-%2mo"
+        suffix: "h%4yr-%2mo"
         output_freq: 1
         output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
             $TEST == True : "days"
             else: "months"
         time_axis_units: "days"
         new_file_freq: 1
         new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
             $TEST == True: "days"
             else: "months"
         reduction_method: "mean"    # time average
@@ -133,20 +134,21 @@ Files:
                 module:   "ocean_model_z"   # z_space
                 packing: = 1 if $TEST else 2
                 lists:
-                    [ *prognostic ]
+                    [ *prognostic_z,
+                      *transports ]
                 lists2:
                     $USE_CFC_CAP == "True":
                         [ *cfc_3d ]
 
     surface_avg:
-        suffix: "sfc%4yr"
+        suffix: "sfc%4yr-%2mo"
         output_freq:
             $OCN_DIAG_MODE == "spinup": 5
             else: 1
         output_freq_units: "days"
         time_axis_units: "days"
         new_file_freq: 1
-        new_file_freq_units: "years"
+        new_file_freq_units: "months"
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
@@ -155,13 +157,13 @@ Files:
                 packing: = 1 if $TEST else 2
                 lists:    [ *surface_flds,
                             *kpp_diags ]
-    forcing_daily_avg:
-        suffix: "frc%4yr"
+    forcing_avg:
+        suffix: "frc%4yr-%2mo"
         output_freq: 1
-        output_freq_units: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq: 365
-        new_file_freq_units: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
@@ -172,12 +174,12 @@ Files:
                             *forcing_flds_dev ]
 
     visc_and_diff_daily_avg:
-        suffix: "visc%4yr"
+        suffix: "visc%4yr-%2mo"
         output_freq: 1
-        output_freq_units: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq: 365
-        new_file_freq_units: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
@@ -202,398 +204,290 @@ Files:
     # Sections ------------------------------------
 
     Agulhas:
-        suffix: "agulhas_section%4yr"
+        suffix: "agulhas_section%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "20.1 20.1 -70.0 -34.6 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
 
     Bab_al_mandeb_Strait:
-        suffix: "Bab_al_mandeb_Strait%4yr"
+        suffix: "Bab_al_mandeb_Strait%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "45.0 45.0 10.5 13.5 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
 
     Barents_opening:
-        suffix: "Barents_opening%4yr"
+        suffix: "Barents_opening%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-5.2 18.8  78.93 78.93 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Bering_Strait:
-        suffix: "Bering_Strait%4yr"
+        suffix: "Bering_Strait%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-174.5  -171.5 66.6 66.6 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Davis_Strait:
-        suffix: "Davis_Strait%4yr"
+        suffix: "Davis_Strait%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-53.5 -45.3 69.5 69.5 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Denmark_Strait:
-        suffix: "Denmark_Strait%4yr"
+        suffix: "Denmark_Strait%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-38.50 -21.5 65.0 65.0 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Drake_Passage:
-        suffix: "Drake_Passage%4yr"
+        suffix: "Drake_Passage%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-67.0 -67.0 -69.0 -55.2 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
 
     English_Channel:
-        suffix: "English_Channel%4yr"
+        suffix: "English_Channel%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "0.0 0.0 51.0 52.9 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
 
     Fram_Strait:
-        suffix: "Fram_Strait%4yr"
+        suffix: "Fram_Strait%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-21.0 -9.8 80.5 80.5 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Florida_Bahamas:
-        suffix: "Florida_Bahamas%4yr"
+        suffix: "Florida_Bahamas%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-80.1 -77.9 25.3 25.3 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Gibraltar_Strait:
-        suffix: "Gibraltar_Strait%4yr"
+        suffix: "Gibraltar_Strait%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-6.5 -6.5 34.3 37.4 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
 
     Hormuz_Strait:
-        suffix: "Hormuz_Strait%4yr"
+        suffix: "Hormuz_Strait%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "55.9 55.9 25.0 27.5 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
 
     Iceland_Norway:
-        suffix: "Iceland_Norway%4yr"
+        suffix: "Iceland_Norway%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-21.5 1.5 65.0 65.0 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Indonesian_Throughflow:
-        suffix: "Indonesian_Throughflow%4yr"
+        suffix: "Indonesian_Throughflow%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-246.5 -220.8 -7.0 -7.0 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Mozambique_Channel:
-        suffix: "Mozambique_Channel%4yr"
+        suffix: "Mozambique_Channel%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "39.9 44.7 -16.0 -16.0 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 
     Pacific_undercurrent:
-        suffix: "Pacific_undercurrent%4yr"
+        suffix: "Pacific_undercurrent%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-155.0 -155.0 -2.0 2.0 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
 
     Taiwan_Luzon:
-        suffix: "Taiwan_Luzon%4yr"
+        suffix: "Taiwan_Luzon%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-239.0 -239.0 18.8 22.5 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
 
     Windward_Passage:
-        suffix: "Windward_Passage%4yr"
+        suffix: "Windward_Passage%4yr-%2mo"
         output_freq: 1
-        output_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        output_freq_units: "months"
         time_axis_units: "days"
-        new_file_freq:
-            $OCN_DIAG_MODE == "spinup": 1
-            else: 365
-        new_file_freq_units:
-            $OCN_DIAG_MODE == "spinup": "years"
-            else: "days"
+        new_file_freq: 1
+        new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
             $OCN_GRID == "tx0.66v1": "-74.2 -73.2 20.39 20.39 -1 -1"
         fields:
             $OCN_GRID == "tx0.66v1" and  $TEST == False and $OCN_DIAG_SECTIONS == True:
-                module:   "ocean_model"  # native
-                packing:  2            # single precision
+                module:   "ocean_model_z"  # z_space
+                packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
 ...
