@@ -68,7 +68,7 @@
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
-  <test name="ERI_Vmct" grid="T62_t061" compset="GMOM">
+  <test name="ERI" grid="T62_t061" compset="GMOM">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom"/>
       <machine name="hobart" compiler="intel" category="aux_mom"/>
