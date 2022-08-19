@@ -1948,9 +1948,7 @@ Global:
             "If true, write out verbose debugging data."
         datatype: logical
         units: Boolean
-        value: 
-            $TEST: = $TESTCASE == "DIMCS"
-            else: $DEBUG
+        value: $TEST # i.e., True for all tests
     CHECK_DIFFUSIVE_CFL:
         description: |
             "[Boolean] default = False
