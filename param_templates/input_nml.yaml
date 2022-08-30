@@ -25,4 +25,8 @@ diag_manager_nml:
         value: .true.
     use_mpp_io:
         value: .true.
+
+mpp_io_nml:
+    cf_compliance:
+        value: .true.
 ...
