@@ -1510,7 +1510,7 @@
          "description": "\"If true, write out verbose debugging data.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": "$DEBUG"
+         "value": "$TEST"
       },
       "CHECK_DIFFUSIVE_CFL": {
          "description": "\"[Boolean] default = False\nIf true, use enough iterations the diffusion to ensure\nthat the diffusive equivalent of the CFL limit is not\nviolated.  If false, always use the greater of 1 or\nMAX_TR_DIFFUSION_CFL iteration.\"\n",

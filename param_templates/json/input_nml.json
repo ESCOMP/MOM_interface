@@ -54,5 +54,10 @@
             "else": 24
          }
       }
+   },
+   "mpp_io_nml": {
+      "cf_compliance": {
+         "value": ".true."
+      }
    }
 }

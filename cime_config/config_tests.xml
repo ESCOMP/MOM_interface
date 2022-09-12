@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+This defines various MOM6-specific system tests
+-->
+
+<config_test>
+
+  <test NAME="DIMCS">
+    <DESC>MOM6 unit rescaling test to check dimensional consistency.</DESC>
+    <INFO_DBUG>1</INFO_DBUG>
+    <DOUT_S>FALSE</DOUT_S>
+    <CONTINUE_RUN>FALSE</CONTINUE_RUN>
+    <STOP_N>2</STOP_N>
+    <REST_OPTION>never</REST_OPTION>
+    <HIST_OPTION>$STOP_OPTION</HIST_OPTION>
+    <HIST_N>$STOP_N</HIST_N>
+  </test>
+
+</config_test>

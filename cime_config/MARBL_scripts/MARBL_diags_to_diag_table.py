@@ -136,12 +136,12 @@ class DiagTableClass(object):
                 continue
             # append _z to frequency for 3D vars
             if is2D:
-                self._diag_table_dict[f"{freq}"]["fields"][0]["lists"][0].append(varname)
+                self._diag_table_dict[f"{freq}"]["fields"]["lists"][0].append(varname)
             else:
                 if vert_grid in ["interpolated", "both"]:
-                    self._diag_table_dict[f"{freq}_z"]["fields"][0]["lists"][0].append(varname)
+                    self._diag_table_dict[f"{freq}_z"]["fields"]["lists"][0].append(varname)
                 if vert_grid in ["native", "both"]:
-                    self._diag_table_dict[f"{freq}_native_z"]["fields"][0]["lists"][0].append(varname)
+                    self._diag_table_dict[f"{freq}_native_z"]["fields"]["lists"][0].append(varname)
 
 
     def dump_to_json(self, filename):
@@ -150,11 +150,11 @@ class DiagTableClass(object):
         out_dict = dict()
         out_dict["Files"] = dict()
         for freq in self._diag_table_dict:
-            if len(self._diag_table_dict[freq]["fields"][0]["lists"][0]) > 0:
+            if len(self._diag_table_dict[freq]["fields"]["lists"][0]) > 0:
                 out_dict["Files"][freq] = self._diag_table_dict[freq].copy()
-                out_dict["Files"][freq]["fields"][0]["lists"].append(["geolat", "geolon"])
-                if out_dict["Files"][freq]["fields"][0]["module"] == "ocean_model" and freq[-2:] == "_z":
-                    out_dict["Files"][freq]["fields"][0]["lists"].append(["volcello", "h"])
+                out_dict["Files"][freq]["fields"]["lists"].append(["geolat", "geolon"])
+                if out_dict["Files"][freq]["fields"]["module"] == "ocean_model" and freq[-2:] == "_z":
+                    out_dict["Files"][freq]["fields"]["lists"].append(["volcello", "h"])
         if out_dict["Files"]:
             with open(filename, "w") as fp:
                 json.dump(out_dict, fp, separators=(',', ': '), sort_keys=False, indent=3)
@@ -165,7 +165,7 @@ class DiagTableClass(object):
     def _dict_template(self, suffix, output_freq_units, new_file_freq_units=None, output_freq=1, new_file_freq=1, module="ocean_model", packing=1):
         """
             Return the basic template for MOM6 diag_table dictionary.
-            Variables will be added to output file by appending to template["fields"][0]["lists"][0]
+            Variables will be added to output file by appending to template["fields"]["lists"][0]
 
             Parameters:
                 * suffix: string used to identify output file; could also be a dictionary
@@ -192,7 +192,7 @@ class DiagTableClass(object):
         template["time_axis_units"] = "days"
         template["reduction_method"] = "mean"
         template["regional_section"] = "none"
-        template["fields"] = [{"module": module, "packing": packing, "lists" : [[]]}]
+        template["fields"] = {"module": module, "packing": packing, "lists" : [[]]}
         return template
 
 

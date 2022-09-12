@@ -39,4 +39,8 @@ diag_manager_nml:
             $OCN_BGC_CONFIG != "none" and $TEST != True: 30
             $OCN_BGC_CONFIG != "none" and $TEST == True: 26
             else: 24
+
+mpp_io_nml:
+    cf_compliance:
+        value: .true.
 ...
