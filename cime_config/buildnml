@@ -87,6 +87,15 @@ def prep_input(case):
         print("NOTE: could not find USE_MARBL_TRACERS in MOM_input_final")
         use_MARBL = False
 
+    # coupler should pass per-category ice fraction and shortwave if running with MARBL
+    cmd = f"cd {caseroot} ; ./xmlquery --value CPL_I2O_PER_CAT"
+    CPL_I2O_PER_CAT_curr = run_cmd(cmd)[1]
+    CPL_I2O_PER_CAT = "TRUE" if use_MARBL else "FALSE"
+    if (CPL_I2O_PER_CAT != CPL_I2O_PER_CAT_curr):
+        cmd = f"cd {caseroot} ; ./xmlchange CPL_I2O_PER_CAT={CPL_I2O_PER_CAT}"
+        run_cmd(cmd)
+
+
     # 4. Create input.nml:
     if "input.nml" in os.listdir(SourceMods_dir):
         run_cmd("cp "+os.path.join(SourceMods_dir,"input.nml")+" "+rundir)
