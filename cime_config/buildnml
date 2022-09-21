@@ -88,6 +88,7 @@ def prep_input(case):
         use_MARBL = False
 
     # coupler should pass per-category ice fraction and shortwave if running with MARBL
+    # (only need to call xmlchange when we are actually changing the value)
     cmd = f"cd {caseroot} ; ./xmlquery --value CPL_I2O_PER_CAT"
     CPL_I2O_PER_CAT_curr = run_cmd(cmd)[1]
     CPL_I2O_PER_CAT = "TRUE" if use_MARBL else "FALSE"
