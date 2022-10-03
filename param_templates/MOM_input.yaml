@@ -348,6 +348,22 @@ Global:
         value:
             bool(re.search("MOM6%[^_]*MARBL", $COMPSET ))== True: True
             else: False
+    USE_ICE_CATEGORIES:
+        description: |
+            "[Boolean] default = False
+            If true, send multiple ice categories from the coupler to MARBL."
+        datatype: logical
+        units: Boolean
+        value:
+            bool(re.search("MOM6%[^_]*MARBL", $COMPSET ))== True: True
+            else: False
+    ICE_NCAT:
+        description: |
+            "[Integer] default = value of ICE_NCAT in env_build.xml
+            If USE_ICE_CATEGORIES is true, this is the number of categories
+            to send from the coupler to MARBL."
+        datatype: integer
+        value: $ICE_NCAT
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:
