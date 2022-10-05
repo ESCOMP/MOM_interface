@@ -2,7 +2,7 @@
     (e.g. MARBL tracer state)
 """
 
-def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_list, calcifier_list, ladjust_bury_coeff, ecosys_diag_filename):
+def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_list, calcifier_list, ladjust_bury_coeff, ecosys_diag_filename, ice_ncat):
     """ Subroutine to write a file in the same format as marbl_diagnostics containing
         a list of MOM-generated diagnostics that should be included based on the
         MARBL configuration
@@ -31,17 +31,23 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         # the provenance of each diagnostic clear
         fout.write("#\n########################################\n")
         fout.write("#       MOM-generated diagnostics      #\n")
-        fout.write("########################################\n#\n")
+        fout.write("########################################\n")
 
-        fout.write("# Dust and Carbon Fluxes from the Coupler\n#\n")
+        fout.write("#\n# Dust and Carbon Fluxes from the Coupler\n#\n")
         fout.write("ATM_FINE_DUST_FLUX_CPL : medium_average\n")
         fout.write("ATM_COARSE_DUST_FLUX_CPL : medium_average\n")
         fout.write("SEAICE_DUST_FLUX_CPL : medium_average\n")
         fout.write("ATM_BLACK_CARBON_FLUX_CPL : medium_average\n")
         fout.write("SEAICE_BLACK_CARBON_FLUX_CPL : medium_average\n")
 
-        fout.write("# Bottom Flux to Tendency Conversion\n#\n")
+        fout.write("#\n# Bottom Flux to Tendency Conversion\n#\n")
         fout.write("BOT_FLUX_TO_TEND : medium_average\n")
+
+        fout.write("#\n# per-category forcings\n#\n")
+        if ice_ncat > 0:
+            for m in range(ice_ncat+1):
+                fout.write(f"FRACR_CAT_{m+1}: medium_average\n")
+                fout.write(f"QSW_CAT_{m+1}: medium_average\n")
 
         # TODO: add running means, and then define these diagnostics
         # If adjusting bury coefficients, add running means to requested diagnostics
@@ -320,5 +326,6 @@ def _2D_varcheck(varname):
             varname.endswith("_FLUX_CPL") or
             varname.endswith("_RIV_FLUX") or
             varname.endswith("_SURF") or
-            varname.endswith("_zint_100m")
+            varname.endswith("_zint_100m") or
+            "_CAT_" in varname
            )

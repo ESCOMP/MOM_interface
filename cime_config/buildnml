@@ -47,6 +47,7 @@ def prep_input(case):
     ocn_grid        = case.get_value("OCN_GRID")
     run_type        = case.get_value("RUN_TYPE")
     continue_run    = case.get_value("CONTINUE_RUN")
+    ice_ncat        = case.get_value("ICE_NCAT")
     momconfdir  = os.path.join(caseroot, "Buildconf", "momconf")
     SourceMods_dir = os.path.join(caseroot,"SourceMods","src.mom")
 
@@ -135,7 +136,7 @@ def prep_input(case):
             # For now, user has no control over lMARBL_output_all
             # TODO: mimic what is done in POP and allow it via user_nl_mom?
             lMARBL_output_all = case.get_value("TEST")
-            generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all)
+            generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all, ice_ncat)
             if os.path.isfile(diag_table_buildconf):
                 diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
         diag_table.write(diag_table_dest, case, MOM_input_final)
@@ -183,7 +184,7 @@ def _copy_files_to_momconf(case):
     for filename in ["MOM_input", "MOM_override", "diag_table", "input.nml"]:
         shutil.copy(os.path.join(rundir,filename), momconfdir)
 
-def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all):
+def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all, ice_ncat):
     """
     Create Buildconf/momconf/diag_table_MARBL.json
 
@@ -220,6 +221,7 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
                                                    MARBL_settings.get_autotroph_names(calcifier_only=True),
                                                    MARBL_settings.ladjust_bury_coeff(),
                                                    ecosys_diags_buildconf,
+                                                   ice_ncat
                                                   )
         # (ii) append MARBL diagnostics to ecosys_diagnostics
         MARBL_diagnostics.write_diagnostics_file(ecosys_diags_buildconf,
