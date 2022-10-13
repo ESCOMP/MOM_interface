@@ -249,6 +249,27 @@
             "else": false
          }
       },
+      "DUST_RATIO_THRES": {
+         "description": "\"TODO: Add description\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$OCN_BGC_CONFIG != \"none\" and $COMP_ATM == \"cam\"": 60.0
+         }
+      },
+      "DUST_RATIO_TO_FE_BIOAVAIL_FRAC": {
+         "description": "\"TODO: Add description\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$OCN_BGC_CONFIG != \"none\" and $COMP_ATM == \"cam\"": "1.0 / 170.0"
+         }
+      },
+      "FE_BIOAVAIL_FRAC_OFFSET": {
+         "description": "\"TODO: Add description\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$OCN_BGC_CONFIG != \"none\" and $COMP_ATM == \"cam\"": 0.01
+         }
+      },
       "USE_ICE_CATEGORIES": {
          "description": "\"[Boolean] default = False\nIf true, send multiple ice categories from the coupler to MARBL.\"\n",
          "datatype": "logical",

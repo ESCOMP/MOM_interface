@@ -348,6 +348,27 @@ Global:
         value:
             bool(re.search("MOM6%[^_]*MARBL", $COMPSET ))== True: True
             else: False
+    DUST_RATIO_THRES:
+        description: |
+            "TODO: Add description
+            "
+        datatype: real
+        value:
+            $OCN_BGC_CONFIG != "none" and $COMP_ATM == "cam": 60.0
+    DUST_RATIO_TO_FE_BIOAVAIL_FRAC:
+        description: |
+            "TODO: Add description
+            "
+        datatype: real
+        value:
+            $OCN_BGC_CONFIG != "none" and $COMP_ATM == "cam": 1.0 / 170.0
+    FE_BIOAVAIL_FRAC_OFFSET:
+        description: |
+            "TODO: Add description
+            "
+        datatype: real
+        value:
+            $OCN_BGC_CONFIG != "none" and $COMP_ATM == "cam": 0.01
     USE_ICE_CATEGORIES:
         description: |
             "[Boolean] default = False
