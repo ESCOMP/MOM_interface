@@ -1192,13 +1192,13 @@
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
-      "SMOOTH_RI": {
-         "description": "\"[Boolean] default = False\nIf true, vertically smooth the Richardsonnumber by applying a 1-2-1 filter once.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
+      "N_SMOOTH_RI": {
+         "description": "\"default = 0\nIf > 0, vertically smooth the Richardson number by applying a 1-2-1 filter\nN_SMOOTH_RI times.\"\n",
+         "datatype": "integer",
+         "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"gx1v6\"": 1,
+            "$OCN_GRID == \"tx0.66v1\"": 1
          }
       },
       "USE_CVMIX_DDIFF": {
