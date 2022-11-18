@@ -1606,15 +1606,16 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
-    SMOOTH_RI:
+    N_SMOOTH_RI:
         description: |
-            "[Boolean] default = False
-            If true, vertically smooth the Richardsonnumber by applying a 1-2-1 filter once."
-        datatype: logical
-        units: Boolean
+            "default = 0
+            If > 0, vertically smooth the Richardson number by applying a 1-2-1 filter
+            N_SMOOTH_RI times."
+        datatype: integer
+        units: nondim
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "gx1v6": 1
+            $OCN_GRID == "tx0.66v1": 1
     USE_CVMIX_DDIFF:
         description: |
             "[Boolean] default = False

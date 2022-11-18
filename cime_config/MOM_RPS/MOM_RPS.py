@@ -184,7 +184,9 @@ class MOM_RPS(object,):
                     if isinstance(param_expanded,str_type):
                         param_expanded = '"'+param_expanded+'"'
                     entry = entry.replace(word,str(param_expanded))
-
+            # Mom does not generate correct paths if there is a double / in the path
+            # remove them here
+            entry = entry.replace('//','/')
             return entry
 
         def _expand_val(val):
