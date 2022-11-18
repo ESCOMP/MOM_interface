@@ -1449,6 +1449,14 @@ Global:
             $OCN_GRID == "tx0.25v1": 1.5E-05
             $OCN_GRID == "MISOMIP": 5.0E-05
             else: 2.0E-05
+    KDML:
+        description: |
+            "[m2 s-1]
+            If BULKMIXEDLAYER is false, KDML is the elevated diapycnal diffusivity in the
+            topmost HMIX of fluid. KDML is only used if BULKMIXEDLAYER is false."
+        datatype: real
+        units: m2 s-1
+        value: 0.0
     PRANDTL_BKGND:
         description: |
             "[nondim] default = 1.0
@@ -3001,6 +3009,7 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "MISOMIP": 0.01
+            else: 0.0
     DYNAMIC_SURFACE_PRESSURE:
         description: |
             "[Boolean] default = False

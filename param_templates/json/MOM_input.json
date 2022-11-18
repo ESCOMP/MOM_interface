@@ -1061,6 +1061,12 @@
             "else": 2e-05
          }
       },
+      "KDML": {
+         "description": "\"[m2 s-1]\nIf BULKMIXEDLAYER is false, KDML is the elevated diapycnal diffusivity in the\ntopmost HMIX of fluid. KDML is only used if BULKMIXEDLAYER is false.\"\n",
+         "datatype": "real",
+         "units": "m2 s-1",
+         "value": 0.0
+      },
       "PRANDTL_BKGND": {
          "description": "\"[nondim] default = 1.0\nTurbulent Prandtl number used to convert vertical background diffusivities\ninto viscosities.\"\n",
          "datatype": "real",
@@ -2361,7 +2367,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": 0.01
+            "$OCN_GRID == \"MISOMIP\"": 0.01,
+            "else": 0.0
          }
       },
       "DYNAMIC_SURFACE_PRESSURE": {
