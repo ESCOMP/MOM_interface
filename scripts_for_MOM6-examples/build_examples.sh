@@ -1,7 +1,6 @@
-#!/bin/bash
+#!/bin/bash -e
 ### For NCAR machines, this script should be run as
 ### $ qcmd -- ./build_examples.sh
-
 
 cd ../MOM6-examples
 
