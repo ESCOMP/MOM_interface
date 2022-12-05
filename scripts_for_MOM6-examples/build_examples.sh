@@ -8,7 +8,7 @@ cd ../MOM6-examples
 # 1) Build FMS
 mkdir -p build/intel/shared/repro
 cd build/intel/shared/repro
-../../../../../scripts_for_MOM6-examples/mkmf/list_paths ../../../../src/FMS/
+../../../../../scripts_for_MOM6-examples/mkmf/list_paths ../../../../src/FMS2/
 ../../../../../scripts_for_MOM6-examples/mkmf/mkmf -t ../../../../../scripts_for_MOM6-examples/templates/cheyenne-intel.mk -p libfms.a -c "-Duse_libMPI -Duse_netCDF -DSPMD" path_names
 make NETCDF=3 REPRO=1 libfms.a -j
 cd ../../../..
