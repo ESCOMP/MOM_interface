@@ -1,6 +1,5 @@
 # Externals
 MOM6/
-MOM6-examples/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -17,6 +16,7 @@ buildnmlc
 .Python
 env/
 build/
+!standalone/build/
 develop-eggs/
 dist/
 downloads/
