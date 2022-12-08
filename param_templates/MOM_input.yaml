@@ -2018,6 +2018,16 @@ Global:
         value:
             $OCN_GRID == "tx0.66v1" and $COMP_ATM == "datm": True  # for C and G compsets on tx0.66v1
             else: False
+
+    ENTHALPY_FROM_COUPLER:
+        description: |
+            "[Boolean] default = False
+            If True, the heat (enthalpy) associated with mass entering/leaving
+            the ocean is provided via coupler."
+        datatype: logical
+        units: Boolean
+        value: True
+
     FLUXCONST:
         description: |
             "[m day-1]

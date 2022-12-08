@@ -1555,6 +1555,12 @@
             "else": false
          }
       },
+      "ENTHALPY_FROM_COUPLER": {
+         "description": "\"[Boolean] default = False\nIf True, the heat (enthalpy) associated with mass entering/leaving\nthe ocean is provided via coupler.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": true
+      },
       "FLUXCONST": {
          "description": "\"[m day-1]\nThe constant that relates the restoring surface fluxes\nto the relative surface anomalies (akin to a piston\nvelocity).  Note the non-MKS units.\"\n",
          "datatype": "real",
