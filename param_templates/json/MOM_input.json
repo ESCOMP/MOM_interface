@@ -2368,15 +2368,6 @@
             "$OCN_GRID == \"MISOMIP\"": 1.0
          }
       },
-      "KVML": {
-         "description": "\"[m2 s-1] default = 1.0E-04\nThe kinematic viscosity in the mixed layer.  A typical\nvalue is ~1e-2 m2 s-1. KVML is not used if\nBULKMIXEDLAYER is true.  The default is set by KV.\"\n",
-         "datatype": "real",
-         "units": "m2 s-1",
-         "value": {
-            "$OCN_GRID == \"MISOMIP\"": 0.01,
-            "else": 0.0
-         }
-      },
       "DYNAMIC_SURFACE_PRESSURE": {
          "description": "\"[Boolean] default = False\nIf true, add a dynamic pressure due to a viscous ice\nshelf, for instance.\"\n",
          "datatype": "logical",
