@@ -23,8 +23,6 @@ fms_nml:
 diag_manager_nml:
     flush_nc_files:
         value: .true.
-    use_mpp_io:
-        value: .true.
 
 mpp_io_nml:
     cf_compliance:
