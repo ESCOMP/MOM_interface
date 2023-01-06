@@ -16,6 +16,7 @@ buildnmlc
 .Python
 env/
 build/
+!standalone/build/
 develop-eggs/
 dist/
 downloads/
