@@ -1,0 +1,4 @@
+! These parameters are missing from the common MOM_input parameters
+WIND_CONFIG = "zero"
+BUOY_CONFIG = "zero"
+GUST_CONST = 0.05
