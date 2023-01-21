@@ -1,7 +1,7 @@
 import os
-from MOM_RPS import MOM_RPS
+from CIME.ParamGen.paramgen import ParamGen
 
-class FType_diag_table(MOM_RPS):
+class FType_diag_table(ParamGen):
     """Encapsulates data and read/write methods for MOM6 diag_table input file."""
 
     def write(self, output_path, case, MOM_input_final):
@@ -29,11 +29,16 @@ class FType_diag_table(MOM_RPS):
                         return False
             return True
 
-        # Expand cime parameters in values of key:value pairs (e.g., $INPUTDIR)
-        self.expand_case_vars(case, MOM_input_final)
+        def expand_func(varname):
+            val = case.get_value(varname)
+            if val is None:
+                val = MOM_input_final.data['Global'][varname]['value']
+            if val is None:
+                raise RuntimeError("Cannot determine the value of variable: "+varname)
+            return val
 
-        # Apply the guards on the general data to get the targeted values
-        self.infer_values(case)
+        # From the general template (diag_table.yaml), reduce a custom diag_table for this case
+        self.reduce(expand_func)
 
         with open(os.path.join(output_path), 'w') as diag_table:
 
