@@ -129,16 +129,15 @@ def process_user_nl_mom(case):
                           output_format = "MOM_override",
                           def_params = MOM_input_rundir)
 
-def _copy_files_to_momconf(case):
+def _copy_input_files(case, dest_dir):
     """ Saves copies of MOM6 input files in momconf directory for the record."""
     caseroot = case.get_value("CASEROOT")
     rundir   = case.get_value("RUNDIR")
-    momconfdir  = os.path.join(caseroot, "Buildconf", "momconf")
-    if not os.path.isdir(momconfdir):
-        os.makedirs(momconfdir)
+    if not os.path.isdir(dest_dir):
+        os.makedirs(dest_dir)
 
     for filename in ["MOM_input", "MOM_override", "diag_table", "input.nml"]:
-        shutil.copy(os.path.join(rundir,filename), momconfdir)
+        shutil.copy(os.path.join(rundir,filename), dest_dir)
 
 
 # pylint: disable=unused-argument
@@ -155,7 +154,13 @@ def buildnml(case, caseroot, compname):
     prep_input(case)
 
     # save copies of input files in momconf
-    _copy_files_to_momconf(case)
+    caseroot = case.get_value("CASEROOT")
+    momconfdir  = os.path.join(caseroot, "Buildconf", "momconf")
+    _copy_input_files(case, momconfdir)
+
+    # save copies of input files in CaseDocs
+    casedocsdir  = os.path.join(caseroot, "CaseDocs")
+    _copy_input_files(case, casedocsdir)
 
     return
 
