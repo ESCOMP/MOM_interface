@@ -1105,6 +1105,12 @@
             "else": 2e-05
          }
       },
+      "KDML": {
+         "description": "\"[m2 s-1]\nIf BULKMIXEDLAYER is false, KDML is the elevated diapycnal diffusivity in the\ntopmost HMIX of fluid. KDML is only used if BULKMIXEDLAYER is false.\"\n",
+         "datatype": "real",
+         "units": "m2 s-1",
+         "value": 0.0
+      },
       "PRANDTL_BKGND": {
          "description": "\"[nondim] default = 1.0\nTurbulent Prandtl number used to convert vertical background diffusivities\ninto viscosities.\"\n",
          "datatype": "real",
@@ -1236,13 +1242,13 @@
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
-      "SMOOTH_RI": {
-         "description": "\"[Boolean] default = False\nIf true, vertically smooth the Richardsonnumber by applying a 1-2-1 filter once.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
+      "N_SMOOTH_RI": {
+         "description": "\"default = 0\nIf > 0, vertically smooth the Richardson number by applying a 1-2-1 filter\nN_SMOOTH_RI times.\"\n",
+         "datatype": "integer",
+         "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true
+            "$OCN_GRID == \"gx1v6\"": 1,
+            "$OCN_GRID == \"tx0.66v1\"": 1
          }
       },
       "USE_CVMIX_DDIFF": {
@@ -1545,7 +1551,7 @@
          "description": "\"If true, write out verbose debugging data.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": "$TEST"
+         "value": false
       },
       "CHECK_DIFFUSIVE_CFL": {
          "description": "\"[Boolean] default = False\nIf true, use enough iterations the diffusion to ensure\nthat the diffusive equivalent of the CFL limit is not\nviolated.  If false, always use the greater of 1 or\nMAX_TR_DIFFUSION_CFL iteration.\"\n",
@@ -1592,6 +1598,12 @@
             "$OCN_GRID == \"tx0.66v1\" and $COMP_ATM == \"datm\"": true,
             "else": false
          }
+      },
+      "ENTHALPY_FROM_COUPLER": {
+         "description": "\"[Boolean] default = False\nIf True, the heat (enthalpy) associated with mass entering/leaving\nthe ocean is provided via coupler.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": true
       },
       "FLUXCONST": {
          "description": "\"[m day-1]\nThe constant that relates the restoring surface fluxes\nto the relative surface anomalies (akin to a piston\nvelocity).  Note the non-MKS units.\"\n",
@@ -2398,14 +2410,6 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 1.0
-         }
-      },
-      "KVML": {
-         "description": "\"[m2 s-1] default = 1.0E-04\nThe kinematic viscosity in the mixed layer.  A typical\nvalue is ~1e-2 m2 s-1. KVML is not used if\nBULKMIXEDLAYER is true.  The default is set by KV.\"\n",
-         "datatype": "real",
-         "units": "m2 s-1",
-         "value": {
-            "$OCN_GRID == \"MISOMIP\"": 0.01
          }
       },
       "DYNAMIC_SURFACE_PRESSURE": {

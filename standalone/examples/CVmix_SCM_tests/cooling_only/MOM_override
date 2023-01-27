@@ -1,0 +1,5 @@
+! These parameters are missing from the common MOM_input parameters
+BUOY_CONFIG = const
+WIND_CONFIG = zero
+GUST_CONST = 0.0
+SENSIBLE_HEAT_FLUX = -100.

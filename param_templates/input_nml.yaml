@@ -23,8 +23,6 @@ fms_nml:
 diag_manager_nml:
     flush_nc_files:
         value: .true.
-    use_mpp_io:
-        value: .true.
     max_input_fields:
         value:
             $OCN_BGC_CONFIG != "none" and $TEST == True: 900

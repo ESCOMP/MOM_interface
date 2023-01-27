@@ -1495,6 +1495,14 @@ Global:
             $OCN_GRID == "tx0.25v1": 1.5E-05
             $OCN_GRID == "MISOMIP": 5.0E-05
             else: 2.0E-05
+    KDML:
+        description: |
+            "[m2 s-1]
+            If BULKMIXEDLAYER is false, KDML is the elevated diapycnal diffusivity in the
+            topmost HMIX of fluid. KDML is only used if BULKMIXEDLAYER is false."
+        datatype: real
+        units: m2 s-1
+        value: 0.0
     PRANDTL_BKGND:
         description: |
             "[nondim] default = 1.0
@@ -1644,15 +1652,16 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
-    SMOOTH_RI:
+    N_SMOOTH_RI:
         description: |
-            "[Boolean] default = False
-            If true, vertically smooth the Richardsonnumber by applying a 1-2-1 filter once."
-        datatype: logical
-        units: Boolean
+            "default = 0
+            If > 0, vertically smooth the Richardson number by applying a 1-2-1 filter
+            N_SMOOTH_RI times."
+        datatype: integer
+        units: nondim
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "gx1v6": 1
+            $OCN_GRID == "tx0.66v1": 1
     USE_CVMIX_DDIFF:
         description: |
             "[Boolean] default = False
@@ -1994,7 +2003,7 @@ Global:
             "If true, write out verbose debugging data."
         datatype: logical
         units: Boolean
-        value: $TEST # i.e., True for all tests
+        value: False
     CHECK_DIFFUSIVE_CFL:
         description: |
             "[Boolean] default = False
@@ -2055,6 +2064,16 @@ Global:
         value:
             $OCN_GRID == "tx0.66v1" and $COMP_ATM == "datm": True  # for C and G compsets on tx0.66v1
             else: False
+
+    ENTHALPY_FROM_COUPLER:
+        description: |
+            "[Boolean] default = False
+            If True, the heat (enthalpy) associated with mass entering/leaving
+            the ocean is provided via coupler."
+        datatype: logical
+        units: Boolean
+        value: True
+
     FLUXCONST:
         description: |
             "[m day-1]
@@ -3037,16 +3056,6 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "MISOMIP": 1.0
-    KVML:
-        description: |
-            "[m2 s-1] default = 1.0E-04
-            The kinematic viscosity in the mixed layer.  A typical
-            value is ~1e-2 m2 s-1. KVML is not used if
-            BULKMIXEDLAYER is true.  The default is set by KV."
-        datatype: real
-        units: m2 s-1
-        value:
-            $OCN_GRID == "MISOMIP": 0.01
     DYNAMIC_SURFACE_PRESSURE:
         description: |
             "[Boolean] default = False
