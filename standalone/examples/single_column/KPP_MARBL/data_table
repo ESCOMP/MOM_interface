@@ -9,3 +9,7 @@
 "OCN" , "snow",    "snow",        "./INPUT/BATS/forcing.nc", .true., 0.0
 "OCN" , "runoff",  "",            ""                       , .true., 0.0
 "OCN" , "calving", "",            ""                       , .true., 0.0
+"OCN" , "atm_fine_dust_flux", "ATM_FINE_DUST_FLUX", "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "atm_coarse_dust_flux", "ATM_COARSE_DUST_FLUX", "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "atm_bc_flux", "ATM_BC_FLUX", "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "u10_sqr", "U10_SQR", "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
