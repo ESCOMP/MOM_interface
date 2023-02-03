@@ -1,15 +1,16 @@
 # gridname, fieldname_code, fieldname_file, file_name,       ongrid, factor
-"OCN" , "lw",      "netlwdn_sfc", "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 1.0
+"OCN" , "lw",      "LWDN",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+#"OCN" , "sw",      "SWDN",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "sw",      "netswdn_sfc", "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 1.0
-"OCN" , "rain",    "precip",      "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 1.0
-"OCN" , "evap",    "evap",        "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 1.0
-"OCN" , "sens",    "shflx",       "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 1.0
-"OCN" , "taux",    "STRESS_X",    "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 1.0
-"OCN" , "tauy",    "STRESS_Y",    "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 1.0
-"OCN" , "snow",    "snow",        "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 0.0
-"OCN" , "runoff",  "",            ""                       , .true., 0.0
-"OCN" , "calving", "",            ""                       , .true., 0.0
-"OCN" , "atm_fine_dust_flux", "ATM_FINE_DUST_FLUX", "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "rain",    "RAIN",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "evap",    "EVAP",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "sens",    "SENS_HEAT_FLUX", "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "taux",    "TAUX",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "tauy",    "TAUY",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "snow",    "SNOW",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 0.0
+"OCN" , "runoff",  "", "", .true., 0.0
+"OCN" , "calving", "", "", .true., 0.0
+"OCN" , "atm_fine_dust_flux",   "ATM_FINE_DUST_FLUX",   "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "atm_coarse_dust_flux", "ATM_COARSE_DUST_FLUX", "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
-"OCN" , "atm_bc_flux", "ATM_BC_FLUX", "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
-"OCN" , "u10_sqr", "U10_SQR", "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "atm_bc_flux",          "ATM_BC_FLUX",          "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "u10_sqr",              "U10_SQR",              "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
