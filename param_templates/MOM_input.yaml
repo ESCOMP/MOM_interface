@@ -348,6 +348,14 @@ Global:
         value:
             bool(re.search("MOM6%[^_]*MARBL", $COMPSET ))== True: True
             else: False
+    CHL_FROM_FILE:
+        description: |
+            "[Boolean] default = True
+             If true, read chlorophyll from a file. Otherwise MARBL will provide it.
+            "
+        datatype: logical
+        value:
+            $OCN_BGC_CONFIG != "none": False
     DUST_RATIO_THRES:
         description: |
             "TODO: Add description
