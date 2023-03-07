@@ -384,7 +384,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            bool(re.search("MOM6%[^_]*MARBL", $COMPSET ))== True: True
+            bool(re.search("MOM6%[^_]*MARBL", $COMPSET )) and $ICE_NCAT > 0: True
             else: False
     ICE_NCAT:
         description: |

@@ -282,7 +282,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "bool(re.search(\"MOM6%[^_]*MARBL\", $COMPSET ))== True": true,
+            "bool(re.search(\"MOM6%[^_]*MARBL\", $COMPSET )) and $ICE_NCAT > 0": true,
             "else": false
          }
       },

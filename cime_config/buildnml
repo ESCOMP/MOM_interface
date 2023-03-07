@@ -92,9 +92,10 @@ def prep_input(case):
     # calling set_value will() also change the value in env_run.xml; we only do that
     # if the value needs to be updated
     CPL_I2O_PER_CAT_curr = case.get_value("CPL_I2O_PER_CAT") # returns python logical, not string
-    if (CPL_I2O_PER_CAT_curr != use_MARBL):
-        case.set_value("CPL_I2O_PER_CAT", use_MARBL)
-        append_status(f"xmlchange via MOM buildnml: CPL_I2O_PER_CAT={use_MARBL}",
+    CPL_I20_PER_CAT_new = (ice_ncat>0 and use_MARBL)
+    if (CPL_I2O_PER_CAT_curr != CPL_I20_PER_CAT_new):
+        case.set_value("CPL_I2O_PER_CAT", CPL_I20_PER_CAT_new)
+        append_status(f"xmlchange via MOM buildnml: CPL_I2O_PER_CAT={CPL_I20_PER_CAT_new}",
                       "CaseStatus")
 
 
