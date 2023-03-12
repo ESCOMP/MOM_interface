@@ -334,11 +334,9 @@ Global:
     CFC_BC_FILE:
         description: |
             "The file in which the CFC-11 and CFC-12 atm concentrations can be found (units
-            must be parts per trillion), or an empty string for internal BC generation
-            (TODO)."
+            must be parts per trillion)."
         datatype: string
-        value:
-            $OCN_GRID == "tx0.66v1": "CFCs_tx0.66v1_v2_5_210430.nc"
+        value: "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc"
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:
