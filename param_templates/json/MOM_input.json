@@ -234,11 +234,9 @@
          "value": false
       },
       "CFC_BC_FILE": {
-         "description": "\"The file in which the CFC-11 and CFC-12 atm concentrations can be found (units\nmust be parts per trillion), or an empty string for internal BC generation\n(TODO).\"\n",
+         "description": "\"The file in which the CFC-11 and CFC-12 atm concentrations can be found (units\nmust be parts per trillion).\"\n",
          "datatype": "string",
-         "value": {
-            "$OCN_GRID == \"tx0.66v1\"": "CFCs_tx0.66v1_v2_5_210430.nc"
-         }
+         "value": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc"
       },
       "COORD_CONFIG": {
          "description": "\"This specifies how layers are to be defined:\nfile - read coordinate information from the file\nspecified by (COORD_FILE).\nlinear - linear based on interfaces not layesrs.\nts_ref - use reference temperature and salinity\nts_range - use range of temperature and salinity\n(T_REF and S_REF) to determine surface density\nand GINT calculate internal densities.\ngprime - use reference density (RHO_0) for surface\ndensity and GINT calculate internal densities.\nts_profile - use temperature and salinity profiles\n(read from COORD_FILE) to set layer densities.\nUSER - call a user modified routine.\nThe file from which the coordinate densities are read.\"\n",
