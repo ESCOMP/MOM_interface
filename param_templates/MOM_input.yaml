@@ -1021,7 +1021,7 @@ Global:
             The molecular value, ~1e-6 m2 s-1, may be used."
         datatype: real
         units: m2 s-1
-        value: 1.0E-04
+        value: 0.0
     MAXVEL:
         description: |
             "[m s-1] default = 3.0E+08
@@ -1446,7 +1446,7 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 1.5E-05
             $OCN_GRID == "MISOMIP": 5.0E-05
-            else: 2.0E-05
+            else: 0.0
     KDML:
         description: |
             "[m2 s-1]
