@@ -1,0 +1,3 @@
+examples/**/*.nc
+!examples/**/INPUT/**/*.nc
+examples/**/logfile.*

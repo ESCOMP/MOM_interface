@@ -1,7 +1,6 @@
 # gridname, fieldname_code, fieldname_file, file_name,       ongrid, factor
 "OCN" , "lw",      "LWDN",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
-#"OCN" , "sw",      "SWDN",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
-"OCN" , "sw",      "netswdn_sfc", "./INPUT/CESM_MOM_COLUMNS/BATS/forcing.nc", .true., 1.0
+"OCN" , "sw",      "SWDN",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "rain",    "RAIN",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "evap",    "EVAP",           "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "sens",    "SENS_HEAT_FLUX", "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0

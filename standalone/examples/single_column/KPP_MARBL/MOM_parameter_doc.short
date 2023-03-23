@@ -38,7 +38,7 @@ NJHALO = 2                      ! default = 4
                                 ! varies with the calling component and static or dynamic memory configuration.
 
 ! === module MOM_fixed_initialization ===
-INPUTDIR = "INPUT/BATS"         ! default = "."
+INPUTDIR = "INPUT/CESM_MOM_COLUMNS/BATS" ! default = "."
                                 ! The directory in which input files are found.
 
 ! === module MOM_grid_init ===
@@ -112,9 +112,11 @@ USE_MARBL_TRACERS = True        !   [Boolean] default = False
                                 ! If true, use the MARBL tracer package.
 
 ! === module MARBL_tracers ===
+CHL_FROM_FILE = False           !   [Boolean] default = True
+                                ! If true, chl_a is read from a file.
 
 ! === module MARBL_tracers ===
-MARBL_TRACERS_IC_FILE = "IC_FILE_COLUMN.nc" ! default = "ecosys_jan_IC_omip_MOM_tx0.66v1_c221027.nc"
+MARBL_TRACERS_IC_FILE = "IC_FILE_COLUMN.nc" ! default = "ecosys_jan_IC_omip_latlon_1x1_180W_c230317.nc"
                                 ! The file in which the MARBL tracers initial values can be found.
 MARBL_FESEDFLUX_FILE = "MARBL_FESEDFLUX_FILE_COLUMN.nc" ! default = "fesedflux_total_reduce_oxic_tx0.66v1.c211109.nc"
                                 ! The file in which the iron sediment flux forcing field can be found.
@@ -179,10 +181,10 @@ Z_INIT_ALE_REMAPPING = True     !   [Boolean] default = False
 
 ! === module MOM_set_visc ===
 HBBL = 10.0                     !   [m]
-                                ! The thickness of a bottom boundary layer with a viscosity of KVBBL if
-                                ! BOTTOMDRAGLAW is not defined, or the thickness over which near-bottom
-                                ! velocities are averaged for the drag law if BOTTOMDRAGLAW is defined but
-                                ! LINEAR_DRAG is not.
+                                ! The thickness of a bottom boundary layer with a viscosity increased by
+                                ! KV_EXTRA_BBL if BOTTOMDRAGLAW is not defined, or the thickness over which
+                                ! near-bottom velocities are averaged for the drag law if BOTTOMDRAGLAW is
+                                ! defined but LINEAR_DRAG is not.
 CDRAG = 0.0                     !   [nondim] default = 0.003
                                 ! CDRAG is the drag coefficient relating the magnitude of the velocity field to
                                 ! the bottom stress. CDRAG is only used if BOTTOMDRAGLAW is defined.
@@ -200,6 +202,8 @@ KV = 1.0E-04                    !   [m2 s-1]
                                 ! m2 s-1, may be used.
 
 ! === module MOM_thickness_diffuse ===
+
+! === module MOM_porous_barriers ===
 
 ! === module MOM_dynamics_unsplit ===
 
@@ -244,9 +248,6 @@ HARMONIC_VISC = True            !   [Boolean] default = False
 HMIX_FIXED = 0.01               !   [m]
                                 ! The prescribed depth over which the near-surface viscosity and diffusivity are
                                 ! elevated when the bulk mixed layer is not used.
-KVML = 0.0                      !   [m2 s-1] default = 1.0E-04
-                                ! The kinematic viscosity in the mixed layer.  A typical value is ~1e-2 m2 s-1.
-                                ! KVML is not used if BULKMIXEDLAYER is true.  The default is set by KV.
 MAXVEL = 6.0                    !   [m s-1] default = 3.0E+08
                                 ! The maximum velocity allowed before the velocity components are truncated.
 VEL_UNDERFLOW = 1.0E-30         !   [m s-1] default = 0.0
@@ -317,9 +318,6 @@ RECLAIM_FRAZIL = False          !   [Boolean] default = True
 VAR_PEN_SW = True               !   [Boolean] default = False
                                 ! If true, use one of the CHL_A schemes specified by OPACITY_SCHEME to determine
                                 ! the e-folding depth of incoming short wave radiation.
-CHL_FILE = "forcing_monthly.nc" !
-                                ! CHL_FILE is the file containing chl_a concentrations in the variable CHL_A. It
-                                ! is used when VAR_PEN_SW and CHL_FROM_FILE are true.
 
 ! === module MOM_opacity ===
 PEN_SW_NBANDS = 3               ! default = 1
@@ -356,6 +354,10 @@ READ_GUST_2D = True             !   [Boolean] default = False
                                 ! If true, use a 2-dimensional gustiness supplied from an input file
 GUST_2D_FILE = "forcing_monthly.nc" !
                                 ! The file in which the wind gustiness is found in variable gustiness.
+READ_NDEP = False               !   [Boolean] default = True
+                                ! If true, use nitrogen deposition supplied from an input file
+READ_RIV_FLUXES = False         !   [Boolean] default = True
+                                ! If true, use nitrogen deposition supplied from an input file
 
 ! === module MOM_main (MOM_driver) ===
 DAYMAX = 1825.0                 !   [days]

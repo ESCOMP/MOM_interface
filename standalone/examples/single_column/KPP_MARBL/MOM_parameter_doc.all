@@ -22,9 +22,9 @@ USE_CONTEMP_ABSSAL = False      !   [Boolean] default = False
                                 ! practical salinity before exchanging them with the coupler and/or reporting
                                 ! T&S diagnostics.
 ADIABATIC = False               !   [Boolean] default = False
-                                ! There are no diapycnal mass fluxes if ADIABATIC is true. This assumes that KD
-                                ! = KDML = 0.0 and that there is no buoyancy forcing, but makes the model faster
-                                ! by eliminating subroutine calls.
+                                ! There are no diapycnal mass fluxes if ADIABATIC is true.  This assumes that KD
+                                ! = 0.0 and that there is no buoyancy forcing, but makes the model faster by
+                                ! eliminating subroutine calls.
 DO_DYNAMICS = True              !   [Boolean] default = True
                                 ! If False, skips the dynamics calls that update u & v, as well as the gravity
                                 ! wave adjustment to h. This may be a fragile feature, but can be useful during
@@ -43,10 +43,13 @@ BULKMIXEDLAYER = False          !   [Boolean] default = False
                                 ! least NKML+NKBL+1 layers if BULKMIXEDLAYER is true. BULKMIXEDLAYER can not be
                                 ! used with USE_REGRIDDING. The default is influenced by ENABLE_THERMODYNAMICS.
 THICKNESSDIFFUSE = False        !   [Boolean] default = False
-                                ! If true, interface heights are diffused with a coefficient of KHTH.
-THICKNESSDIFFUSE_FIRST = False  !   [Boolean] default = False
-                                ! If true, do thickness diffusion before dynamics. This is only used if
-                                ! THICKNESSDIFFUSE is true.
+                                ! If true, isopycnal surfaces are diffused with a Laplacian coefficient of KHTH.
+APPLY_INTERFACE_FILTER = False  !   [Boolean] default = False
+                                ! If true, model interface heights are subjected to a grid-scale dependent
+                                ! spatial smoothing, often with biharmonic filter.
+USE_POROUS_BARRIER = True       !   [Boolean] default = True
+                                ! If true, use porous barrier to constrain the widths and face areas at the
+                                ! edges of the grid cells.
 BATHYMETRY_AT_VEL = False       !   [Boolean] default = False
                                 ! If true, there are separate values for the basin depths at velocity points.
                                 ! Otherwise the effects of topography are entirely determined from thickness
@@ -187,7 +190,7 @@ REFERENCE_HEIGHT = 0.0          !   [m] default = 0.0
                                 ! A reference value for geometric height fields, such as bathyT.
 
 ! === module MOM_fixed_initialization ===
-INPUTDIR = "INPUT/BATS"         ! default = "."
+INPUTDIR = "INPUT/CESM_MOM_COLUMNS/BATS" ! default = "."
                                 ! The directory in which input files are found.
 
 ! === module MOM_grid_init ===
@@ -267,6 +270,8 @@ CHANNEL_CONFIG = "none"         ! default = "none"
                                 !       test case.
                                 !     file - Read open face widths everywhere from a
                                 !       NetCDF file on the model grid.
+SUBGRID_TOPO_AT_VEL = False     !   [Boolean] default = False
+                                ! If true, use variables from TOPO_AT_VEL_FILE as parameters for porous barrier.
 ROTATION = "betaplane"          ! default = "2omegasinlat"
                                 ! This specifies how the Coriolis parameter is specified:
                                 !     2omegasinlat - Use twice the planetary rotation rate
@@ -385,6 +390,8 @@ NDEP_SCALE_FACTOR = 1.0E+05     !   [not defined] default = 1.0E+05
                                 ! Scale factor applied to nitrogen deposition terms
 BOT_FLUX_MIX_THICKNESS = 1.0    !   [m] default = 1.0
                                 ! Bottom fluxes are uniformly mixed over layer of this thickness
+CHL_FROM_FILE = False           !   [Boolean] default = True
+                                ! If true, chl_a is read from a file.
 USE_ICE_CATEGORIES = False      !   [Boolean] default = False
                                 ! If true, allocate memory for shortwave and ice fraction split by ice thickness
                                 ! category.
@@ -392,7 +399,7 @@ ICE_NCAT = 0                    ! default = 0
                                 ! Number of ice thickness categories in shortwave and ice fraction forcings.
 
 ! === module MARBL_tracers ===
-MARBL_TRACERS_IC_FILE = "IC_FILE_COLUMN.nc" ! default = "ecosys_jan_IC_omip_MOM_tx0.66v1_c221027.nc"
+MARBL_TRACERS_IC_FILE = "IC_FILE_COLUMN.nc" ! default = "ecosys_jan_IC_omip_latlon_1x1_180W_c230317.nc"
                                 ! The file in which the MARBL tracers initial values can be found.
 MARBL_FESEDFLUX_FILE = "MARBL_FESEDFLUX_FILE_COLUMN.nc" ! default = "fesedflux_total_reduce_oxic_tx0.66v1.c211109.nc"
                                 ! The file in which the iron sediment flux forcing field can be found.
@@ -737,10 +744,10 @@ DYNAMIC_VISCOUS_ML = False      !   [Boolean] default = False
 OMEGA = 7.2921E-05              !   [s-1] default = 7.2921E-05
                                 ! The rotation rate of the earth.
 HBBL = 10.0                     !   [m]
-                                ! The thickness of a bottom boundary layer with a viscosity of KVBBL if
-                                ! BOTTOMDRAGLAW is not defined, or the thickness over which near-bottom
-                                ! velocities are averaged for the drag law if BOTTOMDRAGLAW is defined but
-                                ! LINEAR_DRAG is not.
+                                ! The thickness of a bottom boundary layer with a viscosity increased by
+                                ! KV_EXTRA_BBL if BOTTOMDRAGLAW is not defined, or the thickness over which
+                                ! near-bottom velocities are averaged for the drag law if BOTTOMDRAGLAW is
+                                ! defined but LINEAR_DRAG is not.
 CDRAG = 0.0                     !   [nondim] default = 0.003
                                 ! CDRAG is the drag coefficient relating the magnitude of the velocity field to
                                 ! the bottom stress. CDRAG is only used if BOTTOMDRAGLAW is defined.
@@ -835,6 +842,23 @@ STANLEY_COEFF = -1.0            !   [not defined] default = -1.0
 STANLEY_A = 1.0                 !   [not defined] default = 1.0
                                 ! Coefficient a which scales chi in stochastic perturbation of the SGS T
                                 ! variance.
+
+! === module MOM_porous_barriers ===
+PORBAR_ANSWER_DATE = 99991231   ! default = 99991231
+                                ! The vintage of the porous barrier weight function calculations.  Values below
+                                ! 20220806 recover the old answers in which the layer averaged weights are not
+                                ! strictly limited by an upper-bound of 1.0 .
+PORBAR_MASKING_DEPTH = 0.0      !   [m] default = 0.0
+                                ! If the effective average depth at the velocity cell is shallower than this
+                                ! number, then porous barrier is not applied at that location.
+                                ! PORBAR_MASKING_DEPTH is assumed to be positive below the sea surface.
+PORBAR_ETA_INTERP = "MAX"       ! default = "MAX"
+                                ! A string describing the method that decides how the interface heights at the
+                                ! velocity points are calculated. Valid values are:
+                                !    MAX (the default) - maximum of the adjacent cells
+                                !    MIN - minimum of the adjacent cells
+                                !    ARITHMETIC - arithmetic mean of the adjacent cells
+                                !    HARMONIC - harmonic mean of the adjacent cells
 
 ! === module MOM_dynamics_unsplit ===
 FIX_UNSPLIT_DT_VISC_BUG = True  !   [Boolean] default = True
@@ -992,7 +1016,20 @@ VERT_FRICTION_ANSWER_DATE = 99991231 ! default = 99991231
                                 ! latter takes precedence.
 DIRECT_STRESS = False           !   [Boolean] default = False
                                 ! If true, the wind stress is distributed over the topmost HMIX_STRESS of fluid
-                                ! (like in HYCOM), and KVML may be set to a very small value.
+                                ! (like in HYCOM), and an added mixed layer viscosity or a physically based
+                                ! boundary layer turbulence parameterization is not needed for stability.
+FIXED_DEPTH_LOTW_ML = False     !   [Boolean] default = False
+                                ! If true, use a Law-of-the-wall prescription for the mixed layer viscosity
+                                ! within a boundary layer that is the lesser of HMIX_FIXED and the total depth
+                                ! of the ocean in a column.
+LOTW_VISCOUS_ML_FLOOR = False   !   [Boolean] default = False
+                                ! If true, use a Law-of-the-wall prescription to set a lower bound on the
+                                ! viscous coupling between layers within the surface boundary layer, based the
+                                ! distance of interfaces from the surface.  This only acts when there are large
+                                ! changes in the thicknesses of successive layers or when the viscosity is set
+                                ! externally and the wind stress has subsequently increased.
+VON_KARMAN_CONST = 0.41         !   [nondim] default = 0.41
+                                ! The value the von Karman constant as used for mixed layer viscosity.
 HARMONIC_VISC = True            !   [Boolean] default = False
                                 ! If true, use the harmonic mean thicknesses for calculating the vertical
                                 ! viscosity.
@@ -1003,9 +1040,12 @@ HARMONIC_BL_SCALE = 0.0         !   [nondim] default = 0.0
 HMIX_FIXED = 0.01               !   [m]
                                 ! The prescribed depth over which the near-surface viscosity and diffusivity are
                                 ! elevated when the bulk mixed layer is not used.
-KVML = 0.0                      !   [m2 s-1] default = 1.0E-04
-                                ! The kinematic viscosity in the mixed layer.  A typical value is ~1e-2 m2 s-1.
-                                ! KVML is not used if BULKMIXEDLAYER is true.  The default is set by KV.
+KV_ML_INVZ2 = 0.0               !   [m2 s-1] default = 0.0
+                                ! An extra kinematic viscosity in a mixed layer of thickness HMIX_FIXED, with
+                                ! the actual viscosity scaling as 1/(z*HMIX_FIXED)^2, where z is the distance
+                                ! from the surface, to allow for finite wind stresses to be transmitted through
+                                ! infinitesimally thin surface layers.  This is an older option for numerical
+                                ! convenience without a strong physical basis, and its use is now discouraged.
 MAXVEL = 6.0                    !   [m s-1] default = 3.0E+08
                                 ! The maximum velocity allowed before the velocity components are truncated.
 CFL_BASED_TRUNCATIONS = True    !   [Boolean] default = True
@@ -1294,9 +1334,6 @@ KD = 2.0E-05                    !   [m2 s-1] default = 0.0
                                 ! molecular value, ~1e-7 m2 s-1, may be used.
 KD_MIN = 2.0E-06                !   [m2 s-1] default = 2.0E-07
                                 ! The minimum diapycnal diffusivity.
-KDML = 2.0E-05                  !   [m2 s-1] default = 2.0E-05
-                                ! If BULKMIXEDLAYER is false, KDML is the elevated diapycnal diffusivity in the
-                                ! topmost HMIX of fluid. KDML is only used if BULKMIXEDLAYER is false.
 BRYAN_LEWIS_DIFFUSIVITY = False !   [Boolean] default = False
                                 ! If true, use a Bryan & Lewis (JGR 1979) like tanh profile of background
                                 ! diapycnal diffusivity with depth. This is done via CVMix.
@@ -1308,9 +1345,6 @@ PRANDTL_BKGND = 1.0             !   [nondim] default = 1.0
                                 ! into viscosities.
 HENYEY_IGW_BACKGROUND = False   !   [Boolean] default = False
                                 ! If true, use a latitude-dependent scaling for the near surface background
-                                ! diffusivity, as described in Harrison & Hallberg, JPO 2008.
-HENYEY_IGW_BACKGROUND_NEW = False !   [Boolean] default = False
-                                ! If true, use a better latitude-dependent scaling for the background
                                 ! diffusivity, as described in Harrison & Hallberg, JPO 2008.
 KD_TANH_LAT_FN = False          !   [Boolean] default = False
                                 ! If true, use a tanh dependence of Kd_sfc on latitude, like CM2.1/CM2M.  There
@@ -1447,13 +1481,6 @@ USE_CALVING_HEAT_CONTENT = False !   [Boolean] default = False
 VAR_PEN_SW = True               !   [Boolean] default = False
                                 ! If true, use one of the CHL_A schemes specified by OPACITY_SCHEME to determine
                                 ! the e-folding depth of incoming short wave radiation.
-CHL_FROM_FILE = True            !   [Boolean] default = True
-                                ! If true, chl_a is read from a file.
-CHL_FILE = "forcing_monthly.nc" !
-                                ! CHL_FILE is the file containing chl_a concentrations in the variable CHL_A. It
-                                ! is used when VAR_PEN_SW and CHL_FROM_FILE are true.
-CHL_VARNAME = "CHL_A"           ! default = "CHL_A"
-                                ! Name of CHL_A variable in CHL_FILE.
 
 ! === module MOM_regularize_layers ===
 REGULARIZE_SURFACE_LAYERS = False !   [Boolean] default = False
@@ -1618,6 +1645,30 @@ READ_GUST_2D = True             !   [Boolean] default = False
                                 ! If true, use a 2-dimensional gustiness supplied from an input file
 GUST_2D_FILE = "forcing_monthly.nc" !
                                 ! The file in which the wind gustiness is found in variable gustiness.
+DUST_RATIO_THRES = 69.00594     !   [not defined] default = 69.00594
+                                ! TODO: Add description
+DUST_RATIO_TO_FE_BIOAVAIL_FRAC = 0.0027298983931818 !   [not defined] default = 0.0027298983931818
+                                ! TODO: Add description
+FE_BIOAVAIL_FRAC_OFFSET = 0.0146756 !   [not defined] default = 0.0146756
+                                ! TODO: Add description
+ATM_FE_TO_BC_RATIO = 1.0        !   [not defined] default = 1.0
+                                ! TODO: Add description
+ATM_BC_FE_BIOAVAIL_FRAC = 0.06  !   [not defined] default = 0.06
+                                ! TODO: Add description
+SEAICE_FE_TO_BC_RATIO = 1.0     !   [not defined] default = 1.0
+                                ! TODO: Add description
+SEAICE_BC_FE_BIOAVAIL_FRAC = 0.06 !   [not defined] default = 0.06
+                                ! TODO: Add description
+IRON_FRAC_IN_ATM_FINE_DUST = 0.035 !   [not defined] default = 0.035
+                                ! Fraction of fine dust from the atmosphere that is iron
+IRON_FRAC_IN_ATM_COARSE_DUST = 0.035 !   [not defined] default = 0.035
+                                ! Fraction of coarse dust from the atmosphere that is iron
+IRON_FRAC_IN_SEAICE_DUST = 0.035 !   [not defined] default = 0.035
+                                ! Fraction of dust from sea ice that is iron
+READ_NDEP = False               !   [Boolean] default = True
+                                ! If true, use nitrogen deposition supplied from an input file
+READ_RIV_FLUXES = False         !   [Boolean] default = True
+                                ! If true, use nitrogen deposition supplied from an input file
 
 ! === module MOM_restart ===
 USE_WAVES = False               !   [Boolean] default = False

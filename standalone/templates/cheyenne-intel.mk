@@ -6,10 +6,10 @@
 # commands #
 ############
 
-FC = ifort
+FC = mpif90
 CC = icc
 CXX = icpc
-LD = ifort
+LD = mpif90
 
 ############
 #  flags   #
@@ -80,7 +80,7 @@ else
 endif
 
 #LIBS += -lmpi
-LIBS += -lmpi -lsma
+#LIBS += -lmpi -lsma
 #LIBS += -lmkl_blas95_lp64 -lmkl_lapack95_lp64 -lmkl_intel_lp64 -lmkl_core -lmkl_sequential
 LDFLAGS += $(LIBS)
 

@@ -301,12 +301,14 @@
 "ocean_model","lprec","lprec","surffluxes","all",.true.,"none",2
 "ocean_model","net_heat_surface","net_heat_surface","surffluxes","all",.true.,"none",2
 "ocean_model","SW","SW","surffluxes","all",.true.,"none",2
+"ocean_model","SW_pen","SW_pen","surffluxes","all",.true.,"none",2
 "ocean_model","LwLatSens","LwLatSens","surffluxes","all",.true.,"none",2
 #"ocean_model","p_surf","p_surf","surffluxes","all",.true.,"none",2
 #"ocean_model","salt_flux","salt_flux","surffluxes","all",.true.,"none",2
 
 # MARBL diagnostics:
 #===================
+"ocean_model", "rsdoabsorb", "rsdoabsorb", "marbl", "all", .false., "none", 2
 "ocean_model", "ECOSYS_IFRAC", "ECOSYS_IFRAC", "marbl", "all", .false., "none", 2
 "ocean_model", "ECOSYS_XKW", "ECOSYS_XKW", "marbl", "all", .false., "none", 2
 "ocean_model", "ECOSYS_ATM_PRESS", "ECOSYS_ATM_PRESS", "marbl", "all", .false., "none", 2
