@@ -24,7 +24,7 @@
     <hist_file_extension>Pacific_undercurrent.?[_\d+]+.nc</hist_file_extension>
     <hist_file_extension>Taiwan_Luzon.?[_\d+]+.nc</hist_file_extension>
     <hist_file_extension>Windward_Passage.?[_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>static.nc$</hist_file_extension>
+    <hist_file_extension>static.?[_\d+]+.nc$</hist_file_extension>
     <rpointer>
       <rpointer_file>rpointer.ocn$NINST_STRING</rpointer_file>
     </rpointer>
