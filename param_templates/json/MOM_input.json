@@ -514,8 +514,8 @@
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
-      "USE_LATERAL_BOUNDARY_DIFFUSION": {
-         "description": "\"[Boolean] default = False\nIf true, enables the lateral boundary tracer's diffusion module.\"\n",
+      "HORIZONTAL_BOUNDARY_DIFFUSION": {
+         "description": "\"[Boolean] default = False\nIf true, enables the horizontal boundary tracer's diffusion module.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
@@ -523,7 +523,7 @@
             "$OCN_GRID == \"tx0.66v1\"": true
          }
       },
-      "LBD_LINEAR_TRANSITION": {
+      "HBD_LINEAR_TRANSITION": {
          "description": "\"[Boolean] default = False\nIf True, apply a linear transition at the base/top of the boundary.\nThe flux will be fully applied at k=k_min and zero at k=k_max.\"\n",
          "datatype": "logical",
          "units": "Boolean",

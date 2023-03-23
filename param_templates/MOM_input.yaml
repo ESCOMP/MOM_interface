@@ -701,16 +701,16 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
-    USE_LATERAL_BOUNDARY_DIFFUSION:
+    HORIZONTAL_BOUNDARY_DIFFUSION:
         description: |
             "[Boolean] default = False
-            If true, enables the lateral boundary tracer's diffusion module."
+            If true, enables the horizontal boundary tracer's diffusion module."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
-    LBD_LINEAR_TRANSITION:
+    HBD_LINEAR_TRANSITION:
         description: |
             "[Boolean] default = False
             If True, apply a linear transition at the base/top of the boundary.
