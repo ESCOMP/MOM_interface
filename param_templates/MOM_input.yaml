@@ -701,7 +701,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
-    HORIZONTAL_BOUNDARY_DIFFUSION:
+    USE_HORIZONTAL_BOUNDARY_DIFFUSION:
         description: |
             "[Boolean] default = False
             If true, enables the horizontal boundary tracer's diffusion module."
