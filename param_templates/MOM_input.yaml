@@ -346,7 +346,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            bool(re.search("MOM6%[^_]*MARBL", $COMPSET ))== True: True
+            $OCN_BGC_CONFIG != "none": True
             else: False
     CHL_FROM_FILE:
         description: |

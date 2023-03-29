@@ -245,7 +245,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "bool(re.search(\"MOM6%[^_]*MARBL\", $COMPSET ))== True": true,
+            "$OCN_BGC_CONFIG != \"none\"": true,
             "else": false
          }
       },

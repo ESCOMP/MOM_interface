@@ -70,8 +70,11 @@
 
   <entry id="OCN_BGC_CONFIG">
     <type>char</type>
-    <valid_values>latest</valid_values>
-    <default_value>latest</default_value>
+    <valid_values>none,latest</valid_values>
+    <default_value>none</default_value>
+    <values>
+      <value compset="MOM6%[^_]*MARBL">latest</value>
+    </values>
     <group>run_component_mom</group>
     <file>env_run.xml</file>
     <desc>Version of ocean BGC tunings to use (default values can be overwritten by user_nl_mom and user_nl_marbl).
