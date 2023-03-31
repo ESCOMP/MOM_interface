@@ -1,0 +1,22 @@
+#!/bin/bash
+
+### Job Name
+#PBS -N standalone_build_cheyenne
+
+### Project code
+#PBS -A P93300070
+#PBS -l walltime=00:30:00
+#PBS -q share
+
+### Merge output and error files
+#PBS -j oe
+#PBS -k eod
+
+### Select 1 nodes with 18 CPUs
+#PBS -l select=1:ncpus=18:mpiprocs=18
+
+### Send email on abort, begin and end
+#PBS -m abe
+
+### Run the executable
+./build_examples-cheyenne.sh intel-cheyenne
