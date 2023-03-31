@@ -118,6 +118,10 @@ CHL_FROM_FILE = False           !   [Boolean] default = True
 ! === module MARBL_tracers ===
 MARBL_TRACERS_IC_FILE = "IC_FILE_COLUMN.nc" ! default = "ecosys_jan_IC_omip_latlon_1x1_180W_c230317.nc"
                                 ! The file in which the MARBL tracers initial values can be found.
+MARBL_TRACERS_INIT_VERTICAL_REMAP_ONLY = True !   [Boolean] default = False
+                                ! If true, initial conditions are on the model horizontal grid. Extrapolation
+                                ! over missing ocean values is done using an ICE-9 procedure with vertical ALE
+                                ! remapping .
 MARBL_FESEDFLUX_FILE = "MARBL_FESEDFLUX_FILE_COLUMN.nc" ! default = "fesedflux_total_reduce_oxic_tx0.66v1.c211109.nc"
                                 ! The file in which the iron sediment flux forcing field can be found.
 MARBL_FEVENTFLUX_FILE = "MARBL_FEVENTFLUX_FILE_COLUMN.nc" ! default = "feventflux_5gmol_tx0.66v1.c211109.nc"
@@ -162,18 +166,22 @@ INIT_LAYERS_FROM_Z_FILE = True  !   [Boolean] default = False
                                 ! Z-space file on a latitude-longitude grid.
 
 ! === module MOM_initialize_layers_from_Z ===
-TEMP_SALT_Z_INIT_FILE = "WOA_column.nc" ! default = "temp_salt_z.nc"
+TEMP_SALT_Z_INIT_FILE = "TS_IC_FILE_COLUMN.nc" ! default = "temp_salt_z.nc"
                                 ! The name of the z-space input file used to initialize temperatures (T) and
                                 ! salinities (S). If T and S are not in the same file, TEMP_Z_INIT_FILE and
                                 ! SALT_Z_INIT_FILE must be set.
-Z_INIT_FILE_PTEMP_VAR = "PTEMP" ! default = "ptemp"
+Z_INIT_FILE_PTEMP_VAR = "theta0" ! default = "ptemp"
                                 ! The name of the potential temperature variable in TEMP_Z_INIT_FILE.
-Z_INIT_FILE_SALT_VAR = "SALT"   ! default = "salt"
+Z_INIT_FILE_SALT_VAR = "s_an"   ! default = "salt"
                                 ! The name of the salinity variable in SALT_Z_INIT_FILE.
 Z_INIT_HOMOGENIZE = True        !   [Boolean] default = False
                                 ! If True, then horizontally homogenize the interpolated initial conditions.
 Z_INIT_ALE_REMAPPING = True     !   [Boolean] default = False
                                 ! If True, then remap straight to model coordinate from file.
+TEMP_SALT_INIT_VERTICAL_REMAP_ONLY = True !   [Boolean] default = False
+                                ! If true, initial conditions are on the model horizontal grid. Extrapolation
+                                ! over missing ocean values is done using an ICE-9 procedure with vertical ALE
+                                ! remapping .
 
 ! === module MOM_diag_mediator ===
 
