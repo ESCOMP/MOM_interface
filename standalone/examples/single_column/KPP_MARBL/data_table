@@ -12,4 +12,8 @@
 "OCN" , "atm_fine_dust_flux",   "ATM_FINE_DUST_FLUX",   "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "atm_coarse_dust_flux", "ATM_COARSE_DUST_FLUX", "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "atm_bc_flux",          "ATM_BC_FLUX",          "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "seaice_dust_flux",     "SEAICE_DUST_FLUX",     "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "seaice_bc_flux",       "SEAICE_BC_FLUX",       "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "nhx_dep",              "NDEP_NHx",             "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "noy_dep",              "NDEP_NOy",             "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "u10_sqr",              "U10_SQR",              "./INPUT/CESM_MOM_COLUMNS/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0

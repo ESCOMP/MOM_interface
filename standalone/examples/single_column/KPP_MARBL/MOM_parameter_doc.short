@@ -354,8 +354,6 @@ READ_GUST_2D = True             !   [Boolean] default = False
                                 ! If true, use a 2-dimensional gustiness supplied from an input file
 GUST_2D_FILE = "forcing_monthly.nc" !
                                 ! The file in which the wind gustiness is found in variable gustiness.
-READ_NDEP = False               !   [Boolean] default = True
-                                ! If true, use nitrogen deposition supplied from an input file
 READ_RIV_FLUXES = False         !   [Boolean] default = True
                                 ! If true, use nitrogen deposition supplied from an input file
 

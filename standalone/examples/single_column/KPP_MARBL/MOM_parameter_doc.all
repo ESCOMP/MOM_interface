@@ -386,8 +386,6 @@ ATM_CO2_CONST = 284.317         !   [ppm] default = 284.317
                                 ! Value to send to MARBL as xco2
 ATM_ALT_CO2_CONST = 284.317     !   [ppm] default = 284.317
                                 ! Value to send to MARBL as xco2_alt_co2
-NDEP_SCALE_FACTOR = 1.0E+05     !   [not defined] default = 1.0E+05
-                                ! Scale factor applied to nitrogen deposition terms
 BOT_FLUX_MIX_THICKNESS = 1.0    !   [m] default = 1.0
                                 ! Bottom fluxes are uniformly mixed over layer of this thickness
 CHL_FROM_FILE = False           !   [Boolean] default = True
@@ -1665,8 +1663,6 @@ IRON_FRAC_IN_ATM_COARSE_DUST = 0.035 !   [not defined] default = 0.035
                                 ! Fraction of coarse dust from the atmosphere that is iron
 IRON_FRAC_IN_SEAICE_DUST = 0.035 !   [not defined] default = 0.035
                                 ! Fraction of dust from sea ice that is iron
-READ_NDEP = False               !   [Boolean] default = True
-                                ! If true, use nitrogen deposition supplied from an input file
 READ_RIV_FLUXES = False         !   [Boolean] default = True
                                 ! If true, use nitrogen deposition supplied from an input file
 
