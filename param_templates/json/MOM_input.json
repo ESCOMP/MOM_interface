@@ -744,7 +744,7 @@
          "description": "\"[m2 s-1]\nThe background kinematic viscosity in the interior.\nThe molecular value, ~1e-6 m2 s-1, may be used.\"\n",
          "datatype": "real",
          "units": "m2 s-1",
-         "value": 0.0001
+         "value": 0.0
       },
       "MAXVEL": {
          "description": "\"[m s-1] default = 3.0E+08\nThe maximum velocity allowed before the velocity\ncomponents are truncated.\"\n",
@@ -1056,7 +1056,7 @@
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 1.5e-05,
             "$OCN_GRID == \"MISOMIP\"": 5e-05,
-            "else": 2e-05
+            "else": 0.0
          }
       },
       "KDML": {
