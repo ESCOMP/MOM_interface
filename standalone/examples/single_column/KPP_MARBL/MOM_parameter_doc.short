@@ -116,7 +116,7 @@ CHL_FROM_FILE = False           !   [Boolean] default = True
                                 ! If true, chl_a is read from a file.
 
 ! === module MARBL_tracers ===
-MARBL_TRACERS_IC_FILE = "IC_FILE_COLUMN.nc" ! default = "ecosys_jan_IC_omip_latlon_1x1_180W_c230317.nc"
+MARBL_TRACERS_IC_FILE = "IC_FILE_COLUMN.nc" ! default = "ecosys_jan_IC_omip_latlon_1x1_180W_c230331.nc"
                                 ! The file in which the MARBL tracers initial values can be found.
 MARBL_FESEDFLUX_FILE = "MARBL_FESEDFLUX_FILE_COLUMN.nc" ! default = "fesedflux_total_reduce_oxic_tx0.66v1.c211109.nc"
                                 ! The file in which the iron sediment flux forcing field can be found.
