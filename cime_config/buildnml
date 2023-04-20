@@ -137,7 +137,24 @@ def prep_input(case):
             # For now, user has no control over lMARBL_output_all
             # TODO: mimic what is done in POP and allow it via user_nl_mom?
             lMARBL_output_all = case.get_value("TEST")
-            generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all, ice_ncat)
+            # Include ALT_CO2 diagnostics if atm_co2_opt and atm_alt_co2_opt differ
+            # (or if they are both "constant" but atm_co2_const != atm_alt_co2_const)
+            atm_co2_opt = MOM_input_final._data["Global"]["ATM_CO2_OPT"]["value"].strip().lower().replace('"', '')
+            try:
+                atm_alt_co2_opt = MOM_input_final._data["Global"]["ATM_ALT_CO2_OPT"]["value"].strip().lower().replace('"', '')
+            except:
+                atm_alt_co2_opt = "constant"
+            if (atm_co2_opt == atm_alt_co2_opt):
+                if atm_co2_opt == "constant":
+                    lMARBL_output_alt_co2 = (MOM_input_final._data["Global"]["ATM_CO2_CONST"]["value"] !=
+                                             MOM_input_final._data["Global"]["ATM_ALT_CO2_CONST"]["value"])
+                else:
+                    lMARBL_output_alt_co2 = False
+            else:
+                lMARBL_output_alt_co2 = True
+            generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir,
+                                      diag_table_buildconf, vert_grid, lMARBL_output_all, lMARBL_output_alt_co2,
+                                       ice_ncat)
             if os.path.isfile(diag_table_buildconf):
                 diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
         diag_table.write(diag_table_dest, case, MOM_input_final)
@@ -185,7 +202,8 @@ def _copy_files_to_momconf(case):
     for filename in ["MOM_input", "MOM_override", "diag_table", "input.nml"]:
         shutil.copy(os.path.join(rundir,filename), momconfdir)
 
-def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf, vert_grid, lMARBL_output_all, ice_ncat):
+def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf,
+                              vert_grid, lMARBL_output_all, lMARBL_output_alt_co2, ice_ncat):
     """
     Create Buildconf/momconf/diag_table_MARBL.json
 
@@ -244,7 +262,8 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
     # 4. Generate diag_table based on contents of ecosys_diagnostics
     #    and knowledge of which diags are 2D
     from MARBL_diags_to_diag_table import diagnostics_to_diag_table
-    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, diag2D_list, vert_grid, lMARBL_output_all, False)
+    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, diag2D_list, vert_grid,
+                              lMARBL_output_all, lMARBL_output_alt_co2)
 
 
 # pylint: disable=unused-argument
