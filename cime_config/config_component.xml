@@ -68,6 +68,26 @@
     </desc>
   </entry>
 
+  <!--- Note that positive second match will overwrite positive first match -->
+  <entry id="OCN_CO2_TYPE">
+    <type>char</type>
+    <valid_values>constant,prognostic,diagnostic,box_atm_co2</valid_values>
+    <default_value>constant</default_value>
+    <values>
+      <value compset="_CAM">diagnostic</value>
+      <value compset="_MOM6%[^_]*MARBL.*_BGC%BPRP">prognostic</value>
+      <value compset="_MOM6%[^_]*MARBL.*_BGC%BDRD">diagnostic</value>
+      <value compset="_DATM%CPLHIST.*_MOM6%[^_]*MARBL">diagnostic</value>
+      <value compset="^OMIP_DATM%IAF.*_MOM6%[^_]*MARBL">diagnostic</value>
+      <value compset="^OMIP_DATM%JRA.*_MOM6%[^_]*MARBL">diagnostic</value>
+    </values>
+    <group>run_component_pop</group>
+    <file>env_run.xml</file>
+    <desc>Determines provenance of atmospheric CO2 for gas flux computation.
+      This option is used in the POP ecosystem model.
+      The default is constant.</desc>
+  </entry>
+
   <entry id="OCN_BGC_CONFIG">
     <type>char</type>
     <valid_values>none,latest</valid_values>

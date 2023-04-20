@@ -356,6 +356,31 @@ Global:
         datatype: logical
         value:
             $OCN_BGC_CONFIG != "none": False
+    ATM_CO2_OPT:
+        description: |
+            "default comes from env_run.xml (OCN_CO2_TYPE)
+             Source of atmospheric CO2 concentration for MARBL
+             valid values: constant, prognostic, diagnostic
+            "
+        datatype: string
+        value:
+            $OCN_BGC_CONFIG != "none": $OCN_CO2_TYPE
+    ATM_CO2_CONST:
+        description: |
+            "default comes from env_run.xml (CCSM_CO2_PPMV)
+             Atmospheric CO2 concentration for MARBL [ppm]
+            "
+        datatype: real
+        value:
+            $OCN_BGC_CONFIG != "none": $CCSM_CO2_PPMV
+    ATM_ALT_CO2_CONST:
+        description: |
+            "default comes from env_run.xml (CCSM_CO2_PPMV)
+             Alternate atmospheric CO2 concentration for MARBL [ppm]
+            "
+        datatype: real
+        value:
+            $OCN_BGC_CONFIG != "none": $CCSM_CO2_PPMV
     DUST_RATIO_THRES:
         description: |
             "TODO: Add description
