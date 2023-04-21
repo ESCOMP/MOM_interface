@@ -41,8 +41,8 @@ def prep_input(case):
     rundir = case.get_value("RUNDIR")
     comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
     srcroot         = case.get_value("SRCROOT")
-    ocn_bgc_config  = case.get_value("OCN_BGC_CONFIG")
-    vert_grid       = case.get_value("OCN_BGC_HIST_VERT_GRID")
+    marbl_config    = case.get_value("MARBL_CONFIG")
+    vert_grid       = case.get_value("MARBL_HIST_VERT_GRID")
     caseroot        = case.get_value("CASEROOT")
     ocn_grid        = case.get_value("OCN_GRID")
     run_type        = case.get_value("RUN_TYPE")
@@ -119,7 +119,7 @@ def prep_input(case):
         MARBL_dir = os.path.join(srcroot, "components", "mom", "MOM6", "pkg", "MARBL")
         from MARBL_settings import MARBL_settings_for_MOM
         MARBL_settings = MARBL_settings_for_MOM(MARBL_dir, caseroot, ocn_grid, run_type,
-                                                continue_run, ocn_bgc_config)
+                                                continue_run, marbl_config)
         MARBL_settings.write_settings_file(os.path.join(rundir, "marbl_in"))
 
     # 7. Create diag_table:

@@ -245,7 +245,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\"": true,
+            "$MARBL_CONFIG != \"off\"": true,
             "else": false
          }
       },
@@ -253,49 +253,49 @@
          "description": "\"[Boolean] default = True\n If true, read chlorophyll from a file. Otherwise MARBL will provide it.\n\"\n",
          "datatype": "logical",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\"": false
+            "$MARBL_CONFIG != \"off\"": false
          }
       },
       "ATM_CO2_OPT": {
          "description": "\"default comes from env_run.xml (OCN_CO2_TYPE)\n Source of atmospheric CO2 concentration for MARBL\n valid values: constant, prognostic, diagnostic\n\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\"": "$OCN_CO2_TYPE"
+            "$MARBL_CONFIG != \"off\"": "$OCN_CO2_TYPE"
          }
       },
       "ATM_CO2_CONST": {
          "description": "\"default comes from env_run.xml (CCSM_CO2_PPMV)\n Atmospheric CO2 concentration for MARBL [ppm]\n\"\n",
          "datatype": "real",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\"": "$CCSM_CO2_PPMV"
+            "$MARBL_CONFIG != \"off\"": "$CCSM_CO2_PPMV"
          }
       },
       "ATM_ALT_CO2_CONST": {
          "description": "\"default comes from env_run.xml (CCSM_CO2_PPMV)\n Alternate atmospheric CO2 concentration for MARBL [ppm]\n\"\n",
          "datatype": "real",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\"": "$CCSM_CO2_PPMV"
+            "$MARBL_CONFIG != \"off\"": "$CCSM_CO2_PPMV"
          }
       },
       "DUST_RATIO_THRES": {
          "description": "\"TODO: Add description\n\"\n",
          "datatype": "real",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\" and $COMP_ATM == \"cam\"": 60.0
+            "$MARBL_CONFIG != \"off\" and $COMP_ATM == \"cam\"": 60.0
          }
       },
       "DUST_RATIO_TO_FE_BIOAVAIL_FRAC": {
          "description": "\"TODO: Add description\n\"\n",
          "datatype": "real",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\" and $COMP_ATM == \"cam\"": "1.0 / 170.0"
+            "$MARBL_CONFIG != \"off\" and $COMP_ATM == \"cam\"": "1.0 / 170.0"
          }
       },
       "FE_BIOAVAIL_FRAC_OFFSET": {
          "description": "\"TODO: Add description\n\"\n",
          "datatype": "real",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\" and $COMP_ATM == \"cam\"": 0.01
+            "$MARBL_CONFIG != \"off\" and $COMP_ATM == \"cam\"": 0.01
          }
       },
       "USE_ICE_CATEGORIES": {
@@ -2713,7 +2713,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_BGC_CONFIG != \"none\"": true
+            "$MARBL_CONFIG != \"off\"": true
          }
       },
       "USE_WAVES": {

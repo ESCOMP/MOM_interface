@@ -25,17 +25,17 @@ diag_manager_nml:
         value: .true.
     max_input_fields:
         value:
-            $OCN_BGC_CONFIG != "none" and $TEST == True: 900
+            $MARBL_CONFIG != "off" and $TEST == True: 900
             else: 600
     max_output_fields:
         value:
-            $OCN_BGC_CONFIG != "none" and $TEST != True: 600
-            $OCN_BGC_CONFIG != "none" and $TEST == True: 1200
+            $MARBL_CONFIG != "off" and $TEST != True: 600
+            $MARBL_CONFIG != "off" and $TEST == True: 1200
             else: 300
     max_num_axis_sets:
         value:
-            $OCN_BGC_CONFIG != "none" and $TEST != True: 30
-            $OCN_BGC_CONFIG != "none" and $TEST == True: 26
+            $MARBL_CONFIG != "off" and $TEST != True: 30
+            $MARBL_CONFIG != "off" and $TEST == True: 26
             else: 24
 
 mpp_io_nml:
