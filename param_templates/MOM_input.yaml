@@ -334,11 +334,9 @@ Global:
     CFC_BC_FILE:
         description: |
             "The file in which the CFC-11 and CFC-12 atm concentrations can be found (units
-            must be parts per trillion), or an empty string for internal BC generation
-            (TODO)."
+            must be parts per trillion)."
         datatype: string
-        value:
-            $OCN_GRID == "tx0.66v1": "CFCs_tx0.66v1_v2_5_210430.nc"
+        value: "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc"
     COORD_CONFIG:
         description: |
             "This specifies how layers are to be defined:
@@ -406,7 +404,7 @@ Global:
             "Name of the file from which to read horizontal grid data."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "ocean_hgrid.nc"
+            $OCN_GRID == "gx1v6": "ocean_hgrid_230424.nc"
             $OCN_GRID == "tx0.66v1": "ocean_hgrid_180829.nc"
             $OCN_GRID == "tx0.25v1": "ocean_hgrid.nc"
     USE_TRIPOLAR_GEOLONB_BUG:
@@ -448,7 +446,7 @@ Global:
             The file from which the bathymetry is read."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "ocean_topog.nc"
+            $OCN_GRID == "gx1v6": "ocean_topog_230424.nc"
             $OCN_GRID == "tx0.66v1": "ocean_topog_200701.nc"
             $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
     MAXIMUM_DEPTH:
@@ -703,16 +701,16 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
-    USE_LATERAL_BOUNDARY_DIFFUSION:
+    USE_HORIZONTAL_BOUNDARY_DIFFUSION:
         description: |
             "[Boolean] default = False
-            If true, enables the lateral boundary tracer's diffusion module."
+            If true, enables the horizontal boundary tracer's diffusion module."
         datatype: logical
         units: Boolean
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
-    LBD_LINEAR_TRANSITION:
+    HBD_LINEAR_TRANSITION:
         description: |
             "[Boolean] default = False
             If True, apply a linear transition at the base/top of the boundary.
@@ -3363,6 +3361,14 @@ Global:
         datatype: string
         value:
             $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "0.04, 0.11, 0.33"
+    IO_LAYOUT:
+        description: |
+            The processor layout to be used, or 0,0 to automatically set the io_layout to
+            be the same as the layout.
+        datatype: list
+        value:
+            $OCN_GRID == "tx0.25v1":
+              4, 3
 
 
 KPP:
