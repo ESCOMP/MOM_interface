@@ -404,7 +404,7 @@ Global:
             "Name of the file from which to read horizontal grid data."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "ocean_hgrid.nc"
+            $OCN_GRID == "gx1v6": "ocean_hgrid_230424.nc"
             $OCN_GRID == "tx0.66v1": "ocean_hgrid_180829.nc"
             $OCN_GRID == "tx0.25v1": "ocean_hgrid.nc"
     USE_TRIPOLAR_GEOLONB_BUG:
@@ -446,7 +446,7 @@ Global:
             The file from which the bathymetry is read."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "ocean_topog.nc"
+            $OCN_GRID == "gx1v6": "ocean_topog_230424.nc"
             $OCN_GRID == "tx0.66v1": "ocean_topog_200701.nc"
             $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
     MAXIMUM_DEPTH:
@@ -3361,6 +3361,14 @@ Global:
         datatype: string
         value:
             $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "0.04, 0.11, 0.33"
+    IO_LAYOUT:
+        description: |
+            The processor layout to be used, or 0,0 to automatically set the io_layout to
+            be the same as the layout.
+        datatype: list
+        value:
+            $OCN_GRID == "tx0.25v1":
+              4, 3
 
 
 KPP:

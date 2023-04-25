@@ -46,9 +46,11 @@
          }
       },
       "IO_LAYOUT": {
-         "description": "\"default = 0\nThe processor layout to be used, or 0,0 to automatically\nset the io_layout to be the same as the layout.\"\n",
-         "datatype": "string",
-         "value": "1, 1"
+         "description": "The processor layout to be used, or 0,0 to automatically set the io_layout to\nbe the same as the layout.\n",
+         "datatype": "list",
+         "value": {
+            "$OCN_GRID == \"tx0.25v1\"": "4, 3"
+         }
       },
       "NK": {
          "description": "\"[nondim]\nThe number of model layers.\"\n",
@@ -281,7 +283,7 @@
          "description": "\"Name of the file from which to read horizontal grid data.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "ocean_hgrid.nc",
+            "$OCN_GRID == \"gx1v6\"": "ocean_hgrid_230424.nc",
             "$OCN_GRID == \"tx0.66v1\"": "ocean_hgrid_180829.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_hgrid.nc"
          }
@@ -307,7 +309,7 @@
          "description": "\"default = 'topog.nc'\nThe file from which the bathymetry is read.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "ocean_topog.nc",
+            "$OCN_GRID == \"gx1v6\"": "ocean_topog_230424.nc",
             "$OCN_GRID == \"tx0.66v1\"": "ocean_topog_200701.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc"
          }
