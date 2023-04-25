@@ -394,7 +394,7 @@ Global:
             "
         datatype: real
         value:
-            $MARBL_CONFIG != "off" and $COMP_ATM == "cam": 1.0 / 170.0
+            $MARBL_CONFIG != "off" and $COMP_ATM == "cam": = 1.0 / 170.0
     FE_BIOAVAIL_FRAC_OFFSET:
         description: |
             "TODO: Add description
