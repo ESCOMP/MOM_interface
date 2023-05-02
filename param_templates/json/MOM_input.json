@@ -249,6 +249,14 @@
             "else": false
          }
       },
+      "MARBL_TRACERS_IC_FILE": {
+         "description": "\"Name of file containing initial conditions\nfor the MARBL tracer package.\"\n",
+         "datatype": "string",
+         "value": {
+            "$MARBL_CONFIG == \"latest\"": "ecosys_jan_IC_omip_latlon_1x1_180W_c230331.nc",
+            "$MARBL_CONFIG == \"latest+4p2z\"": "ecosys_jan_IC_omip_latlon_1x1_180W_c230501.nc"
+         }
+      },
       "CHL_FROM_FILE": {
          "description": "\"[Boolean] default = True\n If true, read chlorophyll from a file. Otherwise MARBL will provide it.\n\"\n",
          "datatype": "logical",

@@ -348,6 +348,14 @@ Global:
         value:
             $MARBL_CONFIG != "off": True
             else: False
+    MARBL_TRACERS_IC_FILE:
+        description: |
+            "Name of file containing initial conditions
+            for the MARBL tracer package."
+        datatype: string
+        value:
+            $MARBL_CONFIG == "latest": ecosys_jan_IC_omip_latlon_1x1_180W_c230331.nc
+            $MARBL_CONFIG == "latest+4p2z": ecosys_jan_IC_omip_latlon_1x1_180W_c230501.nc
     CHL_FROM_FILE:
         description: |
             "[Boolean] default = True

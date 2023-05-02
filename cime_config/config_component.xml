@@ -90,10 +90,10 @@
 
   <entry id="MARBL_CONFIG">
     <type>char</type>
-    <valid_values>off,latest</valid_values>
+    <valid_values>off,latest,latest+4p2z</valid_values>
     <default_value>off</default_value>
     <values>
-      <value compset="MOM6%[^_]*MARBL">latest</value>
+      <value compset="MOM6%[^_]*MARBL">latest+4p2z</value>
     </values>
     <group>run_component_mom</group>
     <file>env_run.xml</file>
