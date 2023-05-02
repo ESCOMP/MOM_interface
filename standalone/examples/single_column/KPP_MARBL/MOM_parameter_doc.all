@@ -1663,12 +1663,12 @@ IRON_FRAC_IN_ATM_COARSE_DUST = 0.035 !   [not defined] default = 0.035
                                 ! Fraction of coarse dust from the atmosphere that is iron
 IRON_FRAC_IN_SEAICE_DUST = 0.035 !   [not defined] default = 0.035
                                 ! Fraction of dust from sea ice that is iron
-ATM_CO2_OPT = "const"           ! default = "const"
-                                ! Source of atmospheric CO2 [const, diagnostic, or prognostic]
+ATM_CO2_OPT = "constant"        ! default = "constant"
+                                ! Source of atmospheric CO2 [constant, diagnostic, or prognostic]
 ATM_CO2_CONST = 284.317         !   [ppm] default = 284.317
                                 ! Value to send to MARBL as xco2
-ATM_ALT_CO2_OPT = "const"       ! default = "const"
-                                ! Source of alternate atmospheric CO2 [const, diagnostic, or prognostic]
+ATM_ALT_CO2_OPT = "constant"    ! default = "constant"
+                                ! Source of alternate atmospheric CO2 [constant, diagnostic, or prognostic]
 ATM_ALT_CO2_CONST = 284.317     !   [ppm] default = 284.317
                                 ! Value to send to MARBL as xco2_alt_co2
 READ_RIV_FLUXES = False         !   [Boolean] default = True
