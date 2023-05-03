@@ -68,12 +68,12 @@ GRID_CONFIG = "cartesian"       !
                                 !     cartesian - use a (flat) Cartesian grid.
                                 !     spherical - use a simple spherical grid.
                                 !     mercator - use a Mercator spherical grid.
-SOUTHLAT = 31.0                 !   [degrees]
+SOUTHLAT = 31.660667            !   [degrees]
                                 ! The southern latitude of the domain or the equivalent starting value for the
                                 ! y-axis.
 LENLAT = 1.0                    !   [degrees]
                                 ! The latitudinal or y-direction length of the domain.
-WESTLON = -30.0                   !   [degrees] default = 0.0
+WESTLON = -64.018700              !   [degrees] default = 0.0
                                 ! The western longitude of the domain or the equivalent starting value for the
                                 ! x-axis.
 LENLON = 1.0                    !   [degrees]
@@ -367,10 +367,10 @@ BUOY_CONFIG = "data_override"   ! default = "zero"
 WIND_CONFIG = "data_override"   ! default = "zero"
                                 ! The character string that indicates how wind forcing is specified. Valid
                                 ! options include (file), (2gyre), (1gyre), (gyres), (zero), and (USER).
-READ_GUST_2D = True             !   [Boolean] default = False
+READ_GUST_2D = False            !   [Boolean] default = False
                                 ! If true, use a 2-dimensional gustiness supplied from an input file
-GUST_2D_FILE = "forcing_monthly.nc" !
-                                ! The file in which the wind gustiness is found in variable gustiness.
+GUST_CONST = 0.02               !   [Pa] default = 0.0
+                                ! The background gustiness in the winds.
 
 ! === module MOM_main (MOM_driver) ===
 DAYMAX = 1825.0                 !   [days]

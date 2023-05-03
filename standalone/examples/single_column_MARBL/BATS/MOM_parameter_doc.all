@@ -207,12 +207,12 @@ AXIS_UNITS = "degrees"          ! default = "degrees"
                                 !     degrees - degrees of latitude and longitude
                                 !     m - meters
                                 !     k - kilometers
-SOUTHLAT = 31.0                 !   [degrees]
+SOUTHLAT = 31.660667            !   [degrees]
                                 ! The southern latitude of the domain or the equivalent starting value for the
                                 ! y-axis.
 LENLAT = 1.0                    !   [degrees]
                                 ! The latitudinal or y-direction length of the domain.
-WESTLON = -30.0                 !   [degrees] default = 0.0
+WESTLON = -64.0187              !   [degrees] default = 0.0
                                 ! The western longitude of the domain or the equivalent starting value for the
                                 ! x-axis.
 LENLON = 1.0                    !   [degrees]
@@ -289,7 +289,7 @@ ROTATION = "betaplane"          ! default = "2omegasinlat"
                                 !       times the sine of latitude.
                                 !     betaplane - Use a beta-plane or f-plane.
                                 !     USER - call a user modified routine.
-F_0 = 7.59943E-05               !   [s-1] default = 0.0
+F_0 = 7.63418E-05               !   [s-1] default = 0.0
                                 ! The reference value of the Coriolis parameter with the betaplane option.
 BETA = 0.0                      !   [m-1 s-1] default = 0.0
                                 ! The northward gradient of the Coriolis parameter with the betaplane option.
@@ -1645,15 +1645,13 @@ LATENT_HEAT_FUSION = 3.34E+05   !   [J/kg] default = 3.34E+05
                                 ! The latent heat of fusion.
 LATENT_HEAT_VAPORIZATION = 2.5E+06 !   [J/kg] default = 2.5E+06
                                 ! The latent heat of fusion.
-GUST_CONST = 0.0                !   [Pa] default = 0.0
+GUST_CONST = 0.02               !   [Pa] default = 0.0
                                 ! The background gustiness in the winds.
 FIX_USTAR_GUSTLESS_BUG = True   !   [Boolean] default = True
                                 ! If true correct a bug in the time-averaging of the gustless wind friction
                                 ! velocity
-READ_GUST_2D = True             !   [Boolean] default = False
+READ_GUST_2D = False            !   [Boolean] default = False
                                 ! If true, use a 2-dimensional gustiness supplied from an input file
-GUST_2D_FILE = "forcing_monthly.nc" !
-                                ! The file in which the wind gustiness is found in variable gustiness.
 DUST_RATIO_THRES = 69.00594     !   [not defined] default = 69.00594
                                 ! TODO: Add description
 DUST_RATIO_TO_FE_BIOAVAIL_FRAC = 0.0027298983931818 !   [not defined] default = 0.0027298983931818
