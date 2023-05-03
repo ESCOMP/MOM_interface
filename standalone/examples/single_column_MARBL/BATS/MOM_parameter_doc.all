@@ -219,7 +219,7 @@ LENLON = 1.0                    !   [degrees]
                                 ! The longitudinal or x-direction length of the domain.
 RAD_EARTH = 6.378E+06           !   [m] default = 6.378E+06
                                 ! The radius of the Earth.
-TOPO_CONFIG = "flat"            !
+TOPO_CONFIG = "file"            !
                                 ! This specifies how bathymetry is specified:
                                 !     file - read bathymetric information from the file
                                 !       specified by (TOPO_FILE).
@@ -246,8 +246,22 @@ TOPO_CONFIG = "flat"            !
                                 !     Phillips - ACC-like idealized topography used in the Phillips config.
                                 !     dense - Denmark Strait-like dense water formation and overflow.
                                 !     USER - call a user modified routine.
-MINIMUM_DEPTH = 0.5             !   [m] default = 0.0
-                                ! The minimum depth of the ocean.
+TOPO_FILE = "TOPO_FILE_COLUMN.nc" ! default = "topog.nc"
+                                ! The file from which the bathymetry is read.
+TOPO_VARNAME = "depth"          ! default = "depth"
+                                ! The name of the bathymetry variable in TOPO_FILE.
+TOPO_EDITS_FILE = ""            ! default = ""
+                                ! The file from which to read a list of i,j,z topography overrides.
+ALLOW_LANDMASK_CHANGES = False  !   [Boolean] default = False
+                                ! If true, allow topography overrides to change land mask.
+MINIMUM_DEPTH = 9.5             !   [m] default = 0.0
+                                ! If MASKING_DEPTH is unspecified, then anything shallower than MINIMUM_DEPTH is
+                                ! assumed to be land and all fluxes are masked out. If MASKING_DEPTH is
+                                ! specified, then all depths shallower than MINIMUM_DEPTH but deeper than
+                                ! MASKING_DEPTH are rounded to MINIMUM_DEPTH.
+MASKING_DEPTH = 0.0             !   [m] default = -9999.0
+                                ! The depth below which to mask points as land points, for which all fluxes are
+                                ! zeroed out. MASKING_DEPTH is ignored if it has the special default value.
 MAXIMUM_DEPTH = 6000.0          !   [m]
                                 ! The maximum depth of the ocean.
 
@@ -256,9 +270,6 @@ MAXIMUM_DEPTH = 6000.0          !   [m]
 ! if any.
 OBC_NUMBER_OF_SEGMENTS = 0      ! default = 0
                                 ! The number of open boundary segments.
-MASKING_DEPTH = -9999.0         !   [m] default = -9999.0
-                                ! The depth below which to mask points as land points, for which all fluxes are
-                                ! zeroed out. MASKING_DEPTH is ignored if it has the special default value.
 CHANNEL_CONFIG = "none"         ! default = "none"
                                 ! A parameter that determines which set of channels are
                                 ! restricted to specific  widths.  Options are:
@@ -303,7 +314,7 @@ ANGSTROM = 1.0E-10              !   [m] default = 1.0E-10
                                 ! The minimum layer thickness, usually one-Angstrom.
 H_TO_M = 1.0                    !   [m H-1] default = 1.0
                                 ! A constant that translates the model's internal units of thickness into m.
-NK = 75                         !   [nondim]
+NK = 65                         !   [nondim]
                                 ! The number of model layers.
 
 ! === module MOM_tracer_registry ===
@@ -445,7 +456,7 @@ REGRIDDING_COORDINATE_MODE = "Z*" ! default = "LAYER"
                                 !  ADAPTIVE - optimize for smooth neutral density surfaces
 REGRIDDING_COORDINATE_UNITS = "m" ! default = "m"
                                 ! Units of the regridding coordinate.
-ALE_COORDINATE_CONFIG = "FILE:./INPUT/vgrid_cm4.nc,dz" ! default = "UNIFORM"
+ALE_COORDINATE_CONFIG = "FILE:./INPUT/vgrid_65L_20200626.nc,dz" ! default = "UNIFORM"
                                 ! Determines how to specify the coordinate resolution. Valid options are:
                                 !  PARAM       - use the vector-parameter ALE_RESOLUTION
                                 !  UNIFORM[:N] - uniformly distributed
@@ -459,7 +470,7 @@ ALE_COORDINATE_CONFIG = "FILE:./INPUT/vgrid_cm4.nc,dz" ! default = "UNIFORM"
                                 !                the filename and two variable names, separated
                                 !                by a comma or space, for sigma-2 and dz. e.g.
                                 !                HYBRID:vgrid.nc,sigma2,dz
-!ALE_RESOLUTION = 4*2.0, 2*2.01, 2*2.02, 2.05, 2.07, 2.09, 2.13, 2.18, 2.24, 2.3, 2.4, 2.5, 2.62, 2.78, 2.95, 3.17, 3.42, 3.71, 4.07, 4.48, 4.97, 5.55, 6.23, 7.04, 7.99, 9.11, 10.43, 11.98, 13.8, 15.94, 18.42, 21.32, 24.66, 28.51, 32.91, 37.92, 43.56, 49.87, 56.88, 64.55, 72.91, 81.87, 91.4, 101.39, 111.73, 122.29, 132.93, 143.47, 153.78, 163.7, 173.07, 181.78, 189.76, 196.89, 203.17, 208.58, 213.14, 216.87, 219.87, 222.19, 223.94, 225.18, 226.04, 226.59, 226.9, 227.07, 227.14, 2*227.16, 227.17 !   [m]
+!ALE_RESOLUTION = 4*2.5, 2.77, 3.38, 4.01, 4.65, 5.29, 5.95, 6.61, 7.28, 7.97, 8.66, 9.37, 10.08, 10.81, 11.54, 12.29, 13.06, 13.85, 14.69, 15.59, 16.56, 17.61, 18.76, 20.02, 21.42, 23.0, 24.77, 26.79, 29.1, 31.76, 34.87, 38.5, 42.79, 47.9, 54.01, 61.37, 70.25, 80.95, 93.75, 108.8, 126.04, 145.04, 164.81, 184.05, 201.34, 215.66, 226.64, 234.5, 239.84, 243.31, 245.52, 246.88, 247.72, 248.23, 248.54, 248.73, 248.84, 248.64, 248.68, 248.71, 248.72, 248.73 !   [m]
                                 ! The distribution of vertical resolution for the target
                                 ! grid used for Eulerian-like coordinates. For example,
                                 ! in z-coordinate mode, the parameter is a list of level
@@ -888,7 +899,7 @@ UPWIND_1ST_CONTINUITY = True    !   [Boolean] default = False
                                 ! If true, CONTINUITY_PPM becomes a 1st-order upwind continuity solver.  This
                                 ! scheme is highly diffusive but may be useful for debugging or in single-column
                                 ! mode where its minimal stencil is useful.
-ETA_TOLERANCE = 1.0E-06         !   [m] default = 3.75E-09
+ETA_TOLERANCE = 1.0E-06         !   [m] default = 3.25E-09
                                 ! The tolerance for the differences between the barotropic and baroclinic
                                 ! estimates of the sea surface height due to the fluxes through each face.  The
                                 ! total tolerance for SSH is 4 times this value.  The default is

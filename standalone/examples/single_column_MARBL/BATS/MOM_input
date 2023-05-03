@@ -78,7 +78,7 @@ WESTLON = -30.0                   !   [degrees] default = 0.0
                                 ! x-axis.
 LENLON = 1.0                    !   [degrees]
                                 ! The longitudinal or x-direction length of the domain.
-TOPO_CONFIG = "flat"            !
+TOPO_CONFIG = "file"            !
                                 ! This specifies how bathymetry is specified:
                                 !     file - read bathymetric information from the file
                                 !       specified by (TOPO_FILE).
@@ -105,10 +105,25 @@ TOPO_CONFIG = "flat"            !
                                 !     Phillips - ACC-like idealized topography used in the Phillips config.
                                 !     dense - Denmark Strait-like dense water formation and overflow.
                                 !     USER - call a user modified routine.
-MINIMUM_DEPTH = 0.5             !   [m] default = 0.0
-                                ! The minimum depth of the ocean.
-MAXIMUM_DEPTH = 6000.0          !   [m]
-                                ! The maximum depth of the ocean.
+TOPO_FILE = "TOPO_FILE_COLUMN.nc" ! default = "topog.nc"
+                                ! The file from which the bathymetry is read.
+
+MAXIMUM_DEPTH = 6000.0
+                                ! "[m]
+                                ! The maximum depth of the ocean."
+
+MINIMUM_DEPTH = 9.5
+                                ! "[m] default = 0.0
+                                ! If MASKING_DEPTH is unspecified, then anything shallower than
+                                ! MINIMUM_DEPTH is assumed to be land and all fluxes are masked out.
+                                ! If MASKING_DEPTH is specified, then all depths shallower than
+                                ! MINIMUM_DEPTH but depper than MASKING_DEPTH are rounded to
+                                ! MINIMUM_DEPTH."
+
+MASKING_DEPTH = 0.0
+                                ! "[m] default = -9999.0
+                                ! The depth below which to mask points as land points, for which all
+                                ! fluxes are zeroed out. MASKING_DEPTH is ignored if negative."
 ROTATION = "betaplane"          ! default = "2omegasinlat"
                                 ! This specifies how the Coriolis parameter is specified:
                                 !     2omegasinlat - Use twice the planetary rotation rate
@@ -118,7 +133,7 @@ ROTATION = "betaplane"          ! default = "2omegasinlat"
 
 ! === module MOM_verticalGrid ===
 ! Parameters providing information about the vertical grid.
-NK = 75                         !   [nondim]
+NK =65                         !   [nondim]
                                 ! The number of model layers.
 
 ! === module MOM_EOS ===
@@ -136,7 +151,7 @@ REGRIDDING_COORDINATE_MODE = "Z*" ! default = "LAYER"
                                 !  HYCOM1 - HyCOM-like hybrid coordinate
                                 !  SLIGHT - stretched coordinates above continuous isopycnal
                                 !  ADAPTIVE - optimize for smooth neutral density surfaces
-ALE_COORDINATE_CONFIG = "FILE:./INPUT/vgrid_cm4.nc,dz" ! default = "UNIFORM"
+ALE_COORDINATE_CONFIG = "FILE:./INPUT/vgrid_65L_20200626.nc,dz" ! default = "UNIFORM"
                                 ! Determines how to specify the coordinate resolution. Valid options are:
                                 !  PARAM       - use the vector-parameter ALE_RESOLUTION
                                 !  UNIFORM[:N] - uniformly distributed
