@@ -51,6 +51,7 @@ USE_MARBL_TRACERS = True
                                 ! "[Boolean] default = False
                                 ! If true, use the MARBL tracer package."
 ! === module MARBL_tracers ===
+MARBL_SETTINGS_FILE = "INPUT/marbl_in" ! default = "marbl_in"
 MARBL_TRACERS_IC_FILE = "IC_FILE_COLUMN.nc" ! default = "ecosys_jan_IC_omip_MOM_tx0.66v1_c211008.nc"
                                 ! The file in which the MARBL tracers initial values can be found.
 MARBL_FESEDFLUX_FILE = "MARBL_FESEDFLUX_FILE_COLUMN.nc" ! default = "fesedflux_total_reduce_oxic_tx0.66v1.c211020.nc"
