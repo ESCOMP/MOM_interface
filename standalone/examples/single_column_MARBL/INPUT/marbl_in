@@ -1,5 +1,5 @@
 ! config PFTs
-PFT_defaults = "user-specified"
+PFT_defaults = "4p2z"
 autotroph_cnt = 4
 max_grazer_prey_cnt = 4
 zooplankton_cnt = 2
