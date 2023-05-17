@@ -1,0 +1,22 @@
+#!/bin/bash
+
+### Job Name
+#PBS -N MARBL_test
+
+### Project code
+#PBS -A P93300070
+#PBS -l walltime=01:00:00
+#PBS -q share
+
+### Merge output and error files
+#PBS -j oe
+#PBS -k eod
+
+### Select 2 nodes with 36 CPUs each for a total of 72 MPI processes
+#PBS -l select=1:ncpus=1:mpiprocs=1
+
+### Send email on abort, begin and end
+#PBS -m abe
+
+### Run the executable
+mpiexec_mpt ../../../build/intel-cheyenne/MOM6/MOM6
