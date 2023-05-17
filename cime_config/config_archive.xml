@@ -24,7 +24,7 @@
     <hist_file_extension>h.Pacific_undercurrent.?[-_\d+]+.nc</hist_file_extension>
     <hist_file_extension>h.Taiwan_Luzon.?[-_\d+]+.nc</hist_file_extension>
     <hist_file_extension>h.Windward_Passage.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.static.nc$</hist_file_extension>
+    <hist_file_extension>h.static.?[_\d+]+.nc$</hist_file_extension>
     <!-- Regular expression for the piece of the history file name following the
          component name that is used to differentiate between different history file
          streams. For MOM6, history file names look like casename.mom6.h.stream.*; we
