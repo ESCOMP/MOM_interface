@@ -22,6 +22,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),"MOM_RPS
 
 from standard_script_setup import *
 from CIME.case import Case
+from CIME.utils import expect
 from CIME.buildnml import parse_input
 from FType_MOM_params import FType_MOM_params
 from FType_input_nml import FType_input_nml
@@ -42,6 +43,10 @@ def prep_input(case, inst_suffixes):
     SourceMods_dir = os.path.join(caseroot,"SourceMods","src.mom")
     SourceMods_listdir = os.listdir(SourceMods_dir)
     multi_instance = inst_suffixes[0] != ''
+
+    if multi_instance:
+      infra_api = case.get_value("MOM6_INFRA_API")
+      expect(infra_api != "FMS1", "Cannot run with FMS1 infra API when multi-instance mode is enabled.")
 
     # Make sure that rundir exists. If not, make it:
     if not os.path.exists(rundir):
