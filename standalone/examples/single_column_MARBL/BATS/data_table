@@ -6,7 +6,7 @@
 "OCN" , "sens",    "SENS_HEAT_FLUX", "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "taux",    "TAUX",           "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "tauy",    "TAUY",           "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
-"OCN" , "snow",    "SNOW",           "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 0.0
+"OCN" , "snow",    "SNOW",           "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "runoff",  "", "", .true., 0.0
 "OCN" , "calving", "", "", .true., 0.0
 "OCN" , "atm_fine_dust_flux",   "ATM_FINE_DUST_FLUX",   "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
@@ -17,3 +17,5 @@
 "OCN" , "nhx_dep",              "NDEP_NHx",             "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "noy_dep",              "NDEP_NOy",             "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
 "OCN" , "u10_sqr",              "U10_SQR",              "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "SST_restore",          "SST_RESTORE",          "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
+"OCN" , "SSS_restore",          "SSS_RESTORE",          "./INPUT/BATS/MARBL_FORCING_FILE_COLUMN.nc", .true., 1.0
