@@ -60,7 +60,7 @@ FieldLists:
 Files:
     # sigma2
     sigma2_hist:
-        suffix: "rho2%4yr-%2mo"
+        suffix: "h.rho2%4yr-%2mo"
         output_freq: 1
         output_freq_units:
             $TEST == True : "days"
@@ -83,7 +83,7 @@ Files:
                         [ *cfc_3d ]
     # native grid
     hist:
-        suffix: "hm%4yr-%2mo"
+        suffix: "h.native%4yr-%2mo"
         output_freq: 1
         output_freq_units:
             $TEST == True : "days"
@@ -117,7 +117,7 @@ Files:
 
     # essential variable mapped to z_space
     hist_z_space:
-        suffix: "h%4yr-%2mo"
+        suffix: "h.z%4yr-%2mo"
         output_freq: 1
         output_freq_units:
             $TEST == True : "days"
@@ -141,7 +141,7 @@ Files:
                         [ *cfc_3d ]
 
     surface_avg:
-        suffix: "sfc%4yr-%2mo"
+        suffix: "h.sfc%4yr-%2mo"
         output_freq:
             $OCN_DIAG_MODE == "spinup": 5
             else: 1
@@ -158,7 +158,7 @@ Files:
                 lists:    [ *surface_flds,
                             *kpp_diags ]
     forcing_avg:
-        suffix: "frc%4yr-%2mo"
+        suffix: "h.frc%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -174,7 +174,7 @@ Files:
                             *forcing_flds_dev ]
 
     visc_and_diff_daily_avg:
-        suffix: "visc%4yr-%2mo"
+        suffix: "h.visc%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -189,7 +189,7 @@ Files:
                 lists:    [ *visc_flds ]
 
     static:
-        suffix: "static"
+        suffix: "h.static"
         output_freq: -1
         output_freq_units: "days"
         time_axis_units: "days"
@@ -204,7 +204,7 @@ Files:
     # Sections ------------------------------------
 
     Agulhas:
-        suffix: "agulhas_section%4yr-%2mo"
+        suffix: "h.agulhas_section%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -220,7 +220,7 @@ Files:
                 lists:    [ *vert_sections_u ]
 
     Bab_al_mandeb_Strait:
-        suffix: "Bab_al_mandeb_Strait%4yr-%2mo"
+        suffix: "h.Bab_al_mandeb_Strait%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -236,7 +236,7 @@ Files:
                 lists:    [ *vert_sections_u ]
 
     Barents_opening:
-        suffix: "Barents_opening%4yr-%2mo"
+        suffix: "h.Barents_opening%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -252,7 +252,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Bering_Strait:
-        suffix: "Bering_Strait%4yr-%2mo"
+        suffix: "h.Bering_Strait%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -268,7 +268,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Davis_Strait:
-        suffix: "Davis_Strait%4yr-%2mo"
+        suffix: "h.Davis_Strait%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -284,7 +284,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Denmark_Strait:
-        suffix: "Denmark_Strait%4yr-%2mo"
+        suffix: "h.Denmark_Strait%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -300,7 +300,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Drake_Passage:
-        suffix: "Drake_Passage%4yr-%2mo"
+        suffix: "h.Drake_Passage%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -316,7 +316,7 @@ Files:
                 lists:    [ *vert_sections_u ]
 
     English_Channel:
-        suffix: "English_Channel%4yr-%2mo"
+        suffix: "h.English_Channel%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -332,7 +332,7 @@ Files:
                 lists:    [ *vert_sections_u ]
 
     Fram_Strait:
-        suffix: "Fram_Strait%4yr-%2mo"
+        suffix: "h.Fram_Strait%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -348,7 +348,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Florida_Bahamas:
-        suffix: "Florida_Bahamas%4yr-%2mo"
+        suffix: "h.Florida_Bahamas%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -364,7 +364,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Gibraltar_Strait:
-        suffix: "Gibraltar_Strait%4yr-%2mo"
+        suffix: "h.Gibraltar_Strait%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -380,7 +380,7 @@ Files:
                 lists:    [ *vert_sections_u ]
 
     Hormuz_Strait:
-        suffix: "Hormuz_Strait%4yr-%2mo"
+        suffix: "h.Hormuz_Strait%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -396,7 +396,7 @@ Files:
                 lists:    [ *vert_sections_u ]
 
     Iceland_Norway:
-        suffix: "Iceland_Norway%4yr-%2mo"
+        suffix: "h.Iceland_Norway%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -412,7 +412,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Indonesian_Throughflow:
-        suffix: "Indonesian_Throughflow%4yr-%2mo"
+        suffix: "h.Indonesian_Throughflow%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -428,7 +428,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Mozambique_Channel:
-        suffix: "Mozambique_Channel%4yr-%2mo"
+        suffix: "h.Mozambique_Channel%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -444,7 +444,7 @@ Files:
                 lists:    [ *vert_sections_v ]
 
     Pacific_undercurrent:
-        suffix: "Pacific_undercurrent%4yr-%2mo"
+        suffix: "h.Pacific_undercurrent%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -460,7 +460,7 @@ Files:
                 lists:    [ *vert_sections_u ]
 
     Taiwan_Luzon:
-        suffix: "Taiwan_Luzon%4yr-%2mo"
+        suffix: "h.Taiwan_Luzon%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
@@ -476,7 +476,7 @@ Files:
                 lists:    [ *vert_sections_u ]
 
     Windward_Passage:
-        suffix: "Windward_Passage%4yr-%2mo"
+        suffix: "h.Windward_Passage%4yr-%2mo"
         output_freq: 1
         output_freq_units: "months"
         time_axis_units: "days"
