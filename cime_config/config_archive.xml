@@ -1,36 +1,15 @@
 <components version="2.0">
   <comp_archive_spec compname="mom" compclass="ocn">
     <rest_file_extension>r</rest_file_extension>
-    <hist_file_extension>h.z.?[-_\d+]+.nc$</hist_file_extension>
-    <hist_file_extension>h.native.?[-_\d+]+.nc$</hist_file_extension>
-    <hist_file_extension>h.frc.?[-_\d+]+.nc$</hist_file_extension>
-    <hist_file_extension>h.sfc.?[-_\d+]+.nc$</hist_file_extension>
-    <hist_file_extension>h.rho2.?[-_\d+]+.nc$</hist_file_extension>
-    <hist_file_extension>h.agulhas_section.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Bab_al_mandeb_Strait.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Barents_opening.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Bering_Strait.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Davis_Strait.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Denmark_Strait.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Drake_Passage.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.English_Channel.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Fram_Strait.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Florida_Bahamas.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Gibraltar_Strait.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Hormuz_Strait.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Iceland_Norway.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Indonesian_Throughflow.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Mozambique_Channel.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Pacific_undercurrent.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Taiwan_Luzon.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.Windward_Passage.?[-_\d+]+.nc</hist_file_extension>
-    <hist_file_extension>h.static.?[_\d+]+.nc$</hist_file_extension>
-    <!-- Regular expression for the piece of the history file name following the
-         component name that is used to differentiate between different history file
-         streams. For MOM6, history file names look like casename.mom6.h.stream.*; we
-         want this to capture the "h.stream" portion of the filename, hence a regex,
-         "\w+\.\w+". This based on the same pattern in CISM. -->
-    <hist_file_ext_regex>\w+\.\w+</hist_file_ext_regex>
+    <!-- match filenames of the form
+         h[.optional stream name][._optional instance number].(date string).nc[.optional tile number] -->
+    <hist_file_extension>h(\.\w+)?(\._\d*)?\.[-\d+]+\.nc(\.\d*)?$</hist_file_extension>
+    <!-- match filenames of the form
+         h.static[._optional instance number].nc[.optional tile number] -->
+    <hist_file_extension>h\.static(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
+    <!-- Match hist extension (i.e., stream name), used to identify last file
+         in each stream in baseline generation within testing -->
+    <hist_file_ext_regex>\w+\.\w+(\._\d*)?</hist_file_ext_regex>
     <rpointer>
       <rpointer_file>rpointer.ocn$NINST_STRING</rpointer_file>
     </rpointer>
