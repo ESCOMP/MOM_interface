@@ -39,5 +39,25 @@
       "cf_compliance": {
          "values": ".true."
       }
+   },
+   "mpp_pio_nml": {
+      "pio_netcdf_format": {
+         "values": "64bit_offset"
+      },
+      "pio_rearranger": {
+         "values": 2
+      },
+      "pio_root": {
+         "values": 1
+      },
+      "pio_stride": {
+         "values": 36
+      },
+      "pio_numiotasks": {
+         "values": "= $NTASKS_OCN // 36"
+      },
+      "pio_typename": {
+         "values": "pnetcdf"
+      }
    }
 }
