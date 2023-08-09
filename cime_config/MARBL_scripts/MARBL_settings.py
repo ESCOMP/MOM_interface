@@ -10,7 +10,7 @@ class MARBL_settings_for_MOM(object):
         # Note that this is a dictionary that will be used to pass named variables to class constructor
         # Arguments to be passed are
         # 1. default_settings_file: full path to default_settings.json; can be in SourceMods, otherwise comes from MARBL
-        # 2. grid: CESM_x1 if running tx0.66v1 (until we come up with better tunings)
+        # 2. grid: CESM_MOM (until we come up with resolution-dependent tunings)
         # 3. saved_state_vars_source: "settings_file" for startup run, otherwise GCM
         MARBL_args = dict()
 
@@ -27,10 +27,10 @@ class MARBL_settings_for_MOM(object):
             MARBL_args["input_file"] = None
 
         # Specify grid
-        if ocn_grid.startswith("tx0.6"):
-            MARBL_args["grid"] = "CESM_x1"
-        else:
-            MARBL_args["grid"] = "CESM_other"
+        MARBL_args["grid"] = "CESM_MOM"
+
+        # MARBL can run in mks unit system instead of requiring MOM to convert to / from cgs
+        MARBL_args["unit_system"] = "mks"
 
         # If not a startup run, MARBL may want initial bury coefficient from restart file
         if run_type == "startup" and not continue_run:
