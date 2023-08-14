@@ -418,7 +418,7 @@
       </pes>
     </mach>
   </grid>
-  <grid name="a%T62.+oi%tx0.66v1">
+  <grid name="a%T62.+oi%(tx0.66v1|tx2_3v2)">
     <mach name="any">
       <pes pesize="any" compset="any">
         <comment>none</comment>
@@ -861,7 +861,7 @@
       </pes>
     </mach>
   </grid>
-  <grid name="a%TL319.+oi%tx0.66v1">
+  <grid name="a%TL319.+oi%(tx0.66v1|tx2_3v2)">
     <mach name="any">
       <pes pesize="any" compset="_DATM.+_DICE.+_SWAV">
         <comment>none</comment>

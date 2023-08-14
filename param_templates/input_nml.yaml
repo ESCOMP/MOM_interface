@@ -3,42 +3,54 @@
 ---
 MOM_input_nml:
     output_directory:
-        value: "'./'"
+        values: "'./'"
     restart_input_dir:
-        value: "'./'"
+        values: "'./'"
     restart_output_dir:
-        value: "'./'"
+        values: "'./'"
     parameter_filename:
-        value: "'MOM_input', 'MOM_override'"
+        values:
+          $NINST_OCN > 1:
+            "'MOM_input_%4E', 'MOM_override_%4E'"
+          else:
+            "'MOM_input', 'MOM_override'"
 fms_nml:
     clock_grain:
-        value: "'ROUTINE'"
+        values: "'ROUTINE'"
     clock_flags:
-        value: "'NONE'"
+        values: "'NONE'"
     domains_stack_size:
-        value: 5000000
+        values: 5000000
     stack_size:
-        value: 0
+        values: 0
 
 diag_manager_nml:
     flush_nc_files:
-        value: .true.
+        values: .true.
     max_input_fields:
-        value:
-            $MARBL_CONFIG != "off" and $TEST == True: 900
-            else: 600
+        values:
+          $MARBL_CONFIG != "off" and $TEST == True:
+            900
+          else:
+            600
     max_output_fields:
-        value:
-            $MARBL_CONFIG != "off" and $TEST != True: 600
-            $MARBL_CONFIG != "off" and $TEST == True: 1200
-            else: 300
+        values:
+          $MARBL_CONFIG != "off" and $TEST != True:
+            600
+          $MARBL_CONFIG != "off" and $TEST == True:
+            1200
+          else:
+            300
     max_num_axis_sets:
-        value:
-            $MARBL_CONFIG != "off" and $TEST != True: 30
-            $MARBL_CONFIG != "off" and $TEST == True: 26
-            else: 24
+        values:
+          $MARBL_CONFIG != "off" and $TEST != True:
+            30
+          $MARBL_CONFIG != "off" and $TEST == True:
+            26
+          else:
+            24
 
 mpp_io_nml:
     cf_compliance:
-        value: .true.
+        values: .true.
 ...

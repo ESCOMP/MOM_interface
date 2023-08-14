@@ -27,19 +27,36 @@ def buildlib(caseroot, libroot, bldroot):
     with Case(caseroot) as case:
         # first check for the external FMS library and build it
         srcroot = case.get_value("SRCROOT")
-        fmsbuildlib = os.path.join(srcroot,"libraries","FMS","buildlib")
-        fmsbuilddir = os.path.join(bldroot,"FMS")
+        fmsbuildlib = os.path.join(srcroot, "libraries", "FMS", "buildlib")
+        fmsbuilddir = os.path.join(bldroot, "FMS")
         if not os.path.exists(fmsbuildlib):
-            #todo: call checkout_externals to get this component
+            # todo: call checkout_externals to get this component
             expect(False, "FMS external not found")
         else:
-            run_sub_or_cmd(fmsbuildlib, [bldroot, fmsbuilddir, caseroot], 'buildlib',
-                           [bldroot, fmsbuilddir, case], case=case)
+            slr = os.path.abspath(case.get_value("SHAREDLIBROOT"))
+            compiler = case.get_value("COMPILER")
+            mpilib = case.get_value("MPILIB")
+            debug = "debug" if case.get_value("DEBUG") else "nodebug"
+            threaded = "threads" if case.get_value("BUILD_THREADED") else "nothreads"
+            comp_interface = case.get_value("COMP_INTERFACE")
+            fmsbuilddir = os.path.join(
+                slr, compiler, mpilib, debug, threaded, comp_interface, "FMS"
+            )
+            if not os.path.isfile(os.path.join(fmsbuilddir, "libfms.a")):
+                run_sub_or_cmd(
+                    fmsbuildlib,
+                    [bldroot, fmsbuilddir, caseroot],
+                    "buildlib",
+                    [bldroot, fmsbuilddir, case],
+                    case=case,
+                )
 
         # CVMix source code is brought in as a git submodule (or my manage_externals)
         logger.info("Making sure CVMix code is available...")
         comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
-        cvmix_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","CVMix-src","src","shared")
+        cvmix_srcdir = os.path.join(
+            comp_root_dir_ocn, "MOM6", "pkg", "CVMix-src", "src", "shared"
+        )
         # If CVMix is not found, abort
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")
@@ -47,9 +64,13 @@ def buildlib(caseroot, libroot, bldroot):
         # MARBL source code is brought in as a git submodule (or my manage_externals)
         logger.info("Making sure MARBL code is available...")
         if case.get_value("MOM6_BUILD_MARBL") == "TRUE":
-            marbl_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","pkg","MARBL","src")
+            marbl_srcdir = os.path.join(
+                comp_root_dir_ocn, "MOM6", "pkg", "MARBL", "src"
+            )
         else:
-            marbl_srcdir = os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","MARBL")
+            marbl_srcdir = os.path.join(
+                comp_root_dir_ocn,"MOM6","config_src","external","MARBL"
+            )
         if not os.path.exists(marbl_srcdir):
             expect(False, f"MARBL external not found in {marbl_srcdir}")
 
@@ -57,60 +78,106 @@ def buildlib(caseroot, libroot, bldroot):
         gmake_j = case.get_value("GMAKE_J")
         gmake = case.get_value("GMAKE")
 
-        #-------------------------------------------------------
+        # -------------------------------------------------------
         # create Filepath file for mom
-        #-------------------------------------------------------
-        memory_mode =  case.get_value("MOM6_MEMORY_MODE")
+        # -------------------------------------------------------
+        memory_mode = case.get_value("MOM6_MEMORY_MODE")
+        infra_api = case.get_value("MOM6_INFRA_API")
 
-        user_incldir = "\"-I{} -I{} -I{}\"".\
-                        format(os.path.join(srcroot,"libraries","FMS","src","include"),
-                               os.path.join(srcroot,"libraries","FMS","src","mpp","include"),
-                               fmsbuilddir)
-        filepath_file = os.path.join(bldroot,"Filepath")
+        user_incldir = '"-I{} -I{} -I{}"'.format(
+            os.path.join(srcroot, "libraries", "FMS", "src", "include"),
+            os.path.join(srcroot, "libraries", "FMS", "src", "mpp", "include"),
+            fmsbuilddir,
+        )
+        filepath_file = os.path.join(bldroot, "Filepath")
+
         if not os.path.isfile(filepath_file):
-#todo: are these needed in mom or only for fms?
-            driver = case.get_value("COMP_INTERFACE")+"_cap"
+            # todo: are these needed in mom or only for fms?
+            driver = case.get_value("COMP_INTERFACE") + "_cap"
             os.environ["CPPDEFS"] = " -Duse_libMPI -Duse_netCDF -DSPMD"
-            paths = [os.path.join(caseroot,"SourceMods","src.mom"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","drivers", driver),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","memory", memory_mode),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","infra", "FMS1"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","GFDL_ocean_BGC"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","ODA_hooks"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","stochastic_physics"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","drifters"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","config_src","external","database_comms"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","ALE"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","core"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","diagnostics"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","equation_of_state"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","equation_of_state","TEOS10"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","framework"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","ice_shelf"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","initialization"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","ocean_data_assim"),
-                     cvmix_srcdir,
-                     marbl_srcdir,
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","lateral"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","vertical"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","parameterizations","stochastic"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","tracer"),
-                     os.path.join(comp_root_dir_ocn,"MOM6","src","user")]
+            paths = [
+                os.path.join(caseroot, "SourceMods", "src.mom"),
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "config_src", "drivers", driver
+                ),
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "config_src", "memory", memory_mode
+                ),
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "config_src", "infra", infra_api
+                ),
+                os.path.join(
+                    comp_root_dir_ocn,
+                    "MOM6",
+                    "config_src",
+                    "external",
+                    "GFDL_ocean_BGC",
+                ),
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "config_src", "external", "ODA_hooks"
+                ),
+                os.path.join(
+                    comp_root_dir_ocn,
+                    "MOM6",
+                    "config_src",
+                    "external",
+                    "stochastic_physics",
+                ),
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "config_src", "external", "drifters"
+                ),
+                os.path.join(
+                    comp_root_dir_ocn,
+                    "MOM6",
+                    "config_src",
+                    "external",
+                    "database_comms",
+                ),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "ALE"),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "core"),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "diagnostics"),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "equation_of_state"),
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "src", "equation_of_state", "TEOS10"
+                ),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "framework"),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "ice_shelf"),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "initialization"),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "ocean_data_assim"),
+                cvmix_srcdir,
+                marbl_srcdir,
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "src", "parameterizations", "lateral"
+                ),
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "src", "parameterizations", "vertical"
+                ),
+                os.path.join(
+                    comp_root_dir_ocn, "MOM6", "src", "parameterizations", "stochastic"
+                ),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "tracer"),
+                os.path.join(comp_root_dir_ocn, "MOM6", "src", "user"),
+            ]
 
             # Check if any of the source paths is empty, which may indicate incompatible MOM_interface
             # and MOM6 versions.
             for path in paths:
-                expect(os.path.isdir(path), "{} is not a valid path within MOM6 source tree! This may be "
-                                    "due to incompatible MOM_interface and MOM6 versions.".format(path))
+                expect(
+                    os.path.isdir(path),
+                    "{} is not a valid path within MOM6 source tree! This may be "
+                    "due to incompatible MOM_interface and MOM6 versions.".format(path),
+                )
                 path_dir = os.listdir(path)
-                expect(len(path_dir)>0, "Source directory {} is empty! This may be due to incompatible "
-                                    "MOM_interface and MOM6 versions.".format(path))
-
+                expect(
+                    len(path_dir) > 0,
+                    "Source directory {} is empty! This may be due to incompatible "
+                    "MOM_interface and MOM6 versions.".format(path),
+                )
 
             with open(filepath_file, "w") as filepath:
                 filepath.write("\n".join(paths))
                 filepath.write("\n")
-        libfms = os.path.join(bldroot,"FMS","libfms.a")
+        libfms = os.path.join(bldroot, "FMS", "libfms.a")
         if os.path.exists(libfms):
             shutil.copy(libfms, libroot)
             # filenames = glob.glob("*.mod")
@@ -121,18 +188,27 @@ def buildlib(caseroot, libroot, bldroot):
 
         # build the library
         makefile = os.path.join(casetools, "Makefile")
-        complib = os.path.join(libroot,"libocn.a")
-        cmd = "{} complib -j {} COMP_NAME=mom COMPLIB={} -f {} USER_INCLDIR={} {}"\
-                .format(gmake, gmake_j, complib, makefile, user_incldir, get_standard_makefile_args(case))
+        complib = os.path.join(libroot, "libocn.a")
+        cmd = (
+            "{} complib -j {} COMP_NAME=mom COMPLIB={} -f {} USER_INCLDIR={} {}".format(
+                gmake,
+                gmake_j,
+                complib,
+                makefile,
+                user_incldir,
+                get_standard_makefile_args(case),
+            )
+        )
 
         rc, out, err = run_cmd(cmd)
-        logger.info("%s: \n\n output:\n %s \n\n err:\n\n%s\n"%(cmd,out,err))
+        logger.info("%s: \n\n output:\n %s \n\n err:\n\n%s\n" % (cmd, out, err))
         expect(rc == 0, "Command %s failed with rc=%s" % (cmd, rc))
 
 
 def _main_func():
     caseroot, libroot, bldroot = parse_input(sys.argv)
     buildlib(caseroot, libroot, bldroot)
+
 
 ###############################################################################
 

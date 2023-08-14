@@ -44,6 +44,16 @@
     </desc>
   </entry>
 
+  <entry id="MOM6_INFRA_API">
+    <type>char</type>
+    <valid_values>FMS1,FMS2</valid_values>
+    <default_value>FMS2</default_value>
+    <group>build_component_mom</group>
+    <file>env_build.xml</file>
+    <desc> This variable controls the MOM6 infrastructure API.
+    </desc>
+  </entry>
+
   <entry id="OCN_DIAG_MODE">
     <type>char</type>
     <valid_values>spinup,production,development,none</valid_values>

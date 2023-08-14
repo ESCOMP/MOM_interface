@@ -171,7 +171,7 @@
    ],
    "Files": {
       "sigma2_hist": {
-         "suffix": "rho2%4yr-%2mo",
+         "suffix": "h.rho2%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": {
             "$TEST == True": "days",
@@ -217,7 +217,7 @@
          }
       },
       "hist": {
-         "suffix": "hm%4yr-%2mo",
+         "suffix": "h.native%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": {
             "$TEST == True": "days",
@@ -345,7 +345,7 @@
          }
       },
       "hist_z_space": {
-         "suffix": "h%4yr-%2mo",
+         "suffix": "h.z%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": {
             "$TEST == True": "days",
@@ -396,7 +396,7 @@
          }
       },
       "surface_avg": {
-         "suffix": "sfc%4yr-%2mo",
+         "suffix": "h.sfc%4yr-%2mo",
          "output_freq": {
             "$OCN_DIAG_MODE == \"spinup\"": 5,
             "else": 1
@@ -433,7 +433,7 @@
          }
       },
       "forcing_avg": {
-         "suffix": "frc%4yr-%2mo",
+         "suffix": "h.frc%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -493,7 +493,7 @@
          }
       },
       "visc_and_diff_daily_avg": {
-         "suffix": "visc%4yr-%2mo",
+         "suffix": "h.visc%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -517,7 +517,7 @@
          }
       },
       "static": {
-         "suffix": "static",
+         "suffix": "h.static",
          "output_freq": -1,
          "output_freq_units": "days",
          "time_axis_units": "days",
@@ -553,7 +553,7 @@
          }
       },
       "Agulhas": {
-         "suffix": "agulhas_section%4yr-%2mo",
+         "suffix": "h.agulhas_section%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -580,7 +580,7 @@
          }
       },
       "Bab_al_mandeb_Strait": {
-         "suffix": "Bab_al_mandeb_Strait%4yr-%2mo",
+         "suffix": "h.Bab_al_mandeb_Strait%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -607,7 +607,7 @@
          }
       },
       "Barents_opening": {
-         "suffix": "Barents_opening%4yr-%2mo",
+         "suffix": "h.Barents_opening%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -634,7 +634,7 @@
          }
       },
       "Bering_Strait": {
-         "suffix": "Bering_Strait%4yr-%2mo",
+         "suffix": "h.Bering_Strait%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -661,7 +661,7 @@
          }
       },
       "Davis_Strait": {
-         "suffix": "Davis_Strait%4yr-%2mo",
+         "suffix": "h.Davis_Strait%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -688,7 +688,7 @@
          }
       },
       "Denmark_Strait": {
-         "suffix": "Denmark_Strait%4yr-%2mo",
+         "suffix": "h.Denmark_Strait%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -715,7 +715,7 @@
          }
       },
       "Drake_Passage": {
-         "suffix": "Drake_Passage%4yr-%2mo",
+         "suffix": "h.Drake_Passage%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -742,7 +742,7 @@
          }
       },
       "English_Channel": {
-         "suffix": "English_Channel%4yr-%2mo",
+         "suffix": "h.English_Channel%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -769,7 +769,7 @@
          }
       },
       "Fram_Strait": {
-         "suffix": "Fram_Strait%4yr-%2mo",
+         "suffix": "h.Fram_Strait%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -796,7 +796,7 @@
          }
       },
       "Florida_Bahamas": {
-         "suffix": "Florida_Bahamas%4yr-%2mo",
+         "suffix": "h.Florida_Bahamas%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -823,7 +823,7 @@
          }
       },
       "Gibraltar_Strait": {
-         "suffix": "Gibraltar_Strait%4yr-%2mo",
+         "suffix": "h.Gibraltar_Strait%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -850,7 +850,7 @@
          }
       },
       "Hormuz_Strait": {
-         "suffix": "Hormuz_Strait%4yr-%2mo",
+         "suffix": "h.Hormuz_Strait%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -877,7 +877,7 @@
          }
       },
       "Iceland_Norway": {
-         "suffix": "Iceland_Norway%4yr-%2mo",
+         "suffix": "h.Iceland_Norway%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -904,7 +904,7 @@
          }
       },
       "Indonesian_Throughflow": {
-         "suffix": "Indonesian_Throughflow%4yr-%2mo",
+         "suffix": "h.Indonesian_Throughflow%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -931,7 +931,7 @@
          }
       },
       "Mozambique_Channel": {
-         "suffix": "Mozambique_Channel%4yr-%2mo",
+         "suffix": "h.Mozambique_Channel%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -958,7 +958,7 @@
          }
       },
       "Pacific_undercurrent": {
-         "suffix": "Pacific_undercurrent%4yr-%2mo",
+         "suffix": "h.Pacific_undercurrent%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -985,7 +985,7 @@
          }
       },
       "Taiwan_Luzon": {
-         "suffix": "Taiwan_Luzon%4yr-%2mo",
+         "suffix": "h.Taiwan_Luzon%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",
@@ -1012,7 +1012,7 @@
          }
       },
       "Windward_Passage": {
-         "suffix": "Windward_Passage%4yr-%2mo",
+         "suffix": "h.Windward_Passage%4yr-%2mo",
          "output_freq": 1,
          "output_freq_units": "months",
          "time_axis_units": "days",

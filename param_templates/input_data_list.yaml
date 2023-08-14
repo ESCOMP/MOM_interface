@@ -4,10 +4,12 @@ mom.input_data_list:
     ocean_hgrid:
         $OCN_GRID == "gx1v6":    "${INPUTDIR}/ocean_hgrid.nc"
         $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_hgrid_180829.nc"
+        $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/ocean_hgrid_221123.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/ocean_hgrid.nc"
     ocean_vgrid1:
         $OCN_GRID == "gx1v6":    "${INPUTDIR}/ocean_vgrid.nc"
         $OCN_GRID == "tx0.66v1": "${INPUTDIR}/vgrid_65L_20200626.nc"
+        $OCN_GRID == "tx2_3v2":   "${INPUTDIR}/vgrid_65L_20200626.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/hycom1_75_800m.nc"
     ocean_vgrid2:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/interpolate_zgrid_40L.nc"
@@ -16,17 +18,20 @@ mom.input_data_list:
     ocean_topog:
         $OCN_GRID == "gx1v6":    "${INPUTDIR}/ocean_topog.nc"
         $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_topog_200701.nc"
+        $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/ocean_topog_230413.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/ocean_topog.nc"
     ocean_topo_edit:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/All_edits.nc"
     tempsalt:
-        $OCN_GRID in ["gx1v6", "tx0.66v1", "tx0.25v1"]:
+        $OCN_GRID in ["gx1v6", "tx0.66v1", "tx2_3v2", "tx0.25v1"]:
             $INIT_LAYERS_FROM_Z_FILE == "True":
                 "${INPUTDIR}/${TEMP_SALT_Z_INIT_FILE}"
     saltrestore:
         $OCN_GRID == "tx0.66v1": "${INPUTDIR}/state_restore_tx0.66v1_20200616.nc"
+        $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/state_restore_tx2_3_20230416.nc"
     tidal:
         $OCN_GRID == "tx0.66v1": "${INPUTDIR}/energy_new_t0.66v1_conserve_190315.nc"
+        $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/energy_new_tx2_3_conserve_230415_cdf5.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/tidal_amplitude.v20140616.nc"
     ocean_channel:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/MOM_channels_global_025"
@@ -36,16 +41,17 @@ mom.input_data_list:
     ocean_seaw:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/seawifs-clim-1997-2010.1440x1080.v20180328.nc"
         $OCN_GRID == "tx0.66v1": "${INPUTDIR}/seawifs-clim-1997-2010-tx0.66v1.nc"
-    cfcs_forcing:
-        $OCN_GRID == "tx0.66v1": "${INPUTDIR}/CFCs_tx0.66v1_v2_5_210430.nc"
+        $OCN_GRID == "tx2_3v2": "${INPUTDIR}/seawifs-clim-1997-2010-tx2_3v2.230416.nc"
+    cfcs_forcing: "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc"
     diag_coord_def_rho2:
         $OCN_GRID == "tx0.66v1": "${INPUTDIR}/ocean_rho2_190917.nc"
+        $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/ocean_rho2_190917.nc"
     marbl_tracers_ic_file:
         $MARBL_CONFIG != "off": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c230331.nc"
     marbl_fesedflux_file:
         $MARBL_CONFIG != "off":
-            $OCN_GRID == "tx0.66v1": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx0.66v1.c211109.nc"
+            $OCN_GRID == "tx0.66v1": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx0.66v1.c230814.nc"
     marbl_feventflux_file:
         $MARBL_CONFIG != "off":
-            $OCN_GRID == "tx0.66v1": "${INPUTDIR}/feventflux_5gmol_tx0.66v1.c211109.nc"
+            $OCN_GRID == "tx0.66v1": "${INPUTDIR}/feventflux_5gmol_tx0.66v1.c230814.nc"
 ...

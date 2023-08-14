@@ -18,6 +18,15 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
+  <test name="SMS_D_Ld2" grid="TL319_t232" compset="CMOM_JRA">
+    <machines>
+      <machine name="cheyenne" compiler="gnu" category="aux_mom"/>
+      <machine name="cheyenne" compiler="gnu" category="pr_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">01:00:00</option>
+    </options>
+  </test>
   <test name="SMS_D" grid="T62_t061" compset="GMOM_IAF">
     <machines>
       <machine name="cheyenne" compiler="gnu" category="aux_mom"/>
@@ -103,7 +112,7 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
-  <test name="SMS_Ld2" grid="f09_t061" compset="B1850MOM" testmods="mom/bmom">
+  <test name="SMS_Ld2" grid="f09_t061" compset="B1850MOM" testmods="mom/bcompset">
     <machines>
       <machine name="cheyenne" compiler="intel" category="aux_mom"/>
       <machine name="cheyenne" compiler="intel" category="pr_mom"/>
