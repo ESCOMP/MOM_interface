@@ -8,8 +8,8 @@
          h.static[._optional instance number].nc[.optional tile number] -->
     <hist_file_extension>h\.static(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
     <!-- match filenames of the form
-         h[m]_bgc[_time_period][_z][._optional instance number].nc -->
-    <hist_file_extension>h(m)?_bgc(_monthly|_daily|_annual)?(_z)?.?[_\d+]+.nc$</hist_file_extension>
+         h.bgc.*[._optional instance number].nc -->
+    <hist_file_extension>h\.bgc\..*?.?[_\d+]+.nc$</hist_file_extension>
     <!-- Match hist extension (i.e., stream name), used to identify last file
          in each stream in baseline generation within testing -->
     <hist_file_ext_regex>\w+\.\w+(\._\d*)?</hist_file_ext_regex>
