@@ -273,6 +273,20 @@
             "$MARBL_CONFIG == \"latest+4p2z\"": "ecosys_jan_IC_omip_latlon_1x1_180W_c230501.nc"
          }
       },
+      "MARBL_FESEDFLUX_FILE": {
+         "description": "\"Name of file containing iron sediment flux\n forcing field for the MARBL tracer package\"\n",
+         "datatype": "string",
+         "value": {
+            "$MARBL_CONFIG != \"off\"": "fesedflux_total_reduce_oxic_tx0.66v1.c230817.nc"
+         }
+      },
+      "MARBL_FEVENTFLUX_FILE": {
+         "description": "\"Name of file containing iron sediment flux\n forcing field for the MARBL tracer package\"\n",
+         "datatype": "string",
+         "value": {
+            "$MARBL_CONFIG != \"off\"": "feventflux_5gmol_tx0.66v1.c230817.nc"
+         }
+      },
       "CHL_FROM_FILE": {
          "description": "\"[Boolean] default = True\n If true, read chlorophyll from a file. Otherwise MARBL will provide it.\n\"\n",
          "datatype": "logical",
