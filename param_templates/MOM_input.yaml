@@ -384,6 +384,18 @@ Global:
         datatype: string
         value:
             $MARBL_CONFIG != "off": feventflux_5gmol_tx0.66v1.c230817.nc
+    READ_RIV_FLUXES:
+        description: Use river fluxes provided by RIV_FLUX_FILE
+        datatype: logical
+        value:
+            $MARBL_CONFIG != "off": True
+    RIV_FLUX_FILE:
+        description: |
+            "Name of file containing river fluxes
+             (added to surface tracer flux in tracer_vertdiff for MARBL tracers)"
+        datatype: string
+        value:
+            $MARBL_CONFIG != "off": riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc
     CHL_FROM_FILE:
         description: |
             "[Boolean] default = True
