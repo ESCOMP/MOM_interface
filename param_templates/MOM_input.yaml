@@ -1660,7 +1660,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.66v1": "energy_new_t0.66v1_conserve_190315.nc"
-            $OCN_GRID == "tx2_3v2": "energy_new_tx2_3_conserve_230415_cdf5.nc" 
+            $OCN_GRID == "tx2_3v2": "energy_new_tx2_3_conserve_230415_cdf5.nc"
     TIDAL_ENERGY_TYPE:
         description: |
             "The type of input tidal energy flux dataset. Valid values are   Jayne
@@ -2412,8 +2412,8 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 0.07
-            $OCN_GRID == "tx2_3v2": 0.07
+            $COMP_ATM == "cam": 0.10
+            else: 0.07
     MEKE_KHTH_FAC:
         description: |
             "[nondim] default = 0.0
