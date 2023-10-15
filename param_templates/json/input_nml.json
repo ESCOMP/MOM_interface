@@ -11,8 +11,8 @@
       },
       "parameter_filename": {
          "values": {
-            "$NINST_OCN > 1": "'MOM_input_%4E', 'MOM_override_%4E'",
-            "else": "'MOM_input', 'MOM_override'"
+            "$NINST_OCN > 1": "'MOM_input_%4E', 'MOM_override_%4E', 'MOM_override_layout_%4E'",
+            "else": "'MOM_input', 'MOM_override', 'MOM_override_layout'"
          }
       }
    },
