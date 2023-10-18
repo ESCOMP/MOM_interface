@@ -33,6 +33,12 @@
    "diag_manager_nml": {
       "flush_nc_files": {
          "values": ".true."
+      },
+      "max_num_axis_sets": {
+         "values": 30
+      },
+      "max_axes": {
+         "values": 90
       }
    },
    "mpp_io_nml": {
