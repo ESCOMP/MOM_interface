@@ -376,14 +376,16 @@ Global:
              forcing field for the MARBL tracer package"
         datatype: string
         value:
-            $MARBL_CONFIG != "off": fesedflux_total_reduce_oxic_tx0.66v1.c230817.nc
+            $MARBL_CONFIG != "off" && $OCN_GRID == "tx2_3v2": fesedflux_total_reduce_oxic_tx2_3v2.c231016.nc
+            $MARBL_CONFIG != "off" && $OCN_GRID == "tx0.66v1": fesedflux_total_reduce_oxic_tx0.66v1.c230817.nc
     MARBL_FEVENTFLUX_FILE:
         description: |
             "Name of file containing iron sediment flux
              forcing field for the MARBL tracer package"
         datatype: string
         value:
-            $MARBL_CONFIG != "off": feventflux_5gmol_tx0.66v1.c230817.nc
+            $MARBL_CONFIG != "off" && $OCN_GRID == "tx2_3v2": feventflux_5gmol_tx2_3v2.c231016.nc
+            $MARBL_CONFIG != "off" && $OCN_GRID == "tx0.66v1": feventflux_5gmol_tx0.66v1.c230817.nc
     READ_RIV_FLUXES:
         description: Use river fluxes provided by RIV_FLUX_FILE
         datatype: logical
@@ -395,7 +397,8 @@ Global:
              (added to surface tracer flux in tracer_vertdiff for MARBL tracers)"
         datatype: string
         value:
-            $MARBL_CONFIG != "off": riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc
+            $MARBL_CONFIG != "off" && $OCN_GRID == "tx2_3v2": riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc
+            $MARBL_CONFIG != "off" && $OCN_GRID == "tx0.66v1": riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc
     CHL_FROM_FILE:
         description: |
             "[Boolean] default = True
