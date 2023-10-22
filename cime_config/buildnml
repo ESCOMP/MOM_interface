@@ -116,29 +116,11 @@ def prep_input(case, inst_suffixes):
         diag_table = FType_diag_table.from_json(diag_table_template)
         diag_table.write(diag_table_rundir, case, MOM_input_final)
 
-    # handle land block elimination
-    idiv, jdiv = None, None
-    if 'TOPO_FILE' in MOM_input_final.data['Global']:
-        try:
-            import xarray
-        except ModuleNotFoundError:
-            print("\nWARNING: Cannot import xarray, skipping MOM6 land block elimination!!!\n")
-        else:
-            from lbe import gen_mask_table
-            print("Land block elimination is activated.")
-            inputdir = MOM_input_final.data['Global']['INPUTDIR']['value'] 
-            topo_file_name = MOM_input_final.data['Global']['TOPO_FILE']['value']
-            topo_file_path = os.path.join(inputdir, topo_file_name) 
-            ntasks_ocn = case.get_value('NTASKS_OCN')
-            idiv, jdiv = gen_mask_table(topo_file_path, ntasks_ocn, rundir)
-      
-    with open(os.path.join(rundir,f"MOM_override_layout{inst_suffix}"), 'w') as f:
-      if (idiv, jdiv) == (None, None):
-        f.write("!!! Land block elimination is inactive. Hence, no need to override layout.\n")
-      else:
-        f.write("!!! Land block elimination is active. Overriding layout: \n\n")
-        f.write(f" LAYOUT = {idiv}, {jdiv}\n")
-
+    if f"MOM_override_layout{inst_suffix}" in SourceMods_listdir:
+        shutil.copy(os.path.join(SourceMods_dir,f"MOM_override_layout{inst_suffix}"),
+                    os.path.join(rundir,f"MOM_override_layout{inst_suffix}"))
+    else:
+        handle_auto_lbe(case, MOM_input_final, rundir, inst_suffix)
 
 def init_MOM_override(rundir, inst_suffix):
     # Create an empty MOM_override:
@@ -185,6 +167,38 @@ def _copy_input_files(case, dest_dir, inst_suffixes):
     for filename in ["diag_table", "input.nml"]:
         shutil.copy(os.path.join(rundir,filename), dest_dir)
 
+def handle_auto_lbe(case, MOM_input_final, rundir, inst_suffix):
+    """ If requested via the MOM6_AUTO_LBE xml variable, attempt to generate a mask table for
+    land block elimination and accordingly change layout variables in MOM_override_layout."""
+
+    mom6_auto_lbe = case.get_value("MOM6_AUTO_LBE")
+
+    if mom6_auto_lbe == "disable":
+        with open(os.path.join(rundir,f"MOM_override_layout{inst_suffix}"), 'w') as f:
+            f.write("!!! MOM6_AUTO_LBE flag is set to 'disable'. Therefore, this file is empty.\n")
+    else:
+        try:
+            from lbe import gen_mask_table
+            inputdir = MOM_input_final.data['Global']['INPUTDIR']['value'] 
+            topo_file_name = MOM_input_final.data['Global']['TOPO_FILE']['value']
+            topo_file_path = os.path.join(inputdir, topo_file_name) 
+            ntasks_ocn = case.get_value('NTASKS_OCN')
+            idiv, jdiv = gen_mask_table(topo_file_path, ntasks_ocn, rundir)
+
+        except Exception as e:
+            if mom6_auto_lbe == "attempt":
+                print(f"Couldn't auto-generate MOM_mask_table due to the following error:\n {str(e)}")
+                print("Skipping automatic land block elimination...")
+                with open(os.path.join(rundir,f"MOM_override_layout{inst_suffix}"), 'w') as f:
+                    f.write("!!! Couldn't auto-generate MOM_mask_table. Therefore, this file is empty.\n")
+            else:
+                raise e
+
+        else: # gen_mask_table execution is succesful
+            with open(os.path.join(rundir,f"MOM_override_layout{inst_suffix}"), 'w') as f:
+                f.write("!!! Land block elimination is active. Overriding layout: \n\n")
+                f.write(f" MASKTABLE = MOM_auto_mask_table\n")
+                f.write(f" LAYOUT = {idiv}, {jdiv}\n")
 
 # pylint: disable=unused-argument
 ###############################################################################

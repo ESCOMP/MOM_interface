@@ -64,6 +64,25 @@
     <desc> Flag to turn on/off the MOM6 sections diagnostics.
     </desc>
   </entry>
+
+  <entry id="MOM6_AUTO_LBE">
+    <type>char</type>
+    <valid_values>disable,attempt,strict</valid_values>
+    <default_value>attempt</default_value>
+    <group>case_comp</group>
+    <file>env_run.xml</file>
+    <desc> Flag for controlling automatic MOM6 land block elimination. To automatically generate the 
+           MOM_mask_table, the presence of the xarray Python library is required. The flag options 
+          are as follows:
+          "disable": Deactivate automatic land-block elimination.
+          "attempt": Activate automatic land-block elimination. In case the MOM_mask_table cannot be
+                     generated (typically due to the unavailability of the xarray Python library),
+                     continue with the standard execution (no automatic land-block elimination).
+          "strict": Terminate the buildnml execution if MOM_mask_table generation fails (primarily
+                    for testing purposes).
+    </desc>
+  </entry>
+
   <help>
     =========================================
     MOM6 naming conventions

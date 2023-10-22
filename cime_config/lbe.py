@@ -9,8 +9,7 @@ import numpy as np
 
 def MOM_define_layout(isz, jsz, ndivs):
     """ This function is a Python implementation of MOM_define_layout subroutine from 
-    MOM_domains.F90, and is used by buildnml for generating mask tables for land block
-    elimination.
+    MOM_domains.F90, and is used here for guiding the land block elimination functions.
     Given a global array size (isz x jsz) and a number of (logical) processors (ndivs)
     , provide a layout of the processors in the two directions where the total number
     of processors is the product of the two layouts and number of points in the 
@@ -87,8 +86,6 @@ def find_land_blocks(da_mask, idiv, jdiv, nihalo=4, njhalo=4):
     
     ny, nx = da_mask.shape
     
-    ndivs = idiv*jdiv
-    
     ibegin, iend = mpp_compute_extent(1,nx,idiv)
     jbegin, jend = mpp_compute_extent(1,ny,jdiv)
     
@@ -134,7 +131,7 @@ def gen_mask_table(topo_file_path, ntasks_ocn, rundir):
     # make sure that exactly ntasks_ocn tasks are active:
     len_mt = p - ntasks_ocn
 
-    with open(os.path.join(rundir, 'MOM_mask_table'), 'w') as f:
+    with open(os.path.join(rundir, 'MOM_auto_mask_table'), 'w') as f:
         f.write(f'{len_mt}\n')          # nmask
         f.write(f'{idiv},{jdiv}\n')    # layout
         # mask list
