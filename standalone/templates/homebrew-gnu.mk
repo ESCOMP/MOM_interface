@@ -77,6 +77,9 @@ ifeq ($(NETCDF),3)
 endif
 
 LIBS := $(shell nc-config --flibs)
+ifeq (${LIBS},)
+  LIBS := $(shell nf-config --flibs)
+endif
 LDFLAGS += $(LIBS)
 
 #---------------------------------------------------------------------------
