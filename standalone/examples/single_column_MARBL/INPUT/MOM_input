@@ -58,6 +58,10 @@ MARBL_FESEDFLUX_FILE = "MARBL_FESEDFLUX_FILE_COLUMN.nc" ! default = "fesedflux_t
                                 ! The file in which the iron sediment flux forcing field can be found.
 MARBL_FEVENTFLUX_FILE = "MARBL_FEVENTFLUX_FILE_COLUMN.nc" ! default = "feventflux_5gmol_tx0.66v1.c211020.nc"
                                 ! The file in which the iron vent flux forcing field can be found.
+MARBL_TRACER_RESTORING_SOURCE = "file" ! default = "none"
+                                ! Source of data for restoring MARBL tracers
+MARBL_TRACER_RESTORING_RTAU_SOURCE = "file" !
+                                ! Source of data for  1/timescale for restoring MARBL tracers
 
 
 ! === module MOM_grid_init ===

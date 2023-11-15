@@ -4,7 +4,7 @@
 # commands #
 ############
 FC = mpif90
-CC = gcc
+CC = mpicc
 CXX = g++
 LD = mpif90 $(MAIN_PROGRAM)
 
@@ -76,10 +76,7 @@ ifeq ($(NETCDF),3)
   endif
 endif
 
-LIBS := $(shell nc-config --flibs)
-ifeq (${LIBS},)
-  LIBS := $(shell nf-config --flibs)
-endif
+LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
 LDFLAGS += $(LIBS)
 
 #---------------------------------------------------------------------------
