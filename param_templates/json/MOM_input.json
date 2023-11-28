@@ -2021,8 +2021,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.07,
-            "$OCN_GRID == \"tx2_3v2\"": 0.07
+            "$COMP_ATM == \"cam\"": 0.1,
+            "else": 0.07
          }
       },
       "MEKE_KHTH_FAC": {

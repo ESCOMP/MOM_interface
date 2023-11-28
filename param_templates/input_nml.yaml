@@ -42,13 +42,9 @@ diag_manager_nml:
           else:
             300
     max_num_axis_sets:
-        values:
-          $MARBL_CONFIG != "off" and $TEST != True:
-            30
-          $MARBL_CONFIG != "off" and $TEST == True:
-            26
-          else:
-            24
+        values: 30
+    max_axes:
+        values: 90
 
 mpp_io_nml:
     cf_compliance:
