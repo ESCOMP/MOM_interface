@@ -19,4 +19,4 @@
 #PBS -m abe
 
 ### Run the executable
-./build_examples-cheyenne.sh intel-casper
+./build_examples-ncar.sh intel-casper

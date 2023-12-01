@@ -16,7 +16,7 @@ SHR_ROOT=${CESM_ROOT}/share
 FMS_ROOT=${CESM_ROOT}/libraries/FMS
 
 COMPILER=intel
-TEMPLATE=${TEMPLATE_DIR}/cheyenne-${COMPILER}.mk
+TEMPLATE=${TEMPLATE_DIR}/ncar-${COMPILER}.mk
 
 if [ -e $1 ]; then
   BLD_ROOT=${COMPILER}
