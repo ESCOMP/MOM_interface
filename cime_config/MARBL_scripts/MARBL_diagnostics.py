@@ -21,6 +21,9 @@ class MARBL_diagnostics_for_MOM(object):
 
         MARBL_args["MARBL_settings"] = MARBL_settings._MARBL_settings
 
+        # MARBL can run in mks unit system instead of requiring MOM to convert to / from cgs
+        MARBL_args["unit_system"] = "mks"
+
         # Import MARBL_diagnostics_file_class, which may come from MARBL_tools or SourceMods/src.mom
         # (i) need MARBL_dir in path for both branches of this if statement because even if
         #     MARBL_diagnostics_file_class.py is in SourceMods, it needs to import MARBL_tools itself
