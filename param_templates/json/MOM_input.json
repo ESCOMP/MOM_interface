@@ -277,16 +277,16 @@
          "description": "\"Name of file containing iron sediment flux\n forcing field for the MARBL tracer package\"\n",
          "datatype": "string",
          "value": {
-            "$MARBL_CONFIG != \"off\" && $OCN_GRID == \"tx2_3v2\"": "fesedflux_total_reduce_oxic_tx2_3v2.c231016.nc",
-            "$MARBL_CONFIG != \"off\" && $OCN_GRID == \"tx0.66v1\"": "fesedflux_total_reduce_oxic_tx0.66v1.c230817.nc"
+            "$MARBL_CONFIG != \"off\" and $OCN_GRID == \"tx2_3v2\"": "fesedflux_total_reduce_oxic_tx2_3v2.c231205.nc",
+            "$MARBL_CONFIG != \"off\" and $OCN_GRID == \"tx0.66v1\"": "fesedflux_total_reduce_oxic_tx0.66v1.c230817.nc"
          }
       },
       "MARBL_FEVENTFLUX_FILE": {
          "description": "\"Name of file containing iron sediment flux\n forcing field for the MARBL tracer package\"\n",
          "datatype": "string",
          "value": {
-            "$MARBL_CONFIG != \"off\" && $OCN_GRID == \"tx2_3v2\"": "feventflux_5gmol_tx2_3v2.c231016.nc",
-            "$MARBL_CONFIG != \"off\" && $OCN_GRID == \"tx0.66v1\"": "feventflux_5gmol_tx0.66v1.c230817.nc"
+            "$MARBL_CONFIG != \"off\" and $OCN_GRID == \"tx2_3v2\"": "feventflux_5gmol_tx2_3v2.c231205.nc",
+            "$MARBL_CONFIG != \"off\" and $OCN_GRID == \"tx0.66v1\"": "feventflux_5gmol_tx0.66v1.c230817.nc"
          }
       },
       "READ_RIV_FLUXES": {
@@ -300,8 +300,8 @@
          "description": "\"Name of file containing river fluxes\n (added to surface tracer flux in tracer_vertdiff for MARBL tracers)\"\n",
          "datatype": "string",
          "value": {
-            "$MARBL_CONFIG != \"off\" && $OCN_GRID == \"tx2_3v2\"": "riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc",
-            "$MARBL_CONFIG != \"off\" && $OCN_GRID == \"tx0.66v1\"": "riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc"
+            "$MARBL_CONFIG != \"off\" and $OCN_GRID == \"tx2_3v2\"": "riv_nut.gnews_gnm.rJRA025_to_tx2_3v2_nnsm_e333r100_230415.20231206.nc",
+            "$MARBL_CONFIG != \"off\" and $OCN_GRID == \"tx0.66v1\"": "riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc"
          }
       },
       "CHL_FROM_FILE": {

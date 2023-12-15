@@ -6,17 +6,17 @@
 ### Project code
 #PBS -A P93300070
 #PBS -l walltime=01:00:00
-#PBS -q share
+#PBS -q develop
 
 ### Merge output and error files
 #PBS -j oe
 #PBS -k eod
 
-### Select 2 nodes with 36 CPUs each for a total of 72 MPI processes
+### Select 1 nodes with 1 CPU (a single MPI process)
 #PBS -l select=1:ncpus=1:mpiprocs=1
 
 ### Send email on abort, begin and end
 #PBS -m abe
 
 ### Run the executable
-mpiexec_mpt ../../../build/intel-cheyenne/MOM6/MOM6
+../../../build/intel-derecho/MOM6/MOM6
