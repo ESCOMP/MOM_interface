@@ -270,7 +270,7 @@
          "datatype": "string",
          "value": {
             "$MARBL_CONFIG == \"latest\"": "ecosys_jan_IC_omip_latlon_1x1_180W_c230331.nc",
-            "$MARBL_CONFIG == \"latest+4p2z\"": "ecosys_jan_IC_omip_latlon_1x1_180W_c230501.nc"
+            "$MARBL_CONFIG == \"latest+4p2z\"": "ecosys_jan_IC_omip_latlon_1x1_180W_c231221.nc"
          }
       },
       "MARBL_FESEDFLUX_FILE": {

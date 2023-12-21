@@ -225,6 +225,21 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             full_diag_dict['DO14Ctot']['diags']['Jint_100m_DO14Ctot'] = 'medium_average'
             # full_diag_dict['DO14Ctot']['diags']['tend_zint_100m_DO14Ctot'] = 'medium_average'
             full_diag_dict['DO14Ctot']['properties']['has surface flux'] = True
+        # ABIO_DIC
+        if 'ABIO_DIC' in full_diag_dict.keys():
+            # full_diag_dict['ABIO_DIC']['diags']['J_ABIO_DIC'] = 'medium_average'
+            full_diag_dict['ABIO_DIC']['diags']['STF_ABIO_DIC'] = 'medium_average'
+            # full_diag_dict['ABIO_DIC']['diags']['FvPER_ABIO_DIC'] = 'medium_average'
+            # full_diag_dict['ABIO_DIC']['diags']['FvICE_ABIO_DIC'] = 'medium_average'
+            full_diag_dict['ABIO_DIC']['properties']['has surface flux'] = True
+        # DI14C
+        if 'ABIO_DI14C' in full_diag_dict.keys():
+            # full_diag_dict['ABIO_DI14C']['diags']['J_ABIO_DI14C'] = 'medium_average'
+            full_diag_dict['ABIO_DI14C']['diags']['STF_ABIO_DI14C'] = 'medium_average'
+            full_diag_dict['ABIO_DI14C']['diags']['Jint_ABIO_DI14C'] = 'medium_average'
+            # full_diag_dict['ABIO_DI14C']['diags']['FvPER_ABIO_DI14C'] = 'medium_average'
+            # full_diag_dict['ABIO_DI14C']['diags']['FvICE_ABIO_DI14C'] = 'medium_average'
+            full_diag_dict['ABIO_DI14C']['properties']['has surface flux'] = True
 
         # 3. Per-autotroph diagnostics
         for autotroph_name in autotroph_list:
