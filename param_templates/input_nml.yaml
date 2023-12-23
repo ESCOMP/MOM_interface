@@ -42,6 +42,7 @@ diag_manager_nml:
           else:
             300
     max_num_axis_sets:
+        values:
           $MARBL_CONFIG != "off": 35
           else: 30
     max_axes:
