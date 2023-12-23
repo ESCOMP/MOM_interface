@@ -170,7 +170,8 @@ class DiagTableClass(object):
             if len(self._diag_table_dict[freq]["fields"]["lists"][0]) > 0:
                 out_dict["Files"][freq] = self._diag_table_dict[freq].copy()
                 out_dict["Files"][freq]["fields"]["lists"].append(["geolat", "geolon"])
-                if out_dict["Files"][freq]["fields"]["module"] == "ocean_model" and freq[-2:] == "_z":
+                if (out_dict["Files"][freq]["fields"]["module"] == "ocean_model" and freq[-2:] == "_z") or \
+                    out_dict["Files"][freq]["fields"]["module"] == "ocean_model_z":
                     out_dict["Files"][freq]["fields"]["lists"].append(["volcello", "h"])
         if out_dict["Files"]:
             with open(filename, "w") as fp:
