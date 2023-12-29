@@ -76,12 +76,15 @@ class MARBL_settings_for_MOM(object):
         """ Returns a list of all autotrophs in current configuration
         """
         autotroph_list = []
-        for n in range(1, self._MARBL_settings.settings_dict['autotroph_cnt']['value']+1):
-            autotroph_name = self._MARBL_settings.settings_dict['autotroph_settings(%d)%%sname' % n]['value'].strip('"')
-            imp_calcifier = (self._MARBL_settings.settings_dict['autotroph_settings(%d)%%imp_calcifier' % n]['value'].strip('"') == '.true.')
-            exp_calcifier = (self._MARBL_settings.settings_dict['autotroph_settings(%d)%%exp_calcifier' % n]['value'].strip('"') == '.true.')
-            if imp_calcifier or exp_calcifier or (not calcifier_only):
-                autotroph_list.append(autotroph_name)
+        try:
+          for n in range(1, self._MARBL_settings.settings_dict['autotroph_cnt']['value']+1):
+              autotroph_name = self._MARBL_settings.settings_dict['autotroph_settings(%d)%%sname' % n]['value'].strip('"')
+              imp_calcifier = (self._MARBL_settings.settings_dict['autotroph_settings(%d)%%imp_calcifier' % n]['value'].strip('"') == '.true.')
+              exp_calcifier = (self._MARBL_settings.settings_dict['autotroph_settings(%d)%%exp_calcifier' % n]['value'].strip('"') == '.true.')
+              if imp_calcifier or exp_calcifier or (not calcifier_only):
+                  autotroph_list.append(autotroph_name)
+        except:
+            print('autotroph_cnt not found, treating as 0')
         return autotroph_list
 
     #######################################
@@ -90,17 +93,24 @@ class MARBL_settings_for_MOM(object):
         """ Returns a list of all zooplankton in current configuration
         """
         zooplankton_list = []
-        for n in range(1, self._MARBL_settings.settings_dict['zooplankton_cnt']['value']+1):
-            zooplankton_name = self._MARBL_settings.settings_dict['zooplankton_settings(%d)%%sname' % n]['value'].strip('"')
-            zooplankton_list.append(zooplankton_name)
+        try:
+          for n in range(1, self._MARBL_settings.settings_dict['zooplankton_cnt']['value']+1):
+              zooplankton_name = self._MARBL_settings.settings_dict['zooplankton_settings(%d)%%sname' % n]['value'].strip('"')
+              zooplankton_list.append(zooplankton_name)
+        except:
+            print('zooplankton_cnt not found, treating as 0')
         return zooplankton_list
 
     #######################################
 
-    def ladjust_bury_coeff(self):
+    def get_ladjust_bury_coeff(self):
         """ Returns True if ladjust_bury_coeff = .true.
         """
-        return (self._MARBL_settings.settings_dict['ladjust_bury_coeff']['value'].strip('"') == '.true.')
+        try:
+            return (self._MARBL_settings.settings_dict['ladjust_bury_coeff']['value'].strip('"') == '.true.')
+        except:
+            print('ladjust_bury_coeff not found, treating as False')
+            return False
 
     #######################################
 

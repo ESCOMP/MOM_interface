@@ -261,7 +261,7 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
                                                    MARBL_settings.get_autotroph_names(),
                                                    MARBL_settings.get_zooplankton_names(),
                                                    MARBL_settings.get_autotroph_names(calcifier_only=True),
-                                                   MARBL_settings.ladjust_bury_coeff(),
+                                                   MARBL_settings.get_ladjust_bury_coeff(),
                                                    ecosys_diags_buildconf,
                                                    ice_ncat
                                                   )
