@@ -1,47 +1,29 @@
 <?xml version="1.0"?>
 <testlist version="2.0">
-  <test name="ERS" grid="T62_g16" compset="CMOM_IAF" testmods="mom/debug">
+  <test name="SMS_D_Ld2" grid="T62_g16" compset="CMOM" testmods="mom/debug">
+    <machines>
+      <machine name="derecho" compiler="gnu" category="aux_mom"/>
+      <machine name="derecho" compiler="gnu" category="pr_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">01:00:00</option>
+    </options>
+  </test>
+  <test name="SMS_D" grid="TL319_t232" compset="GMOM_JRA_RYF">
     <machines>
       <machine name="derecho" compiler="intel" category="aux_mom"/>
-      <machine name="izumi" compiler="intel" category="aux_mom"/>
+      <machine name="derecho" compiler="intel" category="pr_mom"/>
+      <machine name="derecho" compiler="intel" category="prealpha"/>
+      <machine name="derecho" compiler="intel" category="prebeta"/>
     </machines>
     <options>
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
-  <test name="SMS_Ld2" grid="T62_g16" compset="CMOM">
-    <machines>
-      <machine name="derecho" compiler="gnu" category="pr_mom"/>
-    </machines>
-    <options>
-      <option name="wallclock">01:00:00</option>
-    </options>
-  </test>
-  <test name="SMS_D_Ld2" grid="TL319_t232" compset="CMOM_JRA">
-    <machines>
-      <machine name="derecho" compiler="gnu" category="aux_mom"/>
-      <machine name="derecho" compiler="gnu" category="pr_mom"/>
-    </machines>
-    <options>
-      <option name="wallclock">01:00:00</option>
-    </options>
-  </test>
-  <test name="SMS_D" grid="T62_t232" compset="GMOM_IAF">
-    <machines>
-      <machine name="derecho" compiler="gnu" category="aux_mom"/>
-      <machine name="derecho" compiler="gnu" category="pr_mom"/>
-      <machine name="hobart" compiler="gnu" category="aux_mom"/>
-      <machine name="izumi" compiler="gnu" category="aux_mom"/>
-    </machines>
-    <options>
-      <option name="wallclock">01:00:00</option>
-    </options>
-  </test>
-  <test name="SMS_Ld40" grid="T62_t232" compset="CMOM_IAF">
+  <test name="SMS_Ld40" grid="TL319_t232" compset="CMOM_JRA">
     <machines>
       <machine name="derecho" compiler="intel" category="aux_mom"/>
       <machine name="derecho" compiler="intel" category="prealpha"/>
-      <machine name="hobart" compiler="intel" category="aux_mom"/>
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
     <options>
@@ -51,7 +33,6 @@
   <test name="ERS" grid="T62_t061" compset="GMOM_JRA" testmods="mom/debug">
     <machines>
       <machine name="derecho" compiler="intel" category="aux_mom"/>
-      <machine name="hobart" compiler="intel" category="aux_mom"/>
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
     <options>
@@ -60,7 +41,7 @@
   </test>
   <test name="ERS" grid="TL319_t232" compset="GMOM_JRA_WD" testmods="mom/debug">
     <machines>
-      <machine name="derecho" compiler="intel" category="aux_mom"/>
+      <machine name="derecho" compiler="gnu" category="aux_mom"/>
     </machines>
     <options>
       <option name="wallclock">01:30:00</option>
@@ -71,6 +52,7 @@
       <machine name="derecho" compiler="intel" category="aux_mom"/>
       <machine name="derecho" compiler="intel" category="pr_mom"/>
       <machine name="derecho" compiler="intel" category="prealpha"/>
+      <machine name="derecho" compiler="intel" category="prebeta"/>
     </machines>
     <options>
       <option name="wallclock">01:30:00</option>
@@ -84,25 +66,17 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
-  <test name="ERI" grid="T62_t232" compset="GMOM" testmods="mom/debug">
+  <test name="ERI" grid="TL319_t232" compset="GMOM_JRA" testmods="mom/debug">
     <machines>
+      <machine name="derecho" compiler="intel" category="pr_mom"/>
       <machine name="derecho" compiler="intel" category="aux_mom"/>
-      <machine name="hobart" compiler="intel" category="aux_mom"/>
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
     <options>
       <option name="wallclock">02:00:00</option>
     </options>
   </test>
-  <test name="ERI_Ld9" grid="T62_t232" compset="GMOM">
-    <machines>
-      <machine name="derecho" compiler="intel" category="pr_mom"/>
-    </machines>
-    <options>
-      <option name="wallclock">01:00:00</option>
-    </options>
-  </test>
-  <test name="PET" grid="TL319_t232" compset="GMOM_JRA">
+  <test name="PET" grid="TL319_t232" compset="CMOM_JRA">
     <machines>
       <machine name="derecho" compiler="intel" category="aux_mom"/>
       <machine name="derecho" compiler="intel" category="pr_mom"/>
@@ -115,7 +89,7 @@
     <machines>
       <machine name="derecho" compiler="intel" category="aux_mom"/>
       <machine name="derecho" compiler="intel" category="pr_mom"/>
-      <machine name="hobart" compiler="intel" category="aux_mom"/>
+      <machine name="derecho" compiler="intel" category="prebeta"/>
       <machine name="izumi" compiler="intel" category="aux_mom"/>
     </machines>
     <options>
@@ -134,9 +108,11 @@
   <test name="DIMCSL_Ld1" grid="TL319_t232" compset="GMOM_JRA" testmods="mom/cfc_mods">
     <machines>
       <machine name="derecho" compiler="intel" category="pr_mom"/>
+      <machine name="derecho" compiler="intel" category="prealpha"/>
+      <machine name="derecho" compiler="gnu" category="prebeta"/>
     </machines>
     <options>
-      <option name="wallclock">01:30:00</option>
+      <option name="wallclock">02:00:00</option>
     </options>
   </test>
 </testlist>
