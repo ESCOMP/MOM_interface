@@ -1,0 +1,26 @@
+#!/bin/bash
+
+### Job Name
+#PBS -N MARBL_test
+
+### Project code
+#PBS -A P93300070
+#PBS -l walltime=01:00:00
+#PBS -q casper
+
+### Merge output and error files
+#PBS -j oe
+#PBS -k eod
+
+### Set up job array, each subarray needs a single core
+#PBS -J 0-6
+#PBS -l select=1:ncpus=1:mpiprocs=1
+
+### Send email on abort, begin and end
+#PBS -m abe
+
+### Run the executable
+dirs=(ARAB BATS EQPAC HOT KERFIX NABE STNP)
+cd ${dirs[${PBS_ARRAY_INDEX}]}
+pwd
+mpirun -n 1 ../../../build/intel-casper/MOM6/MOM6
