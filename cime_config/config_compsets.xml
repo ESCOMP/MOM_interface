@@ -50,7 +50,12 @@
 
   <compset>
     <alias>CMOM_JRA</alias>
-    <lname>2000_DATM%JRA_SLND_DICE%SSMI_MOM6_DROF%JRA_SGLC_SWAV</lname>
+    <lname>2000_DATM%JRA-1p4-2018_SLND_DICE%SSMI_MOM6_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>CMOM_JRA_RYF</alias>
+    <lname>2000_DATM%JRA-RYF9091_SLND_DICE%SSMI_MOM6_DROF%JRA-RYF9091_SGLC_SWAV</lname>
   </compset>
 
   <!-- G compsets -->
@@ -67,12 +72,17 @@
 
   <compset>
     <alias>GMOM_JRA</alias>
-    <lname>2000_DATM%JRA_SLND_CICE_MOM6_DROF%JRA_SGLC_SWAV</lname>
+    <lname>2000_DATM%JRA-1p4-2018_SLND_CICE_MOM6_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>GMOM_JRA_RYF</alias>
+    <lname>2000_DATM%JRA-RYF9091_SLND_CICE_MOM6_DROF%JRA-RYF9091_SGLC_SWAV</lname>
   </compset>
 
   <compset>
     <alias>GMOM_JRA_WD</alias>
-    <lname>2000_DATM%JRA_SLND_CICE_MOM6_DROF%JRA_SGLC_WW3DEV</lname>
+    <lname>2000_DATM%JRA-1p4-2018_SLND_CICE_MOM6_DROF%JRA-1p4-2018_SGLC_WW3DEV</lname>
   </compset>
 
 </compsets>

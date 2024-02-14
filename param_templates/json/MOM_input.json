@@ -2811,6 +2811,13 @@
          "value": {
             "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": "0.04, 0.11, 0.33"
          }
+      },
+      "AUTO_MASKTABLE": {
+         "description": "Turn on automatic mask table generation to eliminate land blocks\n",
+         "datatype": "list",
+         "value": {
+            "$OCN_GRID in [\"tx0.66v1\", \"tx2_3v2\", \"tx0.25v1\"]": true
+         }
       }
    },
    "KPP": {
