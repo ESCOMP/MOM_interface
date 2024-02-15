@@ -4,6 +4,29 @@ from CIME.ParamGen.paramgen import ParamGen
 class FType_diag_table(ParamGen):
     """Encapsulates data and read/write methods for MOM6 diag_table input file."""
 
+    @classmethod
+    def resolve(cls, unresolved_diag_table_path, resolved_diag_table_path, casename):
+        """Resolve the casename in an unresolved diag_table.
+
+        Parameters
+        ----------
+        unresolved_diag_table_path : str
+            The path to the unresolved diag_table.
+        resolved_diag_table_path : str
+            The path to the resolved diag_table to be created.
+        casename : str
+            The casename to be resolved.
+        """
+        assert os.path.exists(unresolved_diag_table_path), \
+            "Unresolved diag_table file not found: "+unresolved_diag_table_path
+        
+        resolved_diag_table = open(resolved_diag_table_path, 'w')
+        with open(unresolved_diag_table_path, 'r') as diag_table_unresolved:
+            for line in diag_table_unresolved:
+                resolved_diag_table.write(line.replace('${CASE}', casename))
+        
+        resolved_diag_table.close()
+
     def write(self, output_path, case, MOM_input_final):
 
         def get_all_fields(fields_block):
@@ -43,7 +66,7 @@ class FType_diag_table(ParamGen):
         with open(os.path.join(output_path), 'w') as diag_table:
 
             # Print header:
-            casename = case.get_value("CASE")
+            casename = '${CASE}'
             diag_table.write('"MOM6 diagnostic fields table for CESM case: '+casename+'"\n')
             diag_table.write('1 1 1 0 0 0\n') #TODO
             filename = lambda suffix : '"'+casename+'.mom6.'+suffix+'"'

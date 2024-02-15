@@ -37,9 +37,11 @@ def prep_input(case, inst_suffixes):
     in SourceMods, those versions will be copied to run directory instead."""
 
     Buildconf = case.get_value("CASEBUILD")
-    rundir = case.get_value("RUNDIR")
     comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
     caseroot = case.get_value("CASEROOT")
+    casename = case.get_value("CASE")
+    rundir = case.get_value("RUNDIR")
+    momconfdir  = os.path.join(caseroot, "Buildconf", "momconf")
     SourceMods_dir = os.path.join(caseroot,"SourceMods","src.mom")
     SourceMods_listdir = os.listdir(SourceMods_dir)
     multi_instance = inst_suffixes[0] != ''
@@ -48,9 +50,11 @@ def prep_input(case, inst_suffixes):
       infra_api = case.get_value("MOM6_INFRA_API")
       expect(infra_api != "FMS1", "Cannot run with FMS1 infra API when multi-instance mode is enabled.")
 
-    # Make sure that rundir exists. If not, make it:
+    # Make sure that rundir and momconf directories exist. If not, make them:
     if not os.path.exists(rundir):
         os.makedirs(rundir)
+    if not os.path.exists(momconfdir):
+        os.makedirs(momconfdir)
 
     # Parse json files and create MOM6 input files in rundir
     json_templates_dir = os.path.join(comp_root_dir_ocn,"param_templates","json")
@@ -107,14 +111,26 @@ def prep_input(case, inst_suffixes):
     input_data_list.write(input_data_list_buildconf, case, MOM_input_final)
 
     # 6. Create diag_table:
-    diag_table_template = os.path.join(json_templates_dir, "diag_table.json")
-    diag_table_srcmod = os.path.join(SourceMods_dir, "diag_table")
     diag_table_rundir = os.path.join(rundir,"diag_table")
     if "diag_table" in SourceMods_listdir:
+        # A resolved diag_table is provided in SourceMods. Directly copy it to rundir.
+        expect('diag_table.unresolved' not in SourceMods_listdir, \
+               "Cannot provide both resolved and unresolved diag_table in SourceMods!")
+        diag_table_srcmod = os.path.join(SourceMods_dir, "diag_table")
         shutil.copy(diag_table_srcmod, diag_table_rundir)
     else:
-        diag_table = FType_diag_table.from_json(diag_table_template)
-        diag_table.write(diag_table_rundir, case, MOM_input_final)
+        unresolved_diag_table_confdir = os.path.join(momconfdir,"diag_table.unresolved")
+        if "diag_table.unresolved" in SourceMods_listdir:
+            # An unresolved diag_table is provided in SourceMods. Directly copy it to momconf.
+            unresolved_diag_table_srcmod = os.path.join(SourceMods_dir, "diag_table.unresolved")
+            shutil.copy(unresolved_diag_table_srcmod, unresolved_diag_table_confdir)
+        else:
+            # Create an unresolved diag_table in momconf using the template
+            diag_table_template = os.path.join(json_templates_dir, "diag_table.json")
+            unresolved_diag_table = FType_diag_table.from_json(diag_table_template)
+            unresolved_diag_table.write(unresolved_diag_table_confdir, case, MOM_input_final)
+        # Resolve unresolved diag_table in momconf and write it to rundir
+        FType_diag_table.resolve(unresolved_diag_table_confdir, diag_table_rundir, casename)
 
 def init_MOM_override(rundir, inst_suffix):
     # Create an empty MOM_override:
@@ -150,7 +166,6 @@ def process_user_nl_mom(case, inst_suffix):
 
 def _copy_input_files(case, dest_dir, inst_suffixes):
     """ Saves copies of MOM6 input files in momconf directory for the record."""
-    caseroot = case.get_value("CASEROOT")
     rundir   = case.get_value("RUNDIR")
     if not os.path.isdir(dest_dir):
         os.makedirs(dest_dir)
@@ -158,7 +173,7 @@ def _copy_input_files(case, dest_dir, inst_suffixes):
     for inst_suffix in inst_suffixes:
         for filename in ["MOM_input", "MOM_override"]:
             shutil.copy(os.path.join(rundir,filename+inst_suffix), dest_dir)
-    for filename in ["diag_table", "input.nml"]:
+    for filename in ["input.nml"]:
         shutil.copy(os.path.join(rundir,filename), dest_dir)
 
 
