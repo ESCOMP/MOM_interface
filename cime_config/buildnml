@@ -160,19 +160,22 @@ def prep_input(case, inst_suffixes):
             lMARBL_output_all = case.get_value("TEST")
             # Include ALT_CO2 diagnostics if atm_co2_opt and atm_alt_co2_opt differ
             # (or if they are both "constant" but atm_co2_const != atm_alt_co2_const)
-            atm_co2_opt = MOM_input_final._data["Global"]["ATM_CO2_OPT"]["value"].strip().lower().replace('"', '')
-            try:
-                atm_alt_co2_opt = MOM_input_final._data["Global"]["ATM_ALT_CO2_OPT"]["value"].strip().lower().replace('"', '')
-            except:
-                atm_alt_co2_opt = "constant"
-            if (atm_co2_opt == atm_alt_co2_opt):
-                if atm_co2_opt == "constant":
-                    lMARBL_output_alt_co2 = (MOM_input_final._data["Global"]["ATM_CO2_CONST"]["value"] !=
-                                             MOM_input_final._data["Global"]["ATM_ALT_CO2_CONST"]["value"])
+            if "ATM_CO2_OPT" in MOM_input_final._data["Global"]:
+                atm_co2_opt = MOM_input_final._data["Global"]["ATM_CO2_OPT"]["value"].strip().lower().replace('"', '')
+                try:
+                    atm_alt_co2_opt = MOM_input_final._data["Global"]["ATM_ALT_CO2_OPT"]["value"].strip().lower().replace('"', '')
+                except:
+                    atm_alt_co2_opt = "constant"
+                if (atm_co2_opt == atm_alt_co2_opt):
+                    if atm_co2_opt == "constant":
+                        lMARBL_output_alt_co2 = (MOM_input_final._data["Global"]["ATM_CO2_CONST"]["value"] !=
+                                                 MOM_input_final._data["Global"]["ATM_ALT_CO2_CONST"]["value"])
+                    else:
+                        lMARBL_output_alt_co2 = False
                 else:
-                    lMARBL_output_alt_co2 = False
+                    lMARBL_output_alt_co2 = True
             else:
-                lMARBL_output_alt_co2 = True
+                lMARBL_output_alt_co2 = False
             generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir,
                                       diag_table_buildconf, vert_grid, lMARBL_output_all, lMARBL_output_alt_co2,
                                        ice_ncat)

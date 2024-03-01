@@ -5,8 +5,9 @@
 <entry_id version="3.0">
 
   <description>
-    <desc ocn="MOM6[%MARBL]">MOM6 OCEAN </desc>
-    <desc option="MARBL">MARBL Biogeochemistry Tracer Library</desc>
+    <desc ocn="MOM6[%MARBL-BIO][%MARBL-ABIO]">MOM6 OCEAN </desc>
+    <desc option="MARBL-BIO">MARBL Biogeochemistry Tracer Library base biotic tracers</desc>
+    <desc option="MARBL-ABIO">MARBL Biogeochemistry Tracer Library abiotic DIC tracers</desc>
   </description>
 
   <entry id="COMP_OCN">
@@ -85,11 +86,11 @@
     <default_value>constant</default_value>
     <values>
       <value compset="_CAM">diagnostic</value>
-      <value compset="_MOM6%[^_]*MARBL.*_BGC%BPRP">prognostic</value>
-      <value compset="_MOM6%[^_]*MARBL.*_BGC%BDRD">diagnostic</value>
-      <value compset="_DATM%CPLHIST.*_MOM6%[^_]*MARBL">diagnostic</value>
-      <value compset="^OMIP_DATM%IAF.*_MOM6%[^_]*MARBL">diagnostic</value>
-      <value compset="^OMIP_DATM%JRA.*_MOM6%[^_]*MARBL">diagnostic</value>
+      <value compset="_MOM6%[^_]*MARBL-BIO.*_BGC%BPRP">prognostic</value>
+      <value compset="_MOM6%[^_]*MARBL-BIO.*_BGC%BDRD">diagnostic</value>
+      <value compset="_DATM%CPLHIST.*_MOM6%[^_]*MARBL-BIO">diagnostic</value>
+      <value compset="^OMIP_DATM%IAF.*_MOM6%[^_]*MARBL-BIO">diagnostic</value>
+      <value compset="^OMIP_DATM%JRA.*_MOM6%[^_]*MARBL-BIO">diagnostic</value>
     </values>
     <group>run_component_mom</group>
     <file>env_run.xml</file>
@@ -98,12 +99,27 @@
       The default is constant.</desc>
   </entry>
 
+  <entry id="MARBL_TRACER_OPTS">
+    <type>char</type>
+    <valid_values></valid_values>
+    <default_value></default_value>
+    <values modifier='merge'>
+      <value compset="MOM6%[^_]*MARBL-ABIO">INCLUDE_ABIO_DIC</value>
+      <value compset="MOM6%[^_]*MARBL-BIO">INCLUDE_BASE_BIO</value>
+    </values>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Configure what tracers MARBL will provide to MOM6
+    </desc>
+  </entry>
+
   <entry id="MARBL_CONFIG">
     <type>char</type>
     <valid_values>off,latest,latest+4p2z</valid_values>
     <default_value>off</default_value>
     <values>
-      <value compset="MOM6%[^_]*MARBL">latest+4p2z</value>
+      <value compset="MOM6%[^_]*MARBL-ABIO">latest+4p2z</value>
+      <value compset="MOM6%[^_]*MARBL-BIO">latest+4p2z</value>
     </values>
     <group>run_component_mom</group>
     <file>env_run.xml</file>
