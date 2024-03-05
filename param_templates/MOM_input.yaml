@@ -2647,8 +2647,8 @@ Global:
         description: |
             "[Boolean] default = True
             This sets the default value for the various parameters."
-        datatype: logical
-        units: Boolean
+        datatype: string
+        units: ymd
         value: 99991231
     VERTEX_SHEAR:
         description: |

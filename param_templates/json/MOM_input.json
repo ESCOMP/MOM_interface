@@ -2103,8 +2103,8 @@
       },
       "DEFAULT_ANSWER_DATE": {
          "description": "\"[Boolean] default = True\nThis sets the default value for the various parameters.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
+         "datatype": "string",
+         "units": "ymd",
          "value": 99991231
       },
       "VERTEX_SHEAR": {
