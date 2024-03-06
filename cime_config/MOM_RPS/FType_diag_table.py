@@ -27,8 +27,6 @@ class FType_diag_table(ParamGen):
                 for line in diag_table_unresolved:
                     resolved_diag_table.write(line.replace("${CASE}", casename))
 
-        resolved_diag_table.close()
-
     def write(self, output_path, case, MOM_input_final):
         def get_all_fields(fields_block):
             """Given a fields block, returns a list of all fields."""
