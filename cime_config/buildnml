@@ -127,9 +127,7 @@ def prep_input(case, inst_suffixes):
 
     # 6. Create diag_table:
     diag_table_rundir = os.path.join(rundir, "diag_table")
-    unresolved_diag_table_confdir = os.path.join(
-        momconfdir, "diag_table.unresolved"
-    )
+    unresolved_diag_table_confdir = os.path.join(momconfdir, "diag_table.unresolved")
     if "diag_table" in SourceMods_listdir:
         # A resolved diag_table is provided in SourceMods. Directly copy it to rundir.
         expect(
@@ -213,7 +211,10 @@ def _copy_input_files(case, dest_dir, inst_suffixes):
     for inst_suffix in inst_suffixes:
         for filename in ["MOM_input", "MOM_override"]:
             shutil.copy(os.path.join(rundir, filename + inst_suffix), dest_dir)
-    for filename in ["diag_table", "input.nml",]:
+    for filename in [
+        "diag_table",
+        "input.nml",
+    ]:
         shutil.copy(os.path.join(rundir, filename), dest_dir)
 
 
