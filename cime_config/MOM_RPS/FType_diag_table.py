@@ -20,10 +20,10 @@ class FType_diag_table(ParamGen):
         assert os.path.exists(unresolved_diag_table_path), \
             "Unresolved diag_table file not found: "+unresolved_diag_table_path
         
-        resolved_diag_table = open(resolved_diag_table_path, 'w')
-        with open(unresolved_diag_table_path, 'r') as diag_table_unresolved:
-            for line in diag_table_unresolved:
-                resolved_diag_table.write(line.replace('${CASE}', casename))
+        with  open(resolved_diag_table_path, 'w') as resolved_diag_table:
+            with open(unresolved_diag_table_path, 'r') as diag_table_unresolved:
+                for line in diag_table_unresolved:
+                    resolved_diag_table.write(line.replace('${CASE}', casename))
         
         resolved_diag_table.close()
 
