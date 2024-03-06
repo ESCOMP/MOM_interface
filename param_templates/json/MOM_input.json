@@ -2101,11 +2101,11 @@
             "$OCN_GRID == \"tx0.25v1\"": -3.0
          }
       },
-      "DEFAULT_2018_ANSWERS": {
-         "description": "\"[Boolean] default = True\nThis sets the default value for the various _2018_ANSWERS parameters.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": false
+      "DEFAULT_ANSWER_DATE": {
+         "description": "\"[Boolean] default = True\nThis sets the default value for the various parameters.\"\n",
+         "datatype": "string",
+         "units": "ymd",
+         "value": 99991231
       },
       "VERTEX_SHEAR": {
          "description": "\"[Boolean] default = False\nIf true, do the calculations of the shear-driven mixing\nat the cell vertices (i.e., the vorticity points).\"\n",
