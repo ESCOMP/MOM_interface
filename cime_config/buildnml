@@ -41,8 +41,6 @@ def prep_input(case, inst_suffixes):
     rundir            = case.get_value("RUNDIR")
     comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
     srcroot           = case.get_value("SRCROOT")
-    marbl_config      = case.get_value("MARBL_CONFIG")
-    vert_grid         = case.get_value("MARBL_HIST_VERT_GRID")
     caseroot          = case.get_value("CASEROOT")
     ocn_grid          = case.get_value("OCN_GRID")
     run_type          = case.get_value("RUN_TYPE")
@@ -136,10 +134,20 @@ def prep_input(case, inst_suffixes):
 
     # 6. Create marbl_in (if case is set up with ocean BGC)
     if  use_MARBL:
+        # Read MARBL-specific case variables
+        marbl_config         = case.get_value("MARBL_CONFIG")
+        marbl_tracer_opts    = case.get_value("MARBL_TRACER_OPTS")
+        marbl_hist_vert_grid = case.get_value("MARBL_HIST_VERT_GRID")
+
+        # Determine which tracer modules are active in MARBL
+        base_bio_on = "INCLUDE_BASE_BIO" in marbl_tracer_opts
+        abio_dic_on = "INCLUDE_ABIO_DIC" in marbl_tracer_opts
+
+        # Use MARBL-provided tool to generate marbl_in
         MARBL_dir = os.path.join(srcroot, "components", "mom", "MOM6", "pkg", "MARBL")
         from MARBL_settings import MARBL_settings_for_MOM
-        MARBL_settings = MARBL_settings_for_MOM(MARBL_dir, caseroot, ocn_grid, run_type,
-                                                continue_run, marbl_config)
+        MARBL_settings = MARBL_settings_for_MOM(MARBL_dir, caseroot, base_bio_on, abio_dic_on,
+                                                ocn_grid, run_type, continue_run, marbl_config)
         MARBL_settings.write_settings_file(os.path.join(rundir, "marbl_in"))
 
     # 7. Create diag_table:
@@ -177,8 +185,8 @@ def prep_input(case, inst_suffixes):
             else:
                 lMARBL_output_alt_co2 = False
             generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir,
-                                      diag_table_buildconf, vert_grid, lMARBL_output_all, lMARBL_output_alt_co2,
-                                       ice_ncat)
+                                      diag_table_buildconf, marbl_hist_vert_grid, lMARBL_output_all,
+                                      lMARBL_output_alt_co2, ice_ncat)
             if os.path.isfile(diag_table_buildconf):
                 diag_table.append(FType_diag_table.from_json(diag_table_buildconf))
         diag_table.write(diag_table_rundir, case, MOM_input_final)
@@ -229,7 +237,7 @@ def _copy_input_files(case, dest_dir, inst_suffixes):
         shutil.copy(os.path.join(rundir,filename), dest_dir)
 
 def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, diag_table_buildconf,
-                              vert_grid, lMARBL_output_all, lMARBL_output_alt_co2, ice_ncat):
+                              marbl_hist_vert_grid, lMARBL_output_all, lMARBL_output_alt_co2, ice_ncat):
     """
     Create Buildconf/momconf/diag_table_MARBL.json
 
@@ -288,7 +296,7 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
     # 4. Generate diag_table based on contents of ecosys_diagnostics
     #    and knowledge of which diags are 2D
     from MARBL_diags_to_diag_table import diagnostics_to_diag_table
-    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, diag2D_list, vert_grid,
+    diagnostics_to_diag_table(ecosys_diags_buildconf, diag_table_buildconf, diag2D_list, marbl_hist_vert_grid,
                               lMARBL_output_all, lMARBL_output_alt_co2)
 
 

@@ -2,7 +2,7 @@
 """
 
 class MARBL_settings_for_MOM(object):
-    def __init__(self, MARBL_dir, caseroot, ocn_grid, run_type, continue_run, ocn_bgc_config):
+    def __init__(self, MARBL_dir, caseroot, base_bio_on, abio_dic_on, ocn_grid, run_type, continue_run, ocn_bgc_config):
 
         import sys, os
 
@@ -16,6 +16,14 @@ class MARBL_settings_for_MOM(object):
 
         settings_file = "settings_"+ocn_bgc_config+".json"
 
+        # Users CAN NOT provide these variables in user_nl_marbl
+        MARBL_args["exclude_dict"] = {}
+        for var in ['base_bio_on', 'abio_dic_on']:
+          MARBL_args["exclude_dict"][var] = f'ERROR: {var} can not be set in user_nl_marbl -- ' + \
+                                             'it is controlled by MARBL_TRACER_OPTS in env_run.xml'
+        for var in ['ciso_on', 'ladjust_bury_coeff']:
+          MARBL_args["exclude_dict"][var] = f'ERROR: running with {var} is not supported in CESM+MOM6 yet'
+
         # User can put settings_file in SourceMods, otherwise use file provided by MARBL
         MARBL_args["default_settings_file"] = os.path.join(caseroot,"SourceMods","src.mom", settings_file)
         if not os.path.isfile(MARBL_args["default_settings_file"]):
@@ -25,6 +33,10 @@ class MARBL_settings_for_MOM(object):
         MARBL_args["input_file"] = os.path.join(caseroot, "user_nl_marbl")
         if not os.path.isfile(MARBL_args["input_file"]):
             MARBL_args["input_file"] = None
+
+        # Specify MARBL tracer opts
+        MARBL_args["base_bio_on"] = base_bio_on
+        MARBL_args["abio_dic_on"] = abio_dic_on
 
         # Specify grid
         MARBL_args["grid"] = "CESM_MOM"
