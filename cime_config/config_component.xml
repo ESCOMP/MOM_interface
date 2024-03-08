@@ -104,8 +104,8 @@
     <valid_values></valid_values>
     <default_value></default_value>
     <values modifier='merge'>
-      <value compset="MOM6%[^_]*MARBL-ABIO">INCLUDE_ABIO_DIC</value>
-      <value compset="MOM6%[^_]*MARBL-BIO">INCLUDE_BASE_BIO</value>
+      <value compset="MOM6%[^_]*MARBL-ABIO">ABIO_DIC_ON=TRUE</value>
+      <value compset="MOM6%[^_]*MARBL-BIO">BASE_BIO_ON=TRUE</value>
     </values>
     <group>run_component_mom</group>
     <file>env_run.xml</file>

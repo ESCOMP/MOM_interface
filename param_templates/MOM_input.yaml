@@ -360,7 +360,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            '"INCLUDE_ABIO_DIC" in $MARBL_TRACER_OPTS or "INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS': True
+            '"ABIO_DIC_ON=TRUE" in $MARBL_TRACER_OPTS or "BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS': True
             else: False
     MARBL_TRACERS_IC_FILE:
         description: |
@@ -376,48 +376,48 @@ Global:
              forcing field for the MARBL tracer package"
         datatype: string
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': fesedflux_total_reduce_oxic_tx2_3v2.c231205.nc
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx0.66v1"': fesedflux_total_reduce_oxic_tx0.66v1.c230817.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': fesedflux_total_reduce_oxic_tx2_3v2.c231205.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx0.66v1"': fesedflux_total_reduce_oxic_tx0.66v1.c230817.nc
     MARBL_FEVENTFLUX_FILE:
         description: |
             "Name of file containing iron sediment flux
              forcing field for the MARBL tracer package"
         datatype: string
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': feventflux_5gmol_tx2_3v2.c231205.nc
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx0.66v1"': feventflux_5gmol_tx0.66v1.c230817.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': feventflux_5gmol_tx2_3v2.c231205.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx0.66v1"': feventflux_5gmol_tx0.66v1.c230817.nc
     READ_RIV_FLUXES:
         description: Use river fluxes provided by RIV_FLUX_FILE
         datatype: logical
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS': True
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS': True
     RIV_FLUX_FILE:
         description: |
             "Name of file containing river fluxes
              (added to surface tracer flux in tracer_vertdiff for MARBL tracers)"
         datatype: string
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2" and $ROF_GRID == "JRA025"': riv_nut.gnews_gnm.rJRA025_to_tx2_3v2_nnsm_e333r100_230415.20240202.nc
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2" and $ROF_GRID == "r05"': riv_nut.gnews_gnm.r05_to_tx2_3v2_nnsm_e250r250_230914.20240202.nc
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx0.66v1"': riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2" and $ROF_GRID == "JRA025"': riv_nut.gnews_gnm.rJRA025_to_tx2_3v2_nnsm_e333r100_230415.20240202.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2" and $ROF_GRID == "r05"': riv_nut.gnews_gnm.r05_to_tx2_3v2_nnsm_e250r250_230914.20240202.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx0.66v1"': riv_nut.gnews_gnm.JRA025m_to_tx0.66v1_nnsm_e333r100_190910.20230821.nc
     MARBL_D14C_FILE_1:
         description: |
             "Name of file containing D14C forcing from 30 N to 90 N"
         datatype: string
         value:
-            '"INCLUDE_ABIO_DIC" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': atm_delta_C14_CMIP6_sector1_global_1850-2015_yearly_v2.0_c240202.nc
+            '"ABIO_DIC_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': atm_delta_C14_CMIP6_sector1_global_1850-2015_yearly_v2.0_c240202.nc
     MARBL_D14C_FILE_2:
         description: |
             "Name of file containing D14C forcing from 30 S to 30 N"
         datatype: string
         value:
-            '"INCLUDE_ABIO_DIC" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': atm_delta_C14_CMIP6_sector2_global_1850-2015_yearly_v2.0_c240202.nc
+            '"ABIO_DIC_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': atm_delta_C14_CMIP6_sector2_global_1850-2015_yearly_v2.0_c240202.nc
     MARBL_D14C_FILE_3:
         description: |
             "Name of file containing D14C forcing from 90 S to 30 S"
         datatype: string
         value:
-            '"INCLUDE_ABIO_DIC" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': atm_delta_C14_CMIP6_sector3_global_1850-2015_yearly_v2.0_c240202.nc
+            '"ABIO_DIC_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': atm_delta_C14_CMIP6_sector3_global_1850-2015_yearly_v2.0_c240202.nc
     CHL_FROM_FILE:
         description: |
             "[Boolean] default = True
@@ -425,7 +425,7 @@ Global:
             "
         datatype: logical
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS': False
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS': False
     ATM_CO2_OPT:
         description: |
             "default comes from env_run.xml (OCN_CO2_TYPE)
@@ -434,7 +434,7 @@ Global:
             "
         datatype: string
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS': $OCN_CO2_TYPE
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS': $OCN_CO2_TYPE
     ATM_CO2_CONST:
         description: |
             "default comes from env_run.xml (CCSM_CO2_PPMV)
@@ -442,7 +442,7 @@ Global:
             "
         datatype: real
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS': $CCSM_CO2_PPMV
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS': $CCSM_CO2_PPMV
     ATM_ALT_CO2_CONST:
         description: |
             "default comes from env_run.xml (CCSM_CO2_PPMV)
@@ -450,28 +450,28 @@ Global:
             "
         datatype: real
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS': $CCSM_CO2_PPMV
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS': $CCSM_CO2_PPMV
     DUST_RATIO_THRES:
         description: |
             "TODO: Add description
             "
         datatype: real
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $COMP_ATM == "cam"': 60.0
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $COMP_ATM == "cam"': 60.0
     DUST_RATIO_TO_FE_BIOAVAIL_FRAC:
         description: |
             "TODO: Add description
             "
         datatype: real
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $COMP_ATM == "cam"': = 1.0 / 170.0
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $COMP_ATM == "cam"': = 1.0 / 170.0
     FE_BIOAVAIL_FRAC_OFFSET:
         description: |
             "TODO: Add description
             "
         datatype: real
         value:
-            '"INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS and $COMP_ATM == "cam"': 0.01
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $COMP_ATM == "cam"': 0.01
     USE_ICE_CATEGORIES:
         description: |
             "[Boolean] default = False
@@ -3559,7 +3559,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            '"INCLUDE_ABIO_DIC" in $MARBL_TRACER_OPTS or "INCLUDE_BASE_BIO" in $MARBL_TRACER_OPTS': True
+            '"ABIO_DIC_ON=TRUE" in $MARBL_TRACER_OPTS or "BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS': True
     USE_WAVES:
         description: |
             "default = False

@@ -140,8 +140,21 @@ def prep_input(case, inst_suffixes):
         marbl_hist_vert_grid = case.get_value("MARBL_HIST_VERT_GRID")
 
         # Determine which tracer modules are active in MARBL
-        base_bio_on = "INCLUDE_BASE_BIO" in marbl_tracer_opts
-        abio_dic_on = "INCLUDE_ABIO_DIC" in marbl_tracer_opts
+        marbl_tracer_opt_dict = {}
+        for marbl_tracer_opt in marbl_tracer_opts.split():
+            temp_mto = marbl_tracer_opt.split("=")
+            key, tmp_value = temp_mto[0], temp_mto[1]
+            value = tmp_value
+            if key in ["BASE_BIO_ON", "ABIO_DIC_ON"]:
+                if tmp_value == "TRUE":
+                    value = True
+                elif tmp_value == "FALSE":
+                    value = False
+                else:
+                    raise ValueError(f"{tmp_value} is not a valid value for {key} (can not convert to bool)")
+            marbl_tracer_opt_dict[key] = value
+        base_bio_on = marbl_tracer_opt_dict.get("BASE_BIO_ON", False)
+        abio_dic_on = marbl_tracer_opt_dict.get("ABIO_DIC_ON", False)
 
         # Use MARBL-provided tool to generate marbl_in
         MARBL_dir = os.path.join(srcroot, "components", "mom", "MOM6", "pkg", "MARBL")
@@ -169,9 +182,9 @@ def prep_input(case, inst_suffixes):
             # Include ALT_CO2 diagnostics if atm_co2_opt and atm_alt_co2_opt differ
             # (or if they are both "constant" but atm_co2_const != atm_alt_co2_const)
             if "ATM_CO2_OPT" in MOM_input_final._data["Global"]:
-                atm_co2_opt = MOM_input_final._data["Global"]["ATM_CO2_OPT"]["value"].strip().lower().replace('"', '')
+                atm_co2_opt = MOM_input_final._data["Global"]["ATM_CO2_OPT"]["value"].strip().lower().replace('"', "")
                 try:
-                    atm_alt_co2_opt = MOM_input_final._data["Global"]["ATM_ALT_CO2_OPT"]["value"].strip().lower().replace('"', '')
+                    atm_alt_co2_opt = MOM_input_final._data["Global"]["ATM_ALT_CO2_OPT"]["value"].strip().lower().replace('"', "")
                 except:
                     atm_alt_co2_opt = "constant"
                 if (atm_co2_opt == atm_alt_co2_opt):
