@@ -1,6 +1,7 @@
 import os
 from CIME.ParamGen.paramgen import ParamGen
 
+
 class FType_input_nml(ParamGen):
     """Encapsulates data and read/write methods for MOM6 (FMS) input.nml file"""
 
