@@ -2234,11 +2234,11 @@
             "$OCN_GRID == \"tx0.25v1\"": -3.0
          }
       },
-      "DEFAULT_2018_ANSWERS": {
-         "description": "\"[Boolean] default = True\nThis sets the default value for the various _2018_ANSWERS parameters.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": false
+      "DEFAULT_ANSWER_DATE": {
+         "description": "\"[Boolean] default = True\nThis sets the default value for the various parameters.\"\n",
+         "datatype": "string",
+         "units": "ymd",
+         "value": 99991231
       },
       "VERTEX_SHEAR": {
          "description": "\"[Boolean] default = False\nIf true, do the calculations of the shear-driven mixing\nat the cell vertices (i.e., the vorticity points).\"\n",
@@ -2951,6 +2951,13 @@
          "datatype": "string",
          "value": {
             "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": "0.04, 0.11, 0.33"
+         }
+      },
+      "AUTO_MASKTABLE": {
+         "description": "Turn on automatic mask table generation to eliminate land blocks\n",
+         "datatype": "list",
+         "value": {
+            "$OCN_GRID in [\"tx0.66v1\", \"tx2_3v2\", \"tx0.25v1\"]": true
          }
       }
    },

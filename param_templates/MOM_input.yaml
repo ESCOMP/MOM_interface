@@ -2778,13 +2778,13 @@ Global:
             $OCN_GRID == "tx0.66v1": -3.0
             $OCN_GRID == "tx2_3v2": -3.0
             $OCN_GRID == "tx0.25v1": -3.0
-    DEFAULT_2018_ANSWERS:
+    DEFAULT_ANSWER_DATE:
         description: |
             "[Boolean] default = True
-            This sets the default value for the various _2018_ANSWERS parameters."
-        datatype: logical
-        units: Boolean
-        value: False
+            This sets the default value for the various parameters."
+        datatype: string
+        units: ymd
+        value: 99991231
     VERTEX_SHEAR:
         description: |
             "[Boolean] default = False
@@ -3633,6 +3633,12 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1":
               4, 3
+    AUTO_MASKTABLE:
+        description: |
+            Turn on automatic mask table generation to eliminate land blocks
+        datatype: list
+        value:
+            $OCN_GRID in ["tx0.66v1", "tx2_3v2", "tx0.25v1"]: True
 
 
 KPP:
