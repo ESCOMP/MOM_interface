@@ -2689,6 +2689,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     TOPO_EDITS_FILE:
         description: |
@@ -3399,6 +3400,7 @@ Global:
         datatype: real
         units: W m-2 or various
         value:
+            $OCN_GRID == "tx2_3v2": 1.0
             $OCN_GRID == "tx0.25v1": 1.0
     GEOTHERMAL_FILE:
         description: |
@@ -3407,6 +3409,7 @@ Global:
             read, or blank to use a constant heating rate."
         datatype: string
         value:
+            $OCN_GRID == "tx2_3v2": "geothermal_davies2013_tx2_3_20231120_cdf5.nc"
             $OCN_GRID == "tx0.25v1": "geothermal_davies2013_v1.nc"
     GEOTHERMAL_VARNAME:
         description: |
@@ -3415,6 +3418,7 @@ Global:
             GEOTHERMAL_FILE."
         datatype: string
         value:
+            $OCN_GRID == "tx2_3v2": "geothermal_hf"
             $OCN_GRID == "tx0.25v1": "geothermal_hf"
     USE_WAVES:
         description: |

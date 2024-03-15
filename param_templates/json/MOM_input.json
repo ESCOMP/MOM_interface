@@ -2136,6 +2136,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -2738,6 +2739,7 @@
          "datatype": "real",
          "units": "W m-2 or various",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0
          }
       },
@@ -2745,6 +2747,7 @@
          "description": "\"default = ''\nThe file from which the geothermal heating is to be\nread, or blank to use a constant heating rate.\"\n",
          "datatype": "string",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "geothermal_davies2013_tx2_3_20231120_cdf5.nc",
             "$OCN_GRID == \"tx0.25v1\"": "geothermal_davies2013_v1.nc"
          }
       },
@@ -2752,6 +2755,7 @@
          "description": "\"default = 'geo_heat'\nThe name of the geothermal heating variable in\nGEOTHERMAL_FILE.\"\n",
          "datatype": "string",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "geothermal_hf",
             "$OCN_GRID == \"tx0.25v1\"": "geothermal_hf"
          }
       },
