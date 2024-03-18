@@ -691,6 +691,14 @@ Global:
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
+    USE_STANLEY_ISO:
+        description: |
+            "[Boolean] default = False
+            If true, turn on Stanley SGS T variance parameterization in isopycnal slope code."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     ETA_TOLERANCE:
         description: |
             "[m] default = 3.15E-09
@@ -737,6 +745,16 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx2_3v2": True
+    NDIFF_TAPERING:
+        description: |
+            "[Boolean] default = False
+            If true, neutral diffusion linearly decays to zero within a transition
+            zone defined using boundary layer depths.  Only applicable when
+            NDIFF_INTERIOR_ONLY = True."
+        datatype: logical
+        units: Boolean
+        value:
             $OCN_GRID == "tx2_3v2": True
     USE_HORIZONTAL_BOUNDARY_DIFFUSION:
         description: |
@@ -893,6 +911,14 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    USE_STANLEY_PGF:
+        description: |
+            "[Boolean] default = False
+            If true, turn on Stanley SGS T variance parameterization in PGF code."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     LAPLACIAN:
         description: |
             "[Boolean] default = False
@@ -1345,6 +1371,22 @@ Global:
         units: nondimensional
         value:
             $OCN_GRID == "tx0.25v1": 0.1
+    STOCH_EOS:
+        decription:
+            "[Boolean] default = False
+            If true, stochastic perturbations are applied to the EOS in the PGF."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    STANLEY_COEFF:
+        decription:
+            "[nondim] default = -1.0
+            Coefficient correlating the temperature gradient and SGS T variance."
+        datatype: real
+        units: nondimensional
+        value:
+            $OCN_GRID == "tx2_3v2": 0.5
     USE_KH_IN_MEKE:
         description: |
             "[Boolean] default = False
@@ -1378,6 +1420,14 @@ Global:
             $OCN_GRID == "gx1v6": 0.01
             $OCN_GRID == "tx0.66v1": 0.01
             $OCN_GRID == "tx2_3v2": 0.01
+    USE_STANLEY_GM:
+        description: |
+            "[Boolean] default = False
+            If true, turn on Stanley SGS T variance parameterization in GM code."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     MIXEDLAYER_RESTRAT:
         description: |
             "[Boolean] default = False
@@ -1440,6 +1490,14 @@ Global:
             $OCN_GRID == "tx0.66v1": 3.45600E+05
             $OCN_GRID == "tx2_3v2": 3.45600E+05
             $OCN_GRID == "tx0.25v1": 2.592E+06
+    USE_STANLEY_ML:
+        description: |
+            "[Boolean] default = False
+            If true, turn on Stanley SGS T variance parameterization in ML restrat code."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     USE_CVMix_CONVECTION:
         description: |
             "[Boolean] default = False
@@ -2010,6 +2068,15 @@ Global:
             $OCN_GRID == "tx0.66v1": '"PPM:H3"'
             $OCN_GRID == "tx2_3v2": '"PPM:H3"'
             $OCN_GRID == "tx0.25v1": '"PPM:H3"'
+    KHTR_USE_EBT_STRUCT:
+        description: |
+            "[Boolean] default = False
+            If true, uses the equivalent barotropic structure as the vertical structure of
+            the tracer diffusivity."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     KHTR:
         description: |
             "[m2 s-1] default = 0.0
