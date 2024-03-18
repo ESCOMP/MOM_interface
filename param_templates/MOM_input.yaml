@@ -1372,7 +1372,7 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 0.1
     STOCH_EOS:
-        decription:
+        description:
             "[Boolean] default = False
             If true, stochastic perturbations are applied to the EOS in the PGF."
         datatype: logical
@@ -1380,7 +1380,7 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": True
     STANLEY_COEFF:
-        decription:
+        description:
             "[nondim] default = -1.0
             Coefficient correlating the temperature gradient and SGS T variance."
         datatype: real

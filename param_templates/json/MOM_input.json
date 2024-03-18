@@ -1019,7 +1019,7 @@
          }
       },
       "STOCH_EOS": {
-         "decription": "[Boolean] default = False If true, stochastic perturbations are applied to the EOS in the PGF.",
+         "description": "[Boolean] default = False If true, stochastic perturbations are applied to the EOS in the PGF.",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
@@ -1027,7 +1027,7 @@
          }
       },
       "STANLEY_COEFF": {
-         "decription": "[nondim] default = -1.0 Coefficient correlating the temperature gradient and SGS T variance.",
+         "description": "[nondim] default = -1.0 Coefficient correlating the temperature gradient and SGS T variance.",
          "datatype": "real",
          "units": "nondimensional",
          "value": {
