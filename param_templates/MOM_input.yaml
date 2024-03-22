@@ -108,11 +108,10 @@ Global:
         datatype: integer
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 60
-            $OCN_GRID == "tx0.66v1": 65
-            $OCN_GRID == "tx2_3v2": 65
-            $OCN_GRID == "tx0.25v1": 75
-            $OCN_GRID == "MISOMIP": 36
+            $MOM6_VERTICAL_GRID == "zstar_60L": 60
+            $MOM6_VERTICAL_GRID == "zstar_65L": 65
+            $MOM6_VERTICAL_GRID == "hycom1": 75
+            $MOM6_VERTICAL_GRID == "sigma_shelf_zstar": 36
     USE_LEGACY_DIABATIC_DRIVER:
         description: |
             "[Boolean] default = True
@@ -358,7 +357,7 @@ Global:
             "This specifies how layers are to be defined:
             file - read coordinate information from the file
             specified by (COORD_FILE).
-            linear - linear based on interfaces not layesrs.
+            linear - linear based on interfaces not layers.
             ts_ref - use reference temperature and salinity
             ts_range - use range of temperature and salinity
             (T_REF and S_REF) to determine surface density
@@ -371,9 +370,6 @@ Global:
             The file from which the coordinate densities are read."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "none"
-            $OCN_GRID == "tx0.66v1": "none"
-            $OCN_GRID == "tx2_3v2": "none"
             $OCN_GRID == "tx0.25v1": "file"
             $OCN_GRID == "MISOMIP": "linear"
     REMAP_UV_USING_OLD_ALG:
@@ -402,7 +398,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.25v1": True
+            $MOM6_VERTICAL_GRID == "hycom1": True
     GRID_CONFIG:
         description: |
             "A character string that determines the method for
@@ -691,6 +687,14 @@ Global:
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
+    USE_STANLEY_ISO:
+        description: |
+            "[Boolean] default = False
+            If true, turn on Stanley SGS T variance parameterization in isopycnal slope code."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     ETA_TOLERANCE:
         description: |
             "[m] default = 3.15E-09
@@ -737,6 +741,16 @@ Global:
         value:
             $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.66v1": True
+            $OCN_GRID == "tx2_3v2": True
+    NDIFF_TAPERING:
+        description: |
+            "[Boolean] default = False
+            If true, neutral diffusion linearly decays to zero within a transition
+            zone defined using boundary layer depths.  Only applicable when
+            NDIFF_INTERIOR_ONLY = True."
+        datatype: logical
+        units: Boolean
+        value:
             $OCN_GRID == "tx2_3v2": True
     USE_HORIZONTAL_BOUNDARY_DIFFUSION:
         description: |
@@ -788,9 +802,9 @@ Global:
             ADAPTIVE - optimize for smooth neutral density surfaces"
         datatype: string
         value:
-            $OCN_GRID == "tx0.25v1": "HYCOM1"
-            $OCN_GRID == "MISOMIP": "SIGMA_SHELF_ZSTAR"
-            else: "Z*"
+            $MOM6_VERTICAL_GRID == "zstar_65L" or $MOM6_VERTICAL_GRID == "zstar_60L": "Z*"
+            $MOM6_VERTICAL_GRID == "hycom1": "HYCOM1"
+            $MOM6_VERTICAL_GRID == "sigma_shelf_zstar": "SIGMA_SHELF_ZSTAR"
     ALE_COORDINATE_CONFIG:
         description: |
             "default = 'UNIFORM'
@@ -810,10 +824,10 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": '"FILE:ocean_vgrid.nc,dz"'
-            $OCN_GRID == "tx0.66v1": '"FILE:vgrid_65L_20200626.nc,dz"'
-            $OCN_GRID == "tx2_3v2": '"FILE:vgrid_65L_20200626.nc,dz"'
-            $OCN_GRID == "tx0.25v1": '"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"'
+            $MOM6_VERTICAL_GRID == "zstar_65L": '"FILE:vgrid_65L_20200626.nc,dz"'
+            $MOM6_VERTICAL_GRID == "zstar_60L": '"FILE:ocean_vgrid.nc,dz"'
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": '"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz"'
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID == "tx0.25v1": '"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"'
     REGRID_COMPRESSIBILITY_FRACTION:
         description: |
             "[not defined] default = 0.0
@@ -823,7 +837,7 @@ Global:
         datatype: real
         units: not defined
         value:
-            $OCN_GRID == "tx0.25v1": 0.01
+            $MOM6_VERTICAL_GRID == "hycom1": 0.01
     MAXIMUM_INT_DEPTH_CONFIG:
         description: |
             "default = 'NONE'
@@ -838,7 +852,7 @@ Global:
             The list of maximum depths for each interface."
         datatype: string
         value:
-            $OCN_GRID == "tx0.25v1": '"FNC1:5,8000.0,1.0,.01"'
+            $MOM6_VERTICAL_GRID == "hycom1": '"FNC1:5,8000.0,1.0,.01"'
     MAX_LAYER_THICKNESS_CONFIG:
         description: |
             "default = 'NONE'
@@ -853,7 +867,7 @@ Global:
             The list of maximum thickness for each layer."
         datatype: string
         value:
-            $OCN_GRID == "tx0.25v1": '"FNC1:400,31000.0,0.1,.01"'
+            $MOM6_VERTICAL_GRID == "hycom1": '"FNC1:400,31000.0,0.1,.01"'
     BOUND_CORIOLIS:
         description: |
             "[Boolean] default = False
@@ -893,6 +907,14 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    USE_STANLEY_PGF:
+        description: |
+            "[Boolean] default = False
+            If true, turn on Stanley SGS T variance parameterization in PGF code."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     LAPLACIAN:
         description: |
             "[Boolean] default = False
@@ -1345,6 +1367,22 @@ Global:
         units: nondimensional
         value:
             $OCN_GRID == "tx0.25v1": 0.1
+    STOCH_EOS:
+        description:
+            "[Boolean] default = False
+            If true, stochastic perturbations are applied to the EOS in the PGF."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    STANLEY_COEFF:
+        description:
+            "[nondim] default = -1.0
+            Coefficient correlating the temperature gradient and SGS T variance."
+        datatype: real
+        units: nondimensional
+        value:
+            $OCN_GRID == "tx2_3v2": 0.5
     USE_KH_IN_MEKE:
         description: |
             "[Boolean] default = False
@@ -1378,6 +1416,14 @@ Global:
             $OCN_GRID == "gx1v6": 0.01
             $OCN_GRID == "tx0.66v1": 0.01
             $OCN_GRID == "tx2_3v2": 0.01
+    USE_STANLEY_GM:
+        description: |
+            "[Boolean] default = False
+            If true, turn on Stanley SGS T variance parameterization in GM code."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     MIXEDLAYER_RESTRAT:
         description: |
             "[Boolean] default = False
@@ -1440,6 +1486,14 @@ Global:
             $OCN_GRID == "tx0.66v1": 3.45600E+05
             $OCN_GRID == "tx2_3v2": 3.45600E+05
             $OCN_GRID == "tx0.25v1": 2.592E+06
+    USE_STANLEY_ML:
+        description: |
+            "[Boolean] default = False
+            If true, turn on Stanley SGS T variance parameterization in ML restrat code."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     USE_CVMix_CONVECTION:
         description: |
             "[Boolean] default = False
@@ -2010,6 +2064,15 @@ Global:
             $OCN_GRID == "tx0.66v1": '"PPM:H3"'
             $OCN_GRID == "tx2_3v2": '"PPM:H3"'
             $OCN_GRID == "tx0.25v1": '"PPM:H3"'
+    KHTR_USE_EBT_STRUCT:
+        description: |
+            "[Boolean] default = False
+            If true, uses the equivalent barotropic structure as the vertical structure of
+            the tracer diffusivity."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     KHTR:
         description: |
             "[m2 s-1] default = 0.0
@@ -2689,6 +2752,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     TOPO_EDITS_FILE:
         description: |
@@ -3372,7 +3436,8 @@ Global:
             "TODO"
         datatype: string
         value:
-            $OCN_GRID == "MISOMIP": "PPM_H4"
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": "P1M_H2"
+            $MOM6_VERTICAL_GRID == "MISOMIP": "PPM_H4"
     MLE_USE_PBL_MLD:
         description: |
             "TODO"
@@ -3399,6 +3464,7 @@ Global:
         datatype: real
         units: W m-2 or various
         value:
+            $OCN_GRID == "tx2_3v2": 1.0
             $OCN_GRID == "tx0.25v1": 1.0
     GEOTHERMAL_FILE:
         description: |
@@ -3407,6 +3473,7 @@ Global:
             read, or blank to use a constant heating rate."
         datatype: string
         value:
+            $OCN_GRID == "tx2_3v2": "geothermal_davies2013_tx2_3_20240318_cdf5.nc"
             $OCN_GRID == "tx0.25v1": "geothermal_davies2013_v1.nc"
     GEOTHERMAL_VARNAME:
         description: |
@@ -3415,6 +3482,7 @@ Global:
             GEOTHERMAL_FILE."
         datatype: string
         value:
+            $OCN_GRID == "tx2_3v2": "geothermal_hf"
             $OCN_GRID == "tx0.25v1": "geothermal_hf"
     USE_WAVES:
         description: |

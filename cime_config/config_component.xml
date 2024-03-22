@@ -30,7 +30,6 @@
     </desc>
   </entry>
 
-
   <entry id="MOM6_INFRA_API">
     <type>char</type>
     <valid_values>FMS1,FMS2</valid_values>
@@ -38,6 +37,21 @@
     <group>build_component_mom</group>
     <file>env_build.xml</file>
     <desc> This variable controls the MOM6 infrastructure API.
+    </desc>
+  </entry>
+
+  <entry id="MOM6_VERTICAL_GRID">
+    <type>char</type>
+    <valid_values>zstar_65L,hycom1,zstar_60L,sigma_shelf_zstar</valid_values>
+    <default_value>zstar_65L</default_value>
+    <values>
+      <value grid="oi%tx0.25v1">hycom1</value>
+      <value grid="oi%gx1v6">zstar_60L</value>
+      <value grid="oi%MISOMIP">sigma_shelf_zstar</value>
+    </values>
+    <group>case_comp</group>
+    <file>env_run.xml</file>
+    <desc> This variable controls what vertical grid is used in MOM6.
     </desc>
   </entry>
 
