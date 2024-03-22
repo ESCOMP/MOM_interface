@@ -60,11 +60,10 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 60,
-            "$OCN_GRID == \"tx0.66v1\"": 65,
-            "$OCN_GRID == \"tx2_3v2\"": 65,
-            "$OCN_GRID == \"tx0.25v1\"": 75,
-            "$OCN_GRID == \"MISOMIP\"": 36
+            "$MOM6_VERTICAL_GRID == \"zstar_60L\"": 60,
+            "$MOM6_VERTICAL_GRID == \"zstar_65L\"": 65,
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": 75,
+            "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": 36
          }
       },
       "USE_LEGACY_DIABATIC_DRIVER": {
@@ -257,12 +256,9 @@
          "value": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc"
       },
       "COORD_CONFIG": {
-         "description": "\"This specifies how layers are to be defined:\nfile - read coordinate information from the file\nspecified by (COORD_FILE).\nlinear - linear based on interfaces not layesrs.\nts_ref - use reference temperature and salinity\nts_range - use range of temperature and salinity\n(T_REF and S_REF) to determine surface density\nand GINT calculate internal densities.\ngprime - use reference density (RHO_0) for surface\ndensity and GINT calculate internal densities.\nts_profile - use temperature and salinity profiles\n(read from COORD_FILE) to set layer densities.\nUSER - call a user modified routine.\nThe file from which the coordinate densities are read.\"\n",
+         "description": "\"This specifies how layers are to be defined:\nfile - read coordinate information from the file\nspecified by (COORD_FILE).\nlinear - linear based on interfaces not layers.\nts_ref - use reference temperature and salinity\nts_range - use range of temperature and salinity\n(T_REF and S_REF) to determine surface density\nand GINT calculate internal densities.\ngprime - use reference density (RHO_0) for surface\ndensity and GINT calculate internal densities.\nts_profile - use temperature and salinity profiles\n(read from COORD_FILE) to set layer densities.\nUSER - call a user modified routine.\nThe file from which the coordinate densities are read.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "none",
-            "$OCN_GRID == \"tx0.66v1\"": "none",
-            "$OCN_GRID == \"tx2_3v2\"": "none",
             "$OCN_GRID == \"tx0.25v1\"": "file",
             "$OCN_GRID == \"MISOMIP\"": "linear"
          }
@@ -285,7 +281,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": true
          }
       },
       "GRID_CONFIG": {
@@ -604,19 +600,19 @@
          "description": "\"default = 'LAYER'\nCoordinate mode for vertical regridding.\nChoose among the following possibilities:\nLAYER - Isopycnal or stacked shallow water layers\nZSTAR, Z* - stetched geopotential z*\nSIGMA_SHELF_ZSTAR - stetched geopotential z* ignoring shelf\nSIGMA - terrain following coordinates\nRHO   - continuous isopycnal\nHYCOM1 - HyCOM-like hybrid coordinate\nSLIGHT - stretched coordinates above continuous isopycnal\nADAPTIVE - optimize for smooth neutral density surfaces\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "HYCOM1",
-            "$OCN_GRID == \"MISOMIP\"": "SIGMA_SHELF_ZSTAR",
-            "else": "Z*"
+            "$MOM6_VERTICAL_GRID == \"zstar_65L\" or $MOM6_VERTICAL_GRID == \"zstar_60L\"": "Z*",
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": "HYCOM1",
+            "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": "SIGMA_SHELF_ZSTAR"
          }
       },
       "ALE_COORDINATE_CONFIG": {
          "description": "\"default = 'UNIFORM'\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter ALE_RESOLUTION\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "\"FILE:ocean_vgrid.nc,dz\"",
-            "$OCN_GRID == \"tx0.66v1\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
-            "$OCN_GRID == \"tx2_3v2\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
-            "$OCN_GRID == \"tx0.25v1\"": "\"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01\""
+            "$MOM6_VERTICAL_GRID == \"zstar_65L\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
+            "$MOM6_VERTICAL_GRID == \"zstar_60L\"": "\"FILE:ocean_vgrid.nc,dz\"",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "\"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz\"",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx0.25v1\"": "\"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01\""
          }
       },
       "REGRID_COMPRESSIBILITY_FRACTION": {
@@ -624,21 +620,21 @@
          "datatype": "real",
          "units": "not defined",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.01
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": 0.01
          }
       },
       "MAXIMUM_INT_DEPTH_CONFIG": {
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum interface depths.\nValid options are:\nNONE        - there are no maximum interface depths\nPARAM       - use the vector-parameter MAXIMUM_INTERFACE_DEPTHS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum depths for each interface.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "\"FNC1:5,8000.0,1.0,.01\""
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": "\"FNC1:5,8000.0,1.0,.01\""
          }
       },
       "MAX_LAYER_THICKNESS_CONFIG": {
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum layer thicknesses.\nValid options are:\nNONE        - there are no maximum layer thicknesses\nPARAM       - use the vector-parameter MAX_LAYER_THICKNESS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum thickness for each layer.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "\"FNC1:400,31000.0,0.1,.01\""
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": "\"FNC1:400,31000.0,0.1,.01\""
          }
       },
       "BOUND_CORIOLIS": {
@@ -2779,7 +2775,8 @@
          "description": "\"TODO\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": "PPM_H4"
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "P1M_H2",
+            "$MOM6_VERTICAL_GRID == \"MISOMIP\"": "PPM_H4"
          }
       },
       "MLE_USE_PBL_MLD": {
