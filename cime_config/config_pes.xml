@@ -1056,8 +1056,8 @@
           <rootpe_atm>0</rootpe_atm>
           <rootpe_rof>0</rootpe_rof>
           <rootpe_cpl>0</rootpe_cpl>
-          <rootpe_ice>128</rootpe_ice>
-          <rootpe_ocn>256</rootpe_ocn>
+          <rootpe_ice>0</rootpe_ice>
+          <rootpe_ocn>128</rootpe_ocn>
           <rootpe_lnd>0</rootpe_lnd>
           <rootpe_wav>0</rootpe_wav>
           <rootpe_glc>0</rootpe_glc>
