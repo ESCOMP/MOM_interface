@@ -96,47 +96,46 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
-  <test name="SMS" grid="T62_t232" compset="C1850MOMECO">
+  <test name="SMS" grid="TL319_t232" compset="C1850MOMMARBL_JRA">
     <machines>
-      <machine name="cheyenne" compiler="intel" category="aux_mom"/>
+      <machine name="derecho" compiler="intel" category="aux_mom"/>
     </machines>
     <options>
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
-  <test name="SMS_Ld2_Vnuopc_D" grid="T62_t232" compset="C1850MOMECO">
+  <test name="SMS_Ld2_Vnuopc_D" grid="TL319_t232" compset="C1850MOMMARBL_JRA">
     <machines>
-      <machine name="cheyenne" compiler="intel" category="aux_mom_MARBL"/>
+      <machine name="derecho" compiler="intel" category="aux_mom_MARBL"/>
     </machines>
     <options>
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
-  <test name="SMS_Ld2_D" grid="T62_t232" compset="C1850MOMECO">
+  <test name="SMS_Ld2_D" grid="TL319_t232" compset="C1850MOMMARBL_JRA">
     <machines>
-      <machine name="cheyenne" compiler="intel" category="aux_mom_MARBL"/>
+      <machine name="derecho" compiler="intel" category="aux_mom_MARBL"/>
     </machines>
     <options>
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
-  <test name="ERS" grid="T62_t232" compset="C1850MOMECO">
+  <test name="ERS" grid="TL319_t232" compset="C1850MOMMARBL_JRA">
     <machines>
-      <machine name="cheyenne" compiler="intel" category="aux_mom_MARBL"/>
+      <machine name="derecho" compiler="intel" category="aux_mom_MARBL"/>
     </machines>
     <options>
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
-  <test name="SMS" grid="T62_t232" compset="CMOM" testmods="mom/no_ecosys">
+  <test name="SMS" grid="TL319_t232" compset="CMOM_JRA" testmods="mom/no_ecosys">
     <machines>
-      <machine name="cheyenne" compiler="intel" category="aux_mom_MARBL"/>
+      <machine name="derecho" compiler="intel" category="aux_mom_MARBL"/>
     </machines>
     <options>
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
-=======
   <test name="DIMCS_Ld1" grid="TL319_t232" compset="GMOM_JRA" testmods="mom/cfc_mods--mom/debug">
     <machines>
       <machine name="derecho" compiler="intel" category="aux_mom"/>
