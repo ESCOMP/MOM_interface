@@ -60,11 +60,10 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 60,
-            "$OCN_GRID == \"tx0.66v1\"": 65,
-            "$OCN_GRID == \"tx2_3v2\"": 65,
-            "$OCN_GRID == \"tx0.25v1\"": 75,
-            "$OCN_GRID == \"MISOMIP\"": 36
+            "$MOM6_VERTICAL_GRID == \"zstar_60L\"": 60,
+            "$MOM6_VERTICAL_GRID == \"zstar_65L\"": 65,
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": 75,
+            "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": 36
          }
       },
       "USE_LEGACY_DIABATIC_DRIVER": {
@@ -257,12 +256,9 @@
          "value": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc"
       },
       "COORD_CONFIG": {
-         "description": "\"This specifies how layers are to be defined:\nfile - read coordinate information from the file\nspecified by (COORD_FILE).\nlinear - linear based on interfaces not layesrs.\nts_ref - use reference temperature and salinity\nts_range - use range of temperature and salinity\n(T_REF and S_REF) to determine surface density\nand GINT calculate internal densities.\ngprime - use reference density (RHO_0) for surface\ndensity and GINT calculate internal densities.\nts_profile - use temperature and salinity profiles\n(read from COORD_FILE) to set layer densities.\nUSER - call a user modified routine.\nThe file from which the coordinate densities are read.\"\n",
+         "description": "\"This specifies how layers are to be defined:\nfile - read coordinate information from the file\nspecified by (COORD_FILE).\nlinear - linear based on interfaces not layers.\nts_ref - use reference temperature and salinity\nts_range - use range of temperature and salinity\n(T_REF and S_REF) to determine surface density\nand GINT calculate internal densities.\ngprime - use reference density (RHO_0) for surface\ndensity and GINT calculate internal densities.\nts_profile - use temperature and salinity profiles\n(read from COORD_FILE) to set layer densities.\nUSER - call a user modified routine.\nThe file from which the coordinate densities are read.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "none",
-            "$OCN_GRID == \"tx0.66v1\"": "none",
-            "$OCN_GRID == \"tx2_3v2\"": "none",
             "$OCN_GRID == \"tx0.25v1\"": "file",
             "$OCN_GRID == \"MISOMIP\"": "linear"
          }
@@ -285,7 +281,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": true
          }
       },
       "GRID_CONFIG": {
@@ -516,6 +512,14 @@
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
+      "USE_STANLEY_ISO": {
+         "description": "\"[Boolean] default = False\nIf true, turn on Stanley SGS T variance parameterization in isopycnal slope code.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
       "ETA_TOLERANCE": {
          "description": "\"[m] default = 3.15E-09\nThe tolerance for the differences between the\nbarotropic and baroclinic estimates of the sea surface\nheight due to the fluxes through each face.  The total\ntolerance for SSH is 4 times this value.  The default\nis 0.5*NK*ANGSTROM, and this should not be set less x\nthan about 10^-15*MAXIMUM_DEPTH.\"\n",
          "datatype": "real",
@@ -550,6 +554,14 @@
          "value": {
             "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.66v1\"": true,
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "NDIFF_TAPERING": {
+         "description": "\"[Boolean] default = False\nIf true, neutral diffusion linearly decays to zero within a transition\nzone defined using boundary layer depths.  Only applicable when\nNDIFF_INTERIOR_ONLY = True.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -588,19 +600,19 @@
          "description": "\"default = 'LAYER'\nCoordinate mode for vertical regridding.\nChoose among the following possibilities:\nLAYER - Isopycnal or stacked shallow water layers\nZSTAR, Z* - stetched geopotential z*\nSIGMA_SHELF_ZSTAR - stetched geopotential z* ignoring shelf\nSIGMA - terrain following coordinates\nRHO   - continuous isopycnal\nHYCOM1 - HyCOM-like hybrid coordinate\nSLIGHT - stretched coordinates above continuous isopycnal\nADAPTIVE - optimize for smooth neutral density surfaces\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "HYCOM1",
-            "$OCN_GRID == \"MISOMIP\"": "SIGMA_SHELF_ZSTAR",
-            "else": "Z*"
+            "$MOM6_VERTICAL_GRID == \"zstar_65L\" or $MOM6_VERTICAL_GRID == \"zstar_60L\"": "Z*",
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": "HYCOM1",
+            "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": "SIGMA_SHELF_ZSTAR"
          }
       },
       "ALE_COORDINATE_CONFIG": {
          "description": "\"default = 'UNIFORM'\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter ALE_RESOLUTION\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "\"FILE:ocean_vgrid.nc,dz\"",
-            "$OCN_GRID == \"tx0.66v1\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
-            "$OCN_GRID == \"tx2_3v2\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
-            "$OCN_GRID == \"tx0.25v1\"": "\"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01\""
+            "$MOM6_VERTICAL_GRID == \"zstar_65L\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
+            "$MOM6_VERTICAL_GRID == \"zstar_60L\"": "\"FILE:ocean_vgrid.nc,dz\"",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "\"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz\"",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx0.25v1\"": "\"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01\""
          }
       },
       "REGRID_COMPRESSIBILITY_FRACTION": {
@@ -608,21 +620,21 @@
          "datatype": "real",
          "units": "not defined",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.01
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": 0.01
          }
       },
       "MAXIMUM_INT_DEPTH_CONFIG": {
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum interface depths.\nValid options are:\nNONE        - there are no maximum interface depths\nPARAM       - use the vector-parameter MAXIMUM_INTERFACE_DEPTHS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum depths for each interface.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "\"FNC1:5,8000.0,1.0,.01\""
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": "\"FNC1:5,8000.0,1.0,.01\""
          }
       },
       "MAX_LAYER_THICKNESS_CONFIG": {
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum layer thicknesses.\nValid options are:\nNONE        - there are no maximum layer thicknesses\nPARAM       - use the vector-parameter MAX_LAYER_THICKNESS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum thickness for each layer.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "\"FNC1:400,31000.0,0.1,.01\""
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": "\"FNC1:400,31000.0,0.1,.01\""
          }
       },
       "BOUND_CORIOLIS": {
@@ -652,6 +664,14 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": true
+      },
+      "USE_STANLEY_PGF": {
+         "description": "\"[Boolean] default = False\nIf true, turn on Stanley SGS T variance parameterization in PGF code.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
       },
       "LAPLACIAN": {
          "description": "\"[Boolean] default = False\nIf true, use a Laplacian horizontal viscosity.\"\n",
@@ -994,6 +1014,22 @@
             "$OCN_GRID == \"tx0.25v1\"": 0.1
          }
       },
+      "STOCH_EOS": {
+         "description": "[Boolean] default = False If true, stochastic perturbations are applied to the EOS in the PGF.",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "STANLEY_COEFF": {
+         "description": "[nondim] default = -1.0 Coefficient correlating the temperature gradient and SGS T variance.",
+         "datatype": "real",
+         "units": "nondimensional",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.5
+         }
+      },
       "USE_KH_IN_MEKE": {
          "description": "\"[Boolean] default = False\nIf true, uses the thickness diffusivity calculated here to diffuse MEKE.\"\n",
          "datatype": "logical",
@@ -1022,6 +1058,14 @@
             "$OCN_GRID == \"gx1v6\"": 0.01,
             "$OCN_GRID == \"tx0.66v1\"": 0.01,
             "$OCN_GRID == \"tx2_3v2\"": 0.01
+         }
+      },
+      "USE_STANLEY_GM": {
+         "description": "\"[Boolean] default = False\nIf true, turn on Stanley SGS T variance parameterization in GM code.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "MIXEDLAYER_RESTRAT": {
@@ -1064,6 +1108,14 @@
             "$OCN_GRID == \"tx0.66v1\"": 345600.0,
             "$OCN_GRID == \"tx2_3v2\"": 345600.0,
             "$OCN_GRID == \"tx0.25v1\"": 2592000.0
+         }
+      },
+      "USE_STANLEY_ML": {
+         "description": "\"[Boolean] default = False\nIf true, turn on Stanley SGS T variance parameterization in ML restrat code.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "USE_CVMix_CONVECTION": {
@@ -1560,6 +1612,14 @@
             "$OCN_GRID == \"tx0.66v1\"": "\"PPM:H3\"",
             "$OCN_GRID == \"tx2_3v2\"": "\"PPM:H3\"",
             "$OCN_GRID == \"tx0.25v1\"": "\"PPM:H3\""
+         }
+      },
+      "KHTR_USE_EBT_STRUCT": {
+         "description": "\"[Boolean] default = False\nIf true, uses the equivalent barotropic structure as the vertical structure of\nthe tracer diffusivity.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "KHTR": {
@@ -2136,6 +2196,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -2714,7 +2775,8 @@
          "description": "\"TODO\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": "PPM_H4"
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "P1M_H2",
+            "$MOM6_VERTICAL_GRID == \"MISOMIP\"": "PPM_H4"
          }
       },
       "MLE_USE_PBL_MLD": {
@@ -2738,6 +2800,7 @@
          "datatype": "real",
          "units": "W m-2 or various",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0
          }
       },
@@ -2745,6 +2808,7 @@
          "description": "\"default = ''\nThe file from which the geothermal heating is to be\nread, or blank to use a constant heating rate.\"\n",
          "datatype": "string",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "geothermal_davies2013_tx2_3_20240318_cdf5.nc",
             "$OCN_GRID == \"tx0.25v1\"": "geothermal_davies2013_v1.nc"
          }
       },
@@ -2752,6 +2816,7 @@
          "description": "\"default = 'geo_heat'\nThe name of the geothermal heating variable in\nGEOTHERMAL_FILE.\"\n",
          "datatype": "string",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "geothermal_hf",
             "$OCN_GRID == \"tx0.25v1\"": "geothermal_hf"
          }
       },
