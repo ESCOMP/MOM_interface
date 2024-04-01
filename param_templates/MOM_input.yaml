@@ -526,10 +526,10 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
-            $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "tx0.25v1": True
+            $RUN_TYPE != "hybrid" or $CONTINUE_RUN == True and $OCN_GRID in ["gx1v6", "tx0.66v1", "tx2_3v2", "tx0.25v1"]:
+                True
+            else:
+                False
     TEMP_SALT_Z_INIT_FILE:
         description: |
             "default = 'temp_salt_z.nc'
@@ -3006,7 +3006,16 @@ Global:
             USER - call a user modified routine."
         datatype: string
         value:
-            $OCN_GRID == "MISOMIP": "ISOMIP"
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False: 
+                "thickness_file"
+            else:
+                $OCN_GRID == "MISOMIP": "ISOMIP"
+    THICKNESS_FILE:
+        description: "The name of the thickness file"
+        datatype: string
+        value:
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False:
+                = f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
     SPONGE_CONFIG:
         description: |
             "default = 'file'
@@ -3054,7 +3063,45 @@ Global:
             USER - call a user modified routine."
         datatype: string
         value:
-            $OCN_GRID == "MISOMIP": "ISOMIP"
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False:
+                "file"
+            else:
+                $OCN_GRID == "MISOMIP": "ISOMIP"
+    TS_FILE:
+        description: "The initial condition file for the temperature and salinity."
+        datatype: string
+        value:
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False: 
+                = f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+    TEMP_IC_VAR:
+        description: "The initial condition variable for potential temperature"
+        datatype: string
+        value:
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False: "Temp"
+    SALT_IC_VAR:
+        description: "The initial condition variable for the salinity."
+        datatype: string
+        value:
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False: "Salt"
+    VELOCITY_CONFIG:
+        description: "A string that determines how the initial velocities are specified for a new run."
+        datatype: string
+        value:
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False: "file"
+    VELOCITY_FILE:
+        description: "The name of the velocity initial condition file."
+        datatype: string
+        value:
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False:
+                = f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+    AGE_IC_FILE:
+        description: |
+            "The file in which the age-tracer initial values can be found, or an empty
+            string for internal initialization."
+        datatype: string
+        value:
+            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False:
+                = f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
     T_REF:
         description: |
             "[degC]
