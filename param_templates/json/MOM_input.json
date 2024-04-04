@@ -373,7 +373,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$RUN_TYPE != \"hybrid\" or $CONTINUE_RUN == True and $OCN_GRID in [\"gx1v6\", \"tx0.66v1\", \"tx2_3v2\", \"tx0.25v1\"]": true,
+            "$RUN_TYPE != \"hybrid\" and $OCN_GRID in [\"gx1v6\", \"tx0.66v1\", \"tx2_3v2\", \"tx0.25v1\"]": true,
             "else": false
          }
       },
@@ -2403,7 +2403,7 @@
          "description": "\"A string that determines how the initial layer\nthicknesses are specified for a new run:\nfile - read interface heights from the file specified\nthickness_file - read thicknesses from the file specified\nby (THICKNESS_FILE).\ncoord - determined by ALE coordinate.\nuniform - uniform thickness layers evenly distributed\nbetween the surface and MAXIMUM_DEPTH.\nDOME - use a slope and channel configuration for the\nDOME sill-overflow test case.\nISOMIP - use a configuration for the\nISOMIP test case.\nbenchmark - use the benchmark test case thicknesses.\nsearch - search a density profile for the interface\ndensities. This is not yet implemented.\ncircle_obcs - the circle_obcs test case is used.\nDOME2D - 2D version of DOME initialization.\nadjustment2d - TBD AJA.\nsloshing - TBD AJA.\nseamount - TBD AJA.\nrossby_front - a mixed layer front in thermal wind balance.\nUSER - call a user modified routine.\"\n",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "thickness_file",
+            "$RUN_TYPE == \"hybrid\"": "thickness_file",
             "else": {
                "$OCN_GRID == \"MISOMIP\"": "ISOMIP"
             }
@@ -2413,7 +2413,7 @@
          "description": "The name of the thickness file",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
+            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
          }
       },
       "SPONGE_CONFIG": {
@@ -2442,7 +2442,7 @@
          "description": "\"A string that determines how the initial tempertures\nand salinities are specified for a new run:\nfile - read velocities from the file specified\nby (TS_FILE).\nfit - find the temperatures that are consistent with\nthe layer densities and salinity S_REF.\nTS_profile - use temperature and salinity profiles\n(read from TS_FILE) to set layer densities.\nbenchmark - use the benchmark test case T & S.\nlinear - linear in logical layer space.\nDOME2D - 2D DOME initialization.\nISOMIP - ISOMIP initialization.\nadjustment2d - TBD AJA.\nsloshing - TBD AJA.\nseamount - TBD AJA.\nrossby_front - a mixed layer front in thermal wind balance.\nSCM_ideal_hurr - used in the SCM idealized hurricane test.\nUSER - call a user modified routine.\"\n",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "file",
+            "$RUN_TYPE == \"hybrid\"": "file",
             "else": {
                "$OCN_GRID == \"MISOMIP\"": "ISOMIP"
             }
@@ -2452,35 +2452,35 @@
          "description": "The initial condition file for the temperature and salinity.",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
+            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
          }
       },
       "TEMP_IC_VAR": {
          "description": "The initial condition variable for potential temperature",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "Temp"
+            "$RUN_TYPE == \"hybrid\"": "Temp"
          }
       },
       "SALT_IC_VAR": {
          "description": "The initial condition variable for the salinity.",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "Salt"
+            "$RUN_TYPE == \"hybrid\"": "Salt"
          }
       },
       "VELOCITY_CONFIG": {
          "description": "A string that determines how the initial velocities are specified for a new run.",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "file"
+            "$RUN_TYPE == \"hybrid\"": "file"
          }
       },
       "VELOCITY_FILE": {
          "description": "The name of the velocity initial condition file.",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
+            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
          }
       },
       "AGE_IC_FILE": {
