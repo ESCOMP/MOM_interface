@@ -217,6 +217,30 @@ def _copy_input_files(case, dest_dir, inst_suffixes):
     ]:
         shutil.copy(os.path.join(rundir, filename), dest_dir)
 
+def prechecks(case, inst_suffixes):
+    """Performs prechecks to ensure that necessary restart files and rpointer files are present in rundir."""
+
+    rundir = case.get_value("RUNDIR")
+    run_type = case.get_value("RUN_TYPE")
+    continue_run = case.get_value("CONTINUE_RUN")
+    get_refcase = case.get_value("GET_REFCASE")
+    run_refcase = case.get_value("RUN_REFCASE")
+    run_refdate = case.get_value("RUN_REFDATE")
+    run_reftod = case.get_value("RUN_REFTOD")
+
+    # check if rpointer files are present in rundir
+    if run_type != "startup" or continue_run:
+        for inst_suffix in inst_suffixes:
+            pointer_file = os.path.join(rundir, "rpointer.ocn" + inst_suffix)
+            expect(
+                os.path.exists(pointer_file),
+                f"Missing rpointer file rpointer.ocn{inst_suffix} in rundir.",
+            )
+        
+    # check if the restart file is present in rundir
+    if run_type in ["branch", "hybrid"] and not continue_run and not get_refcase:
+        restart_file = os.path.join(rundir, f'./{run_refcase}.mom6.r.{run_refdate}-{run_reftod}.nc')
+        assert os.path.exists(restart_file), f"Missing restart file {run_refcase}.mom6.r.{run_refdate}-{run_reftod}.nc in rundir."
 
 # pylint: disable=unused-argument
 ###############################################################################
@@ -232,6 +256,9 @@ def buildnml(case, caseroot, compname):
     inst_suffixes = (
         ["_{:04d}".format(i + 1) for i in range(ninst)] if ninst > 1 else [""]
     )
+
+    # prechecks
+    prechecks(case, inst_suffixes)
 
     # prepare all input files
     prep_input(case, inst_suffixes)
