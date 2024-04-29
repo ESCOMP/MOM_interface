@@ -62,7 +62,7 @@
          "value": {
             "$MOM6_VERTICAL_GRID == \"zstar_60L\"": 60,
             "$MOM6_VERTICAL_GRID == \"zstar_65L\"": 65,
-            "$MOM6_VERTICAL_GRID == \"hycom1\"": 75,
+            "$MOM6_VERTICAL_GRID == \"hycom1\" or $MOM6_VERTICAL_GRID == \"zstar_75L\"": 75,
             "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": 36
          }
       },
@@ -598,7 +598,7 @@
          "description": "\"default = 'LAYER'\nCoordinate mode for vertical regridding.\nChoose among the following possibilities:\nLAYER - Isopycnal or stacked shallow water layers\nZSTAR, Z* - stetched geopotential z*\nSIGMA_SHELF_ZSTAR - stetched geopotential z* ignoring shelf\nSIGMA - terrain following coordinates\nRHO   - continuous isopycnal\nHYCOM1 - HyCOM-like hybrid coordinate\nSLIGHT - stretched coordinates above continuous isopycnal\nADAPTIVE - optimize for smooth neutral density surfaces\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"zstar_65L\" or $MOM6_VERTICAL_GRID == \"zstar_60L\"": "Z*",
+            "$MOM6_VERTICAL_GRID == \"zstar_65L\" or $MOM6_VERTICAL_GRID == \"zstar_60L\" or $MOM6_VERTICAL_GRID == \"zstar_75L\"": "Z*",
             "$MOM6_VERTICAL_GRID == \"hycom1\"": "HYCOM1",
             "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": "SIGMA_SHELF_ZSTAR"
          }
