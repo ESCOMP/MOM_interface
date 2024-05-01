@@ -326,7 +326,7 @@
          "value": {
             "$OCN_GRID == \"gx1v6\"": "ocean_topog_230424.nc",
             "$OCN_GRID == \"tx0.66v1\"": "ocean_topog_200701.nc",
-            "$OCN_GRID == \"tx2_3v2\"": "ocean_topog_230413.nc",
+            "$OCN_GRID == \"tx2_3v2\"": "ocean_topo_tx2_3v2_240501.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc"
          }
       },
@@ -2069,7 +2069,7 @@
             "$OCN_GRID == \"gx1v6\"": "global_1deg",
             "$OCN_GRID == \"tx0.25v1\"": "list",
             "$OCN_GRID == \"tx0.66v1\"": "list",
-            "$OCN_GRID == \"tx2_3v2\"": "none"
+            "$OCN_GRID == \"tx2_3v2\"": "list"
          }
       },
       "CHANNEL_LIST_FILE": {
@@ -2077,7 +2077,8 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "MOM_channels_global_025",
-            "$OCN_GRID == \"tx0.66v1\"": "MOM_channels_global_tx06v1"
+            "$OCN_GRID == \"tx0.66v1\"": "MOM_channels_global_tx06v1",
+            "$OCN_GRID == \"tx2_3v2\"": "MOM_channels_global_tx2_3v2"
          }
       },
       "SMAG_BI_CONST": {
@@ -2432,6 +2433,14 @@
          "units": "m",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 1e-12
+         }
+      },
+      "HYCOM1_ONLY_IMPROVES": {
+         "description": "\"[Boolean] default = False\n When regridding, an interface is only moved if this improves the fit to the\n target density.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "ISOMIP_TNUDG": {
