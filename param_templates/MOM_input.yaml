@@ -666,6 +666,15 @@ Global:
             $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
+    RESOLN_SCALED_KHTR:
+        description: |
+            "[Boolean] default = False
+            If true, the epipycnal tracer diffusivity is scaled away when the first
+            baroclinic deformation radius is well resolved."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     USE_GM_WORK_BUG:
         description: |
             "[Boolean] default = True
@@ -2325,7 +2334,7 @@ Global:
             $OCN_GRID == "gx1v6": 0.0
             $OCN_GRID == "tx0.25v1": 1.0
             $OCN_GRID == "tx0.66v1": 0.0
-            $OCN_GRID == "tx2_3v2": 0.0
+            $OCN_GRID == "tx2_3v2": 1.0
     MEKE_BGSRC:
         description: |
             "[W kg-1] default = 0.0
@@ -2343,7 +2352,7 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 1.0
             $OCN_GRID == "tx0.66v1": 0.5
-            $OCN_GRID == "tx2_3v2": 0.5
+            $OCN_GRID == "tx2_3v2": 0.75
             $OCN_GRID == "gx1v6": 0.5
     MEKE_VISCOSITY_COEFF_KU:
         description: |
@@ -2355,7 +2364,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.66v1": 0.2
-            $OCN_GRID == "tx2_3v2": 0.2
+            $OCN_GRID == "tx2_3v2": 0.0
             $OCN_GRID == "gx1v6": 0.2
     MEKE_MIN_LSCALE:
         description: |
@@ -2434,7 +2443,16 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.66v1": -1.0
-            $OCN_GRID == "tx2_3v2": -1.0
+            $OCN_GRID == "tx2_3v2": 0.3
+    USE_SIMPLER_EADY_GROWTH_RATE:
+        description: |
+            "[Boolean] default = False
+            If true, use a simpler method to calculate the Eady growth rate that avoids
+            division by layer thickness. Recommended."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     KH_RES_SCALE_COEF:
         description: |
             "[nondim] default = 1.0
@@ -2444,8 +2462,18 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.66v1": 0.4
-            $OCN_GRID == "tx2_3v2": 0.4
+            $OCN_GRID == "tx2_3v2": 0.9
             $OCN_GRID == "gx1v6": 0.4
+    KH_RES_FN_POWER:
+        description: |
+            "[nondim] default = 2
+            The power of dx/Ld in the Kh resolution function.  Any positive integer may be
+            used, although even integers are more efficient to calculate.  Setting this
+            greater than 100 results in a step-function being used."
+        datatype: integer
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 6
     VISC_RES_SCALE_COEF:
         description: |
             "[nondim] default = 1.0
@@ -2478,7 +2506,7 @@ Global:
         units: nondim
         value:
             $COMP_ATM == "cam": 0.10
-            else: 0.07
+            else: 0.09
     MEKE_KHTH_FAC:
         description: |
             "[nondim] default = 0.0
@@ -2499,6 +2527,32 @@ Global:
             $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
             $OCN_GRID == "gx1v6": 1.0
+    MEKE_CB:
+        description: |
+            "[nondim] default = 25.0
+            A coefficient in the expression for the ratio of bottom projected eddy energy
+            and mean column energy (see Jansen et al. 2015)."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 100.0
+    MEKE_CDRAG:
+        description: |
+            "[nondim] default = 0.003
+            Drag coefficient relating the magnitude of the velocity field to the bottom
+            stress in MEKE."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.0025
+    MEKE_MIN_GAMMA2:
+        description: |
+            "[nondim] default = 1.0E-04
+            The minimum allowed value of gamma_b^2."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 1.0E-05
     MEKE_EQUILIBRIUM_ALT:
         description: |
             "[Boolean] default = False
@@ -2529,7 +2583,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.66v1": True
-            $OCN_GRID == "tx2_3v2": True
+            $OCN_GRID == "tx2_3v2": False
             $OCN_GRID == "gx1v6": True
     MEKE_RESTORING_TIMESCALE:
         description: |

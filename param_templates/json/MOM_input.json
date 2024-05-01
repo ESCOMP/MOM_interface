@@ -493,6 +493,14 @@
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
+      "RESOLN_SCALED_KHTR": {
+         "description": "\"[Boolean] default = False\nIf true, the epipycnal tracer diffusivity is scaled away when the first\nbaroclinic deformation radius is well resolved.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
       "USE_GM_WORK_BUG": {
          "description": "\"[Boolean] default = True\nIf true, compute the top-layer work tendency on the u-grid with the incorrect\nsign, for legacy reproducibility.\"\n",
          "datatype": "logical",
@@ -1833,7 +1841,7 @@
             "$OCN_GRID == \"gx1v6\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
             "$OCN_GRID == \"tx0.66v1\"": 0.0,
-            "$OCN_GRID == \"tx2_3v2\"": 0.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_BGSRC": {
@@ -1851,7 +1859,7 @@
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
             "$OCN_GRID == \"tx0.66v1\"": 0.5,
-            "$OCN_GRID == \"tx2_3v2\"": 0.5,
+            "$OCN_GRID == \"tx2_3v2\"": 0.75,
             "$OCN_GRID == \"gx1v6\"": 0.5
          }
       },
@@ -1861,7 +1869,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": 0.2,
-            "$OCN_GRID == \"tx2_3v2\"": 0.2,
+            "$OCN_GRID == \"tx2_3v2\"": 0.0,
             "$OCN_GRID == \"gx1v6\"": 0.2
          }
       },
@@ -1933,7 +1941,15 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": -1.0,
-            "$OCN_GRID == \"tx2_3v2\"": -1.0
+            "$OCN_GRID == \"tx2_3v2\"": 0.3
+         }
+      },
+      "USE_SIMPLER_EADY_GROWTH_RATE": {
+         "description": "\"[Boolean] default = False\nIf true, use a simpler method to calculate the Eady growth rate that avoids\ndivision by layer thickness. Recommended.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "KH_RES_SCALE_COEF": {
@@ -1942,8 +1958,16 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": 0.4,
-            "$OCN_GRID == \"tx2_3v2\"": 0.4,
+            "$OCN_GRID == \"tx2_3v2\"": 0.9,
             "$OCN_GRID == \"gx1v6\"": 0.4
+         }
+      },
+      "KH_RES_FN_POWER": {
+         "description": "\"[nondim] default = 2\nThe power of dx/Ld in the Kh resolution function.  Any positive integer may be\nused, although even integers are more efficient to calculate.  Setting this\ngreater than 100 results in a step-function being used.\"\n",
+         "datatype": "integer",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 6
          }
       },
       "VISC_RES_SCALE_COEF": {
@@ -1972,7 +1996,7 @@
          "units": "nondim",
          "value": {
             "$COMP_ATM == \"cam\"": 0.1,
-            "else": 0.07
+            "else": 0.09
          }
       },
       "MEKE_KHTH_FAC": {
@@ -1993,6 +2017,30 @@
             "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
             "$OCN_GRID == \"gx1v6\"": 1.0
+         }
+      },
+      "MEKE_CB": {
+         "description": "\"[nondim] default = 25.0\nA coefficient in the expression for the ratio of bottom projected eddy energy\nand mean column energy (see Jansen et al. 2015).\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 100.0
+         }
+      },
+      "MEKE_CDRAG": {
+         "description": "\"[nondim] default = 0.003\nDrag coefficient relating the magnitude of the velocity field to the bottom\nstress in MEKE.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.0025
+         }
+      },
+      "MEKE_MIN_GAMMA2": {
+         "description": "\"[nondim] default = 1.0E-04\nThe minimum allowed value of gamma_b^2.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 1e-05
          }
       },
       "MEKE_EQUILIBRIUM_ALT": {
@@ -2021,7 +2069,7 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID == \"tx2_3v2\"": false,
             "$OCN_GRID == \"gx1v6\"": true
          }
       },
