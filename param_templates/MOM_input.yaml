@@ -516,7 +516,7 @@ Global:
             PQM_IH4IH3  (4th-order accurate)
             PQM_IH6IH5  (5th-order accurate)"
         datatype: string
-        value: "PPM_H4"
+        value: "PPM_CW"
     INIT_LAYERS_FROM_Z_FILE:
         description: |
             "[Boolean] default = False
@@ -1568,6 +1568,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
+            $OCN_GRID == "tx2_3v2": 0.0
             $OCN_GRID == "tx0.25v1": 1.5E-05
             $OCN_GRID == "MISOMIP": 5.0E-05
             else: 2.0E-05
@@ -1602,7 +1603,7 @@ Global:
         value:
             $OCN_GRID == "gx1v6": 2.0E-06
             $OCN_GRID == "tx0.66v1": 2.0E-06
-            $OCN_GRID == "tx2_3v2": 2.0E-06
+            $OCN_GRID == "tx2_3v2":  2.0E-07
             $OCN_GRID == "tx0.25v1": 2.0E-06
     INT_TIDE_DECAY_SCALE:
         description: |
@@ -3174,6 +3175,15 @@ Global:
         units: m
         value:
             $OCN_GRID == "MISOMIP": 20.0
+    KV:
+        description: |
+            "[m2 s-1]
+            kinematic viscosity in the interior. The molecular value, ~1e-6
+            m2 s-1, may be used."
+        datatype: real
+        units: m2 s-1
+        value:
+            $OCN_GRID == "tx2_3v2": 0.0
     KV_BBL_MIN:
         description: |
             "[m2 s-1] default = 1.0E-04
@@ -3484,7 +3494,7 @@ Global:
             "TODO"
         datatype: string
         value:
-            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": "P1M_H2"
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": "PPM_CW"
             $MOM6_VERTICAL_GRID == "MISOMIP": "PPM_H4"
     MLE_USE_PBL_MLD:
         description: |

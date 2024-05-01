@@ -366,7 +366,7 @@
       "REMAPPING_SCHEME": {
          "description": "\"default = 'PLM'\nThis sets the reconstruction scheme used\nfor vertical remapping for all variables.\nIt can be one of the following schemes:\nPCM         (1st-order accurate)\nPLM         (2nd-order accurate)\nPPM_H4      (3rd-order accurate)\nPPM_IH4     (3rd-order accurate)\nPQM_IH4IH3  (4th-order accurate)\nPQM_IH6IH5  (5th-order accurate)\"\n",
          "datatype": "string",
-         "value": "PPM_H4"
+         "value": "PPM_CW"
       },
       "INIT_LAYERS_FROM_Z_FILE": {
          "description": "\"[Boolean] default = False\nIf true, intialize the layer thicknesses, temperatures,\nand salnities from a Z-space file on a latitude-\nlongitude grid.\"\n",
@@ -809,10 +809,12 @@
          "value": "V_velocity_truncations"
       },
       "KV": {
-         "description": "\"[m2 s-1]\nThe background kinematic viscosity in the interior.\nThe molecular value, ~1e-6 m2 s-1, may be used.\"\n",
+         "description": "\"[m2 s-1]\nkinematic viscosity in the interior. The molecular value, ~1e-6\nm2 s-1, may be used.\"\n",
          "datatype": "real",
          "units": "m2 s-1",
-         "value": 0.0001
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.0
+         }
       },
       "MAXVEL": {
          "description": "\"[m s-1] default = 3.0E+08\nThe maximum velocity allowed before the velocity\ncomponents are truncated.\"\n",
@@ -1175,6 +1177,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.5e-05,
             "$OCN_GRID == \"MISOMIP\"": 5e-05,
             "else": 2e-05
@@ -1203,7 +1206,7 @@
          "value": {
             "$OCN_GRID == \"gx1v6\"": 2e-06,
             "$OCN_GRID == \"tx0.66v1\"": 2e-06,
-            "$OCN_GRID == \"tx2_3v2\"": 2e-06,
+            "$OCN_GRID == \"tx2_3v2\"": 2e-07,
             "$OCN_GRID == \"tx0.25v1\"": 2e-06
          }
       },
@@ -2828,7 +2831,7 @@
          "description": "\"TODO\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "P1M_H2",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "PPM_CW",
             "$MOM6_VERTICAL_GRID == \"MISOMIP\"": "PPM_H4"
          }
       },
