@@ -2505,8 +2505,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $COMP_ATM == "cam": 0.10
-            else: 0.09
+            $OCN_GRID == "tx2_3v2": 0.09
     MEKE_KHTH_FAC:
         description: |
             "[nondim] default = 0.0
