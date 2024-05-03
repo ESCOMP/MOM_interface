@@ -2664,7 +2664,7 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": "MOM_channels_global_025"
             $OCN_GRID == "tx0.66v1": "MOM_channels_global_tx06v1"
-            $OCN_GRID == "tx2_3v2":  "MOM_channels_global_tx2_3v2"
+            $OCN_GRID == "tx2_3v2":  "MOM_channels_global_tx2_3v2_240501"
     SMAG_BI_CONST:
         description: |
             "[nondim] default = 0.0
