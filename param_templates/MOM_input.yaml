@@ -3558,7 +3558,7 @@ Global:
             "TODO"
         datatype: string
         value:
-            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": "PPM_CW"
+            $OCN_GRID == "tx2_3v2": "PPM_CW"
             $MOM6_VERTICAL_GRID == "MISOMIP": "PPM_H4"
     MLE_USE_PBL_MLD:
         description: |
