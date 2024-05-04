@@ -816,14 +816,6 @@
          "datatype": "string",
          "value": "V_velocity_truncations"
       },
-      "KV": {
-         "description": "\"[m2 s-1]\nkinematic viscosity in the interior. The molecular value, ~1e-6\nm2 s-1, may be used.\"\n",
-         "datatype": "real",
-         "units": "m2 s-1",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0
-         }
-      },
       "MAXVEL": {
          "description": "\"[m s-1] default = 3.0E+08\nThe maximum velocity allowed before the velocity\ncomponents are truncated.\"\n",
          "datatype": "real",
@@ -1212,10 +1204,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 2e-06,
-            "$OCN_GRID == \"tx0.66v1\"": 2e-06,
             "$OCN_GRID == \"tx2_3v2\"": 2e-07,
-            "$OCN_GRID == \"tx0.25v1\"": 2e-06
+            "else": 2e-06
          }
       },
       "INT_TIDE_DECAY_SCALE": {
@@ -2610,6 +2600,15 @@
          "units": "m",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 20.0
+         }
+      },
+      "KV": {
+         "description": "\"[m2 s-1]\nkinematic viscosity in the interior. The molecular value, ~1e-6\nm2 s-1, may be used.\"\n",
+         "datatype": "real",
+         "units": "m2 s-1",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.0,
+            "else": 0.0001
          }
       },
       "KV_BBL_MIN": {

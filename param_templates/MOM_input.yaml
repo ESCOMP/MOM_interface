@@ -1094,14 +1094,6 @@ Global:
             needed."
         datatype: string
         value: "V_velocity_truncations"
-    KV:
-        description: |
-            "[m2 s-1]
-            The background kinematic viscosity in the interior.
-            The molecular value, ~1e-6 m2 s-1, may be used."
-        datatype: real
-        units: m2 s-1
-        value: 1.0E-04
     MAXVEL:
         description: |
             "[m s-1] default = 3.0E+08
@@ -1610,10 +1602,8 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "gx1v6": 2.0E-06
-            $OCN_GRID == "tx0.66v1": 2.0E-06
             $OCN_GRID == "tx2_3v2":  2.0E-07
-            $OCN_GRID == "tx0.25v1": 2.0E-06
+            else: 2.0E-06
     INT_TIDE_DECAY_SCALE:
         description: |
             "[m] default = 500.0
@@ -3248,6 +3238,7 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "tx2_3v2": 0.0
+            else: 1.0E-04
     KV_BBL_MIN:
         description: |
             "[m2 s-1] default = 1.0E-04
