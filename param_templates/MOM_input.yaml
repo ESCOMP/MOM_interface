@@ -833,7 +833,7 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
-            $MOM6_VERTICAL_GRID == "zstar_65L": '"FILE:zstar_75layer_2.5m_248.4m-2024-03-29.nc,dz"'
+            $MOM6_VERTICAL_GRID == "zstar_75L": '"FILE:zstar_75layer_2.5m_248.4m-2024-03-29.nc,dz"'
             $MOM6_VERTICAL_GRID == "zstar_65L": '"FILE:vgrid_65L_20200626.nc,dz"'
             $MOM6_VERTICAL_GRID == "zstar_60L": '"FILE:ocean_vgrid.nc,dz"'
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": '"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz"'
