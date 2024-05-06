@@ -180,7 +180,7 @@ class DiagTableClass(object):
             print("WARNING: no JSON file written as no variables were requested")
 
 
-    def _dict_template(self, suffix, output_freq_units, new_file_freq_units=None, output_freq=1, new_file_freq=1, module="ocean_model", packing=1):
+    def _dict_template(self, suffix, output_freq_units, new_file_freq_units=None, output_freq=1, new_file_freq=1, module="ocean_model"):
         """
             Return the basic template for MOM6 diag_table dictionary.
             Variables will be added to output file by appending to template["fields"]["lists"][0]
@@ -195,8 +195,6 @@ class DiagTableClass(object):
                 * output_freq: how frequently to output (default: 1)
                 * new_file_freq: how frequently to create new files (default: 1)
                 * module: string that determines vertical grid; "ocean_model_z" maps to Z space, "ocean_model" stays on native grid, "ocean_model_rho2" is sigma2
-                * packing: integer that is used to determine precision when writing output; 1 => double precision, 2 => single
-                           (default: 1)
         """
         template = dict()
         template["suffix"] = suffix
@@ -210,7 +208,7 @@ class DiagTableClass(object):
         template["time_axis_units"] = "days"
         template["reduction_method"] = "mean"
         template["regional_section"] = "none"
-        template["fields"] = {"module": module, "packing": packing, "lists" : [[]]}
+        template["fields"] = {"module": module, "packing": "= 1 if $TEST else 2", "lists" : [[]]}
         return template
 
 
