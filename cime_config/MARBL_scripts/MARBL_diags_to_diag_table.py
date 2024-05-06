@@ -130,12 +130,12 @@ class DiagTableClass(object):
                 continue
             # append _z to frequency for 3D vars
             if is2D:
-                self._diag_table_dict[f"{freq}"]["fields"]["lists"][0].append(varname)
+                self._diag_table_dict[f"{freq}"]["fields"]['$OCN_DIAG_MODE != "none"']["lists"][0].append(varname)
             else:
                 if vert_grid in ["interpolated", "both"]:
-                    self._diag_table_dict[f"{freq}_z"]["fields"]["lists"][0].append(varname)
+                    self._diag_table_dict[f"{freq}_z"]["fields"]['$OCN_DIAG_MODE != "none"']["lists"][0].append(varname)
                 if vert_grid in ["native", "both"]:
-                    self._diag_table_dict[f"{freq}_native_z"]["fields"]["lists"][0].append(varname)
+                    self._diag_table_dict[f"{freq}_native_z"]["fields"]['$OCN_DIAG_MODE != "none"']["lists"][0].append(varname)
 
 
     def combine_medium_native_z(self):
@@ -148,17 +148,17 @@ class DiagTableClass(object):
 
         # Make list of all fields in "medium" (and remove "medium" from _diag_table_dict)
         new_fields = []
-        for field_list in self._diag_table_dict.pop("medium")["fields"]["lists"]:
+        for field_list in self._diag_table_dict.pop("medium")["fields"]['$OCN_DIAG_MODE != "none"']["lists"]:
             new_fields = new_fields + field_list
 
         # Make list of all fields in "medium_native_z"
         existing_fields = []
-        for field_list in self._diag_table_dict["medium_native_z"]["fields"]["lists"]:
+        for field_list in self._diag_table_dict["medium_native_z"]["fields"]['$OCN_DIAG_MODE != "none"']["lists"]:
             existing_fields = existing_fields + field_list
 
         new_field_list = list(set(new_fields) - set(existing_fields))
         if new_fields:
-            self._diag_table_dict["medium_native_z"]["fields"]["lists"].append(new_field_list)
+            self._diag_table_dict["medium_native_z"]["fields"]['$OCN_DIAG_MODE != "none"']["lists"].append(new_field_list)
 
 
     def dump_to_json(self, filename):
@@ -167,12 +167,12 @@ class DiagTableClass(object):
         out_dict = dict()
         out_dict["Files"] = dict()
         for freq in self._diag_table_dict:
-            if len(self._diag_table_dict[freq]["fields"]["lists"][0]) > 0:
+            if len(self._diag_table_dict[freq]["fields"]['$OCN_DIAG_MODE != "none"']["lists"][0]) > 0:
                 out_dict["Files"][freq] = self._diag_table_dict[freq].copy()
-                out_dict["Files"][freq]["fields"]["lists"].append(["geolat", "geolon"])
-                if (out_dict["Files"][freq]["fields"]["module"] == "ocean_model" and freq[-2:] == "_z") or \
-                    out_dict["Files"][freq]["fields"]["module"] == "ocean_model_z":
-                    out_dict["Files"][freq]["fields"]["lists"].append(["volcello", "h"])
+                out_dict["Files"][freq]["fields"]['$OCN_DIAG_MODE != "none"']["lists"].append(["geolat", "geolon"])
+                if (out_dict["Files"][freq]["fields"]['$OCN_DIAG_MODE != "none"']["module"] == "ocean_model" and freq[-2:] == "_z") or \
+                    out_dict["Files"][freq]["fields"]['$OCN_DIAG_MODE != "none"']["module"] == "ocean_model_z":
+                    out_dict["Files"][freq]["fields"]['$OCN_DIAG_MODE != "none"']["lists"].append(["volcello", "h"])
         if out_dict["Files"]:
             with open(filename, "w") as fp:
                 json.dump(out_dict, fp, separators=(',', ': '), sort_keys=False, indent=3)
@@ -183,7 +183,7 @@ class DiagTableClass(object):
     def _dict_template(self, suffix, output_freq_units, new_file_freq_units=None, output_freq=1, new_file_freq=1, module="ocean_model"):
         """
             Return the basic template for MOM6 diag_table dictionary.
-            Variables will be added to output file by appending to template["fields"]["lists"][0]
+            Variables will be added to output file by appending to template["fields"]['$OCN_DIAG_MODE != "none"']["lists"][0]
 
             Parameters:
                 * suffix: string used to identify output file; could also be a dictionary
@@ -208,7 +208,8 @@ class DiagTableClass(object):
         template["time_axis_units"] = "days"
         template["reduction_method"] = "mean"
         template["regional_section"] = "none"
-        template["fields"] = {"module": module, "packing": "= 1 if $TEST else 2", "lists" : [[]]}
+        template["fields"] = {'$OCN_DIAG_MODE != "none"':
+                              {"module": module, "packing": "= 1 if $TEST else 2", "lists" : [[]]}}
         return template
 
 
