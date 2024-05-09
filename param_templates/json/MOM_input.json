@@ -1935,6 +1935,14 @@
             "$OCN_GRID == \"tx2_3v2\"": 0.3
          }
       },
+      "MEKE_POSITIVE": {
+         "description": "\"[Boolean] default = False\nIf true, it guarantees that MEKE will always be greater than zero.\n\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
       "USE_SIMPLER_EADY_GROWTH_RATE": {
          "description": "\"[Boolean] default = False\nIf true, use a simpler method to calculate the Eady growth rate that avoids\ndivision by layer thickness. Recommended.\"\n",
          "datatype": "logical",

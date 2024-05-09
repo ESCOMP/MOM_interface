@@ -2434,6 +2434,15 @@ Global:
         value:
             $OCN_GRID == "tx0.66v1": -1.0
             $OCN_GRID == "tx2_3v2": 0.3
+    MEKE_POSITIVE:
+        description: |
+            "[Boolean] default = False
+            If true, it guarantees that MEKE will always be greater than zero.
+            "
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     USE_SIMPLER_EADY_GROWTH_RATE:
         description: |
             "[Boolean] default = False
