@@ -1936,7 +1936,7 @@
          }
       },
       "MEKE_POSITIVE": {
-         "description": "\"[Boolean] default = False\nIf true, it guarantees that MEKE will always be greater than zero.\n\"\n",
+         "description": "\"[Boolean] default = False\nIf true, it guarantees that MEKE will always be >= 0.\n\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {

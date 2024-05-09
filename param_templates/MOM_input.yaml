@@ -2437,7 +2437,7 @@ Global:
     MEKE_POSITIVE:
         description: |
             "[Boolean] default = False
-            If true, it guarantees that MEKE will always be greater than zero.
+            If true, it guarantees that MEKE will always be >= 0.
             "
         datatype: logical
         units: Boolean
