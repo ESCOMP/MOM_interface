@@ -62,7 +62,7 @@
          "value": {
             "$MOM6_VERTICAL_GRID == \"zstar_60L\"": 60,
             "$MOM6_VERTICAL_GRID == \"zstar_65L\"": 65,
-            "$MOM6_VERTICAL_GRID == \"hycom1\"": 75,
+            "$MOM6_VERTICAL_GRID == \"hycom1\" or $MOM6_VERTICAL_GRID == \"zstar_75L\"": 75,
             "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": 36
          }
       },
@@ -326,7 +326,7 @@
          "value": {
             "$OCN_GRID == \"gx1v6\"": "ocean_topog_230424.nc",
             "$OCN_GRID == \"tx0.66v1\"": "ocean_topog_200701.nc",
-            "$OCN_GRID == \"tx2_3v2\"": "ocean_topog_230413.nc",
+            "$OCN_GRID == \"tx2_3v2\"": "ocean_topo_tx2_3v2_240501.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc"
          }
       },
@@ -366,7 +366,7 @@
       "REMAPPING_SCHEME": {
          "description": "\"default = 'PLM'\nThis sets the reconstruction scheme used\nfor vertical remapping for all variables.\nIt can be one of the following schemes:\nPCM         (1st-order accurate)\nPLM         (2nd-order accurate)\nPPM_H4      (3rd-order accurate)\nPPM_IH4     (3rd-order accurate)\nPQM_IH4IH3  (4th-order accurate)\nPQM_IH6IH5  (5th-order accurate)\"\n",
          "datatype": "string",
-         "value": "PPM_H4"
+         "value": "PPM_CW"
       },
       "INIT_LAYERS_FROM_Z_FILE": {
          "description": "\"[Boolean] default = False\nIf true, intialize the layer thicknesses, temperatures,\nand salnities from a Z-space file on a latitude-\nlongitude grid.\"\n",
@@ -493,6 +493,14 @@
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
+      "RESOLN_SCALED_KHTR": {
+         "description": "\"[Boolean] default = False\nIf true, the epipycnal tracer diffusivity is scaled away when the first\nbaroclinic deformation radius is well resolved.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
       "USE_GM_WORK_BUG": {
          "description": "\"[Boolean] default = True\nIf true, compute the top-layer work tendency on the u-grid with the incorrect\nsign, for legacy reproducibility.\"\n",
          "datatype": "logical",
@@ -598,7 +606,7 @@
          "description": "\"default = 'LAYER'\nCoordinate mode for vertical regridding.\nChoose among the following possibilities:\nLAYER - Isopycnal or stacked shallow water layers\nZSTAR, Z* - stetched geopotential z*\nSIGMA_SHELF_ZSTAR - stetched geopotential z* ignoring shelf\nSIGMA - terrain following coordinates\nRHO   - continuous isopycnal\nHYCOM1 - HyCOM-like hybrid coordinate\nSLIGHT - stretched coordinates above continuous isopycnal\nADAPTIVE - optimize for smooth neutral density surfaces\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"zstar_65L\" or $MOM6_VERTICAL_GRID == \"zstar_60L\"": "Z*",
+            "$MOM6_VERTICAL_GRID == \"zstar_65L\" or $MOM6_VERTICAL_GRID == \"zstar_60L\" or $MOM6_VERTICAL_GRID == \"zstar_75L\"": "Z*",
             "$MOM6_VERTICAL_GRID == \"hycom1\"": "HYCOM1",
             "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": "SIGMA_SHELF_ZSTAR"
          }
@@ -607,6 +615,7 @@
          "description": "\"default = 'UNIFORM'\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter ALE_RESOLUTION\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
+            "$MOM6_VERTICAL_GRID == \"zstar_75L\"": "\"FILE:zstar_75layer_2.5m_248.4m-2024-03-29.nc,dz\"",
             "$MOM6_VERTICAL_GRID == \"zstar_65L\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
             "$MOM6_VERTICAL_GRID == \"zstar_60L\"": "\"FILE:ocean_vgrid.nc,dz\"",
             "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "\"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz\"",
@@ -807,12 +816,6 @@
          "description": "\"default = ''\nThe absolute path to a file into which the accelerations\nleading to meridional velocity truncations are written.\nUndefine this for efficiency if this diagnostic is not\nneeded.\"\n",
          "datatype": "string",
          "value": "V_velocity_truncations"
-      },
-      "KV": {
-         "description": "\"[m2 s-1]\nThe background kinematic viscosity in the interior.\nThe molecular value, ~1e-6 m2 s-1, may be used.\"\n",
-         "datatype": "real",
-         "units": "m2 s-1",
-         "value": 0.0001
       },
       "MAXVEL": {
          "description": "\"[m s-1] default = 3.0E+08\nThe maximum velocity allowed before the velocity\ncomponents are truncated.\"\n",
@@ -1175,6 +1178,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.5e-05,
             "$OCN_GRID == \"MISOMIP\"": 5e-05,
             "else": 2e-05
@@ -1201,10 +1205,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 2e-06,
-            "$OCN_GRID == \"tx0.66v1\"": 2e-06,
-            "$OCN_GRID == \"tx2_3v2\"": 2e-06,
-            "$OCN_GRID == \"tx0.25v1\"": 2e-06
+            "$OCN_GRID == \"tx2_3v2\"": 2e-07,
+            "else": 2e-06
          }
       },
       "INT_TIDE_DECAY_SCALE": {
@@ -1830,7 +1832,7 @@
             "$OCN_GRID == \"gx1v6\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
             "$OCN_GRID == \"tx0.66v1\"": 0.0,
-            "$OCN_GRID == \"tx2_3v2\"": 0.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_BGSRC": {
@@ -1848,7 +1850,7 @@
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
             "$OCN_GRID == \"tx0.66v1\"": 0.5,
-            "$OCN_GRID == \"tx2_3v2\"": 0.5,
+            "$OCN_GRID == \"tx2_3v2\"": 0.75,
             "$OCN_GRID == \"gx1v6\"": 0.5
          }
       },
@@ -1858,7 +1860,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": 0.2,
-            "$OCN_GRID == \"tx2_3v2\"": 0.2,
+            "$OCN_GRID == \"tx2_3v2\"": 0.0,
             "$OCN_GRID == \"gx1v6\"": 0.2
          }
       },
@@ -1930,7 +1932,23 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": -1.0,
-            "$OCN_GRID == \"tx2_3v2\"": -1.0
+            "$OCN_GRID == \"tx2_3v2\"": 0.3
+         }
+      },
+      "MEKE_POSITIVE": {
+         "description": "\"[Boolean] default = False\nIf true, it guarantees that MEKE will always be >= 0.\n\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "USE_SIMPLER_EADY_GROWTH_RATE": {
+         "description": "\"[Boolean] default = False\nIf true, use a simpler method to calculate the Eady growth rate that avoids\ndivision by layer thickness. Recommended.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "KH_RES_SCALE_COEF": {
@@ -1939,8 +1957,16 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": 0.4,
-            "$OCN_GRID == \"tx2_3v2\"": 0.4,
+            "$OCN_GRID == \"tx2_3v2\"": 0.9,
             "$OCN_GRID == \"gx1v6\"": 0.4
+         }
+      },
+      "KH_RES_FN_POWER": {
+         "description": "\"[nondim] default = 2\nThe power of dx/Ld in the Kh resolution function.  Any positive integer may be\nused, although even integers are more efficient to calculate.  Setting this\ngreater than 100 results in a step-function being used.\"\n",
+         "datatype": "integer",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 6
          }
       },
       "VISC_RES_SCALE_COEF": {
@@ -1968,8 +1994,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$COMP_ATM == \"cam\"": 0.1,
-            "else": 0.07
+            "$OCN_GRID == \"tx2_3v2\"": 0.09
          }
       },
       "MEKE_KHTH_FAC": {
@@ -1990,6 +2015,30 @@
             "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
             "$OCN_GRID == \"gx1v6\"": 1.0
+         }
+      },
+      "MEKE_CB": {
+         "description": "\"[nondim] default = 25.0\nA coefficient in the expression for the ratio of bottom projected eddy energy\nand mean column energy (see Jansen et al. 2015).\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 100.0
+         }
+      },
+      "MEKE_CDRAG": {
+         "description": "\"[nondim] default = 0.003\nDrag coefficient relating the magnitude of the velocity field to the bottom\nstress in MEKE.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.0025
+         }
+      },
+      "MEKE_MIN_GAMMA2": {
+         "description": "\"[nondim] default = 1.0E-04\nThe minimum allowed value of gamma_b^2.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 1e-05
          }
       },
       "MEKE_EQUILIBRIUM_ALT": {
@@ -2018,7 +2067,7 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID == \"tx2_3v2\"": false,
             "$OCN_GRID == \"gx1v6\"": true
          }
       },
@@ -2066,7 +2115,7 @@
             "$OCN_GRID == \"gx1v6\"": "global_1deg",
             "$OCN_GRID == \"tx0.25v1\"": "list",
             "$OCN_GRID == \"tx0.66v1\"": "list",
-            "$OCN_GRID == \"tx2_3v2\"": "none"
+            "$OCN_GRID == \"tx2_3v2\"": "list"
          }
       },
       "CHANNEL_LIST_FILE": {
@@ -2074,7 +2123,8 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "MOM_channels_global_025",
-            "$OCN_GRID == \"tx0.66v1\"": "MOM_channels_global_tx06v1"
+            "$OCN_GRID == \"tx0.66v1\"": "MOM_channels_global_tx06v1",
+            "$OCN_GRID == \"tx2_3v2\"": "MOM_channels_global_tx2_3v2_240501"
          }
       },
       "SMAG_BI_CONST": {
@@ -2431,6 +2481,14 @@
             "$OCN_GRID == \"MISOMIP\"": 1e-12
          }
       },
+      "HYCOM1_ONLY_IMPROVES": {
+         "description": "\"[Boolean] default = False\n When regridding, an interface is only moved if this improves the fit to the\n target density.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
       "ISOMIP_TNUDG": {
          "description": "\"default = 0.0 (days)\nNudging time scale for sponge layers\"\n",
          "datatype": "real",
@@ -2551,6 +2609,15 @@
          "units": "m",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 20.0
+         }
+      },
+      "KV": {
+         "description": "\"[m2 s-1]\nkinematic viscosity in the interior. The molecular value, ~1e-6\nm2 s-1, may be used.\"\n",
+         "datatype": "real",
+         "units": "m2 s-1",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.0,
+            "else": 0.0001
          }
       },
       "KV_BBL_MIN": {
@@ -2828,8 +2895,8 @@
          "description": "\"TODO\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "P1M_H2",
-            "$MOM6_VERTICAL_GRID == \"MISOMIP\"": "PPM_H4"
+            "$MOM6_VERTICAL_GRID == \"MISOMIP\"": "PPM_H4",
+            "else": "PPM_CW"
          }
       },
       "MLE_USE_PBL_MLD": {
