@@ -3610,7 +3610,13 @@ Global:
         datatype: list
         value:
             $OCN_GRID in ["tx0.66v1", "tx2_3v2", "tx0.25v1"]: True
-
+    GEOM_FILE:
+        description: |
+            default = ocean_geometry.nc
+            The file into which to write the ocean geometry.
+        datatype: string
+        value:
+            $CASE.mom6.h.ocean_geometry.nc
 
 KPP:
     N_SMOOTH:

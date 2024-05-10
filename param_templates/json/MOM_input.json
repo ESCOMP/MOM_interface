@@ -2936,6 +2936,11 @@
          "value": {
             "$OCN_GRID in [\"tx0.66v1\", \"tx2_3v2\", \"tx0.25v1\"]": true
          }
+      },
+      "GEOM_FILE": {
+         "description": "default = ocean_geometry.nc\nThe file into which to write the ocean geometry.\n",
+         "datatype": "string",
+         "value": "$CASE.mom6.h.ocean_geometry.nc"
       }
    },
    "KPP": {
