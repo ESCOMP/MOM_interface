@@ -209,7 +209,9 @@ class DiagTableClass(object):
         template["reduction_method"] = "mean"
         template["regional_section"] = "none"
         template["fields"] = {'$OCN_DIAG_MODE != "none"':
-                              {"module": module, "packing": "= 1 if $TEST else 2", "lists" : [[]]}}
+                              {"module": module,
+                               "packing": "= 1 if $TEST or $MARBL_DIAG_MODE == 'test_suite' else 2",
+                               "lists" : [[]]}}
         return template
 
 

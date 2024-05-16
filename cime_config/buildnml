@@ -52,6 +52,7 @@ def prep_input(case, inst_suffixes):
     run_type = case.get_value("RUN_TYPE")
     continue_run = case.get_value("CONTINUE_RUN")
     ice_ncat = case.get_value("ICE_NCAT")
+    marbl_diag_mode = case.get_value("MARBL_DIAG_MODE")
     multi_instance = inst_suffixes[0] != ""
 
     if multi_instance:
@@ -232,8 +233,9 @@ def prep_input(case, inst_suffixes):
                     lMARBL_output_alt_co2 = False
                 generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir,
                                           MARBL_diag_table_json, marbl_hist_vert_grid, lMARBL_output_all,
-                                          lMARBL_output_alt_co2, ice_ncat)
-                unresolved_diag_table.append(FType_diag_table.from_json(MARBL_diag_table_json))
+                                          lMARBL_output_alt_co2, ice_ncat, marbl_diag_mode)
+                if marbl_diag_mode != 'none':
+                    unresolved_diag_table.append(FType_diag_table.from_json(MARBL_diag_table_json))
 
             unresolved_diag_table.write(
                 unresolved_diag_table_confdir, case, MOM_input_final
@@ -302,7 +304,7 @@ def _copy_input_files(case, dest_dir, inst_suffixes):
         shutil.copy(os.path.join(rundir, filename), dest_dir)
 
 def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, MARBL_diag_table_json,
-                              marbl_hist_vert_grid, lMARBL_output_all, lMARBL_output_alt_co2, ice_ncat):
+                              marbl_hist_vert_grid, lMARBL_output_all, lMARBL_output_alt_co2, ice_ncat, diag_mode):
     """
     Create Buildconf/momconf/diag_table_MARBL.json
 
@@ -333,17 +335,19 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
     else:
         # (i) Create ecosys_diagnostics with MOM-generated diagnostics
         from MOM_ecosys_diagnostics import write_ecosys_diagnostics_file
-        MOM6_diags = write_ecosys_diagnostics_file(MARBL_settings.get_tracer_names(),
-                                                   MARBL_settings.get_autotroph_names(),
-                                                   MARBL_settings.get_zooplankton_names(),
-                                                   MARBL_settings.get_autotroph_names(calcifier_only=True),
-                                                   MARBL_settings.get_ladjust_bury_coeff(),
-                                                   ecosys_diags_buildconf,
-                                                   ice_ncat
-                                                  )
+        write_ecosys_diagnostics_file(MARBL_settings.get_tracer_names(),
+                                      MARBL_settings.get_autotroph_names(),
+                                      MARBL_settings.get_zooplankton_names(),
+                                      MARBL_settings.get_autotroph_names(calcifier_only=True),
+                                      MARBL_settings.get_ladjust_bury_coeff(),
+                                      ecosys_diags_buildconf,
+                                      ice_ncat,
+                                      diag_mode,
+                                     )
         # (ii) append MARBL diagnostics to ecosys_diagnostics
         MARBL_diagnostics.write_diagnostics_file(ecosys_diags_buildconf,
-                                                append=True)
+                                                 diag_mode=diag_mode,
+                                                 append=True)
 
     # 3. We need a list of all the 2D fields in ecosys_diagnostics
     #    because those fields use the ocean_model module rather than

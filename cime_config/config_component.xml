@@ -127,6 +127,23 @@
     </desc>
   </entry>
 
+  <entry id="MARBL_DIAG_MODE">
+    <type>char</type>
+    <valid_values>test_suite,full,minimal,none</valid_values>
+    <default_value>full</default_value>
+    <values>
+      <value compset="_CAM.*MOM6%[^_]*MARBL">minimal</value>
+      <value compset="_DATM.*MOM6%[^_]*MARBL">full</value>
+    </values>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc> This variable is used to choose from a set of predefined diagnostics configurations in MARBL.
+           Each configuration corresponds to a different combination of frequency and field lists.
+           'test_suite' implies "provide all MARBL output in double precision" while the rest of the
+           modes indicate single precision. Note that 'full' is a superset of 'minimal'.
+    </desc>
+  </entry>
+
   <entry id="MARBL_HIST_VERT_GRID">
     <type>char</type>
     <valid_values>interpolated,native,both</valid_values>
