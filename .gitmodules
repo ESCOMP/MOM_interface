@@ -1,0 +1,6 @@
+[submodule "MOM6"]
+path = MOM6
+url = https://github.com/NCAR/MOM6.git
+fxtag = dev/ncar_240510
+fxrequired = AlwaysRequired
+fxDONOTUSEurl = https://github.com/NCAR/MOM6.git
