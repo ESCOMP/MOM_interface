@@ -14,6 +14,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
     # be included.
     valid_diag_modes = ['none', 'minimal', 'full', 'test_suite']
     # For now we hard-code the tracers we want included in the output when diag_mode = 'minimal'
+    # (and for the Jint_100m diagnostics)
     # If we expand the minimal set, we may need to change how we track what is included
     tracers_in_minimal_diag_output = ['Fe',
                                       'DIC',
@@ -25,12 +26,20 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
                                       'O2',
                                       'DOC',
                                       'DOCr',
+                                      'coccoC',
+                                      'diatC',
+                                      'diazC',
+                                      'mesozooC',
+                                      'microzooC',
+                                      'spC',
+                                      'coccoCaCO3',
                                       'spChl',
                                       'diatChl',
                                       'diazChl',
                                       'coccoChl',
                                       'microzooC',
                                       'mesozooC']
+    Jint_100m_in_minimal_diag_output = ['ALK', 'DIC']
 
     with open(ecosys_diag_filename,"w") as fout:
         # File header with information on how to use generated file
@@ -92,6 +101,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         # 1. Create dictionary with default tracer output for all tracers
         #    - This dictionary also stores some tracer properties (currently just for budget-specific diagnostics)
         full_diag_dict = {}
+        Jint_100m_freq_op = {}
         for tracer_short_name in sorted(active_tracers):
             per_tracer_dict = dict()
 
@@ -109,16 +119,16 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             else:
                 freq_op = 'never_average'
             per_tracer_dict['diags'] = {}
-            # Tracers themselves have different defaults than the rest
+            # Tracers themselves and Jint_100m diags  have different defaults than the rest
             if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("full") or \
                (valid_diag_modes.index(diag_mode) == valid_diag_modes.index("minimal") \
                 and tracer_short_name in tracers_in_minimal_diag_output):
                 per_tracer_dict['diags'][tracer_short_name] = 'medium_average'
             else:
                 per_tracer_dict['diags'][tracer_short_name] = 'never_average'
+            per_tracer_dict['diags']['Jint_100m_%s' % tracer_short_name] = 'never_average'
             per_tracer_dict['diags']['STF_%s' % tracer_short_name] = freq_op
             per_tracer_dict['diags']['J_%s' % tracer_short_name] = freq_op
-            per_tracer_dict['diags']['Jint_100m_%s' % tracer_short_name] = freq_op
             per_tracer_dict['diags']['Jint_%s' % tracer_short_name] = freq_op
             per_tracer_dict['diags']['%s_zint_100m' % tracer_short_name] = freq_op
             # per_tracer_dict['diags']['tend_zint_100m_%s' % tracer_short_name] = 'never_average'
@@ -127,6 +137,14 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             # are not added to diagnostics file and will not show up in tavg_contents
             per_tracer_dict['diags']['%s_RIV_FLUX' % tracer_short_name] = 'none'
             full_diag_dict[tracer_short_name] = dict(per_tracer_dict)
+
+            # Set up dictionary for tracking the Jint_100m_{tracer} freq_ops
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("full") or \
+                (valid_diag_modes.index(diag_mode) == valid_diag_modes.index("minimal") \
+                and tracer_short_name in Jint_100m_in_minimal_diag_output):
+                Jint_100m_freq_op[tracer_short_name] = 'medium_average'
+            else:
+                Jint_100m_freq_op[tracer_short_name] = 'never_average'
 
         # TODO: turn on some of these diagnostics once they are properly defined
         # 2. Update dictionary for tracers that don't just rely on default diagnostic output
@@ -144,34 +162,34 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         if 'PO4' in full_diag_dict.keys():
             full_diag_dict['PO4']['diags']['PO4_RIV_FLUX'] = freq_op
             full_diag_dict['PO4']['diags']['J_PO4'] = low_freq_op
-            full_diag_dict['PO4']['diags']['Jint_100m_PO4'] = freq_op
+            full_diag_dict['PO4']['diags']['Jint_100m_PO4'] = Jint_100m_freq_op['PO4']
             # full_diag_dict['PO4']['diags']['tend_zint_100m_PO4'] = freq_op
             full_diag_dict['PO4']['properties']['has surface flux'] = True
         # NO3
         if 'NO3' in full_diag_dict.keys():
             full_diag_dict['NO3']['diags']['NO3_RIV_FLUX'] = freq_op
             full_diag_dict['NO3']['diags']['J_NO3'] = low_freq_op
-            full_diag_dict['NO3']['diags']['Jint_100m_NO3'] = freq_op
+            full_diag_dict['NO3']['diags']['Jint_100m_NO3'] = Jint_100m_freq_op['NO3']
             # full_diag_dict['NO3']['diags']['tend_zint_100m_NO3'] = freq_op
             full_diag_dict['NO3']['properties']['has surface flux'] = True
         # SiO3
         if 'SiO3' in full_diag_dict.keys():
             full_diag_dict['SiO3']['diags']['SiO3_RIV_FLUX'] = freq_op
             full_diag_dict['SiO3']['diags']['J_SiO3'] = low_freq_op
-            full_diag_dict['SiO3']['diags']['Jint_100m_SiO3'] = freq_op
+            full_diag_dict['SiO3']['diags']['Jint_100m_SiO3'] = Jint_100m_freq_op['SiO3']
             # full_diag_dict['SiO3']['diags']['tend_zint_100m_SiO3'] = freq_op
             full_diag_dict['SiO3']['properties']['has surface flux'] = True
         # NH4
         if 'NH4' in full_diag_dict.keys():
             full_diag_dict['NH4']['diags']['J_NH4'] = low_freq_op
-            full_diag_dict['NH4']['diags']['Jint_100m_NH4'] = freq_op
+            full_diag_dict['NH4']['diags']['Jint_100m_NH4'] = Jint_100m_freq_op['NH4']
             # full_diag_dict['NH4']['diags']['tend_zint_100m_NH4'] = freq_op
             full_diag_dict['NH4']['properties']['has surface flux'] = True
         # Fe
         if 'Fe' in full_diag_dict.keys():
             full_diag_dict['Fe']['diags']['Fe_RIV_FLUX'] = freq_op
             full_diag_dict['Fe']['diags']['J_Fe'] = low_freq_op
-            full_diag_dict['Fe']['diags']['Jint_100m_Fe'] = freq_op
+            full_diag_dict['Fe']['diags']['Jint_100m_Fe'] = Jint_100m_freq_op['Fe']
             # full_diag_dict['Fe']['diags']['tend_zint_100m_Fe'] = freq_op
             full_diag_dict['Fe']['properties']['include budget terms'] = True
             full_diag_dict['Fe']['properties']['has surface flux'] = True
@@ -185,7 +203,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
                 full_diag_dict['O2']['diags']['STF_O2'] = 'medium_average, high_average'
             else:
                 full_diag_dict['O2']['diags']['STF_O2'] = 'never_average'
-            full_diag_dict['O2']['diags']['Jint_100m_O2'] = freq_op
+            full_diag_dict['O2']['diags']['Jint_100m_O2'] = Jint_100m_freq_op['O2']
             # full_diag_dict['O2']['diags']['tend_zint_100m_O2'] = freq_op
             full_diag_dict['O2']['properties']['include budget terms'] = True
             full_diag_dict['O2']['properties']['has surface flux'] = True
@@ -193,7 +211,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         if 'DIC' in full_diag_dict.keys():
             full_diag_dict['DIC']['diags']['DIC_RIV_FLUX'] = freq_op
             full_diag_dict['DIC']['diags']['J_DIC'] = freq_op
-            full_diag_dict['DIC']['diags']['Jint_100m_DIC'] = freq_op
+            full_diag_dict['DIC']['diags']['Jint_100m_DIC'] = Jint_100m_freq_op['DIC']
             # full_diag_dict['DIC']['diags']['tend_zint_100m_DIC'] = freq_op
             full_diag_dict['DIC']['properties']['include budget terms'] = True
             full_diag_dict['DIC']['properties']['has surface flux'] = True
@@ -201,7 +219,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         if 'DIC_ALT_CO2' in full_diag_dict.keys():
             full_diag_dict['DIC_ALT_CO2']['diags']['DIC_ALT_CO2_RIV_FLUX'] = freq_op
             full_diag_dict['DIC_ALT_CO2']['diags']['J_DIC_ALT_CO2'] = freq_op
-            full_diag_dict['DIC_ALT_CO2']['diags']['Jint_100m_DIC_ALT_CO2'] = freq_op
+            full_diag_dict['DIC_ALT_CO2']['diags']['Jint_100m_DIC_ALT_CO2'] = Jint_100m_freq_op['DIC_ALT_CO2']
             # full_diag_dict['DIC_ALT_CO2']['diags']['tend_zint_100m_DIC_ALT_CO2'] = freq_op
             full_diag_dict['DIC_ALT_CO2']['properties']['include budget terms'] = True
             full_diag_dict['DIC_ALT_CO2']['properties']['has surface flux'] = True
@@ -210,7 +228,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             full_diag_dict['ALK']['diags']['ALK_RIV_FLUX'] = freq_op
             full_diag_dict['ALK']['diags']['STF_ALK'] = freq_op
             full_diag_dict['ALK']['diags']['J_ALK'] = low_freq_op
-            full_diag_dict['ALK']['diags']['Jint_100m_ALK'] = freq_op
+            full_diag_dict['ALK']['diags']['Jint_100m_ALK'] = Jint_100m_freq_op['ALK']
             # full_diag_dict['ALK']['diags']['tend_zint_100m_ALK'] = freq_op
             full_diag_dict['ALK']['properties']['has surface flux'] = True
         # ALK_ALT_CO2
@@ -218,13 +236,13 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
             full_diag_dict['ALK_ALT_CO2']['diags']['ALK_ALT_CO2_RIV_FLUX'] = freq_op
             full_diag_dict['ALK_ALT_CO2']['diags']['STF_ALK_ALT_CO2'] = freq_op
             full_diag_dict['ALK_ALT_CO2']['diags']['J_ALK_ALT_CO2'] = low_freq_op
-            full_diag_dict['ALK_ALT_CO2']['diags']['Jint_100m_ALK_ALT_CO2'] = freq_op
+            full_diag_dict['ALK_ALT_CO2']['diags']['Jint_100m_ALK_ALT_CO2'] = Jint_100m_freq_op['ALK_ALT_CO2']
             # full_diag_dict['ALK_ALT_CO2']['diags']['tend_zint_100m_ALK_ALT_CO2'] = freq_op
             full_diag_dict['ALK_ALT_CO2']['properties']['has surface flux'] = True
         # DOC
         if 'DOC' in full_diag_dict.keys():
             full_diag_dict['DOC']['diags']['DOC_RIV_FLUX'] = freq_op
-            full_diag_dict['DOC']['diags']['Jint_100m_DOC'] = freq_op
+            full_diag_dict['DOC']['diags']['Jint_100m_DOC'] = Jint_100m_freq_op['DOC']
             # full_diag_dict['DOC']['diags']['tend_zint_100m_DOC'] = freq_op
             full_diag_dict['DOC']['properties']['include budget terms'] = True
             full_diag_dict['DOC']['properties']['has surface flux'] = False # this should be True if EBM is off
@@ -247,7 +265,7 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         # DOCr
         if 'DOCr' in full_diag_dict.keys():
             full_diag_dict['DOCr']['diags']['DOCr_RIV_FLUX'] = freq_op
-            full_diag_dict['DOCr']['diags']['Jint_100m_DOCr'] = freq_op
+            full_diag_dict['DOCr']['diags']['Jint_100m_DOCr'] = Jint_100m_freq_op['DOCr']
             # full_diag_dict['DOCr']['diags']['tend_zint_100m_DOCr'] = freq_op
             full_diag_dict['DOCr']['properties']['include budget terms'] = True
             full_diag_dict['DOCr']['properties']['has surface flux'] = False # this should be True if EBM is off
@@ -255,26 +273,26 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         if 'DI13C' in full_diag_dict.keys():
             # full_diag_dict['DI13C']['diags']['DI13C_RIV_FLUX'] = freq_op
             full_diag_dict['DI13C']['diags']['J_DI13C'] = freq_op
-            full_diag_dict['DI13C']['diags']['Jint_100m_DI13C'] = freq_op
+            full_diag_dict['DI13C']['diags']['Jint_100m_DI13C'] = Jint_100m_freq_op['DI13C']
             # full_diag_dict['DI13C']['diags']['tend_zint_100m_DI13C'] = freq_op
             full_diag_dict['DI13C']['properties']['has surface flux'] = True
         # DO13Ctot
         if 'DO13Ctot' in full_diag_dict.keys():
             # full_diag_dict['DO13Ctot']['diags']['DO13Ctot_RIV_FLUX'] = freq_op
-            full_diag_dict['DO13Ctot']['diags']['Jint_100m_DO13Ctot'] = freq_op
+            full_diag_dict['DO13Ctot']['diags']['Jint_100m_DO13Ctot'] = Jint_100m_freq_op['DO13Ctot']
             # full_diag_dict['DO13Ctot']['diags']['tend_zint_100m_DO13Ctot'] = freq_op
             full_diag_dict['DO13Ctot']['properties']['has surface flux'] = True
         # DI14C
         if 'DI14C' in full_diag_dict.keys():
             # full_diag_dict['DI14C']['diags']['DI14C_RIV_FLUX'] = freq_op
             full_diag_dict['DI14C']['diags']['J_DI14C'] = freq_op
-            full_diag_dict['DI14C']['diags']['Jint_100m_DI14C'] = freq_op
+            full_diag_dict['DI14C']['diags']['Jint_100m_DI14C'] = Jint_100m_freq_op['DI14C']
             # full_diag_dict['DI14C']['diags']['tend_zint_100m_DI14C'] = freq_op
             full_diag_dict['DI14C']['properties']['has surface flux'] = True
         # DO14Ctot
         if 'DO14Ctot' in full_diag_dict.keys():
             # full_diag_dict['DO14Ctot']['diags']['DO14Ctot_RIV_FLUX'] = freq_op
-            full_diag_dict['DO14Ctot']['diags']['Jint_100m_DO14Ctot'] = freq_op
+            full_diag_dict['DO14Ctot']['diags']['Jint_100m_DO14Ctot'] = Jint_100m_freq_op['DO14Ctot']
             # full_diag_dict['DO14Ctot']['diags']['tend_zint_100m_DO14Ctot'] = freq_op
             full_diag_dict['DO14Ctot']['properties']['has surface flux'] = True
         # ABIO_DIC
