@@ -76,11 +76,14 @@ def write_ecosys_diagnostics_file(active_tracers, autotroph_list, zooplankton_li
         fout.write(f"SEAICE_DUST_FLUX_CPL : {freq_op}\n")
         fout.write(f"ATM_BLACK_CARBON_FLUX_CPL : {freq_op}\n")
         fout.write(f"SEAICE_BLACK_CARBON_FLUX_CPL : {freq_op}\n")
+        fout.write("#\n# temperature and salinity\n#\n")
+        fout.write(f"so: {freq_op}\n") # so should be included when diag_mode = "minimal"
 
         if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("full"):
             freq_op = 'medium_average'
         else:
             freq_op = 'never_average'
+        fout.write(f"thetao: {freq_op}\n") #thetao should not be included when diag_mode = "minimal"
         fout.write("#\n# Bottom Flux to Tendency Conversion\n#\n")
         fout.write(f"BOT_FLUX_TO_TEND : {freq_op}\n")
 
