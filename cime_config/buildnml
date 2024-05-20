@@ -227,9 +227,10 @@ def prechecks(case, inst_suffixes):
     run_refcase = case.get_value("RUN_REFCASE")
     run_refdate = case.get_value("RUN_REFDATE")
     run_reftod = case.get_value("RUN_REFTOD")
-
+    testcase = case.get_value("TEST")
+    
     # check if rpointer files are present in rundir
-    if run_type != "startup" or continue_run:
+    if not testcase and (run_type != "startup" or continue_run):
         for inst_suffix in inst_suffixes:
             pointer_file = os.path.join(rundir, "rpointer.ocn" + inst_suffix)
             expect(
