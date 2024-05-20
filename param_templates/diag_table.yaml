@@ -12,7 +12,8 @@ FieldLists:
 
     - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt"]
 
-    - &tracers          ["agessc", "T_ady_2d", "T_adx_2d", "T_diffy_2d", "T_diffx_2d"]
+    - &tracers          ["agessc", "T_ady_2d", "T_adx_2d", "T_diffy_2d", "T_diffx_2d",
+                         "T_hbd_diffx_2d", 'T_hbd_diffy_2d']
 
     - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint",
                          "somint", "Rd_dx", "speed", "mlotst"]
