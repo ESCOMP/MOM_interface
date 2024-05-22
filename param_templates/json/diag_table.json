@@ -38,7 +38,9 @@
          "T_ady_2d",
          "T_adx_2d",
          "T_diffy_2d",
-         "T_diffx_2d"
+         "T_diffx_2d",
+         "T_hbd_diffx_2d",
+         "T_hbd_diffy_2d"
       ],
       [
          "SSH",
@@ -249,7 +251,9 @@
                      "T_ady_2d",
                      "T_adx_2d",
                      "T_diffy_2d",
-                     "T_diffx_2d"
+                     "T_diffx_2d",
+                     "T_hbd_diffx_2d",
+                     "T_hbd_diffy_2d"
                   ],
                   [
                      "diftrelo",
