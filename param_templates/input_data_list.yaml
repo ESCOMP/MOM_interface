@@ -60,7 +60,7 @@ mom.input_data_list:
     riv_flux_file:
         '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS':
             '$ROF_GRID == "JRA025" and $OCN_GRID == "tx2_3v2"': "${INPUTDIR}/riv_nut.gnews_gnm.rJRA025_to_tx2_3v2_nnsm_e333r100_230415.20240202.nc"
-            '$ROF_GRID == "JRA025" and $OCN_GRID == "r05"': "${INPUTDIR}/riv_nut.gnews_gnm.r05_to_tx2_3v2_nnsm_e250r250_230914.20240202.nc"
+            '$ROF_GRID == "r05" and $OCN_GRID == "tx2_3v2"': "${INPUTDIR}/riv_nut.gnews_gnm.r05_to_tx2_3v2_nnsm_e250r250_230914.20240202.nc"
     d14c_file_1:
         '"ABIO_DIC_ON=TRUE" in $MARBL_TRACER_OPTS':
             $OCN_GRID == "tx2_3v2": "${INPUTDIR}/atm_delta_C14_CMIP6_sector1_global_1850-2015_yearly_v2.0_c240202.nc"
