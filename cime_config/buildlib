@@ -38,9 +38,8 @@ def buildlib(caseroot, libroot, bldroot):
             mpilib = case.get_value("MPILIB")
             debug = "debug" if case.get_value("DEBUG") else "nodebug"
             threaded = "threads" if case.get_value("BUILD_THREADED") else "nothreads"
-            comp_interface = case.get_value("COMP_INTERFACE")
             fmsbuilddir = os.path.join(
-                slr, compiler, mpilib, debug, threaded, comp_interface, "FMS"
+                slr, compiler, mpilib, debug, threaded, "FMS"
             )
             if not os.path.isfile(os.path.join(fmsbuilddir, "libfms.a")):
                 run_sub_or_cmd(
