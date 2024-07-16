@@ -39,22 +39,6 @@ mpp_io_nml:
 nam_stochy:
     new_lscale:
         values: .true.
-    OCNSPPT:
-        values: -999.0
-    OCNSPPT_LSCALE:
-        values: 500e3
-    OCNSPPT_TAU:
-        values: 21600
-    ISEED_OCNSPPT:
-        values: 201209010001
-    EPBL:
-        values: -999.0
-    EPBL_LSCALE:
-        values: 500e3
-    EPBL_TAU:
-        values: 21600
-    ISEED_EPBL:
-        values: 201301010102
     OCNSKEB:
         values: 1.0
     OCNSKEB_LSCALE:
