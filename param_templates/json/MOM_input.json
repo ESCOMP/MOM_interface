@@ -3010,17 +3010,17 @@
          "value": "$CASE.mom6.h.ocean_geometry.nc"
       },
       "SKEB_NPASS": {
-         "description": "",
+         "description": "\"default = 3\nnumber of passes of a 9-point smoother of the dissipation estimate.\"\n",
          "datatype": "integer",
          "value": 10
       },
       "SKEB_USE_GM": {
-         "description": "",
+         "description": "\"[Boolean] default = False\nIf true, adds GM work rate to the SKEBS amplitude.\"\n",
          "datatype": "Boolean",
          "value": true
       },
       "SKEB_GM_COEF": {
-         "description": "",
+         "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
          "datatype": "real",
          "value": 0.75
       }
