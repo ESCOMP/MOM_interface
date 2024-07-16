@@ -54,7 +54,7 @@
          "values": 1.0
       },
       "OCNSKEB_LSCALE": {
-         "values": "250e3"
+         "values": "200e3"
       },
       "OCNSKEB_TAU": {
          "values": 21600

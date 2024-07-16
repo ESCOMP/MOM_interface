@@ -1,0 +1,1 @@
+./xmlchange MOM6_BUILD_STOCH_PHYSICS=FALSE

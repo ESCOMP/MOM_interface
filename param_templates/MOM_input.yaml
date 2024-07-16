@@ -3692,6 +3692,18 @@ Global:
         datatype: string
         value:
             $CASE.mom6.h.ocean_geometry.nc
+    SKEB_NPASS:
+        description: |
+        datatype: integer
+        value: 10
+    SKEB_USE_GM:
+        description: |
+        datatype: Boolean
+        value: True
+    SKEB_GM_COEF:
+        description: |
+        datatype: real
+        value: 0.75
 
 KPP:
     N_SMOOTH:
