@@ -64,13 +64,11 @@
       },
       "marbl_fesedflux_file": {
          "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx0.66v1\"": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx0.66v1.c230814.nc",
             "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx2_3v2.c231205.nc"
          }
       },
       "marbl_feventflux_file": {
          "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx0.66v1\"": "${INPUTDIR}/feventflux_5gmol_tx0.66v1.c230814.nc",
             "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/feventflux_5gmol_tx2_3v2.c231205.nc"
          }
       },
@@ -81,19 +79,13 @@
          }
       },
       "d14c_file_1": {
-         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/atm_delta_C14_CMIP6_sector1_global_1850-2015_yearly_v2.0_c240202.nc"
-         }
+         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/atm_delta_C14_CMIP6_sector1_global_1850-2015_yearly_v2.0_c240202.nc"
       },
       "d14c_file_2": {
-         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/atm_delta_C14_CMIP6_sector2_global_1850-2015_yearly_v2.0_c240202.nc"
-         }
+         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/atm_delta_C14_CMIP6_sector2_global_1850-2015_yearly_v2.0_c240202.nc"
       },
       "d14c_file_3": {
-         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/atm_delta_C14_CMIP6_sector3_global_1850-2015_yearly_v2.0_c240202.nc"
-         }
+         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/atm_delta_C14_CMIP6_sector3_global_1850-2015_yearly_v2.0_c240202.nc"
       }
    }
 }

@@ -97,7 +97,7 @@
   <!--- Note that positive second match will overwrite positive first match -->
   <entry id="OCN_CO2_TYPE">
     <type>char</type>
-    <valid_values>constant,prognostic,diagnostic,box_atm_co2</valid_values>
+    <valid_values>constant,prognostic,diagnostic</valid_values>
     <default_value>constant</default_value>
     <values>
       <value compset="_CAM">diagnostic</value>
@@ -133,8 +133,7 @@
     <valid_values>off,latest,latest+4p2z</valid_values>
     <default_value>off</default_value>
     <values>
-      <value compset="MOM6%[^_]*MARBL-ABIO">latest+4p2z</value>
-      <value compset="MOM6%[^_]*MARBL-BIO">latest+4p2z</value>
+      <value compset="MOM6%[^_]*MARBL">latest+4p2z</value>
     </values>
     <group>run_component_mom</group>
     <file>env_run.xml</file>
@@ -166,9 +165,9 @@
     <group>run_component_mom</group>
     <file>env_run.xml</file>
     <desc>Vertical grid to use in BGC-specific history files that contain 3D variables
-          "native" will output on whatever levels MOM is using (e.g. z*); stream will be mom6.h_bgc*
-          "interpolated" will output will be interpolated to static z levels; stream will be mom6.hm_bgc*
-          "both" will write both mom6.h_bgc and mom6.hm_bgc files
+          "native" will output on whatever levels MOM is using (e.g. z*); stream will be mom6.h.bgc.native.*
+          "interpolated" will output will be interpolated to static z levels; stream will be mom6.h.bgc.z.*
+          "both" will write both h.bgc.native and h.bgc.z files
     </desc>
   </entry>
 

@@ -44,18 +44,8 @@
   </compset>
 
   <compset>
-    <alias>C1850MOMMARBL</alias>
-    <lname>1850_DATM%NYF_SLND_DICE%SSMI_MOM6%MARBL-BIO_DROF%NYF_SGLC_SWAV</lname>
-  </compset>
-
-  <compset>
     <alias>CMOM_IAF</alias>
     <lname>2000_DATM%IAF_SLND_DICE%IAF_MOM6_DROF%IAF_SGLC_SWAV</lname>
-  </compset>
-
-  <compset>
-    <alias>C1850MOMMARBL_IAF</alias>
-    <lname>1850_DATM%IAF_SLND_DICE%IAF_MOM6%MARBL-BIO_DROF%IAF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
@@ -73,6 +63,11 @@
     <lname>1850_DATM%JRA_SLND_DICE%SSMI_MOM6%MARBL-BIO_DROF%JRA_SGLC_SWAV</lname>
   </compset>
 
+  <compset>
+    <alias>C1850MOMABIOMARBL_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_DICE%SSMI_MOM6%MARBL-ABIO_DROF%JRA_SGLC_SWAV</lname>
+  </compset>
+
   <!-- G compsets -->
 
   <compset>
@@ -81,18 +76,8 @@
   </compset>
 
   <compset>
-    <alias>G1850MOMMARBL</alias>
-    <lname>1850_DATM%NYF_SLND_CICE_MOM6%MARBL-BIO_DROF%NYF_SGLC_SWAV</lname>
-  </compset>
-
-  <compset>
     <alias>GMOM_IAF</alias>
     <lname>2000_DATM%IAF_SLND_CICE_MOM6_DROF%IAF_SGLC_SWAV</lname>
-  </compset>
-
-  <compset>
-    <alias>G1850MOMMARBL_IAF</alias>
-    <lname>1850_DATM%IAF_SLND_CICE_MOM6%MARBL-BIO_DROF%IAF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
@@ -115,18 +100,9 @@
     <lname>1850_DATM%JRA-1p4-2018_SLND_CICE_MOM6%MARBL-BIO_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
   </compset>
 
-  <!-- Ocean-Only compsets -->
-
   <compset>
-    <alias>CMOMu</alias>
-    <lname>2000_SATM_SLND_SICE_MOM6_SROF_SGLC_SWAV</lname>
-  </compset>
-
-  <!-- MOM6+CISM compsets -->
-
-  <compset>
-    <alias>CMOMG</alias>
-    <lname>2000_SATM_SLND_SICE_MOM6_SROF_CISM2%EVOLVE_SWAV</lname>
+    <alias>G1850MOMABIOMARBL_JRA</alias>
+    <lname>1850_DATM%JRA-1p4-2018_SLND_CICE_MOM6%MARBL-ABIO_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
   </compset>
 
 </compsets>
