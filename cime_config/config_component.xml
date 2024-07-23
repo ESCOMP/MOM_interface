@@ -46,7 +46,6 @@
     <default_value>zstar_65L</default_value>
     <values>
       <value grid="oi%tx0.25v1">hycom1</value>
-      <value grid="oi%gx1v6">zstar_60L</value>
       <value grid="oi%MISOMIP">sigma_shelf_zstar</value>
     </values>
     <group>case_comp</group>
