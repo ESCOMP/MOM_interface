@@ -55,9 +55,8 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"zstar_60L\"": 60,
             "$MOM6_VERTICAL_GRID == \"zstar_65L\"": 65,
-            "$MOM6_VERTICAL_GRID == \"hycom1\" or $MOM6_VERTICAL_GRID == \"zstar_75L\"": 75,
+            "$MOM6_VERTICAL_GRID in [\"hycom1\", \"zstar_75L\"]": 75,
             "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": 36
          }
       },
@@ -537,7 +536,7 @@
          "description": "\"default = 'LAYER'\nCoordinate mode for vertical regridding.\nChoose among the following possibilities:\nLAYER - Isopycnal or stacked shallow water layers\nZSTAR, Z* - stetched geopotential z*\nSIGMA_SHELF_ZSTAR - stetched geopotential z* ignoring shelf\nSIGMA - terrain following coordinates\nRHO   - continuous isopycnal\nHYCOM1 - HyCOM-like hybrid coordinate\nSLIGHT - stretched coordinates above continuous isopycnal\nADAPTIVE - optimize for smooth neutral density surfaces\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"zstar_65L\" or $MOM6_VERTICAL_GRID == \"zstar_60L\" or $MOM6_VERTICAL_GRID == \"zstar_75L\"": "Z*",
+            "$MOM6_VERTICAL_GRID in [\"zstar_65L\", \"zstar_75L\"]": "Z*",
             "$MOM6_VERTICAL_GRID == \"hycom1\"": "HYCOM1",
             "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": "SIGMA_SHELF_ZSTAR"
          }
@@ -548,7 +547,6 @@
          "value": {
             "$MOM6_VERTICAL_GRID == \"zstar_75L\"": "\"FILE:zstar_75layer_2.5m_248.4m-2024-03-29.nc,dz\"",
             "$MOM6_VERTICAL_GRID == \"zstar_65L\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
-            "$MOM6_VERTICAL_GRID == \"zstar_60L\"": "\"FILE:ocean_vgrid.nc,dz\"",
             "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "\"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz\"",
             "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx0.25v1\"": "\"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01\""
          }
