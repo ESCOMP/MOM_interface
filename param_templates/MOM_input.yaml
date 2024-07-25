@@ -3331,7 +3331,7 @@ Global:
             If true, enables surface wave modules."
         datatype: logical
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: True
+            $COMP_WAV == "ww3": True
     WAVE_METHOD:
         description: |
             "Choice of wave method, valid options include:
@@ -3342,8 +3342,8 @@ Global:
              EFACTOR       - Applies an enhancement factor to the KPP...""
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID != "wtx2_3v2" : "EFACTOR"
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx2_3v2" : "SURFACE_BANDS"
+            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : "EFACTOR"
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "SURFACE_BANDS"
     SURFBAND_SOURCE:
         description: |
             Choice of SURFACE_BANDS data mode, valid options include:
@@ -3352,28 +3352,28 @@ Global:
             INPUT         - Testing with fixed values.
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx2_3v2" : "COUPLER"
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "COUPLER"
     STOKES_DDT:
         description: |
             default = False
             Flag to use Stokes d/dt
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx2_3v2" : True
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
     STOKES_VF:
         description: |
             default = False
             Flag to use Stokes vortex force
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx2_3v2" : True
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
     STOKES_PGF:
         description: |
             default = False
             Flag to use Stokes pressure gradient force
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx2_3v2" : True
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
     STK_BAND_COUPLER:
         description: |
             default = 1
@@ -3382,14 +3382,14 @@ Global:
             will fail.
         datatype: int
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx2_3v2" : 3
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: 3
     SURFBAND_WAVENUMBERS:
         description: |
             [rad/m] default = 0.12566
             Central wavenumbers for surface Stokes drift bands.
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx2_3v2" : "0.04, 0.11, 0.33"
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "0.04, 0.11, 0.33"
     IO_LAYOUT:
         description: |
             The processor layout to be used, or 0,0 to automatically set the io_layout to
@@ -3457,7 +3457,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "ww3a" : True
+            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : True
     USE_KPP_LT_VT2:
         description: |
             default = False
@@ -3465,7 +3465,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "ww3a" : True
+            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : True
     KPP_LT_K_METHOD:
         description: |
             default = "CONSTANT"
@@ -3475,7 +3475,7 @@ KPP:
                RW16     = Function of Langmuir number based on RW16
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: VR12
+            $COMP_WAV == "ww3": VR12
     KPP_LT_VT2_METHOD:
         description: |
             default = "CONSTANT"
@@ -3486,6 +3486,6 @@ KPP:
                LF17     = Function of Langmuir number based on LF17
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: VR12
+            $COMP_WAV == "ww3": VR12
 
 ...
