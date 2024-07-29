@@ -3417,12 +3417,6 @@ Global:
             number of passes of a 9-point smoother of the dissipation estimate."
         datatype: integer
         value: 10
-    SKEB_USE_GM:
-        description: |
-            "[Boolean] default = False
-            If true, adds GM work rate to the SKEBS amplitude."
-        datatype: Boolean
-        value: True
     SKEB_GM_COEF:
         description: |
             "[nondim] default = 0.0

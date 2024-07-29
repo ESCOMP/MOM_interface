@@ -1,1 +1,2 @@
 DO_SKEB=True
+SKEB_USE_GM=True
