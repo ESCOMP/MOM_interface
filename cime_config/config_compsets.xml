@@ -39,50 +39,55 @@
   <!-- C compsets -->
 
   <compset>
-    <alias>CMOM</alias>
+    <alias>C</alias>
     <lname>2000_DATM%NYF_SLND_DICE%SSMI_MOM6_DROF%NYF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>CMOM_IAF</alias>
+    <alias>C_IAF</alias>
     <lname>2000_DATM%IAF_SLND_DICE%IAF_MOM6_DROF%IAF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>CMOM_JRA</alias>
+    <alias>C_JRA</alias>
     <lname>2000_DATM%JRA-1p4-2018_SLND_DICE%SSMI_MOM6_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>CMOM_JRA_RYF</alias>
+    <alias>C_JRA_RYF</alias>
     <lname>2000_DATM%JRA-RYF9091_SLND_DICE%SSMI_MOM6_DROF%JRA-RYF9091_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>CW_JRA</alias>
+    <lname>2000_DATM%JRA-1p4-2018_SLND_DICE%SSMI_MOM6_DROF%JRA-1p4-2018_SGLC_WW3</lname>
   </compset>
 
   <!-- G compsets -->
 
   <compset>
-    <alias>GMOM</alias>
+    <alias>G</alias>
     <lname>2000_DATM%NYF_SLND_CICE_MOM6_DROF%NYF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>GMOM_IAF</alias>
+    <alias>G_IAF</alias>
     <lname>2000_DATM%IAF_SLND_CICE_MOM6_DROF%IAF_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>GMOM_JRA</alias>
+    <alias>G_JRA</alias>
     <lname>2000_DATM%JRA-1p4-2018_SLND_CICE_MOM6_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>GMOM_JRA_RYF</alias>
+    <alias>G_JRA_RYF</alias>
     <lname>2000_DATM%JRA-RYF9091_SLND_CICE_MOM6_DROF%JRA-RYF9091_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>GMOM_JRA_WD</alias>
-    <lname>2000_DATM%JRA-1p4-2018_SLND_CICE_MOM6_DROF%JRA-1p4-2018_SGLC_WW3DEV</lname>
+    <alias>GW_JRA</alias>
+    <lname>2000_DATM%JRA-1p4-2018_SLND_CICE_MOM6_DROF%JRA-1p4-2018_SGLC_WW3</lname>
   </compset>
 
 </compsets>

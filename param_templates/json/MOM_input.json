@@ -10,7 +10,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true,
             "else": false
@@ -30,8 +29,6 @@
          "description": "\"The total number of thickness grid points in the\nx-direction in the physical domain. With STATIC_MEMORY_\nthis is set in MOM_memory.h at compile time.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 320,
-            "$OCN_GRID == \"tx0.66v1\"": 540,
             "$OCN_GRID == \"tx2_3v2\"": 540,
             "$OCN_GRID == \"tx0.25v1\"": 1440,
             "$OCN_GRID == \"MISOMIP\"": 402
@@ -41,8 +38,6 @@
          "description": "\"The total number of thickness grid points in the\ny-direction in the physical domain. With STATIC_MEMORY_\nthis is set in MOM_memory.h at compile time.\nThe number of processors in the x-direction. With\nSTATIC_MEMORY_ this is set in MOM_memory.h at compile time.\nThe number of processors in the x-direction. With\nSTATIC_MEMORY_ this is set in MOM_memory.h at compile time.\nThe processor layout that was acutally used.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 384,
-            "$OCN_GRID == \"tx0.66v1\"": 458,
             "$OCN_GRID == \"tx2_3v2\"": 480,
             "$OCN_GRID == \"tx0.25v1\"": 1080,
             "$OCN_GRID == \"MISOMIP\"": 40
@@ -60,9 +55,8 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"zstar_60L\"": 60,
             "$MOM6_VERTICAL_GRID == \"zstar_65L\"": 65,
-            "$MOM6_VERTICAL_GRID == \"hycom1\" or $MOM6_VERTICAL_GRID == \"zstar_75L\"": 75,
+            "$MOM6_VERTICAL_GRID in [\"hycom1\", \"zstar_75L\"]": 75,
             "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": 36
          }
       },
@@ -71,9 +65,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": false,
-            "$OCN_GRID == \"tx2_3v2\"": false,
-            "$OCN_GRID == \"gx1v6\"": false
+            "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
       "DIABATIC_FIRST": {
@@ -81,8 +73,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -97,8 +87,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -108,8 +96,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -119,9 +105,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 1800.0,
             "$OCN_GRID == \"tx0.25v1\"": 900.0,
-            "$OCN_GRID == \"tx0.66v1\"": 1800.0,
             "$OCN_GRID == \"tx2_3v2\"": 1800,
             "$OCN_GRID == \"MISOMIP\"": 600.0
          }
@@ -140,8 +124,6 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 10.0,
-            "$OCN_GRID == \"tx0.66v1\"": 10.0,
             "$OCN_GRID == \"tx2_3v2\"": 10.0,
             "$OCN_GRID == \"tx0.25v1\"": 20.0
          }
@@ -151,7 +133,6 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 7200.0,
             "$OCN_GRID == \"tx2_3v2\"": 7200.0,
             "$OCN_GRID == \"tx0.25v1\"": 3600.0,
             "else": 0.0
@@ -180,8 +161,6 @@
          "datatype": "real",
          "units": "J kg-1 K-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 3992.0,
-            "$OCN_GRID == \"tx0.66v1\"": 3992.0,
             "$OCN_GRID == \"tx2_3v2\"": 3992.0,
             "$OCN_GRID == \"tx0.25v1\"": 3992.0,
             "$OCN_GRID == \"MISOMIP\"": 3974.0
@@ -198,8 +177,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -215,8 +192,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": false,
-            "$OCN_GRID == \"tx0.66v1\"": false,
             "$OCN_GRID == \"tx2_3v2\"": false,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
@@ -226,8 +201,6 @@
          "datatype": "real",
          "units": "deg C Pa-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": -7.75e-08,
-            "$OCN_GRID == \"tx0.66v1\"": -7.75e-08,
             "$OCN_GRID == \"tx2_3v2\"": -7.75e-08,
             "$OCN_GRID == \"tx0.25v1\"": -7.75e-08,
             "$OCN_GRID == \"MISOMIP\"": -7.53e-08
@@ -238,8 +211,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -296,8 +267,6 @@
          "description": "\"Name of the file from which to read horizontal grid data.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "ocean_hgrid_230424.nc",
-            "$OCN_GRID == \"tx0.66v1\"": "ocean_hgrid_180829.nc",
             "$OCN_GRID == \"tx2_3v2\"": "ocean_hgrid_221123.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_hgrid.nc"
          }
@@ -307,7 +276,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": false,
             "$OCN_GRID == \"tx2_3v2\"": false,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
@@ -324,8 +292,6 @@
          "description": "\"default = 'topog.nc'\nThe file from which the bathymetry is read.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "ocean_topog_230424.nc",
-            "$OCN_GRID == \"tx0.66v1\"": "ocean_topog_200701.nc",
             "$OCN_GRID == \"tx2_3v2\"": "ocean_topo_tx2_3v2_240501.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc"
          }
@@ -335,8 +301,6 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 6000.0,
-            "$OCN_GRID == \"tx0.66v1\"": 6000.0,
             "$OCN_GRID == \"tx2_3v2\"": 6000.0,
             "$OCN_GRID == \"tx0.25v1\"": 6500.0,
             "$OCN_GRID == \"MISOMIP\"": 720.0
@@ -347,8 +311,6 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.5,
-            "$OCN_GRID == \"tx0.66v1\"": 9.5,
             "$OCN_GRID == \"tx2_3v2\"": 9.5,
             "$OCN_GRID == \"tx0.25v1\"": 9.5
          }
@@ -358,7 +320,6 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.0,
             "$OCN_GRID == \"tx2_3v2\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.0
          }
@@ -373,7 +334,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$RUN_TYPE != \"hybrid\" and $OCN_GRID in [\"gx1v6\", \"tx0.66v1\", \"tx2_3v2\", \"tx0.25v1\"]": true,
+            "$RUN_TYPE != \"hybrid\" and $OCN_GRID in [\"tx2_3v2\", \"tx0.25v1\"]": true,
             "else": false
          }
       },
@@ -381,8 +342,6 @@
          "description": "\"default = 'temp_salt_z.nc'\nThe name of the z-space input file used to initialize\nthe layer thicknesses, temperatures and salinities.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "WOA05_pottemp_salt.nc",
-            "$OCN_GRID == \"tx0.66v1\"": "woa18_04_initial_conditions.nc",
             "$OCN_GRID == \"tx2_3v2\"": "woa18_04_initial_conditions.nc",
             "$OCN_GRID == \"tx0.25v1\"": "MOM6_IC_TS.nc"
          }
@@ -391,8 +350,6 @@
          "description": "\"default = 'ptemp'\nThe name of the potential temperature variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "PTEMP",
-            "$OCN_GRID == \"tx0.66v1\"": "theta0",
             "$OCN_GRID == \"tx2_3v2\"": "theta0",
             "$OCN_GRID == \"tx0.25v1\"": "temp"
          }
@@ -401,8 +358,6 @@
          "description": "\"default = 'salt'\nThe name of the salinity variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "SALT",
-            "$OCN_GRID == \"tx0.66v1\"": "s_an",
             "$OCN_GRID == \"tx2_3v2\"": "s_an"
          }
       },
@@ -417,8 +372,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -428,8 +381,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -439,9 +390,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.01,
-            "$OCN_GRID == \"tx2_3v2\"": 0.01,
-            "$OCN_GRID == \"gx1v6\"": 0.01
+            "$OCN_GRID == \"tx2_3v2\"": 0.01
          }
       },
       "DEPTH_SCALED_KHTH": {
@@ -449,8 +398,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": false,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
@@ -460,7 +407,6 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 250.0,
             "$OCN_GRID == \"tx2_3v2\"": 250.0
          }
       },
@@ -477,9 +423,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"gx1v6\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "RESOLN_SCALED_KHTH": {
@@ -487,8 +431,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -512,8 +454,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -548,8 +488,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -558,8 +496,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -576,8 +512,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -586,8 +520,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -596,8 +528,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -606,7 +536,7 @@
          "description": "\"default = 'LAYER'\nCoordinate mode for vertical regridding.\nChoose among the following possibilities:\nLAYER - Isopycnal or stacked shallow water layers\nZSTAR, Z* - stetched geopotential z*\nSIGMA_SHELF_ZSTAR - stetched geopotential z* ignoring shelf\nSIGMA - terrain following coordinates\nRHO   - continuous isopycnal\nHYCOM1 - HyCOM-like hybrid coordinate\nSLIGHT - stretched coordinates above continuous isopycnal\nADAPTIVE - optimize for smooth neutral density surfaces\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"zstar_65L\" or $MOM6_VERTICAL_GRID == \"zstar_60L\" or $MOM6_VERTICAL_GRID == \"zstar_75L\"": "Z*",
+            "$MOM6_VERTICAL_GRID in [\"zstar_65L\", \"zstar_75L\"]": "Z*",
             "$MOM6_VERTICAL_GRID == \"hycom1\"": "HYCOM1",
             "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": "SIGMA_SHELF_ZSTAR"
          }
@@ -617,7 +547,6 @@
          "value": {
             "$MOM6_VERTICAL_GRID == \"zstar_75L\"": "\"FILE:zstar_75layer_2.5m_248.4m-2024-03-29.nc,dz\"",
             "$MOM6_VERTICAL_GRID == \"zstar_65L\"": "\"FILE:vgrid_65L_20200626.nc,dz\"",
-            "$MOM6_VERTICAL_GRID == \"zstar_60L\"": "\"FILE:ocean_vgrid.nc,dz\"",
             "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "\"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz\"",
             "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx0.25v1\"": "\"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01\""
          }
@@ -649,22 +578,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": true
-      },
-      "TIDE_M2": {
-         "description": "\"[Boolean] default = False\nIf true, apply tidal momentum forcing at the M2\nfrequency. This is only used if TIDES is true.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": true
-         }
-      },
-      "TIDE_SAL_SCALAR_VALUE": {
-         "description": "\"[m m-1]\nThe constant of proportionality between sea surface\nheight (really it should be bottom pressure) anomalies\nand bottom geopotential anomalies. This is only used if\nTIDES and TIDE_USE_SAL_SCALAR are true.\"\n",
-         "datatype": "real",
-         "units": "m m-1",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.094
-         }
       },
       "MASS_WEIGHT_IN_PRESSURE_GRADIENT": {
          "description": "\"[Boolean] default = False\nIf true, use mass weighting when interpolation T/S for\ntop/bottom integrals in AFV pressure gradient calculation.\"\n",
@@ -701,9 +614,7 @@
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.0,
-            "$OCN_GRID == \"tx0.66v1\"": 0.0,
             "$OCN_GRID == \"tx2_3v2\"": 0.0,
-            "$OCN_GRID == \"gx1v6\"": 0.0,
             "else": 0.01
          }
       },
@@ -712,7 +623,6 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.0,
             "$OCN_GRID == \"tx2_3v2\"": 0.0
          }
       },
@@ -721,7 +631,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"MISOMIP\"": false
          }
@@ -731,9 +640,7 @@
          "datatype": "real",
          "units": "m4 s-1",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1000000000000.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1000000000000.0,
-            "$OCN_GRID == \"gx1v6\"": 1000000000000.0
+            "$OCN_GRID == \"tx2_3v2\"": 1000000000000.0
          }
       },
       "AH_VEL_SCALE": {
@@ -741,7 +648,6 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.01,
             "$OCN_GRID == \"MISOMIP\"": 0.001
          }
@@ -751,9 +657,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"gx1v6\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "LEITH_BI_CONST": {
@@ -761,8 +665,6 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 128.0,
-            "$OCN_GRID == \"tx0.66v1\"": 128.0,
             "$OCN_GRID == \"tx2_3v2\"": 128.0
          }
       },
@@ -801,8 +703,6 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 1.0,
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.25
          }
@@ -831,8 +731,6 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 7200.0,
-            "$OCN_GRID == \"tx0.66v1\"": 7200.0,
             "$OCN_GRID == \"tx2_3v2\"": 7200.0
          }
       },
@@ -841,8 +739,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -851,7 +747,6 @@
          "description": "\" The number of diagnostic vertical coordinates to use.\nFor each coordinate, an entry in DIAG_COORDS must be provided.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 2,
             "$OCN_GRID == \"tx2_3v2\"": 2,
             "$OCN_GRID == \"tx0.25v1\"": 1
          }
@@ -860,7 +755,6 @@
          "description": "\"A list of string tuples associating diag_table modules to\na coordinate definition used for diagnostics. Each string\nis of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": "\"z Z ZSTAR\", \"rho2 RHO2 RHO\"",
             "$OCN_GRID == \"tx2_3v2\"": "\"z Z ZSTAR\", \"rho2 RHO2 RHO\"",
             "$OCN_GRID == \"tx0.25v1\"": "\"z Z ZSTAR\""
          }
@@ -869,7 +763,6 @@
          "description": "\" default = 'WOA09'\nDetermines how to specify the coordinate resolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_RHO2\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": "\"FILE:ocean_rho2_190917.nc,interfaces=rho2\"",
             "$OCN_GRID == \"tx2_3v2\"": "\"FILE:ocean_rho2_190917.nc,interfaces=rho2\""
          }
       },
@@ -891,8 +784,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -902,8 +793,6 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.1,
-            "$OCN_GRID == \"tx0.66v1\"": 0.1,
             "$OCN_GRID == \"tx2_3v2\"": 0.1,
             "$OCN_GRID == \"tx0.25v1\"": 0.1
          }
@@ -934,8 +823,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -976,7 +863,6 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
@@ -993,18 +879,8 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.0,
-            "$OCN_GRID == \"tx0.66v1\"": 0.0,
             "$OCN_GRID == \"tx2_3v2\"": 0.0,
             "$OCN_GRID == \"MISOMIP\"": 0.0
-         }
-      },
-      "KHTH_MAX": {
-         "description": "\"[m2 s-1] default = 0.0\nThe maximum horizontal thickness diffusivity.\"\n",
-         "datatype": "real",
-         "units": "m2 s-1",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.0
          }
       },
       "KHTH_MAX_CFL": {
@@ -1036,9 +912,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"gx1v6\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "KHTH_USE_FGNV_STREAMFUNCTION": {
@@ -1046,8 +920,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1056,8 +928,6 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.01,
-            "$OCN_GRID == \"tx0.66v1\"": 0.01,
             "$OCN_GRID == \"tx2_3v2\"": 0.01
          }
       },
@@ -1083,8 +953,6 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 1.0,
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0
          }
@@ -1094,8 +962,6 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 1000.0,
-            "$OCN_GRID == \"tx0.66v1\"": 1000.0,
             "$OCN_GRID == \"tx2_3v2\"": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0
          }
@@ -1105,8 +971,6 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 345600.0,
-            "$OCN_GRID == \"tx0.66v1\"": 345600.0,
             "$OCN_GRID == \"tx2_3v2\"": 345600.0,
             "$OCN_GRID == \"tx0.25v1\"": 2592000.0
          }
@@ -1124,8 +988,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1134,8 +996,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": false,
-            "$OCN_GRID == \"tx0.66v1\"": false,
             "$OCN_GRID == \"tx2_3v2\"": false,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
@@ -1145,8 +1005,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -1156,8 +1014,6 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.1,
-            "$OCN_GRID == \"tx0.66v1\"": 0.1,
             "$OCN_GRID == \"tx2_3v2\"": 0.1,
             "$OCN_GRID == \"tx0.25v1\"": 0.1
          }
@@ -1167,8 +1023,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -1214,7 +1068,6 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "300.3003003003003",
             "$OCN_GRID == \"tx0.25v1\"": "300.3003003003003"
          }
       },
@@ -1269,8 +1122,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1279,7 +1130,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1288,7 +1138,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -1304,7 +1153,6 @@
          "description": "\"The path to the file containing tidal energy\ndissipation. Used with CVMix tidal mixing schemes.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": "energy_new_t0.66v1_conserve_190315.nc",
             "$OCN_GRID == \"tx2_3v2\"": "energy_new_tx2_3_conserve_230415_cdf5.nc"
          }
       },
@@ -1312,7 +1160,6 @@
          "description": "\"The type of input tidal energy flux dataset. Valid values are   Jayne\nER03\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": "Jayne",
             "$OCN_GRID == \"tx2_3v2\"": "Jayne"
          }
       },
@@ -1321,8 +1168,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1331,8 +1176,6 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 1,
-            "$OCN_GRID == \"tx0.66v1\"": 1,
             "$OCN_GRID == \"tx2_3v2\"": 1
          }
       },
@@ -1341,8 +1184,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1359,8 +1200,6 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 1e-05,
-            "$OCN_GRID == \"tx0.66v1\"": 1e-05,
             "$OCN_GRID == \"tx2_3v2\"": 1e-05,
             "$OCN_GRID == \"MISOMIP\"": 1e-08
          }
@@ -1375,29 +1214,11 @@
             "else": 2.0
          }
       },
-      "PEN_SW_SCALE": {
-         "description": "\"[m] default = 0.0\nThe vertical absorption e-folding depth of the\npenetrating shortwave radiation.\"\n",
-         "datatype": "real",
-         "units": "m",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 15.0
-         }
-      },
-      "PEN_SW_FRAC": {
-         "description": "\"[nondim] default = 0.0\nThe fraction of the shortwave radiation that penetrates\nbelow the surface.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.42
-         }
-      },
       "PRESSURE_DEPENDENT_FRAZIL": {
          "description": "\"[Boolean] default = False\nIf true, use a pressure dependent freezing temperature\nwhen making frazil. The default is false, which will be\nfaster but is inappropriate with ice-shelf cavities.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1575,7 +1396,6 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1584,7 +1404,6 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "seawifs-clim-1997-2010.1440x1080.v20180328.nc",
-            "$OCN_GRID == \"tx0.66v1\"": "seawifs-clim-1997-2010-tx0.66v1.nc",
             "$OCN_GRID == \"tx2_3v2\"": "seawifs-clim-1997-2010-tx2_3v2.230416.nc"
          }
       },
@@ -1600,7 +1419,6 @@
          "datatype": "integer",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 3,
-            "$OCN_GRID == \"tx0.66v1\"": 3,
             "$OCN_GRID == \"tx2_3v2\"": 3
          }
       },
@@ -1608,8 +1426,6 @@
          "description": "\"default = 'PLM'\nThe horizontal transport scheme for tracers:\nPLM    - Piecewise Linear Method\nPPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "\"PPM:H3\"",
-            "$OCN_GRID == \"tx0.66v1\"": "\"PPM:H3\"",
             "$OCN_GRID == \"tx2_3v2\"": "\"PPM:H3\"",
             "$OCN_GRID == \"tx0.25v1\"": "\"PPM:H3\""
          }
@@ -1635,17 +1451,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 50.0,
-            "$OCN_GRID == \"tx0.66v1\"": 50.0,
             "$OCN_GRID == \"tx2_3v2\"": 50.0
-         }
-      },
-      "KHTR_MAX": {
-         "description": "\"[m2 s-1] default = 0.0\nThe maximum along-isopycnal tracer diffusivity.\"\n",
-         "datatype": "real",
-         "units": "m2 s-1",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.0
          }
       },
       "DEBUG": {
@@ -1659,8 +1465,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
@@ -1670,8 +1474,6 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 2.0,
-            "$OCN_GRID == \"tx0.66v1\"": 2.0,
             "$OCN_GRID == \"tx2_3v2\"": 2.0
          }
       },
@@ -1688,8 +1490,6 @@
          "description": "\"default = 'C'\nA case-insensitive character string to indicate the\nstaggering of the surface velocity field that is\nreturned to the coupler.  Valid values include\n'A', 'B', or 'C'.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "A",
-            "$OCN_GRID == \"tx0.66v1\"": "A",
             "$OCN_GRID == \"tx2_3v2\"": "A",
             "$OCN_GRID == \"tx0.25v1\"": "A"
          }
@@ -1699,7 +1499,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\" and $COMP_ATM == \"datm\"": true,
             "$OCN_GRID == \"tx2_3v2\" and $COMP_ATM == \"datm\"": true,
             "else": false
          }
@@ -1715,8 +1514,6 @@
          "datatype": "real",
          "units": "m day-1",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.5,
-            "$OCN_GRID == \"tx0.66v1\"": 0.1667,
             "$OCN_GRID == \"tx2_3v2\"": 0.1667
          }
       },
@@ -1724,7 +1521,6 @@
          "description": "\"default = 'salt_restore.nc'\nA file in which to find the surface salinity to use for restoring.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": "state_restore_tx0.66v1_20200616.nc",
             "$OCN_GRID == \"tx2_3v2\"": "state_restore_tx2_3_20230416.nc"
          }
       },
@@ -1742,7 +1538,6 @@
          "datatype": "real",
          "units": "PSU or g kg-1",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 5.0,
             "$OCN_GRID == \"tx2_3v2\"": 5.0
          }
       },
@@ -1751,7 +1546,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1789,8 +1583,6 @@
          "datatype": "real",
          "units": "days",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 1.0,
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.25,
             "$OCN_GRID == \"MISOMIP\"": 1.0
@@ -1805,22 +1597,12 @@
             "$OCN_GRID == \"MISOMIP\"": true
          }
       },
-      "TIDES": {
-         "description": "\"[Boolean] default = False\nIf true, apply tidal momentum forcing.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": true
-         }
-      },
       "USE_MEKE": {
          "description": "\"[Boolean] default = False\nIf true, turns on the MEKE scheme which calculates\na sub-grid mesoscale eddy kinetic energy budget.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true,
-            "$OCN_GRID == \"tx0.66v1\"": true,
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -1829,9 +1611,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
-            "$OCN_GRID == \"tx0.66v1\"": 0.0,
             "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
@@ -1849,9 +1629,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
-            "$OCN_GRID == \"tx0.66v1\"": 0.5,
-            "$OCN_GRID == \"tx2_3v2\"": 0.75,
-            "$OCN_GRID == \"gx1v6\"": 0.5
+            "$OCN_GRID == \"tx2_3v2\"": 0.75
          }
       },
       "MEKE_VISCOSITY_COEFF_KU": {
@@ -1859,9 +1637,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.2,
-            "$OCN_GRID == \"tx2_3v2\"": 0.0,
-            "$OCN_GRID == \"gx1v6\"": 0.2
+            "$OCN_GRID == \"tx2_3v2\"": 0.0
          }
       },
       "MEKE_MIN_LSCALE": {
@@ -1869,9 +1645,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"gx1v6\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "MEKE_ALPHA_RHINES": {
@@ -1880,9 +1654,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.15,
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"gx1v6\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_ALPHA_EADY": {
@@ -1891,9 +1663,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.15,
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"gx1v6\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_ALPHA_DEFORM": {
@@ -1901,9 +1671,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"gx1v6\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_ALPHA_FRICT": {
@@ -1911,9 +1679,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"gx1v6\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_ALPHA_GRID": {
@@ -1921,9 +1687,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"gx1v6\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_FRCOEFF": {
@@ -1931,7 +1695,6 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": -1.0,
             "$OCN_GRID == \"tx2_3v2\"": 0.3
          }
       },
@@ -1956,9 +1719,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.4,
-            "$OCN_GRID == \"tx2_3v2\"": 0.9,
-            "$OCN_GRID == \"gx1v6\"": 0.4
+            "$OCN_GRID == \"tx2_3v2\"": 0.9
          }
       },
       "KH_RES_FN_POWER": {
@@ -1974,9 +1735,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 0.4,
-            "$OCN_GRID == \"tx2_3v2\"": 0.4,
-            "$OCN_GRID == \"gx1v6\"": 0.4
+            "$OCN_GRID == \"tx2_3v2\"": 0.4
          }
       },
       "MEKE_GEOMETRIC": {
@@ -1984,9 +1743,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"gx1v6\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "MEKE_GEOMETRIC_ALPHA": {
@@ -2002,9 +1759,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"gx1v6\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_KHTR_FAC": {
@@ -2012,9 +1767,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"gx1v6\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "MEKE_CB": {
@@ -2046,9 +1799,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"gx1v6\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "MEKE_VISC_DRAG": {
@@ -2056,9 +1807,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": false,
-            "$OCN_GRID == \"tx2_3v2\"": false,
-            "$OCN_GRID == \"gx1v6\"": false
+            "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
       "MEKE_EQUILIBRIUM_RESTORING": {
@@ -2066,9 +1815,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": false,
-            "$OCN_GRID == \"gx1v6\"": true
+            "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
       "MEKE_RESTORING_TIMESCALE": {
@@ -2076,8 +1823,6 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 10000000.0,
-            "$OCN_GRID == \"tx0.66v1\"": 10000000.0,
             "$OCN_GRID == \"tx2_3v2\"": 10000000.0
          }
       },
@@ -2086,16 +1831,13 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"gx1v6\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
       "DIAG_COORD_DEF_Z": {
          "description": "\"default = WOA09\nDetermines how to specify the coordinate\nresolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_Z\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "WOA09",
             "$OCN_GRID == \"tx0.25v1\"": "\"FILE:interpolate_zgrid_40L.nc,interfaces=zw\""
          }
       },
@@ -2104,7 +1846,6 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 25,
             "$OCN_GRID == \"tx0.25v1\"": 25
          }
       },
@@ -2112,9 +1853,7 @@
          "description": "\"default = 'none'\nA parameter that determines which set of channels are\nrestricted to specific  widths.  Options are:\nnone - All channels have the grid width.\nglobal_1deg - Sets 16 specific channels appropriate\nfor a 1-degree model, as used in CM2G.\nlist - Read the channel locations and widths from a\ntext file, like MOM_channel_list in the MOM_SIS\ntest case.\nfile - Read open face widths everywhere from a\nNetCDF file on the model grid.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "global_1deg",
             "$OCN_GRID == \"tx0.25v1\"": "list",
-            "$OCN_GRID == \"tx0.66v1\"": "list",
             "$OCN_GRID == \"tx2_3v2\"": "list"
          }
       },
@@ -2123,7 +1862,6 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "MOM_channels_global_025",
-            "$OCN_GRID == \"tx0.66v1\"": "MOM_channels_global_tx06v1",
             "$OCN_GRID == \"tx2_3v2\"": "MOM_channels_global_tx2_3v2_240501"
          }
       },
@@ -2132,7 +1870,6 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.06,
             "$OCN_GRID == \"tx0.25v1\"": 0.06,
             "$OCN_GRID == \"MISOMIP\"": 0.06
          }
@@ -2158,14 +1895,6 @@
          "units": "Boolean",
          "value": false
       },
-      "VELOCITY_TOLERANCE": {
-         "description": "\"[m s-1] default = 3.0E+08\nThe tolerance for barotropic velocity discrepancies\nbetween the barotropic solution and  the sum of the\nlayer thicknesses.\"\n",
-         "datatype": "real",
-         "units": "m s-1",
-         "value": {
-            "$OCN_GRID == \"gx1v6\"": 0.0001
-         }
-      },
       "SMAGORINSKY_AH": {
          "description": "\"[Boolean] default = False\nIf true, use a biharmonic Smagorinsky nonlinear eddy\nviscosity.\"\n",
          "datatype": "logical",
@@ -2187,7 +1916,6 @@
          "datatype": "real",
          "units": "PPT",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\" or $COMP_ATM == \"cam\"": 75.0,
             "$OCN_GRID == \"tx2_3v2\" or $COMP_ATM == \"cam\"": 75.0
          }
       },
@@ -2204,7 +1932,6 @@
          "datatype": "real",
          "units": "degC",
          "value": {
-            "$OCN_GRID == \"tx0.66v1\"": -3.0,
             "$OCN_GRID == \"tx2_3v2\"": -3.0,
             "$OCN_GRID == \"tx0.25v1\"": -3.0
          }
@@ -2944,64 +2671,64 @@
          "description": "\"default = False\nIf true, enables surface wave modules.\"\n",
          "datatype": "logical",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"]": true
+            "$COMP_WAV == \"ww3\"": true
          }
       },
       "WAVE_METHOD": {
          "description": "\"Choice of wave method, valid options include:\n TEST_PROFILE  - Prescribed from surface Stokes drift...\n SURFACE_BANDS - Computed from multiple surface values...\n DHH85         - Uses Donelan et al. 1985 empirical...\n LF17          - Infers Stokes drift profile from wind...\n EFACTOR       - Applies an enhancement factor to the KPP...\"\"\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID != \"wtx0.66v1\"": "EFACTOR",
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": "SURFACE_BANDS"
+            "$COMP_WAV == \"ww3\" and $WAV_GRID == \"ww3a\"": "EFACTOR",
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": "SURFACE_BANDS"
          }
       },
       "SURFBAND_SOURCE": {
          "description": "Choice of SURFACE_BANDS data mode, valid options include:\nDATAOVERRIDE  - Read from NetCDF using FMS DataOverride.\nCOUPLER       - Look for variables from coupler pass\nINPUT         - Testing with fixed values.\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": "COUPLER"
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": "COUPLER"
          }
       },
       "STOKES_DDT": {
          "description": "default = False\nFlag to use Stokes d/dt\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
          }
       },
       "STOKES_VF": {
          "description": "default = False\nFlag to use Stokes vortex force\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
          }
       },
       "STOKES_PGF": {
          "description": "default = False\nFlag to use Stokes pressure gradient force\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": true
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
          }
       },
       "STK_BAND_COUPLER": {
          "description": "default = 1\nSTK_BAND_COUPLER is the number of Stokes drift bands in the coupler. This has\nto be consistent with the number of Stokes drift bands in WW3, or the model\nwill fail.\n",
          "datatype": "int",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": 3
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": 3
          }
       },
       "SURFBAND_WAVENUMBERS": {
          "description": "[rad/m] default = 0.12566\nCentral wavenumbers for surface Stokes drift bands.\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"wtx0.66v1\"": "0.04, 0.11, 0.33"
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": "0.04, 0.11, 0.33"
          }
       },
       "AUTO_MASKTABLE": {
          "description": "Turn on automatic mask table generation to eliminate land blocks\n",
          "datatype": "list",
          "value": {
-            "$OCN_GRID in [\"tx0.66v1\", \"tx2_3v2\", \"tx0.25v1\"]": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx0.25v1\"]": true
          }
       },
       "GEOM_FILE": {
@@ -3030,8 +2757,6 @@
          "description": "\"default = 0\nThe number of times the 1-1-4-1-1 Laplacian filter is applied on\nOBL depth.\npurely for diagnostic purposes.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": 3,
-            "$OCN_GRID == \"tx0.66v1\"": 3,
             "$OCN_GRID == \"tx2_3v2\"": 3
          }
       },
@@ -3039,8 +2764,6 @@
          "description": "\"default = 'SimpleShapes'\nCVMix method to set profile function for diffusivity and NLT,\nas well as matching across OBL base. Allowed values are:\nSimpleShapes      = sigma*(1-sigma)^2 for both diffusivity and NLT\nMatchGradient     = sigma*(1-sigma)^2 for NLT; diffusivity profile from matching\nMatchBoth         = match gradient for both diffusivity and NLT\nParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "MatchGradient",
-            "$OCN_GRID == \"tx0.66v1\"": "MatchGradient",
             "$OCN_GRID == \"tx2_3v2\"": "MatchGradient"
          }
       },
@@ -3048,8 +2771,6 @@
          "description": "\"Type of interpolation to compute diff and visc at OBL_depth\nAllowed types are: linear, quadratic, cubic or LMD94.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": "LMD94",
-            "$OCN_GRID == \"tx0.66v1\"": "LMD94",
             "$OCN_GRID == \"tx2_3v2\"": "LMD94"
          }
       },
@@ -3058,8 +2779,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"gx1v6\"": false,
-            "$OCN_GRID == \"tx0.66v1\"": false,
             "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
@@ -3068,7 +2787,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"ww3a\"": true
+            "$COMP_WAV == \"ww3\" and $WAV_GRID == \"ww3a\"": true
          }
       },
       "USE_KPP_LT_VT2": {
@@ -3076,21 +2795,21 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"] and $WAV_GRID == \"ww3a\"": true
+            "$COMP_WAV == \"ww3\" and $WAV_GRID == \"ww3a\"": true
          }
       },
       "KPP_LT_K_METHOD": {
          "description": "default = \"CONSTANT\"\nMethod to enhance mixing coefficient in KPP. Valid options are:\n   CONSTANT = Constant value (KPP_K_ENH_FAC)\n   VR12     = Function of Langmuir number based on VR12\n   RW16     = Function of Langmuir number based on RW16\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"]": "VR12"
+            "$COMP_WAV == \"ww3\"": "VR12"
          }
       },
       "KPP_LT_VT2_METHOD": {
          "description": "default = \"CONSTANT\"\nMethod to enhance Vt2 in KPP. Valid options are:\n   CONSTANT = Constant value (KPP_VT2_ENH_FAC)\n   VR12     = Function of Langmuir number based on VR12\n   RW16     = Function of Langmuir number based on RW16\n   LF17     = Function of Langmuir number based on LF17\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV in [\"ww3\", \"ww3dev\"]": "VR12"
+            "$COMP_WAV == \"ww3\"": "VR12"
          }
       }
    }

@@ -43,7 +43,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
             else: False
@@ -72,8 +71,6 @@ Global:
             this is set in MOM_memory.h at compile time."
         datatype: integer
         value:
-            $OCN_GRID == "gx1v6": 320
-            $OCN_GRID == "tx0.66v1": 540
             $OCN_GRID == "tx2_3v2": 540
             $OCN_GRID == "tx0.25v1": 1440
             $OCN_GRID == "MISOMIP": 402
@@ -89,8 +86,6 @@ Global:
             The processor layout that was acutally used."
         datatype: integer
         value:
-            $OCN_GRID == "gx1v6": 384
-            $OCN_GRID == "tx0.66v1": 458
             $OCN_GRID == "tx2_3v2": 480
             $OCN_GRID == "tx0.25v1": 1080
             $OCN_GRID == "MISOMIP": 40
@@ -108,9 +103,8 @@ Global:
         datatype: integer
         units: nondim
         value:
-            $MOM6_VERTICAL_GRID == "zstar_60L": 60
             $MOM6_VERTICAL_GRID == "zstar_65L": 65
-            $MOM6_VERTICAL_GRID == "hycom1" or $MOM6_VERTICAL_GRID == "zstar_75L": 75
+            $MOM6_VERTICAL_GRID in ["hycom1", "zstar_75L"]: 75
             $MOM6_VERTICAL_GRID == "sigma_shelf_zstar": 36
     USE_LEGACY_DIABATIC_DRIVER:
         description: |
@@ -120,9 +114,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx2_3v2": False
-            $OCN_GRID == "gx1v6": False
     DIABATIC_FIRST:
         description: |
             "[Boolean] default = False
@@ -132,8 +124,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     USE_REGRIDDING:
         description: |
@@ -151,8 +141,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     THICKNESSDIFFUSE_FIRST:
@@ -163,8 +151,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     DT:
@@ -177,9 +163,7 @@ Global:
         datatype: real
         units: s
         value:
-            $OCN_GRID == "gx1v6": 1800.0
             $OCN_GRID == "tx0.25v1": 900.0
-            $OCN_GRID == "tx0.66v1": 1800.0
             $OCN_GRID == "tx2_3v2": 1800
             $OCN_GRID == "MISOMIP": 600.0
     DT_THERM:
@@ -212,8 +196,6 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "gx1v6": 10.0
-            $OCN_GRID == "tx0.66v1": 10.0
             $OCN_GRID == "tx2_3v2": 10.0
             $OCN_GRID == "tx0.25v1": 20.0
     DTBT_RESET_PERIOD:
@@ -227,7 +209,6 @@ Global:
         datatype: real
         units: s
         value:
-            $OCN_GRID == "tx0.66v1": 7200.0
             $OCN_GRID == "tx2_3v2": 7200.0
             $OCN_GRID == "tx0.25v1": 3600.0
             else: 0.0
@@ -269,8 +250,6 @@ Global:
         datatype: real
         units: J kg-1 K-1
         value:
-            $OCN_GRID == "gx1v6": 3992.0
-            $OCN_GRID == "tx0.66v1": 3992.0
             $OCN_GRID == "tx2_3v2": 3992.0
             $OCN_GRID == "tx0.25v1": 3992.0
             $OCN_GRID == "MISOMIP": 3974.0
@@ -289,8 +268,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     SAVE_INITIAL_CONDS:
@@ -310,8 +287,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": False
-            $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx2_3v2": False
             $OCN_GRID == "tx0.25v1": False
     DTFREEZE_DP:
@@ -323,8 +298,6 @@ Global:
         datatype: real
         units: deg C Pa-1
         value:
-            $OCN_GRID == "gx1v6": -7.75E-08
-            $OCN_GRID == "tx0.66v1": -7.75E-08
             $OCN_GRID == "tx2_3v2": -7.75E-08
             $OCN_GRID == "tx0.25v1": -7.75E-08
             $OCN_GRID == "MISOMIP": -7.53E-08
@@ -335,8 +308,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     USE_CFC_CAP:
@@ -417,8 +388,6 @@ Global:
             "Name of the file from which to read horizontal grid data."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "ocean_hgrid_230424.nc"
-            $OCN_GRID == "tx0.66v1": "ocean_hgrid_180829.nc"
             $OCN_GRID == "tx2_3v2": "ocean_hgrid_221123.nc"
             $OCN_GRID == "tx0.25v1": "ocean_hgrid.nc"
     USE_TRIPOLAR_GEOLONB_BUG:
@@ -429,7 +398,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx2_3v2": False
             $OCN_GRID == "tx0.25v1": False
     TOPO_CONFIG:
@@ -461,8 +429,6 @@ Global:
             The file from which the bathymetry is read."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "ocean_topog_230424.nc"
-            $OCN_GRID == "tx0.66v1": "ocean_topog_200701.nc"
             $OCN_GRID == "tx2_3v2": "ocean_topo_tx2_3v2_240501.nc"
             $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
     MAXIMUM_DEPTH:
@@ -472,8 +438,6 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "gx1v6": 6000.0
-            $OCN_GRID == "tx0.66v1": 6000.0
             $OCN_GRID == "tx2_3v2": 6000.0
             $OCN_GRID == "tx0.25v1": 6500.0
             $OCN_GRID == "MISOMIP": 720.0
@@ -488,8 +452,6 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "gx1v6": 0.5
-            $OCN_GRID == "tx0.66v1": 9.5
             $OCN_GRID == "tx2_3v2": 9.5
             $OCN_GRID == "tx0.25v1": 9.5
     MASKING_DEPTH:
@@ -500,7 +462,6 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "tx0.66v1": 0.0
             $OCN_GRID == "tx2_3v2": 0.0
             $OCN_GRID == "tx0.25v1": 0.0
     REMAPPING_SCHEME:
@@ -526,7 +487,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $RUN_TYPE != "hybrid" and $OCN_GRID in ["gx1v6", "tx0.66v1", "tx2_3v2", "tx0.25v1"]:
+            $RUN_TYPE != "hybrid" and $OCN_GRID in ["tx2_3v2", "tx0.25v1"]:
                 True
             else:
                 False
@@ -537,8 +498,6 @@ Global:
             the layer thicknesses, temperatures and salinities."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "WOA05_pottemp_salt.nc"
-            $OCN_GRID == "tx0.66v1": "woa18_04_initial_conditions.nc"
             $OCN_GRID == "tx2_3v2": "woa18_04_initial_conditions.nc"
             $OCN_GRID == "tx0.25v1": "MOM6_IC_TS.nc"
     Z_INIT_FILE_PTEMP_VAR:
@@ -548,8 +507,6 @@ Global:
             TEMP_SALT_Z_INIT_FILE."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "PTEMP"
-            $OCN_GRID == "tx0.66v1": "theta0"
             $OCN_GRID == "tx2_3v2": "theta0"
             $OCN_GRID == "tx0.25v1": "temp"
     Z_INIT_FILE_SALT_VAR:
@@ -559,8 +516,6 @@ Global:
             TEMP_SALT_Z_INIT_FILE."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "SALT"
-            $OCN_GRID == "tx0.66v1": "s_an"
             $OCN_GRID == "tx2_3v2": "s_an"
     Z_INIT_REMAP_OLD_ALG:
         description: |
@@ -581,8 +536,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     RESOLN_SCALED_KH:
@@ -594,8 +547,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     KHTH_SLOPE_CFF:
@@ -606,9 +557,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 0.01
             $OCN_GRID == "tx2_3v2": 0.01
-            $OCN_GRID == "gx1v6": 0.01
     DEPTH_SCALED_KHTH:
         description: |
             "[Boolean] default = False
@@ -620,8 +569,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": False
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": False
     DEPTH_SCALED_KHTH_H0:
@@ -631,7 +578,6 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 250.0
             $OCN_GRID == "tx2_3v2": 250.0
     KHTR_SLOPE_CFF:
         description: |
@@ -650,9 +596,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "gx1v6": True
     RESOLN_SCALED_KHTH:
         description: |
             "[Boolean] default = False
@@ -662,8 +606,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     RESOLN_SCALED_KHTR:
@@ -692,8 +634,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     USE_STANLEY_ISO:
@@ -737,8 +677,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     NDIFF_INTERIOR_ONLY:
         description: |
@@ -748,8 +686,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     NDIFF_TAPERING:
         description: |
@@ -768,8 +704,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     HBD_LINEAR_TRANSITION:
         description: |
@@ -779,8 +713,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     SIMPLE_TKE_TO_KD:
         description: |
@@ -792,8 +724,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     REGRIDDING_COORDINATE_MODE:
@@ -811,7 +741,7 @@ Global:
             ADAPTIVE - optimize for smooth neutral density surfaces"
         datatype: string
         value:
-            $MOM6_VERTICAL_GRID == "zstar_65L" or $MOM6_VERTICAL_GRID == "zstar_60L" or $MOM6_VERTICAL_GRID == "zstar_75L": "Z*"
+            $MOM6_VERTICAL_GRID in ["zstar_65L", "zstar_75L"]: "Z*"
             $MOM6_VERTICAL_GRID == "hycom1": "HYCOM1"
             $MOM6_VERTICAL_GRID == "sigma_shelf_zstar": "SIGMA_SHELF_ZSTAR"
     ALE_COORDINATE_CONFIG:
@@ -835,7 +765,6 @@ Global:
         value:
             $MOM6_VERTICAL_GRID == "zstar_75L": '"FILE:zstar_75layer_2.5m_248.4m-2024-03-29.nc,dz"'
             $MOM6_VERTICAL_GRID == "zstar_65L": '"FILE:vgrid_65L_20200626.nc,dz"'
-            $MOM6_VERTICAL_GRID == "zstar_60L": '"FILE:ocean_vgrid.nc,dz"'
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": '"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz"'
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID == "tx0.25v1": '"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"'
     REGRID_COMPRESSIBILITY_FRACTION:
@@ -889,26 +818,6 @@ Global:
         datatype: logical
         units: Boolean
         value: True
-    TIDE_M2:
-        description: |
-            "[Boolean] default = False
-            If true, apply tidal momentum forcing at the M2
-            frequency. This is only used if TIDES is true."
-        datatype: logical
-        units: Boolean
-        value:
-            $OCN_GRID == "gx1v6": True
-    TIDE_SAL_SCALAR_VALUE:
-        description: |
-            "[m m-1]
-            The constant of proportionality between sea surface
-            height (really it should be bottom pressure) anomalies
-            and bottom geopotential anomalies. This is only used if
-            TIDES and TIDE_USE_SAL_SCALAR are true."
-        datatype: real
-        units: m m-1
-        value:
-            $OCN_GRID == "gx1v6": 0.094
     MASS_WEIGHT_IN_PRESSURE_GRADIENT:
         description: |
             "[Boolean] default = False
@@ -952,9 +861,7 @@ Global:
         value:
             $OCN_GRID == "MISOMIP": 0.0
             $OCN_GRID == "tx0.25v1": 0.0
-            $OCN_GRID == "tx0.66v1": 0.0
             $OCN_GRID == "tx2_3v2": 0.0
-            $OCN_GRID == "gx1v6": 0.0
             else: 0.01
     KH_SIN_LAT:
         description: |
@@ -964,7 +871,6 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "tx0.66v1": 0.0
             $OCN_GRID == "tx2_3v2": 0.0
     BIHARMONIC:
         description: |
@@ -974,7 +880,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "MISOMIP": False
     AH:
@@ -984,9 +889,7 @@ Global:
         datatype: real
         units: m4 s-1
         value:
-            $OCN_GRID == "tx0.66v1": 1.0E+12
             $OCN_GRID == "tx2_3v2": 1.0E+12
-            $OCN_GRID == "gx1v6": 1.0E+12
     AH_VEL_SCALE:
         description: |
             "[m s-1] default = 0.0
@@ -997,7 +900,6 @@ Global:
         datatype: real
         units: m s-1
         value:
-            $OCN_GRID == "gx1v6": 0.0
             $OCN_GRID == "tx0.25v1": 0.01
             $OCN_GRID == "MISOMIP": 0.001
     LEITH_AH:
@@ -1007,9 +909,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "gx1v6": True
     LEITH_BI_CONST:
         description: |
             "[nondim] default = 0.0
@@ -1018,8 +918,6 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 128.0
-            $OCN_GRID == "tx0.66v1": 128.0
             $OCN_GRID == "tx2_3v2": 128.0
     USE_LAND_MASK_FOR_HVISC:
         description: |
@@ -1072,8 +970,6 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 1.0
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
             $OCN_GRID == "tx0.25v1": 1.25
     U_TRUNC_FILE:
@@ -1112,8 +1008,6 @@ Global:
         datatype: real
         units: s
         value:
-            $OCN_GRID == "gx1v6": 7200.0
-            $OCN_GRID == "tx0.66v1": 7200.0
             $OCN_GRID == "tx2_3v2": 7200.0
     Z_INIT_ALE_REMAPPING:
         description: |
@@ -1122,8 +1016,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     NUM_DIAG_COORDS:
@@ -1132,7 +1024,6 @@ Global:
             For each coordinate, an entry in DIAG_COORDS must be provided."
         datatype: integer
         value:
-            $OCN_GRID == "tx0.66v1": 2
             $OCN_GRID == "tx2_3v2": 2
             $OCN_GRID == "tx0.25v1": 1
     DIAG_COORDS:
@@ -1142,7 +1033,6 @@ Global:
             is of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME."
         datatype: string
         value:
-            $OCN_GRID == "tx0.66v1": '"z Z ZSTAR", "rho2 RHO2 RHO"'
             $OCN_GRID == "tx2_3v2": '"z Z ZSTAR", "rho2 RHO2 RHO"'
             $OCN_GRID == "tx0.25v1": '"z Z ZSTAR"'
     DIAG_COORD_DEF_RHO2:
@@ -1163,7 +1053,6 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
-            $OCN_GRID == "tx0.66v1": '"FILE:ocean_rho2_190917.nc,interfaces=rho2"'
             $OCN_GRID == "tx2_3v2": '"FILE:ocean_rho2_190917.nc,interfaces=rho2"'
     DIAG_MISVAL:
         description: |
@@ -1191,8 +1080,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     DRAG_BG_VEL:
@@ -1206,8 +1093,6 @@ Global:
         datatype: real
         units: m s-1
         value:
-            $OCN_GRID == "gx1v6": 0.1
-            $OCN_GRID == "tx0.66v1": 0.1
             $OCN_GRID == "tx2_3v2": 0.1
             $OCN_GRID == "tx0.25v1": 0.1
     BBL_USE_EOS:
@@ -1255,8 +1140,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     BT_THICK_SCHEME:
@@ -1323,7 +1206,6 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
     MAX_P_SURF:
         description: |
@@ -1345,18 +1227,8 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "gx1v6": 0.0
-            $OCN_GRID == "tx0.66v1": 0.0
             $OCN_GRID == "tx2_3v2": 0.0
             $OCN_GRID == "MISOMIP": 0.0
-    KHTH_MAX:
-        description: |
-            "[m2 s-1] default = 0.0
-            The maximum horizontal thickness diffusivity."
-        datatype: real
-        units: m2 s-1
-        value:
-            $OCN_GRID == "gx1v6": 0.0
     KHTH_MAX_CFL:
         description: |
             "[nondimensional] default = 0.8
@@ -1392,9 +1264,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "gx1v6": True
     KHTH_USE_FGNV_STREAMFUNCTION:
         description: |
             "[Boolean] default = False
@@ -1404,8 +1274,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     FGNV_C_MIN:
         description: |
@@ -1415,8 +1283,6 @@ Global:
         datatype: real
         units: m s-1
         value:
-            $OCN_GRID == "gx1v6": 0.01
-            $OCN_GRID == "tx0.66v1": 0.01
             $OCN_GRID == "tx2_3v2": 0.01
     USE_STANLEY_GM:
         description: |
@@ -1456,8 +1322,6 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 1.0
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
             $OCN_GRID == "tx0.25v1": 1.0
     MLE_FRONT_LENGTH:
@@ -1470,8 +1334,6 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "gx1v6": 1000.0
-            $OCN_GRID == "tx0.66v1": 1000.0
             $OCN_GRID == "tx2_3v2": 1000.0
             $OCN_GRID == "tx0.25v1": 500.0
     MLE_MLD_DECAY_TIME:
@@ -1484,8 +1346,6 @@ Global:
         datatype: real
         units: s
         value:
-            $OCN_GRID == "gx1v6": 3.45600E+05
-            $OCN_GRID == "tx0.66v1": 3.45600E+05
             $OCN_GRID == "tx2_3v2": 3.45600E+05
             $OCN_GRID == "tx0.25v1": 2.592E+06
     USE_STANLEY_ML:
@@ -1506,8 +1366,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     BBL_MIXING_AS_MAX:
         description: |
@@ -1518,8 +1376,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": False
-            $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx2_3v2": False
             $OCN_GRID == "tx0.25v1": False
     USE_LOTW_BBL_DIFFUSIVITY:
@@ -1531,8 +1387,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     KD_MAX:
@@ -1544,8 +1398,6 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "gx1v6": 0.1
-            $OCN_GRID == "tx0.66v1": 0.1
             $OCN_GRID == "tx2_3v2": 0.1
             $OCN_GRID == "tx0.25v1": 0.1
     HORIZ_VARYING_BACKGROUND:
@@ -1556,8 +1408,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     KD:
@@ -1612,7 +1462,6 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "gx1v6": "300.3003003003003"
             $OCN_GRID == "tx0.25v1": "300.3003003003003"
     READ_TIDEAMP:
         description: |
@@ -1672,8 +1521,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     USE_CVMix_TIDAL:
         description: |
@@ -1682,7 +1529,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     INT_TIDE_DISSIPATION:
         description: |
@@ -1693,7 +1539,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     INT_TIDE_PROFILE:
@@ -1714,7 +1559,6 @@ Global:
             dissipation. Used with CVMix tidal mixing schemes."
         datatype: string
         value:
-            $OCN_GRID == "tx0.66v1": "energy_new_t0.66v1_conserve_190315.nc"
             $OCN_GRID == "tx2_3v2": "energy_new_tx2_3_conserve_230415_cdf5.nc"
     TIDAL_ENERGY_TYPE:
         description: |
@@ -1722,7 +1566,6 @@ Global:
             ER03"
         datatype: string
         value:
-            $OCN_GRID == "tx0.66v1": "Jayne"
             $OCN_GRID == "tx2_3v2": "Jayne"
     USE_LMD94:
         description: |
@@ -1732,8 +1575,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     N_SMOOTH_RI:
         description: |
@@ -1743,8 +1584,6 @@ Global:
         datatype: integer
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 1
-            $OCN_GRID == "tx0.66v1": 1
             $OCN_GRID == "tx2_3v2": 1
     USE_CVMIX_DDIFF:
         description: |
@@ -1755,8 +1594,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     MAX_ENT_IT:
         description: |
@@ -1774,8 +1611,6 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "gx1v6": 1.0E-05
-            $OCN_GRID == "tx0.66v1": 1.0E-05
             $OCN_GRID == "tx2_3v2": 1.0E-05
             $OCN_GRID == "MISOMIP": 1.0E-08
     HMIX_MIN:
@@ -1789,24 +1624,6 @@ Global:
             $OCN_GRID == "MISOMIP": 20.0
             $OCN_GRID == "tx0.25v1": 0.0
             else: 2.0
-    PEN_SW_SCALE:
-        description: |
-            "[m] default = 0.0
-            The vertical absorption e-folding depth of the
-            penetrating shortwave radiation."
-        datatype: real
-        units: m
-        value:
-            $OCN_GRID == "gx1v6": 15.0
-    PEN_SW_FRAC:
-        description: |
-            "[nondim] default = 0.0
-            The fraction of the shortwave radiation that penetrates
-            below the surface."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "gx1v6": 0.42
     PRESSURE_DEPENDENT_FRAZIL:
         description: |
             "[Boolean] default = False
@@ -1816,8 +1633,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     MSTAR_MODE:
         description: |
@@ -2028,7 +1843,6 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.25v1": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     CHL_FILE:
         description: |
@@ -2036,7 +1850,6 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.25v1": "seawifs-clim-1997-2010.1440x1080.v20180328.nc"
-            $OCN_GRID == "tx0.66v1": "seawifs-clim-1997-2010-tx0.66v1.nc"
             $OCN_GRID == "tx2_3v2": "seawifs-clim-1997-2010-tx2_3v2.230416.nc"
     CHL_VARNAME:
         description: |
@@ -2051,7 +1864,6 @@ Global:
         datatype: integer
         value:
             $OCN_GRID == "tx0.25v1": 3
-            $OCN_GRID == "tx0.66v1": 3
             $OCN_GRID == "tx2_3v2": 3
     TRACER_ADVECTION_SCHEME:
         description: |
@@ -2061,8 +1873,6 @@ Global:
             PPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)"
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": '"PPM:H3"'
-            $OCN_GRID == "tx0.66v1": '"PPM:H3"'
             $OCN_GRID == "tx2_3v2": '"PPM:H3"'
             $OCN_GRID == "tx0.25v1": '"PPM:H3"'
     KHTR_USE_EBT_STRUCT:
@@ -2089,17 +1899,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "gx1v6": 50.0
-            $OCN_GRID == "tx0.66v1": 50.0
             $OCN_GRID == "tx2_3v2": 50.0
-    KHTR_MAX:
-        description: |
-            "[m2 s-1] default = 0.0
-            The maximum along-isopycnal tracer diffusivity."
-        datatype: real
-        units: m2 s-1
-        value:
-            $OCN_GRID == "gx1v6": 0.0
     DEBUG:
         description: |
             "If true, write out verbose debugging data."
@@ -2116,8 +1916,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
     MAX_TR_DIFFUSION_CFL:
@@ -2130,8 +1928,6 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 2.0
-            $OCN_GRID == "tx0.66v1": 2.0
             $OCN_GRID == "tx2_3v2": 2.0
     MAXTRUNC:
         description: |
@@ -2154,8 +1950,6 @@ Global:
             'A', 'B', or 'C'."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "A"
-            $OCN_GRID == "tx0.66v1": "A"
             $OCN_GRID == "tx2_3v2": "A"
             $OCN_GRID == "tx0.25v1": "A"
     RESTORE_SALINITY:
@@ -2167,8 +1961,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1" and $COMP_ATM == "datm": True  # for C and G compsets on tx0.66v1
-            $OCN_GRID == "tx2_3v2" and $COMP_ATM == "datm": True  # for C and G compsets on tx0.66v1
+            $OCN_GRID == "tx2_3v2" and $COMP_ATM == "datm": True  # for C and G compsets on tx2_3v2
             else: False
 
     ENTHALPY_FROM_COUPLER:
@@ -2189,8 +1982,6 @@ Global:
         datatype: real
         units: m day-1
         value:
-            $OCN_GRID == "gx1v6": 0.5
-            $OCN_GRID == "tx0.66v1": 0.1667
             $OCN_GRID == "tx2_3v2": 0.1667
     SALT_RESTORE_FILE:
         description: |
@@ -2198,7 +1989,6 @@ Global:
             A file in which to find the surface salinity to use for restoring."
         datatype: string
         value:
-            $OCN_GRID == "tx0.66v1": "state_restore_tx0.66v1_20200616.nc"
             $OCN_GRID == "tx2_3v2": "state_restore_tx2_3_20230416.nc"
     ADJUST_NET_FRESH_WATER_TO_ZERO:
         description: |
@@ -2217,7 +2007,6 @@ Global:
         datatype: real
         units: PSU or g kg-1
         value:
-            $OCN_GRID == "tx0.66v1": 5.0
             $OCN_GRID == "tx2_3v2": 5.0
     SRESTORE_AS_SFLUX:
         description: |
@@ -2227,7 +2016,6 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     GUST_CONST:
         description: |
@@ -2275,8 +2063,6 @@ Global:
         datatype: real
         units: days
         value:
-            $OCN_GRID == "gx1v6": 1.0
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
             $OCN_GRID == "tx0.25v1": 0.25
             $OCN_GRID == "MISOMIP": 1.0
@@ -2291,14 +2077,6 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": True
             $OCN_GRID == "MISOMIP": True
-    TIDES:
-        description: |
-            "[Boolean] default = False
-            If true, apply tidal momentum forcing."
-        datatype: logical
-        units: Boolean
-        value:
-            $OCN_GRID == "gx1v6": True
     USE_MEKE:
         description: |
             "[Boolean] default = False
@@ -2307,9 +2085,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": True
             $OCN_GRID == "tx0.25v1": True
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
     MEKE_GMCOEFF:
         description: |
@@ -2321,9 +2097,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 0.0
             $OCN_GRID == "tx0.25v1": 1.0
-            $OCN_GRID == "tx0.66v1": 0.0
             $OCN_GRID == "tx2_3v2": 1.0
     MEKE_BGSRC:
         description: |
@@ -2341,9 +2115,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 1.0
-            $OCN_GRID == "tx0.66v1": 0.5
             $OCN_GRID == "tx2_3v2": 0.75
-            $OCN_GRID == "gx1v6": 0.5
     MEKE_VISCOSITY_COEFF_KU:
         description: |
             "[nondim] default = 0.0
@@ -2353,9 +2125,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 0.2
             $OCN_GRID == "tx2_3v2": 0.0
-            $OCN_GRID == "gx1v6": 0.2
     MEKE_MIN_LSCALE:
         description: |
             "[Boolean] default = False
@@ -2364,9 +2134,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "gx1v6": True
     MEKE_ALPHA_RHINES:
         description: |
             "[nondim] default = 0.05
@@ -2376,9 +2144,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 0.15
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "gx1v6": 1.0
     MEKE_ALPHA_EADY:
         description: |
             "[nondim] default = 0.05
@@ -2388,9 +2154,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 0.15
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "gx1v6": 1.0
     MEKE_ALPHA_DEFORM:
         description: |
             "[nondim] default = 0.0
@@ -2399,9 +2163,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "gx1v6": 1.0
     MEKE_ALPHA_FRICT:
         description: |
             "[nondim] default = 0.0
@@ -2410,9 +2172,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "gx1v6": 1.0
     MEKE_ALPHA_GRID:
         description: |
             "[nondim] default = 0.0
@@ -2421,9 +2181,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "gx1v6": 1.0
     MEKE_FRCOEFF:
         description: |
             "[nondim] default = -1.0
@@ -2432,7 +2190,6 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": -1.0
             $OCN_GRID == "tx2_3v2": 0.3
     MEKE_POSITIVE:
         description: |
@@ -2460,9 +2217,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 0.4
             $OCN_GRID == "tx2_3v2": 0.9
-            $OCN_GRID == "gx1v6": 0.4
     KH_RES_FN_POWER:
         description: |
             "[nondim] default = 2
@@ -2482,9 +2237,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 0.4
             $OCN_GRID == "tx2_3v2": 0.4
-            $OCN_GRID == "gx1v6": 0.4
     MEKE_GEOMETRIC:
         description: |
             "[Boolean] default = False
@@ -2493,9 +2246,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "gx1v6": True
     MEKE_GEOMETRIC_ALPHA:
         description: |
             "[nondim] default = 0.05
@@ -2512,9 +2263,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "gx1v6": 1.0
     MEKE_KHTR_FAC:
         description: |
             "[nondim] default = 0.0
@@ -2522,9 +2271,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "gx1v6": 1.0
     MEKE_CB:
         description: |
             "[nondim] default = 25.0
@@ -2559,9 +2306,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "gx1v6": True
     MEKE_VISC_DRAG:
         description: |
             "[Boolean] default = True
@@ -2569,9 +2314,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx2_3v2": False
-            $OCN_GRID == "gx1v6": False
     MEKE_EQUILIBRIUM_RESTORING:
         description: |
             "[Boolean] default = False
@@ -2580,9 +2323,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.66v1": True
             $OCN_GRID == "tx2_3v2": False
-            $OCN_GRID == "gx1v6": True
     MEKE_RESTORING_TIMESCALE:
         description: |
             "[s] default = 1.0E+06
@@ -2590,8 +2331,6 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 1.0E+07
-            $OCN_GRID == "tx0.66v1": 1.0E+07
             $OCN_GRID == "tx2_3v2": 1.0E+07
     MEKE_ADVECTION_FACTOR:
         description: |
@@ -2602,9 +2341,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.66v1": 1.0
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "gx1v6": 1.0
     DIAG_COORD_DEF_Z:
         description: |
             "default = WOA09
@@ -2624,7 +2361,6 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "WOA09"
             $OCN_GRID == "tx0.25v1": '"FILE:interpolate_zgrid_40L.nc,interfaces=zw"'
     MAX_RINO_IT:
         description: |
@@ -2634,7 +2370,6 @@ Global:
         datatype: integer
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 25
             $OCN_GRID == "tx0.25v1": 25
     CHANNEL_CONFIG:
         description: |
@@ -2651,9 +2386,7 @@ Global:
             NetCDF file on the model grid."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "global_1deg"
             $OCN_GRID == "tx0.25v1": "list"
-            $OCN_GRID == "tx0.66v1": "list"
             $OCN_GRID == "tx2_3v2": "list"
     CHANNEL_LIST_FILE:
         description: |
@@ -2662,7 +2395,6 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.25v1": "MOM_channels_global_025"
-            $OCN_GRID == "tx0.66v1": "MOM_channels_global_tx06v1"
             $OCN_GRID == "tx2_3v2":  "MOM_channels_global_tx2_3v2_240501"
     SMAG_BI_CONST:
         description: |
@@ -2672,7 +2404,6 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "gx1v6": 0.06
             $OCN_GRID == "tx0.25v1": 0.06
             $OCN_GRID == "MISOMIP": 0.06
     USE_JACKSON_PARAM:
@@ -2703,16 +2434,6 @@ Global:
         datatype: logical
         units: Boolean
         value: False
-    VELOCITY_TOLERANCE:
-        description: |
-            "[m s-1] default = 3.0E+08
-            The tolerance for barotropic velocity discrepancies
-            between the barotropic solution and  the sum of the
-            layer thicknesses."
-        datatype: real
-        units: m s-1
-        value:
-            $OCN_GRID == "gx1v6": 1.0E-04
     SMAGORINSKY_AH:
         description: |
             "[Boolean] default = False
@@ -2739,7 +2460,6 @@ Global:
         datatype: real
         units: PPT
         value:
-            $OCN_GRID == "tx0.66v1" or $COMP_ATM == "cam": 75.0
             $OCN_GRID == "tx2_3v2" or $COMP_ATM == "cam": 75.0
     BAD_VAL_SST_MAX:
         description: |
@@ -2758,7 +2478,6 @@ Global:
         datatype: real
         units: degC
         value:
-            $OCN_GRID == "tx0.66v1": -3.0
             $OCN_GRID == "tx2_3v2": -3.0
             $OCN_GRID == "tx0.25v1": -3.0
     DEFAULT_ANSWER_DATE:
@@ -3612,7 +3331,7 @@ Global:
             If true, enables surface wave modules."
         datatype: logical
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: True
+            $COMP_WAV == "ww3": True
     WAVE_METHOD:
         description: |
             "Choice of wave method, valid options include:
@@ -3623,8 +3342,8 @@ Global:
              EFACTOR       - Applies an enhancement factor to the KPP...""
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID != "wtx0.66v1" : "EFACTOR"
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "SURFACE_BANDS"
+            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : "EFACTOR"
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "SURFACE_BANDS"
     SURFBAND_SOURCE:
         description: |
             Choice of SURFACE_BANDS data mode, valid options include:
@@ -3633,28 +3352,28 @@ Global:
             INPUT         - Testing with fixed values.
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "COUPLER"
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "COUPLER"
     STOKES_DDT:
         description: |
             default = False
             Flag to use Stokes d/dt
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
     STOKES_VF:
         description: |
             default = False
             Flag to use Stokes vortex force
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
     STOKES_PGF:
         description: |
             default = False
             Flag to use Stokes pressure gradient force
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : True
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
     STK_BAND_COUPLER:
         description: |
             default = 1
@@ -3663,14 +3382,14 @@ Global:
             will fail.
         datatype: int
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : 3
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: 3
     SURFBAND_WAVENUMBERS:
         description: |
             [rad/m] default = 0.12566
             Central wavenumbers for surface Stokes drift bands.
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "wtx0.66v1" : "0.04, 0.11, 0.33"
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "0.04, 0.11, 0.33"
     IO_LAYOUT:
         description: |
             The processor layout to be used, or 0,0 to automatically set the io_layout to
@@ -3684,7 +3403,7 @@ Global:
             Turn on automatic mask table generation to eliminate land blocks
         datatype: list
         value:
-            $OCN_GRID in ["tx0.66v1", "tx2_3v2", "tx0.25v1"]: True
+            $OCN_GRID in ["tx2_3v2", "tx0.25v1"]: True
     GEOM_FILE:
         description: |
             default = ocean_geometry.nc
@@ -3720,8 +3439,6 @@ KPP:
             purely for diagnostic purposes."
         datatype: integer
         value:
-            $OCN_GRID == "gx1v6": 3
-            $OCN_GRID == "tx0.66v1": 3
             $OCN_GRID == "tx2_3v2": 3
     MATCH_TECHNIQUE:
         description: |
@@ -3734,8 +3451,6 @@ KPP:
             ParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT"
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "MatchGradient"
-            $OCN_GRID == "tx0.66v1": "MatchGradient"
             $OCN_GRID == "tx2_3v2": "MatchGradient"
     INTERP_TYPE2:
         description: |
@@ -3743,8 +3458,6 @@ KPP:
             Allowed types are: linear, quadratic, cubic or LMD94."
         datatype: string
         value:
-            $OCN_GRID == "gx1v6": "LMD94"
-            $OCN_GRID == "tx0.66v1": "LMD94"
             $OCN_GRID == "tx2_3v2": "LMD94"
     KPP_IS_ADDITIVE:
         description: |
@@ -3754,8 +3467,6 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "gx1v6": False
-            $OCN_GRID == "tx0.66v1": False
             $OCN_GRID == "tx2_3v2": False
     USE_KPP_LT_K:
         description: |
@@ -3764,7 +3475,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "ww3a" : True
+            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : True
     USE_KPP_LT_VT2:
         description: |
             default = False
@@ -3772,7 +3483,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV in ["ww3", "ww3dev"] and $WAV_GRID == "ww3a" : True
+            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : True
     KPP_LT_K_METHOD:
         description: |
             default = "CONSTANT"
@@ -3782,7 +3493,7 @@ KPP:
                RW16     = Function of Langmuir number based on RW16
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: VR12
+            $COMP_WAV == "ww3": VR12
     KPP_LT_VT2_METHOD:
         description: |
             default = "CONSTANT"
@@ -3793,6 +3504,6 @@ KPP:
                LF17     = Function of Langmuir number based on LF17
         datatype: string
         value:
-            $COMP_WAV in ["ww3", "ww3dev"]: VR12
+            $COMP_WAV == "ww3": VR12
 
 ...
