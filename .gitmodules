@@ -1,6 +1,14 @@
 [submodule "MOM6"]
-path = MOM6
-url = https://github.com/NCAR/MOM6.git
-fxtag = dev/ncar_240510
-fxrequired = AlwaysRequired
-fxDONOTUSEurl = https://github.com/NCAR/MOM6.git
+  path = MOM6
+  url = https://github.com/NCAR/MOM6.git
+  fxDONOTUSEurl = https://github.com/NCAR/MOM6.git
+    fxtag = dev/ncar_240709
+    fxrequired = AlwaysRequired
+
+[submodule "stochastic_physics"]
+  path = externals/stochastic_physics
+  url = https://github.com/iangrooms/stochastic_physics.git
+  fxDONOTUSEurl = https://github.com/iangrooms/stochastic_physics.git
+    fxtag = ocn_skeb_240715
+    fxrequired = AlwaysRequired
+

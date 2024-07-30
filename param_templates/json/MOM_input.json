@@ -2735,6 +2735,16 @@
          "description": "default = ocean_geometry.nc\nThe file into which to write the ocean geometry.\n",
          "datatype": "string",
          "value": "$CASE.mom6.h.ocean_geometry.nc"
+      },
+      "SKEB_NPASS": {
+         "description": "\"default = 3\nnumber of passes of a 9-point smoother of the dissipation estimate.\"\n",
+         "datatype": "integer",
+         "value": 10
+      },
+      "SKEB_GM_COEF": {
+         "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
+         "datatype": "real",
+         "value": 0.75
       }
    },
    "KPP": {

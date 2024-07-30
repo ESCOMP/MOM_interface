@@ -60,6 +60,16 @@ def buildlib(caseroot, libroot, bldroot):
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")
 
+        # Set root for stochastic physics
+        if case.get_value("MOM6_BUILD_STOCH_PHYSICS") == "TRUE":
+            stoch_physics_srcdir = os.path.join(
+                comp_root_dir_ocn, "externals", "stochastic_physics"
+            )
+        else:
+            stoch_physics_srcdir = os.path.join(
+                comp_root_dir_ocn, "MOM6", "config_src", "external", "stochastic_physics"
+            )
+
         # Current code base does not need to build MARBL yet
         # pragma pylint: disable=using-constant-test
         if False:
@@ -114,13 +124,7 @@ def buildlib(caseroot, libroot, bldroot):
                 os.path.join(
                     comp_root_dir_ocn, "MOM6", "config_src", "external", "ODA_hooks"
                 ),
-                os.path.join(
-                    comp_root_dir_ocn,
-                    "MOM6",
-                    "config_src",
-                    "external",
-                    "stochastic_physics",
-                ),
+                stoch_physics_srcdir,
                 os.path.join(
                     comp_root_dir_ocn, "MOM6", "config_src", "external", "drifters"
                 ),

@@ -45,5 +45,22 @@
       "cf_compliance": {
          "values": ".true."
       }
+   },
+   "nam_stochy": {
+      "new_lscale": {
+         "values": ".true."
+      },
+      "OCNSKEB": {
+         "values": 1.0
+      },
+      "OCNSKEB_LSCALE": {
+         "values": "200e3"
+      },
+      "OCNSKEB_TAU": {
+         "values": 21600
+      },
+      "ISEED_OCNSKEB": {
+         "values": 20
+      }
    }
 }
