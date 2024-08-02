@@ -38,9 +38,8 @@ def buildlib(caseroot, libroot, bldroot):
             mpilib = case.get_value("MPILIB")
             debug = "debug" if case.get_value("DEBUG") else "nodebug"
             threaded = "threads" if case.get_value("BUILD_THREADED") else "nothreads"
-            comp_interface = case.get_value("COMP_INTERFACE")
             fmsbuilddir = os.path.join(
-                slr, compiler, mpilib, debug, threaded, comp_interface, "FMS"
+                slr, compiler, mpilib, debug, threaded, "FMS"
             )
             if not os.path.isfile(os.path.join(fmsbuilddir, "libfms.a")):
                 run_sub_or_cmd(
@@ -61,11 +60,21 @@ def buildlib(caseroot, libroot, bldroot):
         if not os.path.exists(cvmix_srcdir):
             expect(False, "CVMix external not found")
 
+        # Set root for stochastic physics
+        if case.get_value("MOM6_BUILD_STOCH_PHYSICS") == "TRUE":
+            stoch_physics_srcdir = os.path.join(
+                comp_root_dir_ocn, "externals", "stochastic_physics"
+            )
+        else:
+            stoch_physics_srcdir = os.path.join(
+                comp_root_dir_ocn, "MOM6", "config_src", "external", "stochastic_physics"
+            )
+
         # MARBL source code is brought in as a git submodule (or my manage_externals)
         logger.info("Making sure MARBL code is available...")
         if case.get_value("MOM6_BUILD_MARBL") == "TRUE":
             marbl_srcdir = os.path.join(
-                comp_root_dir_ocn, "MOM6", "pkg", "MARBL", "src"
+                comp_root_dir_ocn, "externals", "MARBL", "src"
             )
         else:
             marbl_srcdir = os.path.join(
@@ -116,13 +125,7 @@ def buildlib(caseroot, libroot, bldroot):
                 os.path.join(
                     comp_root_dir_ocn, "MOM6", "config_src", "external", "ODA_hooks"
                 ),
-                os.path.join(
-                    comp_root_dir_ocn,
-                    "MOM6",
-                    "config_src",
-                    "external",
-                    "stochastic_physics",
-                ),
+                stoch_physics_srcdir,
                 os.path.join(
                     comp_root_dir_ocn, "MOM6", "config_src", "external", "drifters"
                 ),

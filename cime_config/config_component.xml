@@ -32,6 +32,19 @@
     </desc>
   </entry>
 
+  <entry id="MOM6_BUILD_STOCH_PHYSICS">
+    <type>char</type>
+    <valid_values>TRUE,FALSE</valid_values>
+    <default_value>TRUE</default_value>
+    <group>build_component_mom</group>
+    <file>env_build.xml</file>
+    <desc> This variable controls whether MOM6 builds with full stochastics physics library (default)
+           or with stubs. If set to FALSE then setting DO_SKEB = True will result in a runtime error.
+           It is recommended to leave this variable set to TRUE, it exists to allow testing of the
+           stub in the CESM test suite.
+    </desc>
+  </entry>
+
   <entry id="MOM6_BUILD_MARBL">
     <type>char</type>
     <valid_values>TRUE,FALSE</valid_values>
@@ -57,11 +70,10 @@
 
   <entry id="MOM6_VERTICAL_GRID">
     <type>char</type>
-    <valid_values>zstar_75L,zstar_65L,hycom1,zstar_60L,sigma_shelf_zstar</valid_values>
+    <valid_values>zstar_75L,zstar_65L,hycom1,sigma_shelf_zstar</valid_values>
     <default_value>zstar_65L</default_value>
     <values>
       <value grid="oi%tx0.25v1">hycom1</value>
-      <value grid="oi%gx1v6">zstar_60L</value>
       <value grid="oi%MISOMIP">sigma_shelf_zstar</value>
     </values>
     <group>case_comp</group>

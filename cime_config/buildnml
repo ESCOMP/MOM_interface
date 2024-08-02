@@ -178,7 +178,7 @@ def prep_input(case, inst_suffixes):
         abio_dic_on = marbl_tracer_opt_dict.get("ABIO_DIC_ON", False)
 
         # Use MARBL-provided tool to generate marbl_in
-        MARBL_dir = os.path.join(srcroot, "components", "mom", "MOM6", "pkg", "MARBL")
+        MARBL_dir = os.path.join(srcroot, "components", "mom", "externals", "MARBL")
         MARBL_settings = MARBL_settings_for_MOM(MARBL_dir, caseroot, base_bio_on, abio_dic_on,
                                                 ocn_grid, run_type, continue_run, marbl_config)
         MARBL_settings.write_settings_file(os.path.join(rundir, "marbl_in"))
@@ -377,9 +377,10 @@ def prechecks(case, inst_suffixes):
     run_refcase = case.get_value("RUN_REFCASE")
     run_refdate = case.get_value("RUN_REFDATE")
     run_reftod = case.get_value("RUN_REFTOD")
-
+    testcase = case.get_value("TEST")
+    
     # check if rpointer files are present in rundir
-    if run_type != "startup" or continue_run:
+    if not testcase and (run_type != "startup" or continue_run):
         for inst_suffix in inst_suffixes:
             pointer_file = os.path.join(rundir, "rpointer.ocn" + inst_suffix)
             expect(

@@ -29,26 +29,38 @@ diag_manager_nml:
         values: .true.
     max_input_fields:
         values:
-          $MARBL_CONFIG != "off" and $TEST == True:
-            1200
-          else:
-            900
+            $MARBL_CONFIG != "off" and $TEST == True:
+                1200
+            else:
+                900
     max_output_fields:
         values:
-          $MARBL_CONFIG != "off" and $TEST != True:
-            900
-          $MARBL_CONFIG != "off" and $TEST == True:
-            1200
-          else:
-            300
+            $MARBL_CONFIG != "off" and $TEST != True:
+                900
+            $MARBL_CONFIG != "off" and $TEST == True:
+                1200
+            else:
+                300
     max_num_axis_sets:
         values:
-          $MARBL_CONFIG != "off": 35
-          else: 30
+            $MARBL_CONFIG != "off": 35
+            else: 30
     max_axes:
         values: 90
 
 mpp_io_nml:
     cf_compliance:
         values: .true.
+
+nam_stochy:
+    new_lscale:
+        values: .true.
+    OCNSKEB:
+        values: 1.0
+    OCNSKEB_LSCALE:
+        values: 200e3
+    OCNSKEB_TAU:
+        values: 21600
+    ISEED_OCNSKEB:
+        values: 20
 ...

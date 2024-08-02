@@ -42,7 +42,7 @@ make -j36 NETCDF=3 REPRO=1 libfms.a
 cd ${INTERFACE_ROOT}/standalone/build
 mkdir -p ${BLD_ROOT}/MOM6
 cd ${BLD_ROOT}/MOM6
-${MKMF_ROOT}/list_paths -l ${MOM_ROOT}/{config_src/infra/FMS2,config_src/memory/dynamic_symmetric,config_src/drivers/solo_driver,pkg/MARBL/src,config_src/external,src/{*,*/*}}/
+${MKMF_ROOT}/list_paths -l ${MOM_ROOT}/{config_src/infra/FMS2,config_src/memory/dynamic_symmetric,config_src/drivers/solo_driver,../externals/MARBL/src,config_src/external,src/{*,*/*}}/
 ${MKMF_ROOT}/mkmf -t ${TEMPLATE} -o '-I../FMS' -p MOM6 -l '-L../FMS -lfms' -c '-Duse_libMPI -Duse_netCDF -DSPMD' path_names
 make -j36 NETCDF=3 REPRO=1 MOM6
 

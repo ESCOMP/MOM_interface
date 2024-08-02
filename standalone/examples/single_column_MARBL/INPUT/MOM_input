@@ -60,8 +60,10 @@ MARBL_FEVENTFLUX_FILE = "MARBL_FEVENTFLUX_FILE_COLUMN.nc" ! default = "feventflu
                                 ! The file in which the iron vent flux forcing field can be found.
 MARBL_TRACER_RESTORING_SOURCE = "file" ! default = "none"
                                 ! Source of data for restoring MARBL tracers
-MARBL_TRACER_RESTORING_RTAU_SOURCE = "file" !
+MARBL_TRACER_RESTORING_I_TAU_SOURCE = "file" !
                                 ! Source of data for  1/timescale for restoring MARBL tracers
+MARBL_TRACER_RESTORING_I_TAU_VAR_NAME = "RTAU" ! default = "I_TAU"
+                                ! Field containing the inverse timescale for restoring MARBL tracers
 
 
 ! === module MOM_grid_init ===
