@@ -8,14 +8,14 @@
 [submodule "stochastic_physics"]
   path = externals/stochastic_physics
   url = https://github.com/iangrooms/stochastic_physics.git
-  fxdonotuseurl = https://github.com/iangrooms/stochastic_physics.git
+  fxDONOTUSEurl = https://github.com/iangrooms/stochastic_physics.git
     fxtag = ocn_skeb_240715
-    fxrequired = alwaysrequired
+    fxrequired = AlwaysRequired
 
 [submodule "MARBL"]
   path = externals/MARBL
   url = https://github.com/marbl-ecosys/MARBL.git
-  fxdonotuseurl = https://github.com/marbl-ecosys/MARBL.git
+  fxDONOTUSEurl = https://github.com/marbl-ecosys/MARBL.git
     fxtag = marbl0.47.0
-    fxrequired = alwaysrequired
+    fxrequired = AlwaysRequired
 
