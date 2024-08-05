@@ -45,6 +45,35 @@
       "cfcs_forcing": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc",
       "diag_coord_def_rho2": {
          "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/ocean_rho2_190917.nc"
+      },
+      "marbl_tracers_ic_file": {
+         "$MARBL_CONFIG == \"latest\"": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c231221.nc",
+         "$MARBL_CONFIG == \"latest+4p2z\"": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c231221.nc"
+      },
+      "marbl_fesedflux_file": {
+         "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
+            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx2_3v2.c231205.nc"
+         }
+      },
+      "marbl_feventflux_file": {
+         "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
+            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/feventflux_5gmol_tx2_3v2.c231205.nc"
+         }
+      },
+      "riv_flux_file": {
+         "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
+            "$ROF_GRID == \"JRA025\" and $OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/riv_nut.gnews_gnm.rJRA025_to_tx2_3v2_nnsm_e333r100_230415.20240202.nc",
+            "$ROF_GRID == \"r05\" and $OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/riv_nut.gnews_gnm.r05_to_tx2_3v2_nnsm_e250r250_230914.20240202.nc"
+         }
+      },
+      "d14c_file_1": {
+         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/atm_delta_C14_CMIP6_sector1_global_1850-2015_yearly_v2.0_c240202.nc"
+      },
+      "d14c_file_2": {
+         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/atm_delta_C14_CMIP6_sector2_global_1850-2015_yearly_v2.0_c240202.nc"
+      },
+      "d14c_file_3": {
+         "\"ABIO_DIC_ON=TRUE\" in $MARBL_TRACER_OPTS": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/atm_delta_C14_CMIP6_sector3_global_1850-2015_yearly_v2.0_c240202.nc"
       }
    }
 }

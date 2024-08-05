@@ -2,7 +2,7 @@
   path = MOM6
   url = https://github.com/NCAR/MOM6.git
   fxDONOTUSEurl = https://github.com/NCAR/MOM6.git
-    fxtag = dev/ncar_240709
+    fxtag = dev/ncar_240802
     fxrequired = AlwaysRequired
 
 [submodule "stochastic_physics"]
@@ -10,5 +10,12 @@
   url = https://github.com/iangrooms/stochastic_physics.git
   fxDONOTUSEurl = https://github.com/iangrooms/stochastic_physics.git
     fxtag = ocn_skeb_240715
+    fxrequired = AlwaysRequired
+
+[submodule "MARBL"]
+  path = externals/MARBL
+  url = https://github.com/marbl-ecosys/MARBL.git
+  fxDONOTUSEurl = https://github.com/marbl-ecosys/MARBL.git
+    fxtag = marbl0.47.0
     fxrequired = AlwaysRequired
 

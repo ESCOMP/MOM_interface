@@ -5,7 +5,9 @@
 <entry_id version="3.0">
 
   <description>
-    <desc ocn="MOM6">MOM6 OCEAN </desc>
+    <desc ocn="MOM6[%MARBL-BIO][%MARBL-ABIO]">MOM6 OCEAN </desc>
+    <desc option="MARBL-BIO">MARBL Biogeochemistry Tracer Library base biotic tracers</desc>
+    <desc option="MARBL-ABIO">MARBL Biogeochemistry Tracer Library abiotic DIC tracers</desc>
   </description>
 
   <entry id="COMP_OCN">
@@ -43,6 +45,19 @@
     </desc>
   </entry>
 
+  <entry id="MOM6_BUILD_MARBL">
+    <type>char</type>
+    <valid_values>TRUE,FALSE</valid_values>
+    <default_value>TRUE</default_value>
+    <group>build_component_mom</group>
+    <file>env_build.xml</file>
+    <desc> This variable controls whether MOM6 builds with the full MARBL library (default) or just
+           with stubs. If set to FALSE then setting USE_MARBL_TRACERS = True in the Parameters file
+           will result in a runtime error. It is recommended to leave this variable set to TRUE, it
+           exists to allow testing of the MARBL stub in the CESM test suite.
+    </desc>
+  </entry>
+
   <entry id="MOM6_INFRA_API">
     <type>char</type>
     <valid_values>FMS1,FMS2</valid_values>
@@ -71,7 +86,7 @@
     <type>char</type>
     <valid_values>spinup,production,development,none</valid_values>
     <default_value>production</default_value>
-    <group>case_comp</group>
+    <group>run_component_mom</group>
     <file>env_run.xml</file>
     <desc> This variable is used to choose from a set of predefined ocean diagnostics configurations.
            Each configuration corresponds to a different combination of frequency, precision, and field lists.
@@ -90,6 +105,84 @@
     <desc> Flag to turn on/off the MOM6 sections diagnostics.
     </desc>
   </entry>
+
+  <!--- Note that positive second match will overwrite positive first match -->
+  <entry id="OCN_CO2_TYPE">
+    <type>char</type>
+    <valid_values>constant,prognostic,diagnostic</valid_values>
+    <default_value>constant</default_value>
+    <values>
+      <value compset="_CAM">diagnostic</value>
+      <value compset="_MOM6%[^_]*MARBL-BIO.*_BGC%BPRP">prognostic</value>
+      <value compset="_MOM6%[^_]*MARBL-BIO.*_BGC%BDRD">diagnostic</value>
+      <value compset="_DATM%CPLHIST.*_MOM6%[^_]*MARBL-BIO">diagnostic</value>
+      <value compset="^OMIP_DATM%IAF.*_MOM6%[^_]*MARBL-BIO">diagnostic</value>
+      <value compset="^OMIP_DATM%JRA.*_MOM6%[^_]*MARBL-BIO">diagnostic</value>
+    </values>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Determines provenance of atmospheric CO2 for gas flux computation.
+      This option is used in MARBL.
+      The default is constant.</desc>
+  </entry>
+
+  <entry id="MARBL_TRACER_OPTS">
+    <type>char</type>
+    <valid_values></valid_values>
+    <default_value></default_value>
+    <values modifier='merge'>
+      <value compset="MOM6%[^_]*MARBL-ABIO">ABIO_DIC_ON=TRUE</value>
+      <value compset="MOM6%[^_]*MARBL-BIO">BASE_BIO_ON=TRUE</value>
+    </values>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Configure what tracers MARBL will provide to MOM6
+    </desc>
+  </entry>
+
+  <entry id="MARBL_CONFIG">
+    <type>char</type>
+    <valid_values>off,latest,latest+4p2z</valid_values>
+    <default_value>off</default_value>
+    <values>
+      <value compset="MOM6%[^_]*MARBL">latest+4p2z</value>
+    </values>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Version of ocean BGC tunings to use (default values can be overwritten by user_nl_mom and user_nl_marbl).
+    </desc>
+  </entry>
+
+  <entry id="MARBL_DIAG_MODE">
+    <type>char</type>
+    <valid_values>test_suite,full,minimal,none</valid_values>
+    <default_value>full</default_value>
+    <values>
+      <value compset="_CAM.*MOM6%[^_]*MARBL">minimal</value>
+      <value compset="_DATM.*MOM6%[^_]*MARBL">full</value>
+    </values>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc> This variable is used to choose from a set of predefined diagnostics configurations in MARBL.
+           Each configuration corresponds to a different combination of frequency and field lists.
+           'test_suite' implies "provide all MARBL output in double precision" while the rest of the
+           modes indicate single precision. Note that 'full' is a superset of 'minimal'.
+    </desc>
+  </entry>
+
+  <entry id="MARBL_HIST_VERT_GRID">
+    <type>char</type>
+    <valid_values>interpolated,native,both</valid_values>
+    <default_value>interpolated</default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Vertical grid to use in BGC-specific history files that contain 3D variables
+          "native" will output on whatever levels MOM is using (e.g. z*); stream will be mom6.h.bgc.native.*
+          "interpolated" will output will be interpolated to static z levels; stream will be mom6.h.bgc.z.*
+          "both" will write both h.bgc.native and h.bgc.z files
+    </desc>
+  </entry>
+
   <help>
     =========================================
     MOM6 naming conventions

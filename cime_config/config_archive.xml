@@ -7,6 +7,9 @@
     <!-- match filenames of the form
          h.static[._optional instance number].nc[.optional tile number] -->
     <hist_file_extension>h\.static(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
+    <!-- match filenames of the form
+         h.bgc.*[._optional instance number].nc -->
+    <hist_file_extension>h\.bgc\..*?.?[_\d+]+.nc$</hist_file_extension>
     <hist_file_extension>h\.ocean_geometry(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
     <!-- Match hist extension (i.e., stream name), used to identify last file
          in each stream in baseline generation within testing -->

@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 ###############################################################################
 def buildlib(caseroot, libroot, bldroot):
-    ###############################################################################
+###############################################################################
 
     with Case(caseroot) as case:
         # first check for the external FMS library and build it
@@ -70,17 +70,18 @@ def buildlib(caseroot, libroot, bldroot):
                 comp_root_dir_ocn, "MOM6", "config_src", "external", "stochastic_physics"
             )
 
-        # Current code base does not need to build MARBL yet
-        # pragma pylint: disable=using-constant-test
-        if False:
-            # MARBL source code is brought in as a git submodule (or my manage_externals)
-            logger.info("Making sure MARBL code is available...")
+        # MARBL source code is brought in as a git submodule (or my manage_externals)
+        logger.info("Making sure MARBL code is available...")
+        if case.get_value("MOM6_BUILD_MARBL") == "TRUE":
             marbl_srcdir = os.path.join(
-                comp_root_dir_ocn, "MOM6", "pkg", "MARBL", "src"
+                comp_root_dir_ocn, "externals", "MARBL", "src"
             )
-            # If MARBL is not found, abort
-            if not os.path.exists(marbl_srcdir):
-                expect(False, "MARBL external not found")
+        else:
+            marbl_srcdir = os.path.join(
+                comp_root_dir_ocn,"MOM6","config_src","external","MARBL"
+            )
+        if not os.path.exists(marbl_srcdir):
+            expect(False, f"MARBL external not found in {marbl_srcdir}")
 
         casetools = case.get_value("CASETOOLS")
         gmake_j = case.get_value("GMAKE_J")
@@ -147,7 +148,7 @@ def buildlib(caseroot, libroot, bldroot):
                 os.path.join(comp_root_dir_ocn, "MOM6", "src", "initialization"),
                 os.path.join(comp_root_dir_ocn, "MOM6", "src", "ocean_data_assim"),
                 cvmix_srcdir,
-                #                     marbl_srcdir,
+                marbl_srcdir,
                 os.path.join(
                     comp_root_dir_ocn, "MOM6", "src", "parameterizations", "lateral"
                 ),

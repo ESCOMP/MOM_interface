@@ -6,10 +6,10 @@
 # commands #
 ############
 
-FC = ifort
-CC = icc
+FC = mpif90
+CC = mpicc
 CXX = icpc
-LD = ifort
+LD = mpif90
 
 ############
 #  flags   #
@@ -24,14 +24,16 @@ MAKEFLAGS += --jobs=8
 
 FPPFLAGS := -fpp -Wp,-w
 
-FFLAGS := -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -i4 -r8 -nowarn -sox -traceback
+FFLAGS := -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -i4 -r8 -nowarn -traceback
+FFLAGS += -I$(shell nf-config --includedir)
 FFLAGS_OPT = -O3 -debug minimal -fp-model source -qoverride-limits
 FFLAGS_DEBUG = -g -O0 -check -check noarg_temp_created -check nopointer -warn -warn noerrors -fpe0 -ftrapuv
 FFLAGS_REPRO = -O2 -debug minimal -fp-model source -qoverride-limits
 FFLAGS_OPENMP = -openmp
 FFLAGS_VERBOSE = -v -V -what
 
-CFLAGS := -D__IFC -sox -traceback
+CFLAGS := -D__IFC -sox -traceback -diag-disable=10441
+CFLAGS += -I$(NETCDF_PATH)/include
 CFLAGS_OPT = -O2 -debug minimal
 CFLAGS_OPENMP = -openmp
 CFLAGS_DEBUG = -O0 -g -ftrapuv
@@ -73,14 +75,11 @@ ifeq ($(NETCDF),3)
   endif
 endif
 
-ifneq ($(findstring netcdf/4,$(LOADEDMODULES)),)
-  LIBS += -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz
-else
-  LIBS += -lnetcdf
-endif
+# Add netcdf linking
+LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
 
 #LIBS += -lmpi
-LIBS += -lmpi -lsma
+#LIBS += -lmpi -lsma
 #LIBS += -lmkl_blas95_lp64 -lmkl_lapack95_lp64 -lmkl_intel_lp64 -lmkl_core -lmkl_sequential
 LDFLAGS += $(LIBS)
 

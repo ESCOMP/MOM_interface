@@ -63,6 +63,16 @@
     <lname>2000_DATM%JRA-1p4-2018_SLND_DICE%SSMI_MOM6_DROF%JRA-1p4-2018_SGLC_WW3</lname>
   </compset>
 
+  <compset>
+    <alias>C1850MARBL_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_DICE%SSMI_MOM6%MARBL-BIO_DROF%JRA_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>C1850ABIOMARBL_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_DICE%SSMI_MOM6%MARBL-ABIO_DROF%JRA_SGLC_SWAV</lname>
+  </compset>
+
   <!-- G compsets -->
 
   <compset>
@@ -88,6 +98,16 @@
   <compset>
     <alias>GW_JRA</alias>
     <lname>2000_DATM%JRA-1p4-2018_SLND_CICE_MOM6_DROF%JRA-1p4-2018_SGLC_WW3</lname>
+  </compset>
+
+  <compset>
+    <alias>G1850MARBL_JRA</alias>
+    <lname>1850_DATM%JRA-1p4-2018_SLND_CICE_MOM6%MARBL-BIO_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>G1850ABIOMARBL_JRA</alias>
+    <lname>1850_DATM%JRA-1p4-2018_SLND_CICE_MOM6%MARBL-ABIO_DROF%JRA-1p4-2018_SGLC_SWAV</lname>
   </compset>
 
 </compsets>
