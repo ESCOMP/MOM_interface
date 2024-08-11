@@ -9,7 +9,7 @@
   path = externals/stochastic_physics
   url = https://github.com/iangrooms/stochastic_physics.git
   fxDONOTUSEurl = https://github.com/iangrooms/stochastic_physics.git
-    fxtag = ocn_skeb_240715
+    fxtag = ocn_skeb_240807
     fxrequired = AlwaysRequired
 
 [submodule "MARBL"]
