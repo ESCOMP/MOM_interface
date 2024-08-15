@@ -24,7 +24,8 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "MARBL_
 
 from standard_script_setup import *
 from CIME.case import Case
-from CIME.utils import expect, append_status
+from CIME.utils import expect
+from CIME.status import append_status
 from CIME.buildnml import parse_input
 from FType_MOM_params import FType_MOM_params
 from FType_input_nml import FType_input_nml
