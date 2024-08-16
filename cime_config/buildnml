@@ -34,6 +34,7 @@ from MARBL_settings import MARBL_settings_for_MOM
 from MARBL_diagnostics import MARBL_diagnostics_for_MOM
 from MOM_MARBL_diagnostics import write_MARBL_diagnostics_file, get_2D_vars_from_MARBL_diagnostics
 from MARBL_diags_to_diag_table import diagnostics_to_diag_table
+from tools.utils import MOM_define_layout, mpp_compute_extent
 
 logger = logging.getLogger(__name__)
 
@@ -247,6 +248,10 @@ def prep_input(case, inst_suffixes):
         FType_diag_table.resolve(
             unresolved_diag_table_confdir, diag_table_rundir, casename
         )
+    
+    # Sanity checks after all input files are generated.
+    postchecks(case, MOM_input_final)
+
 
 def init_MOM_override(rundir, inst_suffix):
     # Create an empty MOM_override:
@@ -392,6 +397,26 @@ def prechecks(case, inst_suffixes):
     if run_type in ["branch", "hybrid"] and not continue_run and not get_refcase:
         restart_file = os.path.join(rundir, f'./{run_refcase}.mom6.r.{run_refdate}-{run_reftod}.nc')
         assert os.path.exists(restart_file), f"Missing restart file {run_refcase}.mom6.r.{run_refdate}-{run_reftod}.nc in rundir."
+
+def postchecks(case,  MOM_input_final):
+    """Performs checks after input files are generated. To be called within prep_input() as a final step."""
+
+    ntasks_ocn = case.get_value("NTASKS_OCN")
+    niglobal = int(MOM_input_final._data["Global"]["NIGLOBAL"]['value'])
+    njglobal = int(MOM_input_final._data["Global"]["NJGLOBAL"]['value'])
+
+    # Check whether given NTASKS_OCN is feasible by attempting to compute domain decomposition
+    niproc, njproc = MOM_define_layout(niglobal, njglobal, ntasks_ocn)
+    try:
+        mpp_compute_extent(1, niglobal, niproc)
+        mpp_compute_extent(1, njglobal, njproc)
+    except AssertionError as e:
+        raise SystemExit(
+            f"ERROR: {e}\n"
+            f"  NTASKS_OCN={ntasks_ocn}, NIGLOBAL={niglobal}, NJGLOBAL={njglobal}\n"
+            f"  Domain decomposition: NIPROC={niproc}, NJPROC={njproc}\n"
+            f"  Unable to find a feasible MOM6 domain decomposition! Try a different NTASKS_OCN."
+        )
 
 # pylint: disable=unused-argument
 ###############################################################################
