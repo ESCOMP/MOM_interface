@@ -277,7 +277,7 @@ Global:
             by IC_OUTPUT_FILE."
         datatype: logical
         units: Boolean
-        value: True
+        value: = $CONTINUE_RUN == False
     GRID_ROTATION_ANGLE_BUGS:
         description: |
             "[Boolean] default = True
@@ -2717,6 +2717,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "MISOMIP_IC"
+            else: = "${CASE}.mom6.ic.${RUN_STARTDATE}.nc"
     TRIMMING_USES_REMAPPING:
         description: |
             "[Boolean] default = False
@@ -3554,7 +3555,7 @@ Global:
             The file into which to write the ocean geometry.
         datatype: string
         value:
-            $CASE.mom6.h.ocean_geometry.nc
+            "${CASE}.mom6.h.ocean_geometry.nc"
     SKEB_NPASS:
         description: |
             "default = 3

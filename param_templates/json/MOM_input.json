@@ -185,7 +185,7 @@
          "description": "\"[Boolean] default = False\nIf true, write the initial conditions to a file given\nby IC_OUTPUT_FILE.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": true
+         "value": "= $CONTINUE_RUN == False"
       },
       "GRID_ROTATION_ANGLE_BUGS": {
          "description": "\"[Boolean] default = True\nIf true, use an older algorithm to calculate the sine and\ncosines needed rotate between grid-oriented directions and\ntrue north and east.  Differences arise at the tripolar fold.\"\n",
@@ -2156,7 +2156,8 @@
          "description": "\"default = 'MOM_IC'\nThe file into which to write the initial conditions.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": "MISOMIP_IC"
+            "$OCN_GRID == \"MISOMIP\"": "MISOMIP_IC",
+            "else": "= \"${CASE}.mom6.ic.${RUN_STARTDATE}.nc\""
          }
       },
       "TRIMMING_USES_REMAPPING": {
@@ -2878,7 +2879,7 @@
       "GEOM_FILE": {
          "description": "default = ocean_geometry.nc\nThe file into which to write the ocean geometry.\n",
          "datatype": "string",
-         "value": "$CASE.mom6.h.ocean_geometry.nc"
+         "value": "${CASE}.mom6.h.ocean_geometry.nc"
       },
       "SKEB_NPASS": {
          "description": "\"default = 3\nnumber of passes of a 9-point smoother of the dissipation estimate.\"\n",
