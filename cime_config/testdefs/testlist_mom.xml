@@ -154,4 +154,12 @@
       <option name="wallclock">02:00:00</option>
     </options>
   </test>
+    <test name="MCC" grid="T62_t232" compset="C">
+    <machines>
+      <machine name="derecho" compiler="gnu" category="aux_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">01:00:00</option>
+    </options>
+  </test>
 </testlist>
