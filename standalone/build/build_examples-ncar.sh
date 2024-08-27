@@ -15,8 +15,26 @@ CESM_ROOT=`pwd -P`
 SHR_ROOT=${CESM_ROOT}/share
 FMS_ROOT=${CESM_ROOT}/libraries/FMS
 
-COMPILER=intel
+# Default compiler
+COMPILER="intel"
+
+# Parse command line arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --compiler) COMPILER="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+echo "Using compiler: $COMPILER"
+
 TEMPLATE=${TEMPLATE_DIR}/ncar-${COMPILER}.mk
+
+# Throw error if template does not exist:
+if [ ! -f $TEMPLATE ]; then
+  echo "ERROR: Template file $TEMPLATE does not exist. Exiting."
+  exit 1
+fi
 
 if [ -e $1 ]; then
   BLD_ROOT=${COMPILER}
