@@ -56,6 +56,6 @@ jobs:
           pip install pyyaml
 
           # Run test
-          python tests/check_default_parameters
+          python tests/check_default_parameters.py
 
   
