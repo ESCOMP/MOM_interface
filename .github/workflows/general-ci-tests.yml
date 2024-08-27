@@ -35,7 +35,7 @@ jobs:
   #         echo Add other actions to build,
   #         echo test, and deploy your project.
 
-  # Job to run the check_default_parameters test
+  # Job to run the check_default_params test
   check_default_params_job:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -49,13 +49,7 @@ jobs:
       # Install pip
       # Install yaml with pip
       # Run test
-      - name: Run a multi-line script
-        run: |
-          # Upgrade pip and install dependencies
-          python -m pip install --upgrade pip
-          pip install pyyaml
-
-          # Run test
-          python tests/check_default_parameters.py
+      - name: Run the check_default_params script
+        run: python tests/check_default_params.py
 
   
