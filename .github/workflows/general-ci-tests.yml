@@ -17,7 +17,20 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-
+    # Copied from NCAR/MOM6 - Install Basic Build Packages for MOM6
+      - name: Install Ubuntu Linux packages
+        shell: bash
+        run: |
+          echo "::group::Install linux packages"
+          sudo apt-get update
+          sudo apt-get install netcdf-bin
+          sudo apt-get install libnetcdf-dev
+          sudo apt-get install libnetcdff-dev
+          sudo apt-get install openmpi-bin
+          sudo apt-get install libopenmpi-dev
+          sudo apt-get install linux-tools-common
+          echo "::endgroup::"
+          
       # Checkout CESM, Build MOM Standalone, can we add the pull request as the checkout?
       - name: Checkout CESM and Build MOM Standalone
         run: |
