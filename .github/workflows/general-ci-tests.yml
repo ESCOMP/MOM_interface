@@ -17,7 +17,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-            
+      - name: Setup Fortran
+        uses: fortran-lang/setup-fortran@v1.6.1
+        with:
+          compiler: ifort
+              
     # Copied from NCAR/MOM6 - Install Basic Build Packages for MOM6
       - name: Install Ubuntu Linux packages
         shell: bash
