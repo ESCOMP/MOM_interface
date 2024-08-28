@@ -45,7 +45,7 @@ jobs:
           ./bin/git-fleximod update
       - name: Checkout MOM Branch
         run: |
-          cd components/mom
+          cd $HOME/cesm3_0_alpha03a/components/mom/
           git checkout main
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
