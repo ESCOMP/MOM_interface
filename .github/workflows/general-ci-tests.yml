@@ -17,10 +17,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Setup Fortran
-        shell: bash
-        run: |
-          echo "::group::Install linux packages" 
             
     # Copied from NCAR/MOM6 - Install Basic Build Packages for MOM6
       - name: Install Ubuntu Linux packages
