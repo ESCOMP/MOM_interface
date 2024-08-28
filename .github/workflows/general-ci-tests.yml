@@ -37,18 +37,24 @@ jobs:
           sudo apt-get install -y csh
           echo "::endgroup::"
           
-      # Checkout CESM, Build MOM Standalone, can we add the pull request as the checkout?
-      - name: Checkout CESM and Build MOM Standalone
+      # Checkout CESM, Build MOM Standalone
+      - name: Checkout CESM and Externals
         run: |
           git clone https://github.com/ESCOMP/CESM.git -b cesm3_0_alpha03a cesm3_0_alpha03a
           cd cesm3_0_alpha03a
           ./bin/git-fleximod update
+      - name: Checkout MOM Branch
+        run: |
           cd components/mom
           git checkout main
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      - name: Build Standalone MOM
+        run: |
           cd standalone/build
           ./build_examples-ncar.sh
   # The takes the build we just made and runs the standalone mom        
-  test_lightweight_standalone_mom:
+  check_standalone_mom_lightweight_examples:
     
     runs-on: ubuntu-latest
     needs: build
@@ -78,7 +84,7 @@ jobs:
         run: python tests/check_default_params.py
         
   # Job to run the black formatter for cime_config
-  black_check_for_cime_config:
+  check_black_format_for_cime_config:
     
     runs-on: ubuntu-latest
     
