@@ -47,7 +47,7 @@ jobs:
         uses: mxschmitt/action-tmate@v3
       - name: Checkout MOM Branch
         run: |
-          cd $HOME/cesm3_0_alpha03a/components/mom/
+          cd $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/
           git checkout main
 
       - name: Build Standalone MOM
