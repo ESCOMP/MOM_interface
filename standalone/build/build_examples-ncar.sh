@@ -15,7 +15,7 @@ CESM_ROOT=`pwd -P`
 SHR_ROOT=${CESM_ROOT}/share
 FMS_ROOT=${CESM_ROOT}/libraries/FMS
 
-COMPILER=intel
+COMPILER=gnu
 TEMPLATE=${TEMPLATE_DIR}/ncar-${COMPILER}.mk
 
 if [ -e $1 ]; then
