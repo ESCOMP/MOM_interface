@@ -39,8 +39,8 @@ jobs:
           git clone https://github.com/ESCOMP/CESM.git -b cesm3_0_alpha03a cesm3_0_alpha03a
           cd cesm3_0_alpha03a
           ./bin/git-fleximod update
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
       - name: Checkout MOM Branch
         run: |
           cd $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/
@@ -61,10 +61,10 @@ jobs:
       # CDs into a couple MOM examples and runs MOM in them. These are very light weight.
       - name: Run simple mom tests
         run: |
-          cd $HOME/cesm3_0_alpha03a/components/mom/standalone/examples/double_gyre
-          $HOME/cesm3_0_alpha03a/components/mom/standalone/build/intel/MOM6/MOM6
-          cd $HOME/cesm3_0_alpha03a/components/mom/standalone/examples/single_column/KPP
-          $HOME/cesm3_0_alpha03a/components/mom/standalone/build/intel/MOM6/MOM6
+          cd $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/standalone/examples/double_gyre
+          $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/standalone/build/intel/MOM6/MOM6
+          cd $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/standalone/examples/single_column/KPP
+          $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/standalone/build/intel/MOM6/MOM6
           
 
   # Job to run the check_default_params test
