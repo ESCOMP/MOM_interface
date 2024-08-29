@@ -362,8 +362,6 @@ def write_MARBL_diagnostics_file(
             # STF_SALT_ABIO_DIC is special case
             if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("minimal"):
                 full_diag_dict["ABIO_DIC"]["diags"]["STF_SALT_ABIO_DIC"] = "medium_average"
-            full_diag_dict["DIC"]["diags"]["DIC_RIV_FLUX"] = freq_op
-            full_diag_dict["DIC"]["diags"]["J_DIC"] = freq_op
             # full_diag_dict['ABIO_DIC']['diags']['J_ABIO_DIC'] = freq_op
             full_diag_dict["ABIO_DIC"]["diags"]["STF_ABIO_DIC"] = freq_op
             # full_diag_dict['ABIO_DIC']['diags']['FvPER_ABIO_DIC'] = freq_op
