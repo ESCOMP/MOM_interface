@@ -11,7 +11,7 @@ on:
 jobs:
   # This workflow contains 4 jobs 
   # Build checks out MOM through the CESM and lets us run the standalone version
-  build:
+  build_standalone_mom:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -46,7 +46,7 @@ jobs:
           git checkout main
       - name: Build Standalone MOM
         run: |
-          cd standalone/build
+          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/build
           ./build_examples-darwin.sh
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
@@ -63,10 +63,12 @@ jobs:
     steps:
 
       # CDs into a couple MOM examples and runs MOM in them. These are very light weight.
-      - name: Run simple mom tests
+      - name: Run Double Gyre Test
         run: |
           cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/examples/double_gyre
           $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/build/gnu/MOM6/MOM6
+      - name: Run Single Column KPP Test
+        run: |
           cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/examples/single_column/KPP
           $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/build/gnu/MOM6/MOM6
           
