@@ -23,7 +23,7 @@ fi
 
 # 1) Build FMS
 cd ${INTERFACE_ROOT}/standalone/build
-mkdir -p ${BLD_ROOT}/FMS
+mkdir -p ${BLD_ROOT}/FS
 cd ${BLD_ROOT}/FMS
 ${MKMF_ROOT}/list_paths ${FMS_ROOT}/src
 # We need shr_const_mod.F90 and shr_kind_mod.F90 from ${SHR_ROOT}/src
