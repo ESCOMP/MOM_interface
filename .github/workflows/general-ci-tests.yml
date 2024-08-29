@@ -58,7 +58,7 @@ jobs:
   check_standalone_mom_lightweight_examples:
     
     runs-on: ubuntu-latest
-    needs: build
+    needs: build_standalone_mom
     
     steps:
 
