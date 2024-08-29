@@ -20,7 +20,8 @@ jobs:
       - name: Setup Fortran
         uses: fortran-lang/setup-fortran@v1.6.1
         with:
-          compiler: gcc
+          compiler: intel-classic
+          version: 2021.1
               
     # Copied from NCAR/MOM6 - Install Basic Build Packages for MOM6
       - name: Install Ubuntu Linux packages
