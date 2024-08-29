@@ -40,17 +40,20 @@ jobs:
           git clone https://github.com/ESCOMP/CESM.git -b cesm3_0_alpha03a cesm3_0_alpha03a
           cd cesm3_0_alpha03a
           ./bin/git-fleximod update
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
       - name: Checkout MOM Branch
         run: |
-          cd $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/
+          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/
           git checkout main
-
       - name: Build Standalone MOM
         run: |
           cd standalone/build
-          ./build_examples-ncar.sh
+          ./build_examples-darwin.sh
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+        if: ${{ failure() }}
+        with:
+        ## If no one connects after 5 minutes, shut down server.
+          wait-timeout-minutes: 5
   # The takes the build we just made and runs the standalone mom        
   check_standalone_mom_lightweight_examples:
     
@@ -62,10 +65,10 @@ jobs:
       # CDs into a couple MOM examples and runs MOM in them. These are very light weight.
       - name: Run simple mom tests
         run: |
-          cd $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/standalone/examples/double_gyre
-          $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/standalone/build/intel/MOM6/MOM6
-          cd $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/standalone/examples/single_column/KPP
-          $HOME/work/MOM_interface/MOM_interface/cesm3_0_alpha03a/components/mom/standalone/build/intel/MOM6/MOM6
+          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/examples/double_gyre
+          $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/build/gnu/MOM6/MOM6
+          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/examples/single_column/KPP
+          $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/build/gnu/MOM6/MOM6
           
 
   # Job to run the check_default_params test
