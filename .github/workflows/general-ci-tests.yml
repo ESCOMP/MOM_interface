@@ -17,11 +17,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Setup Fortran
-        uses: fortran-lang/setup-fortran@v1.6.1
-        with:
-          compiler: intel-classic
-          version: 2021.1
+
               
     # Copied from NCAR/MOM6 - Install Basic Build Packages for MOM6
       - name: Install Ubuntu Linux packages
@@ -37,6 +33,11 @@ jobs:
           sudo apt-get install linux-tools-common
           sudo apt-get install -y csh
           echo "::endgroup::"
+      - name: Setup Fortran
+        uses: fortran-lang/setup-fortran@v1.6.1
+        with:
+          compiler: intel-classic
+          version: 2021.1
           
       # Checkout CESM, Build MOM Standalone
       - name: Checkout CESM and Externals
