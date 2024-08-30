@@ -59,10 +59,7 @@ jobs:
           echo "Handling push"
           cd $GITHUB_WORKSPACE/CESM/components/mom/
           git checkout ${{ github.sha }}
-          
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
-        
+
       # Build the standalone mom using the macos script. build_examples-ncar doesn't work.    
       - name: Build Standalone MOM
         run: |
