@@ -64,7 +64,7 @@ jobs:
       - name: Build Standalone MOM
         run: |
           cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/build
-          ./build_examples-darwin.sh
+          ./build_examples.sh --compiler gnu --machine ubuntu
           
       # CD into a couple MOM examples and run MOM in them. These are very light weight and quick.
       - name: Run Double Gyre Test
