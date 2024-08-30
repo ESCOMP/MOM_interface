@@ -51,8 +51,11 @@ fi
 
 # Set -j option based on the MACHINE argument
 case $MACHINE in
-    "homebrew" | "ubuntu")
+    "homebrew" )
         JOBS=2
+        ;;
+    "ubuntu" )
+        JOBS=4
         ;;
     "ncar")
         JOBS=36
