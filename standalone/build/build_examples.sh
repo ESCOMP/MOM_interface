@@ -51,7 +51,7 @@ fi
 
 # Set -j option based on the MACHINE argument
 case $MACHINE in
-    "darwin" | "ubuntu")
+    "homebrew" | "ubuntu")
         jNUM=2
         ;;
     "ncar")
