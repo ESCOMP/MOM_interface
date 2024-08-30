@@ -19,4 +19,4 @@
 #PBS -m abe
 
 ### Run the executable
-./build_examples-ncar.sh intel-casper
+./build_examples-ncar.sh --compiler intel --machine ncar
