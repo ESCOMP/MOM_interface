@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ESCOMP/MOM_interface.svg?branch=master)](https://travis-ci.org/ESCOMP/MOM_interface)
+[![MOM_interface CI](https://github.com/ESCOMP/MOM_interface/actions/workflows/general-ci-tests.yml/badge.svg)](https://github.com/ESCOMP/MOM_interface/actions/workflows/general-ci-tests.yml)
 
 # MOM_interface
 
