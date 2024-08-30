@@ -21,7 +21,7 @@ MAKEFLAGS += --jobs=$(shell grep '^processor' /proc/cpuinfo | wc -l)
 
 FPPFLAGS :=
 
-FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check
+FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check -fallow-argument-mismatch
 FFLAGS += -I$(shell nc-config --includedir)
 FFLAGS += $(shell pkg-config --cflags-only-I mpich2-c)
 FFLAGS_OPT = -O3
@@ -79,7 +79,7 @@ ifeq ($(NETCDF),3)
   endif
 endif
 
-LIBS := $(shell nc-config --flibs) $(shell pkg-config --libs mpich2-f90)
+LIBS := $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
 LDFLAGS += $(LIBS)
 
 #---------------------------------------------------------------------------
