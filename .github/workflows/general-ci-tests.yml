@@ -34,6 +34,7 @@ jobs:
           sudo apt-get install openmpi-bin
           sudo apt-get install libopenmpi-dev
           sudo apt-get install linux-tools-common
+          sudo apt-get install -y csh
           echo "::endgroup::"
           
       # Checkout CESM (cesm3_0_alpha03a) and externals
