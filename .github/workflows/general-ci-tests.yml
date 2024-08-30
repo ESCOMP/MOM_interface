@@ -37,11 +37,11 @@ jobs:
           sudo apt-get install -y csh
           echo "::endgroup::"
           
-      # Checkout CESM (cesm3_0_alpha03a) and externals
+      # Checkout CESM (default branch) and externals
       - name: Checkout CESM and Externals
         run: |
-          git clone https://github.com/ESCOMP/CESM.git -b cesm3_0_alpha03a cesm3_0_alpha03a
-          cd cesm3_0_alpha03a
+          git clone https://github.com/ESCOMP/CESM.git 
+          cd CESM
           ./bin/git-fleximod update
           
       # Checkout the correct MOM Branch
@@ -49,7 +49,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           echo "Handling pull request"
-          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/
+          cd $GITHUB_WORKSPACE/CESM/components/mom/
           git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
           git checkout pr-${{ github.event.pull_request.number }}
 
@@ -57,24 +57,24 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: |
           echo "Handling push"
-          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/
+          cd $GITHUB_WORKSPACE/CESM/components/mom/
           git checkout ${{ github.sha }}
           
       # Build the standalone mom using the macos script. build_examples-ncar doesn't work.    
       - name: Build Standalone MOM
         run: |
-          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/build
+          cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/build
           ./build_examples-darwin.sh
           
       # CD into a couple MOM examples and run MOM in them. These are very light weight and quick.
       - name: Run Double Gyre Test
         run: |
-          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/examples/double_gyre
-          $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/build/gnu/MOM6/MOM6
+          cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/examples/double_gyre
+          $GITHUB_WORKSPACE/CESM/components/mom/standalone/build/gnu/MOM6/MOM6
       - name: Run Single Column KPP Test
         run: |
-          cd $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/examples/single_column/KPP
-          $GITHUB_WORKSPACE/cesm3_0_alpha03a/components/mom/standalone/build/gnu/MOM6/MOM6
+          cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/examples/single_column/KPP
+          $GITHUB_WORKSPACE/CESM/components/mom/standalone/build/gnu/MOM6/MOM6
           
 
   # Job to run the check_default_params script, which is a test
