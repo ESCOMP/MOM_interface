@@ -10,9 +10,9 @@ name: General MOM_interface CI
 on:
   # Triggers the workflow on push or pull request events but only for the listed branches
   push:
-    branches: ["138-set-up-github-actions-ci-testing" ]
+    branches: ["main" ]
   pull_request:
-    branches: [ "138-set-up-github-actions-ci-testing" ]
+    branches: [ "main" ]
 
 jobs:
   
