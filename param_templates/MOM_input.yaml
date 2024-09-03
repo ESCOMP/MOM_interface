@@ -74,6 +74,7 @@ Global:
             $OCN_GRID == "tx2_3v2": 540
             $OCN_GRID == "tx0.25v1": 1440
             $OCN_GRID == "MISOMIP": 402
+            $OCN_GRID == "nwa12": 740
     NJGLOBAL:
         description: |
             "The total number of thickness grid points in the
@@ -89,6 +90,7 @@ Global:
             $OCN_GRID == "tx2_3v2": 480
             $OCN_GRID == "tx0.25v1": 1080
             $OCN_GRID == "MISOMIP": 40
+            $OCN_GRID == "nwa12": 780
     IO_LAYOUT:
         description: |
             "default = 0
@@ -163,7 +165,7 @@ Global:
         datatype: real
         units: s
         value:
-            $OCN_GRID == "tx0.25v1": 900.0
+            $OCN_GRID in ["nwa12", "tx0.25v1"]: 900.0
             $OCN_GRID == "tx2_3v2": 1800
             $OCN_GRID == "MISOMIP": 600.0
     DT_THERM:
@@ -268,8 +270,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "tx0.25v1": True
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: True
     SAVE_INITIAL_CONDS:
         description: |
             "[Boolean] default = False
@@ -298,8 +299,7 @@ Global:
         datatype: real
         units: deg C Pa-1
         value:
-            $OCN_GRID == "tx2_3v2": -7.75E-08
-            $OCN_GRID == "tx0.25v1": -7.75E-08
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: -7.75E-08
             $OCN_GRID == "MISOMIP": -7.53E-08
     USE_IDEAL_AGE_TRACER:
         description: |
@@ -526,7 +526,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx2_3v2": "ocean_hgrid_221123.nc"
-            $OCN_GRID == "tx0.25v1": "ocean_hgrid.nc"
+            $OCN_GRID in ["tx0.25v1", "nwa12"]: "ocean_hgrid.nc"
     USE_TRIPOLAR_GEOLONB_BUG:
         description: |
             "[Boolean] default = True
@@ -568,6 +568,7 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": "ocean_topo_tx2_3v2_240501.nc"
             $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
+            $OCN_GRID == "nwa12": "ocean_topo.nc"
     MAXIMUM_DEPTH:
         description: |
             "[m]
@@ -577,6 +578,7 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": 6000.0
             $OCN_GRID == "tx0.25v1": 6500.0
+            $OCN_GRID == "nwa12": 6000.0
             $OCN_GRID == "MISOMIP": 720.0
     MINIMUM_DEPTH:
         description: |
@@ -589,8 +591,7 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "tx2_3v2": 9.5
-            $OCN_GRID == "tx0.25v1": 9.5
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: 9.5
     MASKING_DEPTH:
         description: |
             "[m] default = -9999.0
@@ -599,8 +600,7 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "tx2_3v2": 0.0
-            $OCN_GRID == "tx0.25v1": 0.0
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: 0.0
     REMAPPING_SCHEME:
         description: |
             "default = 'PLM'
@@ -624,7 +624,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $RUN_TYPE != "hybrid" and $OCN_GRID in ["tx2_3v2", "tx0.25v1"]:
+            $RUN_TYPE != "hybrid" and $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]:
                 True
             else:
                 False
@@ -635,7 +635,7 @@ Global:
             the layer thicknesses, temperatures and salinities."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "woa18_04_initial_conditions.nc"
+            $OCN_GRID in ["tx2_3v2", "nwa12"]: "woa18_04_initial_conditions.nc"
             $OCN_GRID == "tx0.25v1": "MOM6_IC_TS.nc"
     Z_INIT_FILE_PTEMP_VAR:
         description: |
@@ -644,7 +644,7 @@ Global:
             TEMP_SALT_Z_INIT_FILE."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "theta0"
+            $OCN_GRID in ["tx2_3v2", "nwa12"]: "theta0"
             $OCN_GRID == "tx0.25v1": "temp"
     Z_INIT_FILE_SALT_VAR:
         description: |
@@ -653,7 +653,7 @@ Global:
             TEMP_SALT_Z_INIT_FILE."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "s_an"
+            $OCN_GRID in ["tx2_3v2", "nwa12"]: "s_an"
     Z_INIT_REMAP_OLD_ALG:
         description: |
             "[Boolean] default = True
@@ -673,8 +673,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "tx0.25v1": True
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: True
     RESOLN_SCALED_KH:
         description: |
             "[Boolean] default = False
@@ -1153,8 +1152,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "tx0.25v1": True
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: True
     NUM_DIAG_COORDS:
         description: |
             " The number of diagnostic vertical coordinates to use.
@@ -1240,7 +1238,8 @@ Global:
             the layer target potential densities."
         datatype: logical
         units: Boolean
-        value: True
+        value:
+            $OCN_GRID != "nwa12": True
     BBL_THICK_MIN:
         description: |
             "[m] default = 0.0
@@ -1624,7 +1623,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx0.25v1": 0.0018
+            $OCN_GRID in ["tx0.25v1", "nwa12"]: 0.0018
     USE_RIGID_SEA_ICE:
         description: |
             "[Boolean] default = False
@@ -2010,8 +2009,7 @@ Global:
             PPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)"
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": '"PPM:H3"'
-            $OCN_GRID == "tx0.25v1": '"PPM:H3"'
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: '"PPM:H3"'
     KHTR_USE_EBT_STRUCT:
         description: |
             "[Boolean] default = False
@@ -2053,8 +2051,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
-            $OCN_GRID == "tx0.25v1": True
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: True
     MAX_TR_DIFFUSION_CFL:
         description: |
             "[nondim] default = -1.0
@@ -2065,7 +2062,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx2_3v2": 2.0
+            $OCN_GRID in ["tx2_3v2", "nwa12"]: 2.0
     MAXTRUNC:
         description: |
             "[truncations save_interval-1] default = 0
@@ -2076,7 +2073,7 @@ Global:
         datatype: integer
         units: truncations save_interval-1
         value:
-            $OCN_GRID == "tx0.25v1": 100000
+            $OCN_GRID in ["tx0.25v1", "nwa12"]: 100000
             else: 0
     OCEAN_SURFACE_STAGGER:
         description: |
@@ -2087,8 +2084,7 @@ Global:
             'A', 'B', or 'C'."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "A"
-            $OCN_GRID == "tx0.25v1": "A"
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: "A"
     RESTORE_SALINITY:
         description: |
             "[Boolean] default = False
@@ -2135,7 +2131,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $COMP_ATM == "datm": True  # for C and G compsets
+            '$COMP_ATM == "datm" and $OCN_GRID != "nwa12"': True  # for C and G compsets
             else: False
     MAX_DELTA_SRESTORE:
         description: |
@@ -2201,7 +2197,7 @@ Global:
         units: days
         value:
             $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "tx0.25v1": 0.25
+            $OCN_GRID in ["tx0.25v1", "nwa12"]: 0.25
             $OCN_GRID == "MISOMIP": 1.0
     ENERGETICS_SFC_PBL:
         description: |
@@ -2587,7 +2583,7 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "tx0.25v1": 50.0   # TODO
+            $OCN_GRID in ["nwa12", "tx0.25v1"]: 50.0   # TODO
     BAD_VAL_SSS_MAX:
         description: |
             "default = 45.0
@@ -2605,7 +2601,7 @@ Global:
         datatype: real
         units: deg C
         value:
-            $OCN_GRID == "tx0.25v1": 65.0
+            $OCN_GRID in ["nwa12", "tx0.25v1"]: 65.0
     BAD_VAL_SST_MIN:
         description: |
             "default = -2.1
@@ -2614,8 +2610,7 @@ Global:
         datatype: real
         units: degC
         value:
-            $OCN_GRID == "tx2_3v2": -3.0
-            $OCN_GRID == "tx0.25v1": -3.0
+            $OCN_GRID in ["nwa12", "tx2_3v2", "tx0.25v1"]: -3.0
     DEFAULT_ANSWER_DATE:
         description: |
             "[Boolean] default = True
@@ -2679,7 +2674,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx0.25v1": True
+            $OCN_GRID in ["tx0.25v1", "nwa12"]: True
 
     # MISOMIP-only variables:
 
@@ -2691,6 +2686,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
+            $OCN_GRID == "nwa12": False
     RHO_0:
         description: |
             "[kg m-3] default = 1035.0

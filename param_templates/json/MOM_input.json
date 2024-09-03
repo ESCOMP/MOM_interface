@@ -31,7 +31,8 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 540,
             "$OCN_GRID == \"tx0.25v1\"": 1440,
-            "$OCN_GRID == \"MISOMIP\"": 402
+            "$OCN_GRID == \"MISOMIP\"": 402,
+            "$OCN_GRID == \"nwa12\"": 740
          }
       },
       "NJGLOBAL": {
@@ -40,7 +41,8 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 480,
             "$OCN_GRID == \"tx0.25v1\"": 1080,
-            "$OCN_GRID == \"MISOMIP\"": 40
+            "$OCN_GRID == \"MISOMIP\"": 40,
+            "$OCN_GRID == \"nwa12\"": 780
          }
       },
       "IO_LAYOUT": {
@@ -105,7 +107,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 900.0,
+            "$OCN_GRID in [\"nwa12\", \"tx0.25v1\"]": 900.0,
             "$OCN_GRID == \"tx2_3v2\"": 1800,
             "$OCN_GRID == \"MISOMIP\"": 600.0
          }
@@ -177,8 +179,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": true
          }
       },
       "SAVE_INITIAL_CONDS": {
@@ -201,8 +202,7 @@
          "datatype": "real",
          "units": "deg C Pa-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": -7.75e-08,
-            "$OCN_GRID == \"tx0.25v1\"": -7.75e-08,
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": -7.75e-08,
             "$OCN_GRID == \"MISOMIP\"": -7.53e-08
          }
       },
@@ -406,7 +406,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": "ocean_hgrid_221123.nc",
-            "$OCN_GRID == \"tx0.25v1\"": "ocean_hgrid.nc"
+            "$OCN_GRID in [\"tx0.25v1\", \"nwa12\"]": "ocean_hgrid.nc"
          }
       },
       "USE_TRIPOLAR_GEOLONB_BUG": {
@@ -431,7 +431,8 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": "ocean_topo_tx2_3v2_240501.nc",
-            "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc"
+            "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc",
+            "$OCN_GRID == \"nwa12\"": "ocean_topo.nc"
          }
       },
       "MAXIMUM_DEPTH": {
@@ -441,6 +442,7 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 6000.0,
             "$OCN_GRID == \"tx0.25v1\"": 6500.0,
+            "$OCN_GRID == \"nwa12\"": 6000.0,
             "$OCN_GRID == \"MISOMIP\"": 720.0
          }
       },
@@ -449,8 +451,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 9.5,
-            "$OCN_GRID == \"tx0.25v1\"": 9.5
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": 9.5
          }
       },
       "MASKING_DEPTH": {
@@ -458,8 +459,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0,
-            "$OCN_GRID == \"tx0.25v1\"": 0.0
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": 0.0
          }
       },
       "REMAPPING_SCHEME": {
@@ -472,7 +472,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$RUN_TYPE != \"hybrid\" and $OCN_GRID in [\"tx2_3v2\", \"tx0.25v1\"]": true,
+            "$RUN_TYPE != \"hybrid\" and $OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": true,
             "else": false
          }
       },
@@ -480,7 +480,7 @@
          "description": "\"default = 'temp_salt_z.nc'\nThe name of the z-space input file used to initialize\nthe layer thicknesses, temperatures and salinities.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "woa18_04_initial_conditions.nc",
+            "$OCN_GRID in [\"tx2_3v2\", \"nwa12\"]": "woa18_04_initial_conditions.nc",
             "$OCN_GRID == \"tx0.25v1\"": "MOM6_IC_TS.nc"
          }
       },
@@ -488,7 +488,7 @@
          "description": "\"default = 'ptemp'\nThe name of the potential temperature variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "theta0",
+            "$OCN_GRID in [\"tx2_3v2\", \"nwa12\"]": "theta0",
             "$OCN_GRID == \"tx0.25v1\"": "temp"
          }
       },
@@ -496,7 +496,7 @@
          "description": "\"default = 'salt'\nThe name of the salinity variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "s_an"
+            "$OCN_GRID in [\"tx2_3v2\", \"nwa12\"]": "s_an"
          }
       },
       "Z_INIT_REMAP_OLD_ALG": {
@@ -510,8 +510,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": true
          }
       },
       "RESOLN_SCALED_KH": {
@@ -877,8 +876,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": true
          }
       },
       "NUM_DIAG_COORDS": {
@@ -939,7 +937,9 @@
          "description": "\"[Boolean] default = False\nIf true, use the equation of state in determining the\nproperties of the bottom boundary layer.  Otherwise use\nthe layer target potential densities.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": true
+         "value": {
+            "$OCN_GRID != \"nwa12\"": true
+         }
       },
       "BBL_THICK_MIN": {
          "description": "\"[m] default = 0.0\nThe minimum bottom boundary layer thickness that can be\nused with BOTTOMDRAGLAW. This might be\nKv / (cdrag * drag_bg_vel) to give Kv as the minimum\nnear-bottom viscosity.\"\n",
@@ -1229,7 +1229,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.0018
+            "$OCN_GRID in [\"tx0.25v1\", \"nwa12\"]": 0.0018
          }
       },
       "USE_RIGID_SEA_ICE": {
@@ -1564,8 +1564,7 @@
          "description": "\"default = 'PLM'\nThe horizontal transport scheme for tracers:\nPLM    - Piecewise Linear Method\nPPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "\"PPM:H3\"",
-            "$OCN_GRID == \"tx0.25v1\"": "\"PPM:H3\""
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": "\"PPM:H3\""
          }
       },
       "KHTR_USE_EBT_STRUCT": {
@@ -1603,8 +1602,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": true
          }
       },
       "MAX_TR_DIFFUSION_CFL": {
@@ -1612,7 +1610,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 2.0
+            "$OCN_GRID in [\"tx2_3v2\", \"nwa12\"]": 2.0
          }
       },
       "MAXTRUNC": {
@@ -1620,7 +1618,7 @@
          "datatype": "integer",
          "units": "truncations save_interval-1",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 100000,
+            "$OCN_GRID in [\"tx0.25v1\", \"nwa12\"]": 100000,
             "else": 0
          }
       },
@@ -1628,8 +1626,7 @@
          "description": "\"default = 'C'\nA case-insensitive character string to indicate the\nstaggering of the surface velocity field that is\nreturned to the coupler.  Valid values include\n'A', 'B', or 'C'.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "A",
-            "$OCN_GRID == \"tx0.25v1\"": "A"
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": "A"
          }
       },
       "RESTORE_SALINITY": {
@@ -1667,7 +1664,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$COMP_ATM == \"datm\"": true,
+            "$COMP_ATM == \"datm\" and $OCN_GRID != \"nwa12\"": true,
             "else": false
          }
       },
@@ -1722,7 +1719,7 @@
          "units": "days",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"tx0.25v1\"": 0.25,
+            "$OCN_GRID in [\"tx0.25v1\", \"nwa12\"]": 0.25,
             "$OCN_GRID == \"MISOMIP\"": 1.0
          }
       },
@@ -2046,7 +2043,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 50.0
+            "$OCN_GRID in [\"nwa12\", \"tx0.25v1\"]": 50.0
          }
       },
       "BAD_VAL_SSS_MAX": {
@@ -2062,7 +2059,7 @@
          "datatype": "real",
          "units": "deg C",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 65.0
+            "$OCN_GRID in [\"nwa12\", \"tx0.25v1\"]": 65.0
          }
       },
       "BAD_VAL_SST_MIN": {
@@ -2070,8 +2067,7 @@
          "datatype": "real",
          "units": "degC",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": -3.0,
-            "$OCN_GRID == \"tx0.25v1\"": -3.0
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": -3.0
          }
       },
       "DEFAULT_ANSWER_DATE": {
@@ -2125,7 +2121,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID in [\"tx0.25v1\", \"nwa12\"]": true
          }
       },
       "REENTRANT_X": {
@@ -2133,7 +2129,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": false
+            "$OCN_GRID == \"MISOMIP\"": false,
+            "$OCN_GRID == \"nwa12\"": false
          }
       },
       "RHO_0": {
