@@ -716,7 +716,7 @@
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum layer thicknesses.\nValid options are:\nNONE        - there are no maximum layer thicknesses\nPARAM       - use the vector-parameter MAX_LAYER_THICKNESS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum thickness for each layer.\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hybrid\" and $OCN_GRID in [\"tx2_3v2\"]": "\"FILE:dz_max_90th_quantile.nc,dz\"",
+            "$MOM6_VERTICAL_GRID == \"hybrid\" and $OCN_GRID in [\"tx2_3v2\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max_90th_quantile.nc,dz\"'\n",
             "else": "\"FNC1:400,31000.0,0.1,.01\""
          }
       },
