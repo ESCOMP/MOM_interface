@@ -1,11 +1,10 @@
-# template for the GNU fortran compiler
-# typical use with mkmf
-# mkmf -t linux-gnu.mk -c"-Duse_libMPI -Duse_netCDF" path_names /usr/local/include
+# template for the GNU fortran compiler for Ubuntu (Used initially for Github Actions)
+# (assumes Ubuntu with apt installs of netcdf-bin, libnetcdf-dev, libnetcdff-dev, openmpi-bin, libopenmpi-dev, linux-tools-common)
 ############
 # commands #
 ############
 FC = mpif90
-CC = gcc
+CC = mpicc
 CXX = g++
 LD = mpif90 $(MAIN_PROGRAM)
 
@@ -17,13 +16,12 @@ REPRO =
 VERBOSE =
 OPENMP =
 
-MAKEFLAGS += --jobs=$(shell grep '^processor' /proc/cpuinfo | wc -l)
+MAKEFLAGS += --jobs=2
 
 FPPFLAGS :=
 
-FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check -fallow-argument-mismatch
-FFLAGS += -I$(shell nc-config --includedir)
-FFLAGS += $(shell pkg-config --cflags-only-I mpich2-c)
+FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check
+FFLAGS += -I$(shell nf-config --includedir)
 FFLAGS_OPT = -O3
 FFLAGS_REPRO = -O2 -fbounds-check
 FFLAGS_DEBUG = -O0 -g -W -fbounds-check -fbacktrace -ffpe-trap=invalid,zero,overflow
@@ -32,7 +30,6 @@ FFLAGS_VERBOSE =
 
 CFLAGS := -D__IFC
 CFLAGS += -I$(shell nc-config --includedir)
-CFLAGS += $(shell pkg-config --cflags-only-I mpich2-c)
 CFLAGS_OPT = -O2
 CFLAGS_OPENMP = -fopenmp
 CFLAGS_DEBUG = -O0 -g
@@ -79,7 +76,7 @@ ifeq ($(NETCDF),3)
   endif
 endif
 
-LIBS := $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
+LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
 LDFLAGS += $(LIBS)
 
 #---------------------------------------------------------------------------
