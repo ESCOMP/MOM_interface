@@ -464,7 +464,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
       "INIT_LAYERS_FROM_Z_FILE": {
