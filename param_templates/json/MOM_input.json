@@ -2869,7 +2869,7 @@
          "description": "Turn on automatic mask table generation to eliminate land blocks\n",
          "datatype": "list",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx0.25v1\"]": true
+            "$OCN_GRID in [\"nwa12\", \"tx2_3v2\", \"tx0.25v1\"]": true
          }
       },
       "GEOM_FILE": {
