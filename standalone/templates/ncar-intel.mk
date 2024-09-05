@@ -36,7 +36,7 @@ CFLAGS := -D__IFC -sox -traceback -diag-disable=10441
 CFLAGS += -I$(NETCDF_PATH)/include
 CFLAGS_OPT = -O2 -debug minimal
 CFLAGS_OPENMP = -openmp
-CFLAGS_DEBUG = -O0 -g -ftrapuv
+CFLAGS_DEBUG = -O0 -g -ftrapv
 
 LDFLAGS :=
 LDFLAGS_OPENMP := -openmp
