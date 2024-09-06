@@ -1,7 +1,4 @@
 # template for Intel compilers
-#
-# typical use with mkmf:
-# mkmf -t nescc-intel.mk -c "-Duse_libMPI -Duse_netCDF" path_names /usr/local/include
 
 ############
 # commands #
@@ -15,48 +12,39 @@ LD = mpif90
 #  flags   #
 ############
 
-DEBUG =
-REPRO =
+DEBUG = 
+# Default set to REPRODUCIBLE
 
 MAKEFLAGS += --jobs=8
 
+FC_AUTO_R8 := -r8
 FPPFLAGS := -fpp -Wp,-w
+FFLAGS :=  -qno-opt-dynamic-align  -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source  -no-fma  -qopt-report -march=core-avx2 $(FC_AUTO_R8) 
+FFLAGS_DEBUG = -O0 -g -check uninit -check bounds -check pointers -fpe0 -check noarg_temp_created
+FFLAGS_REPRO = -O2 -debug minimal
 
-FFLAGS := -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -i4 -r8 -nowarn -traceback
-FFLAGS_OPT = -O3 -debug minimal -fp-model source -qoverride-limits
-FFLAGS_DEBUG = -g -O0 -check -check noarg_temp_created -check nopointer -warn -warn noerrors -fpe0 -ftrapuv
-FFLAGS_REPRO = -O2 -debug minimal -fp-model source -qoverride-limits
-
-CFLAGS := -D__IFC -sox -traceback -diag-disable=10441
+CFLAGS := -qno-opt-dynamic-align -fp-model precise -std=gnu99  -no-fma -qopt-report -march=core-avx2
 CFLAGS += -I$(NETCDF_PATH)/include
-CFLAGS_OPT = -O2 -debug minimal
-CFLAGS_OPENMP = -openmp
-CFLAGS_DEBUG = -O0 -g -ftrapv
-FFLAGS_NOOPT
+CFLAGS_REPRO= -O2 -debug minimal
+CFLAGS_DEBUG = -O0 -g
 LDFLAGS :=
 
-# start with blank LIBS
-LIBS :=
-
-ifneq ($(REPRO),)
-  CFLAGS += $(CFLAGS_REPRO)
-  FFLAGS += $(FFLAGS_REPRO)
-else ifneq ($(DEBUG),)
+ifeq ($(DEBUG),1)
   CFLAGS += $(CFLAGS_DEBUG)
   FFLAGS += $(FFLAGS_DEBUG)
 else
-  CFLAGS += $(CFLAGS_OPT)
-  FFLAGS += $(FFLAGS_OPT)
+  FFLAGS += $(FFLAGS_REPRO)
+  CFLAGS += $(CFLAGS_REPRO)
 endif
 
 # Add Net CDF Flags
 FFLAGS += -I$(shell nf-config --includedir)
-  # add the use_LARGEFILE cppdef
-  ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
-    CPPDEFS += -Duse_LARGEFILE
-  endif
+# add the use_LARGEFILE cppdef
+ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
+  CPPDEFS += -Duse_LARGEFILE
 endif
 
+CPPDEFS := $(CPPDEFS)  -DCNL -D__IFC -DNDEBUG -DHAVE_MPI -DFORTRANUNDERSCORE -DCPRINTEL -DLINUX -DHAVE_GETTID -DHAVE_SLASHPROC 
 # Add netcdf linking
 LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
 

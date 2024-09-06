@@ -18,7 +18,8 @@ FMS_ROOT=${CESM_ROOT}/libraries/FMS
 # Default compiler
 COMPILER="intel"
 MACHINE="ncar"
-REPRO_OR_DEBUG=REPRO
+USE_CESM=""
+DEBUG=0 # Set to False, or REPRO Mode!
 
 # Parse command line arguments
 while [[ "$#" -gt 0 ]]; do
@@ -29,8 +30,10 @@ while [[ "$#" -gt 0 ]]; do
         --machine) 
             MACHINE="$2"
             shift ;;
+        --cesm) 
+            USE_CESM="_cesm" ;;
         --debug)
-            REPRO_OR_DEBUG=DEBUG ;;
+            DEBUG=1 ;;
         *) 
             echo "Unknown parameter passed: $1"
             echo "Usage: $0 [--compiler <compiler>] [--machine <machine>]"
@@ -40,8 +43,9 @@ while [[ "$#" -gt 0 ]]; do
 done
 echo "Using compiler: $COMPILER"
 echo "Using machine: $MACHINE"
+echo "Using CESM: $USE_CESM"
 
-TEMPLATE=${TEMPLATE_DIR}/${MACHINE}-${COMPILER}.mk
+TEMPLATE=${TEMPLATE_DIR}/${MACHINE}-${COMPILER}${USE_CESM}.mk
 
 # Throw error if template does not exist:
 if [ ! -f $TEMPLATE ]; then
@@ -69,11 +73,16 @@ case $MACHINE in
         ;;
 esac
 
-if [ "${REPRO_OR_DEBUG}" == "DEBUG" ]; then
+if [ "${DEBUG}" == 1 ]; then
   BLD_ROOT=${COMPILER}-debug
 else
   BLD_ROOT=${COMPILER}
 fi
+
+if [ "${USE_CESM}" == "_cesm" ]; then
+  BLD_ROOT=${BLD_ROOT}-cesm
+fi
+
 
 # Load modules for NCAR
 if [ "$MACHINE" == "ncar" ]; then
@@ -110,7 +119,7 @@ ${MKMF_ROOT}/list_paths ${FMS_ROOT}/src
 echo "${SHR_ROOT}/src/shr_kind_mod.F90" >> path_names
 echo "${SHR_ROOT}/src/shr_const_mod.F90" >> path_names
 ${MKMF_ROOT}/mkmf -t ${TEMPLATE} -p libfms.a -c "-Duse_libMPI -Duse_netCDF -DSPMD" path_names
-make -j${JOBS} NETCDF=3 ${REPRO_OR_DEBUG}=1 libfms.a
+make -j${JOBS} DEBUG=${DEBUG} libfms.a
 
 # 2) Build MOM6
 cd ${INTERFACE_ROOT}/standalone/build
@@ -118,6 +127,6 @@ mkdir -p ${BLD_ROOT}/MOM6
 cd ${BLD_ROOT}/MOM6
 ${MKMF_ROOT}/list_paths -l ${MOM_ROOT}/{config_src/infra/FMS2,config_src/memory/dynamic_symmetric,config_src/drivers/solo_driver,../externals/MARBL/src,config_src/external,src/{*,*/*}}/
 ${MKMF_ROOT}/mkmf -t ${TEMPLATE} -o '-I../FMS' -p MOM6 -l '-L../FMS -lfms' -c '-Duse_libMPI -Duse_netCDF -DSPMD' path_names
-make -j${JOBS}  NETCDF=3 ${REPRO_OR_DEBUG}=1 MOM6
+make -j${JOBS} DEBUG=${DEBUG} MOM6
 
 echo "Finished build at `date`"

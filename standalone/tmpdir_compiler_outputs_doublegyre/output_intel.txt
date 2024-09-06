@@ -1,0 +1,120 @@
+NOTE: MPP_DOMAINS_SET_STACK_SIZE: stack size set to    32768.
+NOTE: MPP_IO_SET_STACK_SIZE: stack size set to     131072.
+NOTE: ======== Model being driven by MOM_driver ========
+NOTE: callTree: o Program MOM_main, MOM_driver.F90
+NOTE: open_param_file: MOM_input has been opened successfully.
+NOTE: open_param_file: MOM_override has been opened successfully.
+ MOM_in domain decomposition
+whalo =    4, ehalo =    4, shalo =    4, nhalo =    4
+  X-AXIS =   44
+  Y-AXIS =   40
+ MOM_inc domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =   22
+  Y-AXIS =   20
+NOTE: diag_manager_mod::diag_manager_init: diag_manager is using fms2_io
+NOTE: diag_manager_mod::diag_manager_init: prepend_date only supported when diag_manager_init is called with time_init present.
+ MOM_in domain decomposition
+whalo =    4, ehalo =    4, shalo =    4, nhalo =    4
+  X-AXIS =   44
+  Y-AXIS =   40
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =   22
+  Y-AXIS =   20
+ MOM_in domain decomposition
+whalo =    4, ehalo =    4, shalo =    4, nhalo =    4
+  X-AXIS =   44
+  Y-AXIS =   40
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =   22
+  Y-AXIS =   20
+
+WARNING: Open_file is appending .nc to the filename ./ocean_geometry
+
+ MOM_in domain decomposition
+whalo =    4, ehalo =    4, shalo =    4, nhalo =    4
+  X-AXIS =   44
+  Y-AXIS =   40
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =   22
+  Y-AXIS =   20
+
+WARNING: KVML is a deprecated parameter. Use KV_ML_INVZ2 instead.
+
+ MOM_in domain decomposition
+whalo =    4, ehalo =    4, shalo =    4, nhalo =    4
+  X-AXIS =   44
+  Y-AXIS =   40
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =   22
+  Y-AXIS =   20
+
+WARNING: ./Depth_list.nc checksums do not match; updating file.
+
+
+WARNING: open_ASCII_file: File ./CPU_stats opened WRITEONLY already exists!
+
+
+WARNING: open_ASCII_file: File ./ocean.stats opened WRITEONLY already exists!
+
+MOM Day       0.000      0: En 1.423718E-13, MaxCFL  0.00000, Mass 5.288178268008E+18
+    Total Energy: 4126F9EEE7BAE2DD  7.5288745259770344E+05
+    Total Mass:   5.2881782680077681E+18, Change:   0.0000000000000000E+00 Error:  0.00000E+00 ( 0.0E+00)
+MOM Day       1.000     72: En 4.580432E-06, MaxCFL  0.00023, Mass 5.288178268008E+18
+    Total Energy: 42B607A80A8420B7  2.4222139843616715E+13
+    Total Mass:   5.2881782680077681E+18, Change:   3.2193974656087079E+01 Error:  3.21940E+01 ( 6.1E-18)
+MOM Day       2.000    144: En 8.958206E-06, MaxCFL  0.00040, Mass 5.288178268008E+18
+    Total Energy: 42C58AE533476D84  4.7372590026459031E+13
+    Total Mass:   5.2881782680077681E+18, Change:   2.1198830548456300E+01 Error:  2.11988E+01 ( 4.0E-18)
+MOM Day       3.000    216: En 1.166708E-05, MaxCFL  0.00045, Mass 5.288178268008E+18
+    Total Energy: 42CC0E8B5CDF9554  6.1697586478890656E+13
+    Total Mass:   5.2881782680077681E+18, Change:   8.9205174261806206E+01 Error:  8.92052E+01 ( 1.7E-17)
+MOM Day       4.000    288: En 1.542296E-05, MaxCFL  0.00044, Mass 5.288178268008E+18
+    Total Energy: 42D28B60D5889B78  8.1559337443949875E+13
+    Total Mass:   5.2881782680077681E+18, Change:   2.3419270011328905E+01 Error:  2.34193E+01 ( 4.4E-18)
+MOM Day       5.000    360: En 1.826022E-05, MaxCFL  0.00053, Mass 5.288178268008E+18
+    Total Energy: 42D5F4B97D5C8551  9.6563312816661266E+13
+    Total Mass:   5.2881782680077681E+18, Change:  -1.2080455676106425E+01 Error: -1.20805E+01 (-2.3E-18)
+MOM Day       6.000    432: En 2.397431E-05, MaxCFL  0.00062, Mass 5.288178268008E+18
+    Total Energy: 42DCD397A5E07162  1.2678043163078953E+14
+    Total Mass:   5.2881782680077681E+18, Change:  -2.1910341298459628E+01 Error: -2.19103E+01 (-4.1E-18)
+MOM Day       7.000    504: En 2.927962E-05, MaxCFL  0.00073, Mass 5.288178268008E+18
+    Total Energy: 42E19A5109E57D52  1.5483585791076256E+14
+    Total Mass:   5.2881782680077681E+18, Change:  -4.4345925674156945E+01 Error: -4.43459E+01 (-8.4E-18)
+MOM Day       8.000    576: En 3.486441E-05, MaxCFL  0.00081, Mass 5.288178268008E+18
+    Total Energy: 42E4F5D995BA8CCC  1.8436920009226238E+14
+    Total Mass:   5.2881782680077681E+18, Change:   9.7697074840426694E+00 Error:  9.76971E+00 ( 1.8E-18)
+MOM Day       9.000    648: En 4.195565E-05, MaxCFL  0.00090, Mass 5.288178268008E+18
+    Total Energy: 42E9393C9CAB9D37  2.2186896584624972E+14
+    Total Mass:   5.2881782680077681E+18, Change:   1.1448227714030054E+01 Error:  1.14482E+01 ( 2.2E-18)
+MOM Day      10.000    720: En 4.604729E-05, MaxCFL  0.00100, Mass 5.288178268008E+18
+    Total Energy: 42EBAEF71B99D311  2.4350627232527253E+14
+    Total Mass:   5.2881782680077681E+18, Change:   4.6395058086486216E+01 Error:  4.63951E+01 ( 8.8E-18)
+ MOM_in domain decomposition
+whalo =    4, ehalo =    4, shalo =    4, nhalo =    4
+  X-AXIS =   44
+  Y-AXIS =   40
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =   22
+  Y-AXIS =   20
+
+WARNING: open_ASCII_file: File RESTART/ocean_solo.res opened WRITEONLY already exists!
+
+
+WARNING: open_ASCII_file: File exitcode opened WRITEONLY already exists!
+
+ MPP_DOMAINS_STACK high water mark=           0
+
+Tabulating mpp_clock statistics across      1 PEs...
+
+                                      hits          tmin          tmax          tavg          tstd  tfrac grain pemin pemax
+Total runtime                            1      5.326431      5.326431      5.326431      0.000000  1.000     0     0     0
+Initialization                           1      0.187860      0.187860      0.187860      0.000000  0.035     0     0     0
+Main loop                                1      4.872444      4.872444      4.872444      0.000000  0.915     0     0     0
+Termination                              1      0.244684      0.244684      0.244684      0.000000  0.046     0     0     0
+ MPP_STACK high water mark=           0

@@ -1,82 +1,35 @@
-# Template for the PGI Compilers
-#
-# Typical use with mkmf
-# mkmf -t ncrc-cray.mk -c"-Duse_libMPI -Duse_netCDF" path_names /usr/local/include
+# template for the GNU fortran compiler
 
 ############
 # commands #
 ############
-FC = ftn
-CC = cc
-CXX = cc
-LD = ftn $(MAIN_PROGRAM)
+FC = mpif90
+CC = gcc
+CXX = g++
+LD = mpif90 $(MAIN_PROGRAM)
 
-############
-#  flags   #
-############
+#########
+# flags #
+#########
 
-DEBUG = 0 
+DEBUG =
+ 
+MAKEFLAGS += --jobs=$(shell grep '^processor' /proc/cpuinfo | wc -l)
 
-MAKEFLAGS += --jobs=8
-
-INCLUDES := $(shell pkg-config --cflags yaml-0.1)
-
-# Need to use at least GNU Make version 3.81
-need := 3.81
-ok := $(filter $(need),$(firstword $(sort $(MAKE_VERSION) $(need))))
-ifneq ($(need),$(ok))
-$(error Need at least make version $(need).  Load module gmake/3.81)
-endif
-
-# Check version of PGI for use of -nofma option
-has_nofma := $(shell $(FC) -dryrun -nofma foo.f90 > /dev/null 2>&1; echo $$?)
-ifneq ($(has_nofma),0)
-NOFMA :=
-else
-NOFMA := -nofma
-endif
-
-# Required Preprocessor Macros:
-CPPDEFS += -Duse_netCDF
-
-# Additional Preprocessor Macros needed due to  Autotools and CMake
-CPPDEFS += -DHAVE_SCHED_GETAFFINITY -DHAVE_GETTID
-
-# Macro for Fortran preprocessor
-FPPFLAGS := $(INCLUDES)
+FPPFLAGS :=
+FC_AUTO_R8 := -fdefault-real-8 -fdefault-double-8
+FFLAGS :=  $(FC_AUTO_R8) -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none -fallow-argument-mismatch  -fallow-invalid-boz -fcray-pointer
+FFLAGS_REPRO = -O
+FFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=zero,overflow -fcheck=bounds
 
 
-# Base set of Fortran compiler flags
-FFLAGS = -g -Mdwarf3 -traceback -i4 -r8 -byteswapio -Mcray=pointer -Mflushz \
-  -Mnofma -Mdaz -D_F2000
+CFLAGS := -std=gnu99
+CFLAGS_REPRO = -O
+CFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=invalid,zero,overflow -fcheck=bounds
 
-# Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
-#FFLAGS_REPRO = -O2 -Mvect=nosse -Mnoscalarsse $(NOFMA)
-# NOTE: "REPRO" temporarily uses -O0 due to errors in existing codes.
-#   Optimization will be restored once the issues have been investigated.
-FFLAGS_REPRO = -O0
-FFLAGS_DEBUG = -O0 -Ktrap=fp
+LDFLAGS :=
 
 
-
-# Macro for C preprocessor
-CPPFLAGS := $(INCLUDES)
-
-
-# Base set of C compiler flags
-CFLAGS =
-
-# Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
-CFLAGS_REPRO = -O2
-CFLAGS_DEBUG = -O0 -g -traceback -Ktrap=fp
-
-# Linking flags
-LDFLAGS := -byteswapio
-
-# List of -L library directories to be added to the compile and linking commands
-LIBS :=
-
-# Get compile flags based on target macros.
 ifeq ($(DEBUG),1)
 CFLAGS += $(CFLAGS_DEBUG)
 FFLAGS += $(FFLAGS_DEBUG)
@@ -85,20 +38,19 @@ CFLAGS += $(CFLAGS_REPRO)
 FFLAGS += $(FFLAGS_REPRO)
 endif
 
-# Fortran Compiler flags for the NetCDF library
-FPPFLAGS += $(shell nf-config --fflags)
-# C Compiler flags for the NetCDF library
-CPPFLAGS += $(shell nc-config --cflags)
+
+# NetCDF Flags
+FFLAGS += -I$(shell nc-config --includedir)
+CFLAGS += -I$(shell nc-config --includedir)
   # add the use_LARGEFILE cppdef
-  ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
+ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
     CPPDEFS += -Duse_LARGEFILE
-  endif
-  # Add netcdf linking
-  LIBS += $(shell nc-config --libs) $(shell nf-config --flibs)
+endif
 
-
-# These Algebra libraries Add solution to more complex vector matrix model equations
-LIBS += -llapack -lblas
+# More CPPDefs
+CPPDEFS += -DFORTRANUNDERSCORE -DNO_R16 -DCPRGNU -DLINUX -DHAVE_GETTID
+# Linking Flags
+LIBS := $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
 LDFLAGS += $(LIBS)
 
 #---------------------------------------------------------------------------
@@ -110,17 +62,18 @@ LDFLAGS += $(LIBS)
 # .f, .f90, .F, .F90. Given a sourcefile <file>.<ext>, where <ext> is one of
 # the above, this provides a number of default actions:
 
-# make <file>.opt       create an optimization report
-# make <file>.o         create an object file
-# make <file>.s         create an assembly listing
-# make <file>.x         create an executable file, assuming standalone
-#                       source
-# make <file>.i         create a preprocessed file (for .F)
-# make <file>.i90       create a preprocessed file (for .F90)
+# make <file>.opt	create an optimization report
+# make <file>.o		create an object file
+# make <file>.s		create an assembly listing
+# make <file>.x		create an executable file, assuming standalone
+#			source
+# make <file>.i		create a preprocessed file (for .F)
+# make <file>.i90	create a preprocessed file (for .F90)
 
 # The macro TMPFILES is provided to slate files like the above for removal.
 
 RM = rm -f
+SHELL = /bin/csh -f
 TMPFILES = .*.m *.B *.L *.i *.i90 *.l *.s *.mod *.opt
 
 .SUFFIXES: .F .F90 .H .L .T .f .f90 .h .i .i90 .l .o .s .opt .x

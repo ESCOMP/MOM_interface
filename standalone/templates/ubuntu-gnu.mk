@@ -13,8 +13,7 @@ LD = mpif90 $(MAIN_PROGRAM)
 #########
 DEBUG =
 REPRO =
-VERBOSE =
-OPENMP =
+
 
 MAKEFLAGS += --jobs=2
 
@@ -25,55 +24,30 @@ FFLAGS += -I$(shell nf-config --includedir)
 FFLAGS_OPT = -O3
 FFLAGS_REPRO = -O2 -fbounds-check
 FFLAGS_DEBUG = -O0 -g -W -fbounds-check -fbacktrace -ffpe-trap=invalid,zero,overflow
-FFLAGS_OPENMP = -fopenmp
-FFLAGS_VERBOSE =
+
 
 CFLAGS := -D__IFC
-CFLAGS += -I$(shell nc-config --includedir)
-CFLAGS_OPT = -O2
-CFLAGS_OPENMP = -fopenmp
+CFLAGS_REPRO= -O2
 CFLAGS_DEBUG = -O0 -g
-
-# Optional Testing compile flags.  Mutually exclusive from DEBUG, REPRO, and OPT
-# *_TEST will match the production if no new option(s) is(are) to be tested.
-FFLAGS_TEST = -O2
-CFLAGS_TEST = -O2
 
 LDFLAGS :=
 LDFLAGS_OPENMP := -fopenmp
 LDFLAGS_VERBOSE :=
 
-ifneq ($(REPRO),)
-CFLAGS += $(CFLAGS_REPRO)
-FFLAGS += $(FFLAGS_REPRO)
-else ifneq ($(DEBUG),)
+ifneq ($(DEBUG),)
 CFLAGS += $(CFLAGS_DEBUG)
 FFLAGS += $(FFLAGS_DEBUG)
-else ifneq ($(TEST),)
-CFLAGS += $(CFLAGS_TEST)
-FFLAGS += $(FFLAGS_TEST)
 else
-CFLAGS += $(CFLAGS_OPT)
-FFLAGS += $(FFLAGS_OPT)
+CFLAGS += $(CFLAGS_REPRO)
+FFLAGS += $(FFLAGS_REPRO)
 endif
 
-ifneq ($(OPENMP),)
-CFLAGS += $(CFLAGS_OPENMP)
-FFLAGS += $(FFLAGS_OPENMP)
-LDFLAGS += $(LDFLAGS_OPENMP)
-endif
+FFLAGS += -I$(shell nf-config --includedir)
+CFLAGS += -I$(shell nc-config --includedir)
 
-ifneq ($(VERBOSE),)
-CFLAGS += $(CFLAGS_VERBOSE)
-FFLAGS += $(FFLAGS_VERBOSE)
-LDFLAGS += $(LDFLAGS_VERBOSE)
-endif
-
-ifeq ($(NETCDF),3)
   # add the use_LARGEFILE cppdef
-  ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
-    CPPDEFS += -Duse_LARGEFILE
-  endif
+ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
+  CPPDEFS += -Duse_LARGEFILE
 endif
 
 LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)

@@ -1,7 +1,4 @@
 # Template for the PGI Compilers
-#
-# Typical use with mkmf
-# mkmf -t ncrc-cray.mk -c"-Duse_libMPI -Duse_netCDF" path_names /usr/local/include
 
 ############
 # commands #
@@ -15,7 +12,7 @@ LD = ftn $(MAIN_PROGRAM)
 #  flags   #
 ############
 
-DEBUG = 0 
+DEBUG =
 
 MAKEFLAGS += --jobs=8
 
@@ -27,6 +24,7 @@ ok := $(filter $(need),$(firstword $(sort $(MAKE_VERSION) $(need))))
 ifneq ($(need),$(ok))
 $(error Need at least make version $(need).  Load module gmake/3.81)
 endif
+
 
 # Check version of PGI for use of -nofma option
 has_nofma := $(shell $(FC) -dryrun -nofma foo.f90 > /dev/null 2>&1; echo $$?)
@@ -47,27 +45,22 @@ FPPFLAGS := $(INCLUDES)
 
 
 # Base set of Fortran compiler flags
-FFLAGS = -g -Mdwarf3 -traceback -i4 -r8 -byteswapio -Mcray=pointer -Mflushz \
-  -Mnofma -Mdaz -D_F2000
+FC_AUTO_R8 = -r8
+FFLAGS = $(FC_AUTO_R8) -Mnofma -i4 -gopt  -time -Mextend -byteswapio -Mflushz -Kieee
 
 # Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
-#FFLAGS_REPRO = -O2 -Mvect=nosse -Mnoscalarsse $(NOFMA)
-# NOTE: "REPRO" temporarily uses -O0 due to errors in existing codes.
-#   Optimization will be restored once the issues have been investigated.
-FFLAGS_REPRO = -O0
-FFLAGS_DEBUG = -O0 -Ktrap=fp
-
-
+FFLAGS_REPRO = -O -tp=zen3
+FFLAGS_DEBUG = -O0 -g -Ktrap=fp -Mbounds -Kieee
 
 # Macro for C preprocessor
 CPPFLAGS := $(INCLUDES)
 
 
 # Base set of C compiler flags
-CFLAGS =
+CFLAGS = -gopt -time -Mnofma
 
 # Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
-CFLAGS_REPRO = -O2
+CFLAGS_REPRO = -O 
 CFLAGS_DEBUG = -O0 -g -traceback -Ktrap=fp
 
 # Linking flags
@@ -85,6 +78,8 @@ CFLAGS += $(CFLAGS_REPRO)
 FFLAGS += $(FFLAGS_REPRO)
 endif
 
+
+# NetCDF Flags
 # Fortran Compiler flags for the NetCDF library
 FPPFLAGS += $(shell nf-config --fflags)
 # C Compiler flags for the NetCDF library
@@ -96,10 +91,13 @@ CPPFLAGS += $(shell nc-config --cflags)
   # Add netcdf linking
   LIBS += $(shell nc-config --libs) $(shell nf-config --flibs)
 
+# Additional CPPDEFS Flags
+CPPDEFS += -Duse_LARGEFILE -DFORTRANUNDERSCORE -DNO_SHR_VMATH -DNO_R16  -DCPRPGI -DLINUX -DHAVE_GETTID
+
 
 # These Algebra libraries Add solution to more complex vector matrix model equations
 LIBS += -llapack -lblas
-LDFLAGS += $(LIBS)
+LDFLAGS += $(LIBS) -time -Wl,--allow-multiple-definition
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.
