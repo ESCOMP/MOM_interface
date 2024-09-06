@@ -1,6 +1,8 @@
 # template for the GNU fortran compiler
+# 
 # typical use with mkmf
 # mkmf -t linux-gnu.mk -c"-Duse_libMPI -Duse_netCDF" path_names /usr/local/include
+
 ############
 # commands #
 ############
@@ -12,6 +14,7 @@ LD = mpif90 $(MAIN_PROGRAM)
 #########
 # flags #
 #########
+
 DEBUG =
 REPRO =
 VERBOSE =

@@ -17,20 +17,15 @@ LD = mpif90
 
 DEBUG =
 REPRO =
-VERBOSE =
-OPENMP =
 
 MAKEFLAGS += --jobs=8
 
 FPPFLAGS := -fpp -Wp,-w
 
 FFLAGS := -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -i4 -r8 -nowarn -traceback
-FFLAGS += -I$(shell nf-config --includedir)
 FFLAGS_OPT = -O3 -debug minimal -fp-model source -qoverride-limits
 FFLAGS_DEBUG = -g -O0 -check -check noarg_temp_created -check nopointer -warn -warn noerrors -fpe0 -ftrapuv
 FFLAGS_REPRO = -O2 -debug minimal -fp-model source -qoverride-limits
-FFLAGS_OPENMP = -openmp
-FFLAGS_VERBOSE = -v -V -what
 
 CFLAGS := -D__IFC -sox -traceback -diag-disable=10441
 CFLAGS += -I$(NETCDF_PATH)/include
@@ -39,8 +34,6 @@ CFLAGS_OPENMP = -openmp
 CFLAGS_DEBUG = -O0 -g -ftrapv
 FFLAGS_NOOPT
 LDFLAGS :=
-LDFLAGS_OPENMP := -openmp
-LDFLAGS_VERBOSE := -Wl,-V,--verbose,-cref,-M
 
 # start with blank LIBS
 LIBS :=
@@ -56,19 +49,8 @@ else
   FFLAGS += $(FFLAGS_OPT)
 endif
 
-ifneq ($(OPENMP),)
-  CFLAGS += $(CFLAGS_OPENMP)
-  FFLAGS += $(FFLAGS_OPENMP)
-  LDFLAGS += $(LDFLAGS_OPENMP)
-endif
-
-ifneq ($(VERBOSE),)
-  CFLAGS += $(CFLAGS_VERBOSE)
-  FFLAGS += $(FFLAGS_VERBOSE)
-  LDFLAGS += $(LDFLAGS_VERBOSE)
-endif
-
-ifeq ($(NETCDF),3)
+# Add Net CDF Flags
+FFLAGS += -I$(shell nf-config --includedir)
   # add the use_LARGEFILE cppdef
   ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
     CPPDEFS += -Duse_LARGEFILE
@@ -78,9 +60,6 @@ endif
 # Add netcdf linking
 LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
 
-#LIBS += -lmpi
-#LIBS += -lmpi -lsma
-#LIBS += -lmkl_blas95_lp64 -lmkl_lapack95_lp64 -lmkl_intel_lp64 -lmkl_core -lmkl_sequential
 LDFLAGS += $(LIBS)
 
 #---------------------------------------------------------------------------
