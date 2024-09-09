@@ -260,9 +260,9 @@ def write_MARBL_diagnostics_file(
         if "DIC_ALT_CO2" in full_diag_dict.keys():
             full_diag_dict["DIC_ALT_CO2"]["diags"]["DIC_ALT_CO2_RIV_FLUX"] = freq_op
             full_diag_dict["DIC_ALT_CO2"]["diags"]["J_DIC_ALT_CO2"] = freq_op
-            full_diag_dict["DIC_ALT_CO2"]["diags"]["Jint_100m_DIC_ALT_CO2"] = (
-                Jint_100m_freq_op["DIC_ALT_CO2"]
-            )
+            full_diag_dict["DIC_ALT_CO2"]["diags"][
+                "Jint_100m_DIC_ALT_CO2"
+            ] = Jint_100m_freq_op["DIC_ALT_CO2"]
             # full_diag_dict['DIC_ALT_CO2']['diags']['tend_zint_100m_DIC_ALT_CO2'] = freq_op
             full_diag_dict["DIC_ALT_CO2"]["properties"]["include budget terms"] = True
             full_diag_dict["DIC_ALT_CO2"]["properties"]["has surface flux"] = True
@@ -282,9 +282,9 @@ def write_MARBL_diagnostics_file(
             full_diag_dict["ALK_ALT_CO2"]["diags"]["ALK_ALT_CO2_RIV_FLUX"] = freq_op
             full_diag_dict["ALK_ALT_CO2"]["diags"]["STF_ALK_ALT_CO2"] = freq_op
             full_diag_dict["ALK_ALT_CO2"]["diags"]["J_ALK_ALT_CO2"] = low_freq_op
-            full_diag_dict["ALK_ALT_CO2"]["diags"]["Jint_100m_ALK_ALT_CO2"] = (
-                Jint_100m_freq_op["ALK_ALT_CO2"]
-            )
+            full_diag_dict["ALK_ALT_CO2"]["diags"][
+                "Jint_100m_ALK_ALT_CO2"
+            ] = Jint_100m_freq_op["ALK_ALT_CO2"]
             # full_diag_dict['ALK_ALT_CO2']['diags']['tend_zint_100m_ALK_ALT_CO2'] = freq_op
             full_diag_dict["ALK_ALT_CO2"]["properties"]["has surface flux"] = True
         # DOC
@@ -335,9 +335,9 @@ def write_MARBL_diagnostics_file(
         # DO13Ctot
         if "DO13Ctot" in full_diag_dict.keys():
             # full_diag_dict['DO13Ctot']['diags']['DO13Ctot_RIV_FLUX'] = freq_op
-            full_diag_dict["DO13Ctot"]["diags"]["Jint_100m_DO13Ctot"] = (
-                Jint_100m_freq_op["DO13Ctot"]
-            )
+            full_diag_dict["DO13Ctot"]["diags"][
+                "Jint_100m_DO13Ctot"
+            ] = Jint_100m_freq_op["DO13Ctot"]
             # full_diag_dict['DO13Ctot']['diags']['tend_zint_100m_DO13Ctot'] = freq_op
             full_diag_dict["DO13Ctot"]["properties"]["has surface flux"] = True
         # DI14C
@@ -352,16 +352,18 @@ def write_MARBL_diagnostics_file(
         # DO14Ctot
         if "DO14Ctot" in full_diag_dict.keys():
             # full_diag_dict['DO14Ctot']['diags']['DO14Ctot_RIV_FLUX'] = freq_op
-            full_diag_dict["DO14Ctot"]["diags"]["Jint_100m_DO14Ctot"] = (
-                Jint_100m_freq_op["DO14Ctot"]
-            )
+            full_diag_dict["DO14Ctot"]["diags"][
+                "Jint_100m_DO14Ctot"
+            ] = Jint_100m_freq_op["DO14Ctot"]
             # full_diag_dict['DO14Ctot']['diags']['tend_zint_100m_DO14Ctot'] = freq_op
             full_diag_dict["DO14Ctot"]["properties"]["has surface flux"] = True
         # ABIO_DIC
         if "ABIO_DIC" in full_diag_dict.keys():
             # STF_SALT_ABIO_DIC is special case
             if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("minimal"):
-                full_diag_dict["ABIO_DIC"]["diags"]["STF_SALT_ABIO_DIC"] = "medium_average"
+                full_diag_dict["ABIO_DIC"]["diags"][
+                    "STF_SALT_ABIO_DIC"
+                ] = "medium_average"
             # full_diag_dict['ABIO_DIC']['diags']['J_ABIO_DIC'] = freq_op
             full_diag_dict["ABIO_DIC"]["diags"]["STF_ABIO_DIC"] = freq_op
             # full_diag_dict['ABIO_DIC']['diags']['FvPER_ABIO_DIC'] = freq_op
