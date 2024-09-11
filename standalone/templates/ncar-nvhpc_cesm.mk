@@ -25,33 +25,17 @@ ifneq ($(need),$(ok))
 $(error Need at least make version $(need).  Load module gmake/3.81)
 endif
 
-
-# Check version of PGI for use of -nofma option
-has_nofma := $(shell $(FC) -dryrun -nofma foo.f90 > /dev/null 2>&1; echo $$?)
-ifneq ($(has_nofma),0)
-NOFMA :=
-else
-NOFMA := -nofma
-endif
-
-# Required Preprocessor Macros:
-CPPDEFS += -Duse_netCDF
-
-# Additional Preprocessor Macros needed due to  Autotools and CMake
-CPPDEFS += -DHAVE_SCHED_GETAFFINITY -DHAVE_GETTID
-
 # Macro for Fortran preprocessor
 FPPFLAGS := $(INCLUDES)
 
 
 # Base set of Fortran compiler flags
 FC_AUTO_R8 = -r8
-FFLAGS = $(FC_AUTO_R8) -Mnofma -i4 -gopt  -time -Mextend -byteswapio -Mflushz -Kieee
+FFLAGS = $(FC_AUTO_R8) -Mnofma -i4 -gopt  -time -Mextend -byteswapio -Mflushz -Kieee 
 
 # Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
-FFLAGS_REPRO = -O -tp=zen3
-FFLAGS_DEBUG = -O0 -g -Ktrap=fp -Mbounds -Kieee
-
+FFLAGS_REPRO = -O0 -tp=zen3 # CESM doesn't include the 2, but it looks like we need it. Not quite sure what happens on just -O
+FFLAGS_DEBUG = -O0 -g -traceback -Mdwarf3 #-MBounds fails compilation!  o does -KTrap=fp, seems like there is a floating point exception in  netcdf_io_mod file, which means i'm missing some coompiler flag
 # Macro for C preprocessor
 CPPFLAGS := $(INCLUDES)
 
@@ -61,10 +45,10 @@ CFLAGS = -gopt -time -Mnofma
 
 # Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
 CFLAGS_REPRO = -O 
-CFLAGS_DEBUG = -O0 -g -traceback -Ktrap=fp
+CFLAGS_DEBUG = 
 
 # Linking flags
-LDFLAGS := -byteswapio
+LDFLAGS := 
 
 # List of -L library directories to be added to the compile and linking commands
 LIBS :=
@@ -84,15 +68,13 @@ endif
 FPPFLAGS += $(shell nf-config --fflags)
 # C Compiler flags for the NetCDF library
 CPPFLAGS += $(shell nc-config --cflags)
-  # add the use_LARGEFILE cppdef
-  ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
-    CPPDEFS += -Duse_LARGEFILE
-  endif
   # Add netcdf linking
-  LIBS += $(shell nc-config --libs) $(shell nf-config --flibs)
-
+LIBS += $(shell nc-config --libs) $(shell nf-config --flibs)
+ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
+    CPPDEFS += -Duse_LARGEFILE
+endif
 # Additional CPPDEFS Flags
-CPPDEFS += -DCNL -DFORTRANUNDERSCORE -DNO_SHR_VMATH -DNO_R16  -DCPRPGI -DLINUX -DHAVE_GETTID  -DFORTRANUNDERSCORE -DNO_SHR_VMATH -DNO_R16  -DCPRPGI -DLINUX -DHAVE_GETTID -DNDEBUG -DUSE_ESMF_LIB -DHAVE_MPI -DNUOPC_INTERFACE -DPIO2 -DHAVE_SLASHPROC -D_PNETCDF -DESMF_VERSION_MAJOR=8 -DESMF_VERSION_MINOR=6 -DATM_PRESENT -DICE_PRESENT -DLND_PRESENT -DOCN_PRESENT -DROF_PRESENT -DGLC_PRESENT -DWAV_PRESENT -DESP_PRESENT -DMED_PRESENT
+CPPDEFS += -DHAVE_SCHED_GETAFFINITY -DFORTRANUNDERSCORE -DNO_SHR_VMATH -DNO_R16  -DCPRPGI -DLINUX -DHAVE_GETTID -DNDEBUG -DUSE_ESMF_LIB -DHAVE_MPI -DNUOPC_INTERFACE -DPIO2 -DHAVE_SLASHPROC -D_PNETCDF -DESMF_VERSION_MAJOR=8 -DESMF_VERSION_MINOR=6 -DATM_PRESENT -DICE_PRESENT -DLND_PRESENT -DOCN_PRESENT -DROF_PRESENT -DGLC_PRESENT -DWAV_PRESENT -DESP_PRESENT -DMED_PRESENT -DPIO2
 
 
 # These Algebra libraries Add solution to more complex vector matrix model equations

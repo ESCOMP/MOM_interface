@@ -20,7 +20,7 @@ MAKEFLAGS += --jobs=8
 FC_AUTO_R8 := -r8
 FPPFLAGS := -fpp -Wp,-w
 FFLAGS :=  -qno-opt-dynamic-align  -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source  -no-fma  -qopt-report -march=core-avx2 $(FC_AUTO_R8) 
-FFLAGS_DEBUG = -O0 -g -check uninit -check bounds -check pointers -fpe0 -check noarg_temp_created
+FFLAGS_DEBUG = -O0 -g -check uninit -check bounds -check nopointer -fpe0 -check noarg_temp_created # CESM uses -check pointers, that throws an error, changed to nopointer
 FFLAGS_REPRO = -O2 -debug minimal
 
 CFLAGS := -qno-opt-dynamic-align -fp-model precise -std=gnu99  -no-fma -qopt-report -march=core-avx2

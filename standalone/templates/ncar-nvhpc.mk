@@ -47,8 +47,7 @@ FPPFLAGS := $(INCLUDES)
 
 
 # Base set of Fortran compiler flags
-FFLAGS = -g -Mdwarf3 -traceback -i4 -r8 -byteswapio -Mcray=pointer -Mflushz \
-  -Mnofma -Mdaz -D_F2000
+FFLAGS = -g -Mdwarf3 -traceback -i4 -r8 -byteswapio -Mcray=pointer -Mflushz -Mnofma -Mdaz -D_F2000
 
 # Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
 #FFLAGS_REPRO = -O2 -Mvect=nosse -Mnoscalarsse $(NOFMA)
