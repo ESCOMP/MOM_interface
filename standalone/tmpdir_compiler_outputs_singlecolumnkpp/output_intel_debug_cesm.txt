@@ -1,0 +1,241 @@
+NOTE: MPP_DOMAINS_SET_STACK_SIZE: stack size set to    32768.
+NOTE: MPP_IO_SET_STACK_SIZE: stack size set to     131072.
+NOTE: MPP_DOMAINS_SET_STACK_SIZE: stack size set to   710000.
+NOTE: ======== Model being driven by MOM_driver ========
+NOTE: callTree: o Program MOM_main, MOM_driver.F90
+NOTE: open_param_file: MOM_input has been opened successfully.
+NOTE: open_param_file: MOM_override has been opened successfully.
+NOTE: open_param_file: MOM_override2 has been opened successfully.
+
+WARNING: MOM_obsolete_params: ETA_TOLERANCE_AUX is an obsolete run-time flag.
+
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =    2
+  Y-AXIS =    2
+ MOM_inc domain decomposition
+whalo =    1, ehalo =    1, shalo =    1, nhalo =    1
+  X-AXIS =    1
+  Y-AXIS =    1
+NOTE: diag_manager_mod::diag_manager_init: diag_manager is using fms2_io
+NOTE: diag_manager_mod::diag_manager_init: prepend_date only supported when diag_manager_init is called with time_init present.
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =    2
+  Y-AXIS =    2
+ MOM_in domain decomposition
+whalo =    1, ehalo =    1, shalo =    1, nhalo =    1
+  X-AXIS =    1
+  Y-AXIS =    1
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =    2
+  Y-AXIS =    2
+ MOM_in domain decomposition
+whalo =    1, ehalo =    1, shalo =    1, nhalo =    1
+  X-AXIS =    1
+  Y-AXIS =    1
+
+WARNING: Open_file is appending .nc to the filename ./ocean_geometry
+
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =    2
+  Y-AXIS =    2
+ MOM_in domain decomposition
+whalo =    1, ehalo =    1, shalo =    1, nhalo =    1
+  X-AXIS =    1
+  Y-AXIS =    1
+
+WARNING: KVML is a deprecated parameter. Use KV_ML_INVZ2 instead.
+
+
+WARNING: open_ASCII_file: File ./CPU_stats opened WRITEONLY already exists!
+
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =    2
+  Y-AXIS =    2
+ MOM_in domain decomposition
+whalo =    1, ehalo =    1, shalo =    1, nhalo =    1
+  X-AXIS =    1
+  Y-AXIS =    1
+
+WARNING: open_ASCII_file: File ./ocean.stats opened WRITEONLY already exists!
+
+MOM Date      1/01/01 00:00:00      0: En 1.688827E-26, MaxCFL  0.00000, Mass 7.695119440691E+16, Salt  35.12933891773, Temp   4.80639202356
+    Total Energy: 3E165394AEF59AC7  1.2995726125765195E-09
+    Total Mass:   7.6951194406912352E+16, Change:   0.0000000000000000E+00 Error:  0.00000E+00 ( 0.0E+00)
+    Total Salt:   2.7032445884447250E+15, Change:   0.0000000000000000E+00 Error:  0.00000E+00 ( 0.0E+00)
+    Total Heat:   1.4516911074791564E+21, Change:   0.0000000000000000E+00 Error:  0.00000E+00 ( 0.0E+00)
+
+WARNING: diag_util_mod::opening_file: module/field_name (ocean_model/wd) NOT registered
+
+MOM Date      1/01/11 00:00:00    240: En 1.327912E-05, MaxCFL  0.00618, Mass 7.695129762538E+16, Salt  35.12929179706, Temp   4.80261700476
+    Total Energy: 426DBD578CC763CB  1.0218454646351185E+12
+    Total Mass:   7.6951297625383088E+16, Change:   1.0321847073124609E+11 Error:  1.63107E+00 ( 2.1E-17)
+    Total Salt:   2.7032445884447265E+15, Change:   1.5360000000000000E+00 Error:  1.53600E+00 ( 5.7E-16)
+    Total Heat:   1.4505528712669986E+21, Change:  -1.1382362121578742E+18 Error:  1.63751E+06 ( 1.1E-15)
+MOM Date      1/01/21 00:00:00    480: En 2.375370E-06, MaxCFL  0.00320, Mass 7.695105571929E+16, Salt  35.12940223076, Temp   4.79562022532
+    Total Energy: 4245477BD35F4148  1.8278722118251001E+11
+    Total Mass:   7.6951055719286720E+16, Change:  -2.4190609634575000E+11 Error:  6.02910E-01 ( 7.8E-18)
+    Total Salt:   2.7032445884447275E+15, Change:   1.0240000000000000E+00 Error:  1.02400E+00 ( 3.8E-16)
+    Total Heat:   1.4484350537297161E+21, Change:  -2.1178175372824412E+18 Error:  2.29016E+06 ( 1.6E-15)
+MOM Date      1/01/31 00:00:00    720: En 5.799045E-07, MaxCFL  0.00085, Mass 7.695053647716E+16, Salt  35.12963927480, Temp   4.78918037334
+    Total Energy: 4224C7973E43023D  4.4623961889504372E+10
+    Total Mass:   7.6950536477160688E+16, Change:  -5.1924212605850391E+11 Error: -1.10531E+00 (-1.4E-17)
+    Total Salt:   2.7032445884447280E+15, Change:   5.1200000000000001E-01 Error:  5.12000E-01 ( 1.9E-16)
+    Total Heat:   1.4464802461304598E+21, Change:  -1.9548075992563057E+18 Error: -2.30512E+05 (-1.6E-16)
+MOM Date      1/02/10 00:00:00    960: En 9.910178E-07, MaxCFL  0.00182, Mass 7.695067948439E+16, Salt  35.12957398892, Temp   4.78329123513
+    Total Energy: 4231C16B8E5BA218  7.6259495515633179E+10
+    Total Mass:   7.6950679484394848E+16, Change:   1.4300723417518359E+11 Error: -9.29978E-02 (-1.2E-18)
+    Total Salt:   2.7032445884447280E+15, Change:   0.0000000000000000E+00 Error:  0.00000E+00 ( 0.0E+00)
+    Total Heat:   1.4447042295564062E+21, Change:  -1.7760165740536136E+18 Error:  2.08442E+06 ( 1.4E-15)
+MOM Date      1/02/20 00:00:00   1200: En 4.356363E-07, MaxCFL  0.00046, Mass 7.695042925094E+16, Salt  35.12968822603, Temp   4.77574336304
+    Total Energy: 421F385CE3B3853F  3.3522399468880123E+10
+    Total Mass:   7.6950429250940912E+16, Change:  -2.5023345393000391E+11 Error: -6.91583E-01 (-9.0E-18)
+    Total Salt:   2.7032445884447290E+15, Change:   1.0240000000000000E+00 Error:  1.02400E+00 ( 3.8E-16)
+    Total Heat:   1.4424198444810033E+21, Change:  -2.2843850754028995E+18 Error: -8.00590E+05 (-5.6E-16)
+MOM Date      1/03/02 00:00:00   1440: En 1.785313E-06, MaxCFL  0.00238, Mass 7.695008075769E+16, Salt  35.12984732215, Temp   4.77080464168
+    Total Energy: 423FFC7C169FC044  1.3737997686375104E+11
+    Total Mass:   7.6950080757691392E+16, Change:  -3.4849324952506641E+11 Error:  1.13596E+00 ( 1.5E-17)
+    Total Salt:   2.7032445884447305E+15, Change:   1.5360000000000000E+00 Error:  1.53600E+00 ( 5.7E-16)
+    Total Heat:   1.4409216746403474E+21, Change:  -1.4981698406559252E+18 Error: -6.84629E+04 (-4.8E-17)
+MOM Date      1/03/12 00:00:00   1680: En 3.041746E-06, MaxCFL  0.00203, Mass 7.694994618542E+16, Salt  35.12990875823, Temp   4.76909444220
+    Total Energy: 424B3F988C55D509  2.3406215799566434E+11
+    Total Mass:   7.6949946185415312E+16, Change:  -1.3457227608250000E+11 Error:  7.68106E-02 ( 1.0E-18)
+    Total Salt:   2.7032445884447320E+15, Change:   1.5360000000000000E+00 Error:  1.53600E+00 ( 5.7E-16)
+    Total Heat:   1.4404026256711095E+21, Change:  -5.1904896923782349E+17 Error:  8.65353E+05 ( 6.0E-16)
+MOM Date      1/03/22 00:00:00   1920: En 6.344657E-06, MaxCFL  0.00397, Mass 7.694963553169E+16, Salt  35.13005058135, Temp   4.76845073241
+    Total Energy: 425C6B07C4C1E4E5  4.8821902208757648E+11
+    Total Mass:   7.6949635531688512E+16, Change:  -3.1065372678123047E+11 Error: -2.03979E-01 (-2.7E-18)
+    Total Salt:   2.7032445884447310E+15, Change:  -1.0240000000000000E+00 Error: -1.02400E+00 (-3.8E-16)
+    Total Heat:   1.4402023926962515E+21, Change:  -2.0023297485805978E+17 Error: -1.87651E+06 (-1.3E-15)
+MOM Date      1/04/01 00:00:00   2160: En 1.168214E-05, MaxCFL  0.00543, Mass 7.694959233117E+16, Salt  35.13007030382, Temp   4.76482636062
+    Total Energy: 426A29984376839F  8.9893595435611316E+11
+    Total Mass:   7.6949592331174288E+16, Change:  -4.3200514253363281E+10 Error: -6.58889E-01 (-8.6E-18)
+    Total Salt:   2.7032445884447305E+15, Change:  -5.1200000000000001E-01 Error: -5.12000E-01 (-1.9E-16)
+    Total Heat:   1.4391069254667807E+21, Change:  -1.0954672294707855E+18 Error:  5.35714E+05 ( 3.7E-16)
+MOM Date      1/04/11 00:00:00   2400: En 8.191328E-06, MaxCFL  0.00479, Mass 7.694924183741E+16, Salt  35.13023031672, Temp   4.76467926739
+    Total Energy: 426258394F76D5B7  6.3031649784667859E+11
+    Total Mass:   7.6949241837405888E+16, Change:  -3.5049376837383594E+11 Error: -7.27250E-02 (-9.5E-19)
+    Total Salt:   2.7032445884447330E+15, Change:   2.5600000000000001E+00 Error:  2.56000E+00 ( 9.5E-16)
+    Total Heat:   1.4390559446039643E+21, Change:  -5.0980862816419840E+16 Error:  5.54833E+05 ( 3.9E-16)
+MOM Date      1/04/21 00:00:00   2640: En 1.100002E-06, MaxCFL  0.00237, Mass 7.694918568794E+16, Salt  35.13025595108, Temp   4.76644763575
+    Total Energy: 4233B530AAAEA15F  8.4644244142630356E+10
+    Total Mass:   7.6949185687939648E+16, Change:  -5.6149466280246094E+10 Error:  1.87801E-03 ( 2.4E-20)
+    Total Salt:   2.7032445884447340E+15, Change:   1.0240000000000000E+00 Error:  1.02400E+00 ( 3.8E-16)
+    Total Heat:   1.4395889869652330E+21, Change:   5.3304236126869914E+17 Error:  5.72131E+04 ( 4.0E-17)
+MOM Date      1/05/01 00:00:00   2880: En 5.096970E-06, MaxCFL  0.00333, Mass 7.694905586864E+16, Salt  35.13031521868, Temp   4.76709512427
+    Total Energy: 4256D457151D70CF  3.9220702936576263E+11
+    Total Mass:   7.6949055868637120E+16, Change:  -1.2981930250610156E+11 Error:  5.90776E-01 ( 7.7E-18)
+    Total Salt:   2.7032445884447330E+15, Change:  -1.0240000000000000E+00 Error: -1.02400E+00 (-3.8E-16)
+    Total Heat:   1.4397821160161076E+21, Change:   1.9312905087457690E+17 Error:  2.67827E+05 ( 1.9E-16)
+MOM Date      1/05/11 00:00:00   3120: En 4.277498E-06, MaxCFL  0.00458, Mass 7.694903291197E+16, Salt  35.13032569931, Temp   4.77033872111
+    Total Energy: 425328B4F4AFB242  3.2914930553478528E+11
+    Total Mass:   7.6949032911974096E+16, Change:  -2.2956663024222656E+10 Error: -5.45049E-01 (-7.1E-18)
+    Total Salt:   2.7032445884447320E+15, Change:  -1.0240000000000000E+00 Error: -1.02400E+00 (-3.8E-16)
+    Total Heat:   1.4407613336632172E+21, Change:   9.7921764710966886E+17 Error:  8.10158E+04 ( 5.6E-17)
+MOM Date      1/05/21 00:00:00   3360: En 6.713437E-06, MaxCFL  0.00567, Mass 7.694887490158E+16, Salt  35.13039783755, Temp   4.77256993164
+    Total Energy: 425E11CFE2E9BEDA  5.1659142237498206E+11
+    Total Mass:   7.6948874901584288E+16, Change:  -1.5801038979697266E+11 Error: -2.11407E-01 (-2.7E-18)
+    Total Salt:   2.7032445884447310E+15, Change:  -1.0240000000000000E+00 Error: -1.02400E+00 (-3.8E-16)
+    Total Heat:   1.4414322550173697E+21, Change:   6.7092135415250944E+17 Error: -4.73617E+05 (-3.3E-16)
+MOM Date      1/05/31 00:00:00   3600: En 2.703283E-06, MaxCFL  0.00522, Mass 7.694877653789E+16, Salt  35.13044274477, Temp   4.77884680682
+    Total Energy: 4248374F1351178A  2.0801428854618390E+11
+    Total Mass:   7.6948776537891696E+16, Change:  -9.8363692594390625E+10 Error: -1.54113E+00 (-2.0E-17)
+    Total Salt:   2.7032445884447305E+15, Change:  -5.1200000000000001E-01 Error: -5.12000E-01 (-1.9E-16)
+    Total Heat:   1.4433261790584693E+21, Change:   1.8939240410995753E+18 Error: -1.86729E+06 (-1.3E-15)
+MOM Date      1/06/10 00:00:00   3840: En 4.764762E-06, MaxCFL  0.00536, Mass 7.694868047379E+16, Salt  35.13048660224, Temp   4.78354393781
+    Total Energy: 42555764DAF2002E  3.6664216263200281E+11
+    Total Mass:   7.6948680473789232E+16, Change:  -9.6064102469398438E+10 Error:  1.33100E+00 ( 1.7E-17)
+    Total Salt:   2.7032445884447305E+15, Change:   0.0000000000000000E+00 Error:  0.00000E+00 ( 0.0E+00)
+    Total Heat:   1.4447430214606502E+21, Change:   1.4168424021808906E+18 Error:  1.26885E+06 ( 8.8E-16)
+MOM Date      1/06/20 00:00:00   4080: En 5.932180E-06, MaxCFL  0.00728, Mass 7.694865404446E+16, Salt  35.13049866841, Temp   4.78927197084
+    Total Energy: 425A91FB6C86A75E  4.5647329333861511E+11
+    Total Mass:   7.6948654044462432E+16, Change:  -2.6429326817179688E+10 Error:  1.88414E+00 ( 2.4E-17)
+    Total Salt:   2.7032445884447300E+15, Change:  -5.1200000000000001E-01 Error: -5.12000E-01 (-1.9E-16)
+    Total Heat:   1.4464725256342070E+21, Change:   1.7295041735567606E+18 Error:  1.83830E+04 ( 1.3E-17)
+MOM Date      1/06/30 00:00:00   4320: En 9.597778E-07, MaxCFL  0.00400, Mass 7.694905623951E+16, Salt  35.13031504936, Temp   4.79264929607
+    Total Energy: 4231320A97FEA8BC  7.3853999102659119E+10
+    Total Mass:   7.6949056239507056E+16, Change:   4.0219504463619141E+11 Error: -8.14012E-01 (-1.1E-17)
+    Total Salt:   2.7032445884447285E+15, Change:  -1.5360000000000000E+00 Error: -1.53600E+00 (-5.7E-16)
+    Total Heat:   1.4475001228630696E+21, Change:   1.0275972288626033E+18 Error:  5.42159E+04 ( 3.7E-17)
+ MOM_in domain decomposition
+whalo =    2, ehalo =    2, shalo =    2, nhalo =    2
+  X-AXIS =    2
+  Y-AXIS =    2
+ MOM_in domain decomposition
+whalo =    1, ehalo =    1, shalo =    1, nhalo =    1
+  X-AXIS =    1
+  Y-AXIS =    1
+
+WARNING: open_ASCII_file: File RESTART/ocean_solo.res opened WRITEONLY already exists!
+
+
+WARNING: open_ASCII_file: File exitcode opened WRITEONLY already exists!
+
+ MPP_DOMAINS_STACK high water mark=       25200
+
+Tabulating mpp_clock statistics across      1 PEs...
+
+                                      hits          tmin          tmax          tavg          tstd  tfrac grain pemin pemax
+Total runtime                            1    113.229635    113.229635    113.229635      0.000000  1.000     0     0     0
+Initialization                           1      0.666284      0.666284      0.666284      0.000000  0.006     0     0     0
+Main loop                                1    112.477269    112.477269    112.477269      0.000000  0.993     0     0     0
+Termination                              1      0.043579      0.043579      0.043579      0.000000  0.000     0     0     0
+Ocean Initialization                     2      0.653722      0.653722      0.653722      0.000000  0.006    11     0     0
+Ocean                                 4320    111.487019    111.487019    111.487019      0.000000  0.985     1     0     0
+Ocean dynamics                        8640     65.562918     65.562918     65.562918      0.000000  0.579    11     0     0
+Ocean thermodynamics and tracers     12960     33.793822     33.793822     33.793822      0.000000  0.298    11     0     0
+Ocean Other                          21600     11.317871     11.317871     11.317871      0.000000  0.100    11     0     0
+(Ocean tracer advection)              8640      8.196473      8.196473      8.196473      0.000000  0.072    21     0     0
+(Ocean diabatic driver)               4320     25.595177     25.595177     25.595177      0.000000  0.226    21     0     0
+(Ocean continuity equation *)            0      0.000000      0.000000      0.000000      0.000000  0.000    31     0     0
+(Ocean set BBL viscosity)             4320      0.951416      0.951416      0.951416      0.000000  0.008    31     0     0
+(Ocean message passing *)            17280      1.869548      1.869548      1.869548      0.000000  0.017    31     0     0
+(Ocean MOM_initialize_state)             2      0.070049      0.070049      0.070049      0.000000  0.001    31     0     0
+(Ocean init message passing *)           2      0.038014      0.038014      0.038014      0.000000  0.000    41     0     0
+(Ocean mixed layer restrat)              0      0.000000      0.000000      0.000000      0.000000  0.000    31     0     0
+(Ocean collective diagnostics)       17280     10.903811     10.903811     10.903811      0.000000  0.096    31     0     0
+(Ocean Z-space diagnostics)              0      0.000000      0.000000      0.000000      0.000000  0.000    31     0     0
+(Ocean ALE)                           4320      4.873804      4.873804      4.873804      0.000000  0.043    31     0     0
+(Stochastic EOS)                      4320      0.000383      0.000383      0.000383      0.000000  0.000    31     0     0
+(SGS Temperature Variance)            4320      0.000350      0.000350      0.000350      0.000000  0.000    31     0     0
+(Initialize from Z)                      1      0.055211      0.055211      0.055211      0.000000  0.000    41     0     0
+(Initialize from Z) ALE                  1      0.002567      0.002567      0.002567      0.000000  0.000    51     0     0
+(Initialize tracer from Z) read          2      0.002730      0.002730      0.002730      0.000000  0.000    51     0     0
+(Ocean diagnostics framework)       190080     16.080816     16.080816     16.080816      0.000000  0.142    31     0     0
+(Ocean diagnostics remapping)        34560      3.484094      3.484094      3.484094      0.000000  0.031    41     0     0
+(Ocean diagnostics grid updates)     38881      1.310204      1.310204      1.310204      0.000000  0.012    41     0     0
+(Ocean porous barrier)                4320      0.238494      0.238494      0.238494      0.000000  0.002    31     0     0
+(Ocean continuity update)            51840      1.377039      1.377039      1.377039      0.000000  0.012    41     0     0
+(Ocean continuity correction)        25920      2.210315      2.210315      2.210315      0.000000  0.020    41     0     0
+(Ocean Coriolis & mom advection)     12960     10.759905     10.759905     10.759905      0.000000  0.095    31     0     0
+(Ocean continuity equation)          12960      3.637005      3.637005      3.637005      0.000000  0.032    31     0     0
+(Ocean pressure force)               12960     33.551877     33.551877     33.551877      0.000000  0.296    31     0     0
+(Ocean vertical viscosity)           12960      7.256061      7.256061      7.256061      0.000000  0.064    31     0     0
+(Ocean horizontal viscosity)          4320      0.018183      0.018183      0.018183      0.000000  0.000    31     0     0
+(Ocean momentum increments)          12960      1.525548      1.525548      1.525548      0.000000  0.013    31     0     0
+(Ocean message passing)              43200      4.682030      4.682030      4.682030      0.000000  0.041    31     0     0
+(Ocean init message passing)             0      0.000000      0.000000      0.000000      0.000000  0.000    41     0     0
+Ocean KPP calculate)                  4320      0.455807      0.455807      0.455807      0.000000  0.004    31     0     0
+(Ocean KPP comp BLD)                  4320      2.273303      2.273303      2.273303      0.000000  0.020    41     0     0
+(Ocean kappa_shear)                   4320      3.292194      3.292194      3.292194      0.000000  0.029    31     0     0
+(Ocean diabatic entrain)                 0      0.000000      0.000000      0.000000      0.000000  0.000    31     0     0
+(Ocean vert remap)                    4320      0.723660      0.723660      0.723660      0.000000  0.006    31     0     0
+(Ocean set_diffusivity)               8640      5.039123      5.039123      5.039123      0.000000  0.045    31     0     0
+(Ocean KPP)                           4320     11.093588     11.093588     11.093588      0.000000  0.098    31     0     0
+(Ocean tracer_columns)                4320      0.004261      0.004261      0.004261      0.000000  0.000    26     0     0
+(Ocean diabatic tridiag)              4320      0.275523      0.275523      0.275523      0.000000  0.002    41     0     0
+(Ocean diabatic message passing)      4320      0.091729      0.091729      0.091729      0.000000  0.001    41     0     0
+(Ocean find_uv_at_h)                  4320      0.085794      0.085794      0.085794      0.000000  0.001    41     0     0
+(Ocean frazil)                        8640      0.068846      0.068846      0.068846      0.000000  0.001    41     0     0
+(Ocean advect tracer)                 4320      6.486305      6.486305      6.486305      0.000000  0.057    31     0     0
+(Ocean tracer halo updates)          17280      1.609944      1.609944      1.609944      0.000000  0.014    41     0     0
+(Ocean tracer global synch)           4320      0.002165      0.002165      0.002165      0.000000  0.000    41     0     0
+(Ocean diffuse tracer)                4320      1.358068      1.358068      1.358068      0.000000  0.012    31     0     0
+(Ocean epipycnal diffuse tracer)         0      0.000000      0.000000      0.000000      0.000000  0.000    31     0     0
+(Ocean surface forcing)               4321      0.623008      0.623008      0.623008      0.000000  0.006    31     0     0
+(Ocean forcing diagnostics)           8640      0.347761      0.347761      0.347761      0.000000  0.003    41     0     0
+ MPP_STACK high water mark=           0
