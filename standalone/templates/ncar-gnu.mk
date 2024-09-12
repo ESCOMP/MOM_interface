@@ -1,7 +1,4 @@
 # template for the GNU fortran compiler
-# 
-# typical use with mkmf
-# mkmf -t linux-gnu.mk -c"-Duse_libMPI -Duse_netCDF" path_names /usr/local/include
 
 ############
 # commands #
@@ -15,27 +12,23 @@ LD = mpif90 $(MAIN_PROGRAM)
 # flags #
 #########
 
-DEBUG = 0
-
+DEBUG =
+ 
 MAKEFLAGS += --jobs=$(shell grep '^processor' /proc/cpuinfo | wc -l)
 
 FPPFLAGS :=
+FC_AUTO_R8 := -fdefault-real-8 -fdefault-double-8
+FFLAGS :=  $(FC_AUTO_R8) -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none -fallow-argument-mismatch  -fallow-invalid-boz -fcray-pointer
+FFLAGS_REPRO = -O
+FFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=zero,overflow -fcheck=bounds
 
-FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check -fallow-argument-mismatch
-FFLAGS += $(shell pkg-config --cflags-only-I mpich2-c)
-FFLAGS_REPRO = -O2 -fbounds-check
-FFLAGS_DEBUG = -O0 -g -W -fbounds-check -fbacktrace -ffpe-trap=invalid,zero,overflow
 
-CFLAGS := -D__IFC
-
-CFLAGS += $(shell pkg-config --cflags-only-I mpich2-c)
-CFLAGS_REPRO = -O2
-CFLAGS_DEBUG = -O0 -g
-
+CFLAGS := -std=gnu99
+CFLAGS_REPRO = -O
+CFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=invalid,zero,overflow -fcheck=bounds
 
 LDFLAGS :=
 
-ifneq ($(REPRO),)
 
 ifeq ($(DEBUG),1)
 CFLAGS += $(CFLAGS_DEBUG)
@@ -45,13 +38,16 @@ CFLAGS += $(CFLAGS_REPRO)
 FFLAGS += $(FFLAGS_REPRO)
 endif
 
+
+# NetCDF Flags
 FFLAGS += -I$(shell nc-config --includedir)
 CFLAGS += -I$(shell nc-config --includedir)
   # add the use_LARGEFILE cppdef
-  ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
+ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
     CPPDEFS += -Duse_LARGEFILE
-  endif
+endif
 
+# Linking Flags
 LIBS := $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
 LDFLAGS += $(LIBS)
 
