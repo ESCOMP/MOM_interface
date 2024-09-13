@@ -34,8 +34,8 @@ FC_AUTO_R8 = -r8
 FFLAGS = $(FC_AUTO_R8) -Mnofma -i4 -gopt  -time -Mextend -byteswapio -Mflushz -Kieee 
 
 # Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
-FFLAGS_REPRO = -O2 -tp=zen3 # CESM doesn't include the 0, but it looks like we need it. Not quite sure what happens on just -O, but even O2 causes runtime errors
-FFLAGS_DEBUG = -O0 -g  # -Mbounds fails compilation! -KTrap=fp fails run! seems like there is a floating point exception in  netcdf_io_mod file, which means i'm missing some coompiler flag
+FFLAGS_REPRO = -O2 -tp=zen3 
+FFLAGS_DEBUG = -O0 -g  # -Mbounds fails compilation and -KTrap=fp fails run! seems like there is a floating point exception in netcdf_io_mod
 # Macro for C preprocessor
 CPPFLAGS := $(INCLUDES)
 
