@@ -1,4 +1,4 @@
-!/bin/bash -e
+#!/bin/bash -e
 ### For NCAR machines, this script should be run as
 ### $ qcmd -- ./build_examples.sh
 
