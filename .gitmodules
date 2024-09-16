@@ -7,8 +7,8 @@
 
 [submodule "stochastic_physics"]
   path = externals/stochastic_physics
-  url = https://github.com/iangrooms/stochastic_physics.git
-  fxDONOTUSEurl = https://github.com/iangrooms/stochastic_physics.git
+  url = https://github.com/ESCOMP/stochastic_physics.git
+  fxDONOTUSEurl = https://github.com/ESCOMP/stochastic_physics.git
     fxtag = ocn_skeb_240807
     fxrequired = AlwaysRequired
 
