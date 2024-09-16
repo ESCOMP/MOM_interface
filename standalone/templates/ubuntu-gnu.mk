@@ -12,7 +12,6 @@ LD = mpif90 $(MAIN_PROGRAM)
 # flags #
 #########
 DEBUG =
-REPRO =
 
 
 MAKEFLAGS += --jobs=2
@@ -20,8 +19,6 @@ MAKEFLAGS += --jobs=2
 FPPFLAGS :=
 
 FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check
-FFLAGS += -I$(shell nf-config --includedir)
-FFLAGS_OPT = -O3
 FFLAGS_REPRO = -O2 -fbounds-check
 FFLAGS_DEBUG = -O0 -g -W -fbounds-check -fbacktrace -ffpe-trap=invalid,zero,overflow
 
@@ -31,10 +28,8 @@ CFLAGS_REPRO= -O2
 CFLAGS_DEBUG = -O0 -g
 
 LDFLAGS :=
-LDFLAGS_OPENMP := -fopenmp
-LDFLAGS_VERBOSE :=
 
-ifneq ($(DEBUG),)
+ifeq ($(DEBUG),1)
 CFLAGS += $(CFLAGS_DEBUG)
 FFLAGS += $(FFLAGS_DEBUG)
 else
@@ -42,10 +37,11 @@ CFLAGS += $(CFLAGS_REPRO)
 FFLAGS += $(FFLAGS_REPRO)
 endif
 
+# NetCDF Things 
 FFLAGS += -I$(shell nf-config --includedir)
 CFLAGS += -I$(shell nc-config --includedir)
 
-  # add the use_LARGEFILE cppdef
+# add the use_LARGEFILE cppdef
 ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
   CPPDEFS += -Duse_LARGEFILE
 endif

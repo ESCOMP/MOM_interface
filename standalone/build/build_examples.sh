@@ -18,7 +18,7 @@ FMS_ROOT=${CESM_ROOT}/libraries/FMS
 # Default compiler
 COMPILER="intel"
 MACHINE="ncar"
-DEBUG=0 # Set to False, or REPRO Mode!
+DEBUG=0 # Set to False (REPRO Mode)!
 
 # Parse command line arguments
 while [[ "$#" -gt 0 ]]; do
