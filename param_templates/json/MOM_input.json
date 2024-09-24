@@ -68,14 +68,6 @@
             "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
-      "DIABATIC_FIRST": {
-         "description": "\"[Boolean] default = False\nIf true, apply diabatic and thermodynamic processes,\nincluding buoyancy forcing and mass gain or loss,\nbefore stepping the dynamics forward.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
-         }
-      },
       "USE_REGRIDDING": {
          "description": "\"[Boolean] default = False\nIf True, use the ALE algorithm (regridding/remapping).\nIf False, use the layered isopycnal algorithm.\"\n",
          "datatype": "logical",
@@ -467,6 +459,14 @@
          "datatype": "string",
          "value": "PPM_CW"
       },
+      "REMAP_VEL_CONSERVE_KE": {
+         "description": "\"[Boolean] default = False\nIf true, a correction is applied to the baroclinic component of velocity after\nremapping so that total KE is conserved. KE may not be conserved when\n(CS%BBL_h_vel_mask > 0.0) .and. (CS%h_vel_mask > 0.0)\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": false
+         }
+      },
       "INIT_LAYERS_FROM_Z_FILE": {
          "description": "\"[Boolean] default = False\nIf true, intialize the layer thicknesses, temperatures,\nand salnities from a Z-space file on a latitude-\nlongitude grid.\"\n",
          "datatype": "logical",
@@ -504,6 +504,14 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": false
+      },
+      "Z_INIT_REMAP_GENERAL": {
+         "description": "\"[Boolean] default = False\nIf false, only initializes to z* coordinates. If true, allows initialization\ndirectly to general coordinates.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": true
+         }
       },
       "USE_VARIABLE_MIXING": {
          "description": "\"[Boolean] default = False\nIf true, the variable mixing code will be called.  This\nallows diagnostics to be created even if the scheme is\nnot used.  If KHTR_SLOPE_CFF>0 or  KhTh_Slope_Cff>0,\nthis is set to true regardless of what is in the\nparameter file.\"\n",
@@ -694,7 +702,7 @@
          "datatype": "real",
          "units": "not defined",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\"": 0.01
+            "$MOM6_VERTICAL_GRID == \"hycom1\"": 0.0
          }
       },
       "MAXIMUM_INT_DEPTH_CONFIG": {
@@ -708,7 +716,8 @@
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum layer thicknesses.\nValid options are:\nNONE        - there are no maximum layer thicknesses\nPARAM       - use the vector-parameter MAX_LAYER_THICKNESS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum thickness for each layer.\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\"": "\"FNC1:400,31000.0,0.1,.01\""
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max_90th_quantile.nc,dz\"'\n",
+            "else": "\"FNC1:400,31000.0,0.1,.01\""
          }
       },
       "BOUND_CORIOLIS": {
@@ -1019,6 +1028,22 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 0.0,
             "$OCN_GRID == \"MISOMIP\"": 0.0
+         }
+      },
+      "KHTH_MIN": {
+         "description": "\"[m2 s-1] default = 0.0\nThe minimum horizontal thickness diffusivity\"\n",
+         "datatype": "real",
+         "units": "m2 s-1",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 50.0
+         }
+      },
+      "FULL_DEPTH_KHTH_MIN": {
+         "description": "\"[Boolean] default = False\nKHTH_MIN is enforced throughout the whole water column. Otherwise,\nKHTH_MIN is only enforced at the surface. This parameter is only available\nwhen KHTH_USE_EBT_STRUCT=True and KHTH_MIN>0.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "KHTH_MAX_CFL": {
@@ -1557,7 +1582,14 @@
          "datatype": "integer",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 3,
-            "$OCN_GRID == \"tx2_3v2\"": 3
+            "$OCN_GRID == \"tx2_3v2\"": 2
+         }
+      },
+      "OPACITY_SCHEME": {
+         "description": "\"default = 'MANIZZA_05'\nThis character string specifies how chlorophyll concentrations are translated\ninto opacities. Currently valid options include:\n       MANIZZA_05 - Use Manizza et al., GRL, 2005.\n       MOREL_88 - Use Morel, JGR, 1988.\n       OHLMANN_03 - Use Ohlmann, J Clim, 2003.\"\n",
+         "datatype": "string",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "OHLMANN_03"
          }
       },
       "TRACER_ADVECTION_SCHEME": {
@@ -1590,6 +1622,14 @@
          "units": "m2 s-1",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 50.0
+         }
+      },
+      "FULL_DEPTH_KHTR_MIN": {
+         "description": "\"[Boolean] default = False\nKHTR_MIN is enforced throughout the whole water column. Otherwise,\nKHTR_MIN is only enforced at the surface. This parameter is only available\nwhen KHTR_USE_EBT_STRUCT=True and KHTR_MIN>0.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "DEBUG": {
