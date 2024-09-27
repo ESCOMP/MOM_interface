@@ -3,6 +3,7 @@
 ############
 # commands #
 ############
+
 FC = mpif90
 CC = mpicc
 CXX = icpc
@@ -12,43 +13,40 @@ LD = mpif90
 #  flags   #
 ############
 
-DEBUG = 
-# Default set to REPRODUCIBLE
-
+DEBUG =
 MAKEFLAGS += --jobs=8
+LDFLAGS :=
 
 FC_AUTO_R8 := -r8
 FPPFLAGS := -fpp -Wp,-w
-FFLAGS :=  -qno-opt-dynamic-align  -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source  -no-fma  -qopt-report -march=core-avx2 $(FC_AUTO_R8) 
+FFLAGS := $(FC_AUTO_R8) -qno-opt-dynamic-align  -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source  -no-fma  -qopt-report -march=core-avx2
 FFLAGS_DEBUG = -O0 -g -check uninit -check bounds -check nopointer -fpe0 -check noarg_temp_created # CESM uses -check pointers, that throws an error, changed to nopointer
 FFLAGS_REPRO = -O2 -debug minimal
 
 CFLAGS := -qno-opt-dynamic-align -fp-model precise -std=gnu99  -no-fma -qopt-report -march=core-avx2
-CFLAGS += -I$(NETCDF_PATH)/include
 CFLAGS_REPRO= -O2 -debug minimal
 CFLAGS_DEBUG = -O0 -g
-LDFLAGS :=
 
 ifeq ($(DEBUG),1)
-  CFLAGS += $(CFLAGS_DEBUG)
   FFLAGS += $(FFLAGS_DEBUG)
+  CFLAGS += $(CFLAGS_DEBUG)
 else
   FFLAGS += $(FFLAGS_REPRO)
   CFLAGS += $(CFLAGS_REPRO)
 endif
 
-# Add Net CDF Flags
+# NetCDF Flags
 FFLAGS += -I$(shell nf-config --includedir)
-# add the use_LARGEFILE cppdef
+CFLAGS += -I$(NETCDF_PATH)/include
+
 ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
+  # add the use_LARGEFILE cppdef
   CPPDEFS += -Duse_LARGEFILE
 endif
+CPPDEFS += -D__IFC
 
-CPPDEFS := $(CPPDEFS) -D__IFC
-# Add netcdf linking
-LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
-
-LDFLAGS += $(LIBS)
+# Linking Flags
+LDFLAGS += $(shell nc-config --libs) $(shell nf-config --flibs)
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.

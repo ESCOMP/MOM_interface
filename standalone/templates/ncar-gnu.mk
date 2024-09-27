@@ -3,53 +3,49 @@
 ############
 # commands #
 ############
+
 FC = mpif90
 CC = gcc
 CXX = g++
 LD = mpif90 $(MAIN_PROGRAM)
 
-#########
-# flags #
-#########
+############
+#  flags   #
+############
 
 DEBUG =
- 
 MAKEFLAGS += --jobs=$(shell grep '^processor' /proc/cpuinfo | wc -l)
+LDFLAGS :=
 
-FPPFLAGS :=
 FC_AUTO_R8 := -fdefault-real-8 -fdefault-double-8
-FFLAGS :=  $(FC_AUTO_R8) -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none -fallow-argument-mismatch  -fallow-invalid-boz -fcray-pointer
+FPPFLAGS :=
+FFLAGS := $(FC_AUTO_R8) -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none -fallow-argument-mismatch  -fallow-invalid-boz -fcray-pointer
 FFLAGS_REPRO = -O
 FFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=zero,overflow -fcheck=bounds
-
 
 CFLAGS := -std=gnu99
 CFLAGS_REPRO = -O
 CFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=invalid,zero,overflow -fcheck=bounds
 
-LDFLAGS :=
-
-
 ifeq ($(DEBUG),1)
-CFLAGS += $(CFLAGS_DEBUG)
-FFLAGS += $(FFLAGS_DEBUG)
+  FFLAGS += $(FFLAGS_DEBUG)
+  CFLAGS += $(CFLAGS_DEBUG)
 else
-CFLAGS += $(CFLAGS_REPRO)
-FFLAGS += $(FFLAGS_REPRO)
+  FFLAGS += $(FFLAGS_REPRO)
+  CFLAGS += $(CFLAGS_REPRO)
 endif
-
 
 # NetCDF Flags
 FFLAGS += -I$(shell nc-config --includedir)
 CFLAGS += -I$(shell nc-config --includedir)
-  # add the use_LARGEFILE cppdef
+
 ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
-    CPPDEFS += -Duse_LARGEFILE
+  # add the use_LARGEFILE cppdef
+  CPPDEFS += -Duse_LARGEFILE
 endif
 
 # Linking Flags
-LIBS := $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
-LDFLAGS += $(LIBS)
+LDFLAGS += $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.

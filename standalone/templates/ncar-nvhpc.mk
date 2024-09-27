@@ -3,6 +3,7 @@
 ############
 # commands #
 ############
+
 FC = ftn
 CC = cc
 CXX = cc
@@ -13,73 +14,40 @@ LD = ftn $(MAIN_PROGRAM)
 ############
 
 DEBUG =
-
 MAKEFLAGS += --jobs=8
+LDFLAGS :=
 
-INCLUDES := $(shell pkg-config --cflags yaml-0.1)
-
-# Need to use at least GNU Make version 3.81
-need := 3.81
-ok := $(filter $(need),$(firstword $(sort $(MAKE_VERSION) $(need))))
-ifneq ($(need),$(ok))
-$(error Need at least make version $(need).  Load module gmake/3.81)
-endif
-
-# Macro for Fortran preprocessor
-FPPFLAGS := $(INCLUDES)
-
-
-# Base set of Fortran compiler flags
 FC_AUTO_R8 = -r8
-FFLAGS = $(FC_AUTO_R8) -Mnofma -i4 -gopt  -time -Mextend -byteswapio -Mflushz -Kieee 
-
-# Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
-FFLAGS_REPRO = -O2 -tp=zen3 
+FPPFLAGS := $(shell pkg-config --cflags yaml-0.1)
+FFLAGS = $(FC_AUTO_R8) -Mnofma -i4 -gopt  -time -Mextend -byteswapio -Mflushz -Kieee
 FFLAGS_DEBUG = -O0 -g  # -Mbounds fails compilation and -KTrap=fp fails run! seems like there is a floating point exception in netcdf_io_mod
-# Macro for C preprocessor
-CPPFLAGS := $(INCLUDES)
+FFLAGS_REPRO = -O2 -tp=zen3
 
-
-# Base set of C compiler flags
 CFLAGS = -gopt -time -Mnofma
-
-# Flags based on perforance target (production (OPT), reproduction (REPRO), or debug (DEBUG)
-CFLAGS_REPRO = -O2 
-CFLAGS_DEBUG = 
-
-# Linking flags
-LDFLAGS := 
-
-# List of -L library directories to be added to the compile and linking commands
-LIBS :=
+CFLAGS_REPRO = -O2
+CFLAGS_DEBUG =
+CPPFLAGS := $(shell pkg-config --cflags yaml-0.1)
 
 # Get compile flags based on target macros.
 ifeq ($(DEBUG),1)
-CFLAGS += $(CFLAGS_DEBUG)
-FFLAGS += $(FFLAGS_DEBUG)
+  FFLAGS += $(FFLAGS_DEBUG)
+  CFLAGS += $(CFLAGS_DEBUG)
 else
-CFLAGS += $(CFLAGS_REPRO)
-FFLAGS += $(FFLAGS_REPRO)
+  FFLAGS += $(FFLAGS_REPRO)
+  CFLAGS += $(CFLAGS_REPRO)
 endif
-
 
 # NetCDF Flags
-# Fortran Compiler flags for the NetCDF library
-FPPFLAGS += $(shell nf-config --fflags)
-# C Compiler flags for the NetCDF library
-CPPFLAGS += $(shell nc-config --cflags)
-# Add Netcdf linking
-LIBS += $(shell nc-config --libs) $(shell nf-config --flibs)
+FFLAGS += $(shell nf-config --fflags)
+CFLAGS += $(shell nc-config --cflags)
+
 ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
-    CPPDEFS += -Duse_LARGEFILE
+  # add the use_LARGEFILE cppdef
+  CPPDEFS += -Duse_LARGEFILE
 endif
 
-
-# These Algebra libraries Add solution to more complex vector matrix model equations
-LIBS += -llapack -lblas
-
-# CESM Linking Flags
-LDFLAGS += $(LIBS) -time -Wl,--allow-multiple-definition
+# Linking Flags
+LDFLAGS += $(shell nc-config --libs) $(shell nf-config --flibs) -llapack -lblas -time -Wl,--allow-multiple-definition
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.
@@ -90,13 +58,13 @@ LDFLAGS += $(LIBS) -time -Wl,--allow-multiple-definition
 # .f, .f90, .F, .F90. Given a sourcefile <file>.<ext>, where <ext> is one of
 # the above, this provides a number of default actions:
 
-# make <file>.opt       create an optimization report
-# make <file>.o         create an object file
-# make <file>.s         create an assembly listing
-# make <file>.x         create an executable file, assuming standalone
-#                       source
-# make <file>.i         create a preprocessed file (for .F)
-# make <file>.i90       create a preprocessed file (for .F90)
+# make <file>.opt	create an optimization report
+# make <file>.o		create an object file
+# make <file>.s		create an assembly listing
+# make <file>.x		create an executable file, assuming standalone
+#			source
+# make <file>.i		create a preprocessed file (for .F)
+# make <file>.i90	create a preprocessed file (for .F90)
 
 # The macro TMPFILES is provided to slate files like the above for removal.
 
