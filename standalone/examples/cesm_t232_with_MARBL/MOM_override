@@ -1,0 +1,25 @@
+! Parameter changes to run CESM-MOM6 config in standalone mode
+
+#override INPUTDIR = /glade/work/altuntas/mom6.standalone.runs/cesm/INPUT/t232
+#override READ_RIV_FLUXES = False
+WIND_FILE             = "ocean_forcing_daily.nc"
+DT_FORCING            = 1800.0
+EVAPORATION_FILE      =  "ocean_forcing_daily.nc"
+SNOW_FILE             =  "ocean_precip_monthly.nc"
+SSTRESTORE_FILE       =  "ocean_forcing_daily.nc"
+WINDSTRESS_X_VAR      =  "taux"
+LONGWAVE_FILE         =  "ocean_forcing_daily.nc"
+SALINITYRESTORE_FILE  =  "ocean_forcing_daily.nc"
+RUNOFF_FILE           =  "ocean_precip_monthly.nc"
+WINDSTRESS_Y_VAR      =  "tauy"
+SENSIBLEHEAT_FILE     =  "ocean_forcing_daily.nc"
+SHORTWAVE_FILE        =  "ocean_forcing_daily.nc"
+WIND_CONFIG           =  "file"
+BUOY_CONFIG           =  "file"
+WINDSTRESS_STAGGER    =  "C"
+RAIN_FILE             =  "ocean_precip_monthly.nc"
+LATENTHEAT_FILE       =  "ocean_forcing_daily.nc"
+ARCHAIC_OMIP_FORCING_FILE = .false.
+DAYMAX = 1.0
+
+
