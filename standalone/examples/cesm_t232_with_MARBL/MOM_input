@@ -11,6 +11,8 @@
 
 INPUTDIR = /glade/campaign/cesm/cesmdata/inputdata/ocn/mom/tx2_3v2
                                 ! "The directory in which input files are found."
+                                ! NOTE: this needs to point to CESM input directory
+                                !       current default is for NCAR super computers
 
 TRIPOLAR_N = True
                                 ! "[Boolean] default = False

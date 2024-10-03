@@ -1,6 +1,5 @@
 ! Parameter changes to run CESM-MOM6 config in standalone mode
 
-#override INPUTDIR = /glade/work/altuntas/mom6.standalone.runs/cesm/INPUT/t232
 #override READ_RIV_FLUXES = False
 WIND_FILE             = "ocean_forcing_daily.nc"
 DT_FORCING            = 1800.0

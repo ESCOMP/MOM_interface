@@ -121,6 +121,7 @@
   </test>
   <test name="SMS_Ld1_D" grid="TL319_t232" compset="C1850MARBL_JRA">
     <machines>
+      <machine name="derecho" compiler="intel" category="aux_mom"/>
       <machine name="derecho" compiler="intel" category="aux_mom_MARBL"/>
       <machine name="derecho" compiler="intel" category="prebeta"/>
     </machines>
