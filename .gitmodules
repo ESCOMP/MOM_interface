@@ -2,7 +2,7 @@
   path = MOM6
   url = https://github.com/NCAR/MOM6.git
   fxDONOTUSEurl = https://github.com/NCAR/MOM6.git
-    fxtag = dev/ncar_240923
+    fxtag = dev/ncar_241003
     fxrequired = AlwaysRequired
 
 [submodule "stochastic_physics"]
