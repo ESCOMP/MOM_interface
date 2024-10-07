@@ -1,86 +1,51 @@
 # template for the GNU fortran compiler
-# typical use with mkmf
-# mkmf -t linux-gnu.mk -c"-Duse_libMPI -Duse_netCDF" path_names /usr/local/include
+
 ############
 # commands #
 ############
+
 FC = mpif90
 CC = gcc
 CXX = g++
 LD = mpif90 $(MAIN_PROGRAM)
 
-#########
-# flags #
-#########
+############
+#  flags   #
+############
+
 DEBUG =
-REPRO =
-VERBOSE =
-OPENMP =
-
 MAKEFLAGS += --jobs=$(shell grep '^processor' /proc/cpuinfo | wc -l)
-
-FPPFLAGS :=
-
-FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check -fallow-argument-mismatch
-FFLAGS += -I$(shell nc-config --includedir)
-FFLAGS += $(shell pkg-config --cflags-only-I mpich2-c)
-FFLAGS_OPT = -O3
-FFLAGS_REPRO = -O2 -fbounds-check
-FFLAGS_DEBUG = -O0 -g -W -fbounds-check -fbacktrace -ffpe-trap=invalid,zero,overflow
-FFLAGS_OPENMP = -fopenmp
-FFLAGS_VERBOSE =
-
-CFLAGS := -D__IFC
-CFLAGS += -I$(shell nc-config --includedir)
-CFLAGS += $(shell pkg-config --cflags-only-I mpich2-c)
-CFLAGS_OPT = -O2
-CFLAGS_OPENMP = -fopenmp
-CFLAGS_DEBUG = -O0 -g
-
-# Optional Testing compile flags.  Mutually exclusive from DEBUG, REPRO, and OPT
-# *_TEST will match the production if no new option(s) is(are) to be tested.
-FFLAGS_TEST = -O2
-CFLAGS_TEST = -O2
-
 LDFLAGS :=
-LDFLAGS_OPENMP := -fopenmp
-LDFLAGS_VERBOSE :=
 
-ifneq ($(REPRO),)
-CFLAGS += $(CFLAGS_REPRO)
-FFLAGS += $(FFLAGS_REPRO)
-else ifneq ($(DEBUG),)
-CFLAGS += $(CFLAGS_DEBUG)
-FFLAGS += $(FFLAGS_DEBUG)
-else ifneq ($(TEST),)
-CFLAGS += $(CFLAGS_TEST)
-FFLAGS += $(FFLAGS_TEST)
+FC_AUTO_R8 := -fdefault-real-8 -fdefault-double-8
+FPPFLAGS :=
+FFLAGS := $(FC_AUTO_R8) -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none -fallow-argument-mismatch  -fallow-invalid-boz -fcray-pointer
+FFLAGS_REPRO = -O
+FFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=zero,overflow -fcheck=bounds
+
+CFLAGS := -std=gnu99
+CFLAGS_REPRO = -O
+CFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=invalid,zero,overflow -fcheck=bounds
+
+ifeq ($(DEBUG),1)
+  FFLAGS += $(FFLAGS_DEBUG)
+  CFLAGS += $(CFLAGS_DEBUG)
 else
-CFLAGS += $(CFLAGS_OPT)
-FFLAGS += $(FFLAGS_OPT)
+  FFLAGS += $(FFLAGS_REPRO)
+  CFLAGS += $(CFLAGS_REPRO)
 endif
 
-ifneq ($(OPENMP),)
-CFLAGS += $(CFLAGS_OPENMP)
-FFLAGS += $(FFLAGS_OPENMP)
-LDFLAGS += $(LDFLAGS_OPENMP)
-endif
+# NetCDF Flags
+FFLAGS += -I$(shell nc-config --includedir)
+CFLAGS += -I$(shell nc-config --includedir)
 
-ifneq ($(VERBOSE),)
-CFLAGS += $(CFLAGS_VERBOSE)
-FFLAGS += $(FFLAGS_VERBOSE)
-LDFLAGS += $(LDFLAGS_VERBOSE)
-endif
-
-ifeq ($(NETCDF),3)
+ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
   # add the use_LARGEFILE cppdef
-  ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
-    CPPDEFS += -Duse_LARGEFILE
-  endif
+  CPPDEFS += -Duse_LARGEFILE
 endif
 
-LIBS := $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
-LDFLAGS += $(LIBS)
+# Linking Flags
+LDFLAGS += $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.

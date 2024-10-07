@@ -1,6 +1,4 @@
 # template for Intel compilers
-# typical use with mkmf:
-# mkmf -t nescc-intel.mk -c "-Duse_libMPI -Duse_netCDF" path_names /usr/local/include
 
 ############
 # commands #
@@ -16,72 +14,39 @@ LD = mpif90
 ############
 
 DEBUG =
-REPRO =
-VERBOSE =
-OPENMP =
-
 MAKEFLAGS += --jobs=8
-
-FPPFLAGS := -fpp -Wp,-w
-
-FFLAGS := -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -i4 -r8 -nowarn -traceback
-FFLAGS += -I$(shell nf-config --includedir)
-FFLAGS_OPT = -O3 -debug minimal -fp-model source -qoverride-limits
-FFLAGS_DEBUG = -g -O0 -check -check noarg_temp_created -check nopointer -warn -warn noerrors -fpe0 -ftrapuv
-FFLAGS_REPRO = -O2 -debug minimal -fp-model source -qoverride-limits
-FFLAGS_OPENMP = -openmp
-FFLAGS_VERBOSE = -v -V -what
-
-CFLAGS := -D__IFC -sox -traceback -diag-disable=10441
-CFLAGS += -I$(NETCDF_PATH)/include
-CFLAGS_OPT = -O2 -debug minimal
-CFLAGS_OPENMP = -openmp
-CFLAGS_DEBUG = -O0 -g -ftrapuv
-
 LDFLAGS :=
-LDFLAGS_OPENMP := -openmp
-LDFLAGS_VERBOSE := -Wl,-V,--verbose,-cref,-M
 
-# start with blank LIBS
-LIBS :=
+FC_AUTO_R8 := -r8
+FPPFLAGS := -fpp -Wp,-w
+FFLAGS := $(FC_AUTO_R8) -qno-opt-dynamic-align  -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs -fp-model source  -no-fma  -qopt-report -march=core-avx2
+FFLAGS_DEBUG = -O0 -g -check uninit -check bounds -check nopointer -fpe0 -check noarg_temp_created # CESM uses -check pointers, that throws an error, changed to nopointer
+FFLAGS_REPRO = -O2 -debug minimal
 
-ifneq ($(REPRO),)
-  CFLAGS += $(CFLAGS_REPRO)
-  FFLAGS += $(FFLAGS_REPRO)
-else ifneq ($(DEBUG),)
-  CFLAGS += $(CFLAGS_DEBUG)
+CFLAGS := -qno-opt-dynamic-align -fp-model precise -std=gnu99  -no-fma -qopt-report -march=core-avx2
+CFLAGS_REPRO= -O2 -debug minimal
+CFLAGS_DEBUG = -O0 -g
+
+ifeq ($(DEBUG),1)
   FFLAGS += $(FFLAGS_DEBUG)
+  CFLAGS += $(CFLAGS_DEBUG)
 else
-  CFLAGS += $(CFLAGS_OPT)
-  FFLAGS += $(FFLAGS_OPT)
+  FFLAGS += $(FFLAGS_REPRO)
+  CFLAGS += $(CFLAGS_REPRO)
 endif
 
-ifneq ($(OPENMP),)
-  CFLAGS += $(CFLAGS_OPENMP)
-  FFLAGS += $(FFLAGS_OPENMP)
-  LDFLAGS += $(LDFLAGS_OPENMP)
-endif
+# NetCDF Flags
+FFLAGS += -I$(shell nf-config --includedir)
+CFLAGS += -I$(NETCDF_PATH)/include
 
-ifneq ($(VERBOSE),)
-  CFLAGS += $(CFLAGS_VERBOSE)
-  FFLAGS += $(FFLAGS_VERBOSE)
-  LDFLAGS += $(LDFLAGS_VERBOSE)
-endif
-
-ifeq ($(NETCDF),3)
+ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
   # add the use_LARGEFILE cppdef
-  ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
-    CPPDEFS += -Duse_LARGEFILE
-  endif
+  CPPDEFS += -Duse_LARGEFILE
 endif
+CPPDEFS += -D__IFC
 
-# Add netcdf linking
-LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
-
-#LIBS += -lmpi
-#LIBS += -lmpi -lsma
-#LIBS += -lmkl_blas95_lp64 -lmkl_lapack95_lp64 -lmkl_intel_lp64 -lmkl_core -lmkl_sequential
-LDFLAGS += $(LIBS)
+# Linking Flags
+LDFLAGS += $(shell nc-config --libs) $(shell nf-config --flibs)
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.

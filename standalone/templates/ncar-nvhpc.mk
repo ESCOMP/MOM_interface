@@ -1,53 +1,53 @@
-# template for the GNU fortran compiler for Ubuntu (Used initially for Github Actions)
-# (assumes Ubuntu with apt installs of netcdf-bin, libnetcdf-dev, libnetcdff-dev, openmpi-bin, libopenmpi-dev, linux-tools-common)
+# Template for the PGI Compilers
+
 ############
 # commands #
 ############
-FC = mpif90
-CC = mpicc
-CXX = g++
-LD = mpif90 $(MAIN_PROGRAM)
 
-#########
-# flags #
-#########
+FC = ftn
+CC = cc
+CXX = cc
+LD = ftn $(MAIN_PROGRAM)
+
+############
+#  flags   #
+############
+
 DEBUG =
-
-
-MAKEFLAGS += --jobs=2
-
-FPPFLAGS :=
-
-FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check
-FFLAGS_REPRO = -O2 -fbounds-check
-FFLAGS_DEBUG = -O0 -g -W -fbounds-check -fbacktrace -ffpe-trap=invalid,zero,overflow
-
-
-CFLAGS := -D__IFC
-CFLAGS_REPRO= -O2
-CFLAGS_DEBUG = -O0 -g
-
+MAKEFLAGS += --jobs=8
 LDFLAGS :=
 
+FC_AUTO_R8 = -r8
+FPPFLAGS := $(shell pkg-config --cflags yaml-0.1)
+FFLAGS = $(FC_AUTO_R8) -Mnofma -i4 -gopt  -time -Mextend -byteswapio -Mflushz -Kieee
+FFLAGS_DEBUG = -O0 -g  # -Mbounds fails compilation and -KTrap=fp fails run! seems like there is a floating point exception in netcdf_io_mod
+FFLAGS_REPRO = -O2 -tp=zen3
+
+CFLAGS = -gopt -time -Mnofma
+CFLAGS_REPRO = -O2
+CFLAGS_DEBUG =
+CPPFLAGS := $(shell pkg-config --cflags yaml-0.1)
+
+# Get compile flags based on target macros.
 ifeq ($(DEBUG),1)
-CFLAGS += $(CFLAGS_DEBUG)
-FFLAGS += $(FFLAGS_DEBUG)
+  FFLAGS += $(FFLAGS_DEBUG)
+  CFLAGS += $(CFLAGS_DEBUG)
 else
-CFLAGS += $(CFLAGS_REPRO)
-FFLAGS += $(FFLAGS_REPRO)
+  FFLAGS += $(FFLAGS_REPRO)
+  CFLAGS += $(CFLAGS_REPRO)
 endif
 
-# NetCDF Things 
-FFLAGS += -I$(shell nf-config --includedir)
-CFLAGS += -I$(shell nc-config --includedir)
+# NetCDF Flags
+FFLAGS += $(shell nf-config --fflags)
+CFLAGS += $(shell nc-config --cflags)
 
-# add the use_LARGEFILE cppdef
 ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
+  # add the use_LARGEFILE cppdef
   CPPDEFS += -Duse_LARGEFILE
 endif
 
-LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
-LDFLAGS += $(LIBS)
+# Linking Flags
+LDFLAGS += $(shell nc-config --libs) $(shell nf-config --flibs) -llapack -lblas -time -Wl,--allow-multiple-definition
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.
@@ -69,7 +69,6 @@ LDFLAGS += $(LIBS)
 # The macro TMPFILES is provided to slate files like the above for removal.
 
 RM = rm -f
-SHELL = /bin/csh -f
 TMPFILES = .*.m *.B *.L *.i *.i90 *.l *.s *.mod *.opt
 
 .SUFFIXES: .F .F90 .H .L .T .f .f90 .h .i .i90 .l .o .s .opt .x
