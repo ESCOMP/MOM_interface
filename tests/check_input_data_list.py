@@ -10,107 +10,155 @@ EXCEPTIONS = [
 ]
 
 
-def filter_files(func):
-    """This decorator function filters out all non-input file names from the set of file names
-    returned by the decorated function. The decorator function removes all entries that are not
-    strings, all entries that contain case specific strs in them, as well as all entries matching
-    known exceptions. The function returns only the file names, not the relative/absolute paths.
+def extract_values(d):
+    """Given a dictionary or value, this function recursively extracts all values from the dictionary."""
+    if isinstance(d, dict):
+        for key in d:
+            yield from extract_values(d[key])
+    else:
+        yield d
+
+
+def _retrieve_input_filenames(varname, values):
+    """Given a variable name and values pair from a param template dict, this function extracts all
+    input file names from the values. It attempts to filter out non-file names, output file names,
+    and known exceptions. It also retains only the file names from relative/absolute paths.
+
+    Parameters
+    ----------
+    varname : str
+        The variable name from the param template dict.
+    values : list
+        A list of values for the variable name from the param template dict.
+
+    Returns
+    -------
+    values : list
+        A list of input file names extracted from the values.
     """
+    # Remove all entries that are not strings
+    values = [v for v in values if isinstance(v, str)]
 
-    def wrapper():
+    # Retain only values that are (most likely) file names: ending with '.nc' or '.txt' or containing 'FILE:'
+    # or containing ':<filename>.nc' or ':<filename>.txt'
+    values = [
+        v
+        for v in values
+        if "FILE:" in v
+        or re.search(":[\w\-\.]+\.(nc|txt)", v)
+        or v.endswith(".nc")
+        or v.endswith(".txt")
+        or varname.endswith("_FILE")
+        or v.strip("${}").endswith("_FILE")
+    ]
 
-        files = func()
+    # Extract the file names from values of the form 'WORD:FILENAME[,]'
+    values = [v.split(":")[1].split(",")[0].strip() if ":" in v else v for v in values]
 
-        # Remove all entries that are not strings
-        files = {f for f in files if isinstance(f, str)}
+    # If relative/absolute paths, retain only the file names
+    values = [v.split("/")[-1] for v in values]
 
-        # If relative/absolute paths, extract only the file names
-        files = {f.split("/")[-1] for f in files}
+    # Exclude entries containing CASE-specific XML variables, as these indicate output files rather than inputs.
+    values = [v for v in values if not re.search(r"\$\{.*CASE.*\}|\{\$.*CASE.*\}", v)]
 
-        # Exclude entries containing CASE-specific XML variables, as these indicate output files rather than inputs.
-        files = {f for f in files if not re.search(r"\$\{.*CASE.*\}|\{\$.*CASE.*\}", f)}
+    # Filter out known exceptions:
+    for pattern in EXCEPTIONS:
+        values = [v for v in values if not re.search(pattern, v)]
 
-        # Filter out known exceptions:
-        for pattern in EXCEPTIONS:
-            files = {f for f in files if not re.search(pattern, f)}
-
-        return files
-
-    return wrapper
+    return values
 
 
-@filter_files
-def get_input_files_in_MOM_input():
+def get_input_files_in_MOM_input(MOM_input_yaml):
     """
     This function reads the MOM_input.yaml file and extracts all input file names that it can detect.
-    To do so, it looks for all parameters ending with _FILE and all parameters with values of the form '*.FILE: ...'.
+
+    Parameters
+    ----------
+    MOM_input_yaml : dict
+        The dictionary object containing the parsed MOM_input.yaml file.
+
+    Returns
+    -------
+    file_params: dict
+        A dictionary of varname: file names pairs, where varname is the parameter name and file names are the input file names.
     """
 
-    MOM_input_yaml = yaml.safe_load(open("./param_templates/MOM_input.yaml", "r"))
+    files = {}
 
-    files = set()
-
-    # Part 1 - Find all input parameters ending with _FILE
     for module in MOM_input_yaml:
         for varname in MOM_input_yaml[module]:
-            if varname.endswith("_FILE"):
-                value = MOM_input_yaml[module][varname]["value"]
-                if isinstance(value, str):
-                    files.add(value)
-                elif isinstance(value, dict):
-                    for key in value:
-                        files.add(value[key])
-                else:
-                    raise ValueError("Unexpected value type: {}".format(type(value)))
-
-    # Part 2 - Go through all parameters and gather those with values '*.FILE: ...'
-    extract_filename = lambda x: x.split("FILE:")[1].split(",")[0]
-    for module in MOM_input_yaml:
-        for varname in MOM_input_yaml[module]:
-            value = MOM_input_yaml[module][varname]["value"]
-            if isinstance(value, str) and "FILE:" in value:
-                files.add(extract_filename(value))
-            elif isinstance(value, dict):
-                for key in value:
-                    if isinstance(value[key], str) and "FILE:" in value[key]:
-                        files.add(extract_filename(value[key]))
+            value_block = MOM_input_yaml[module][varname]["value"]
+            values = _retrieve_input_filenames(varname, extract_values(value_block))
+            if values:
+                files[varname] = values
 
     return files
 
 
-@filter_files
-def get_input_data_list_files():
+def get_input_data_list_files(input_data_list_yaml, MOM_input_files):
     """
-    This function reads the input_data_list.yaml file and extracts all input file names in it.
+    This function reads the input_data_list.yaml file and extracts all input file names that it can detect.
+    To do so, it looks for all values in the input_data_list.yaml file.
+
+    Parameters
+    ----------
+    input_data_list_yaml : dict
+        The dictionary object containing the parsed input_data_list.yaml file.
+    MOM_input_files : dict
+        The dictionary object containing the varname: file names pairs extracted from the MOM_input.yaml file.
+        To be used to expand expandable variables in the input_data_list.yaml file.
+
+    Returns
+    -------
+    files: dict
+        A dictionary of varname: file names pairs, where varname is the parameter name and file names are the input file names.
     """
 
-    # a recursive function to extract all values from a nested dictionary:
-    def extract_values(d):
-        if isinstance(d, dict):
-            for key in d:
-                yield from extract_values(d[key])
-        else:
-            yield d
+    files = {}
 
-    input_data_list_yaml = yaml.safe_load(
-        open("./param_templates/input_data_list.yaml", "r")
-    )
     input_data_list = input_data_list_yaml["mom.input_data_list"]
 
-    files = {
-        v for file in input_data_list for v in extract_values(input_data_list[file])
-    }
+    for varname in input_data_list:
+        _files = _retrieve_input_filenames(
+            varname, extract_values(input_data_list[varname])
+        )
+        if _files:
+            # Expand expandable variables in the input_data_list.yaml file
+            for i, _file in enumerate(_files):
+                # Find all expandable variables in the file name:
+                expandable_vars = re.findall(r"\$\{.*\}|\b\$.*\b", _file)
+                for expandable_var in expandable_vars:
+                    if expandable_var.strip("${}") in MOM_input_files:
+                        # Replace the expandable variable with the corresponding file name from MOM_input.yaml
+                        _files.pop(i)
+                        _files.extend(MOM_input_files[expandable_var.strip("${}")])
+
+            files[varname] = _files
 
     return files
 
 
 if __name__ == "__main__":
-    mom_input_files = get_input_files_in_MOM_input()
-    input_data_list_files = get_input_data_list_files()
 
-    # Check if all files in input_data_list.yaml are also in MOM_input.yaml
+    # Read in the MOM_input.yaml file and extract all input file names
+    MOM_input_yaml = yaml.safe_load(open("./param_templates/MOM_input.yaml", "r"))
+    MOM_input_files = get_input_files_in_MOM_input(MOM_input_yaml)
+
+    # Read in the input_data_list.yaml file and extract all input file names
+    input_data_list_yaml = yaml.safe_load(
+        open("./param_templates/input_data_list.yaml", "r")
+    )
+    input_data_list_files = get_input_data_list_files(
+        input_data_list_yaml, MOM_input_files
+    )
+
+    # Check if all files in MOM_input.yaml are present in input_data_list.yaml
     # If not, print the missing files and raise an error
-    missing_files = mom_input_files - input_data_list_files
+    missing_files = set(
+        filename for filelist in MOM_input_files.values() for filename in filelist
+    ) - set(
+        filename for filelist in input_data_list_files.values() for filename in filelist
+    )
     if missing_files:
         raise ValueError(
             "Below parameter value(s) in MOM_input.yaml are suspected to be input file name(s), "
