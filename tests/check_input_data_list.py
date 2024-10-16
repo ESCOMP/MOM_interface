@@ -23,6 +23,11 @@ def filter_files(func):
         # Remove all entries that are not strings
         files = {f for f in files if isinstance(f, str)}
 
+        # Remove all entries that contain expandable variables other than DIN_LOC_ROOT and INPUTDIR:
+        files = {
+            f for f in files if "$" not in f or "DIN_LOC_ROOT" in f or "INPUTDIR" in f
+        }
+
         # In file names, replace all occurrences of DIN_LOC_ROOT:
         files = {
             f.replace("${DIN_LOC_ROOT}/", "").replace("{$DIN_LOC_ROOT}/", "")
@@ -33,9 +38,6 @@ def filter_files(func):
         files = {
             f.replace("${INPUTDIR}/", "").replace("{$INPUTDIR}/", "") for f in files
         }
-
-        # Remove all remaining files with expandable variables, since they most likely correspond to output file names
-        files = {f for f in files if "$" not in f}
 
         # For entries corresponding to relative or absolute paths, retrieve only the file name:
         files = {f.split("/")[-1] for f in files}
@@ -129,3 +131,5 @@ if __name__ == "__main__":
             "to exclude them from the check e.g., by adding them to the EXCEPTIONS list.\n\n  "
             + "\n  ".join(missing_files)
         )
+
+    print("All input files in MOM_input.yaml are present in input_data_list.yaml.")
