@@ -37,7 +37,7 @@ def filter_files(func):
         # Remove all remaining files with expandable variables, since they most likely correspond to output file names
         files = {f for f in files if "$" not in f}
 
-        # For entries corresponding to relative or absolute paths, extract the file name:
+        # For entries corresponding to relative or absolute paths, retrieve only the file name:
         files = {f.split("/")[-1] for f in files}
 
         # Filter out known exceptions:
@@ -122,9 +122,10 @@ if __name__ == "__main__":
     # If not, print the missing files and raise an error
     missing_files = mom_input_files - input_data_list_files
     if missing_files:
-        print(
-            "The following files are in MOM_input.yaml but not in input_data_list.yaml:"
+        raise ValueError(
+            "Below parameter value(s) in MOM_input.yaml are suspected to be input file name(s), "
+            "but are not present in input_data_list.yaml. If these are indeed input files, "
+            "please add them to input_data_list.yaml. If not, please update this CI test module "
+            "to exclude them from the check e.g., by adding them to the EXCEPTIONS list.\n\n  "
+            + "\n  ".join(missing_files)
         )
-        for file in missing_files:
-            print(file)
-        raise ValueError("Above files are missing in input_data_list.yaml")
