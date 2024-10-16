@@ -89,6 +89,19 @@ jobs:
       # Run the test
       - name: Run the check_default_params script
         run: python tests/check_default_params.py
+  
+  # Job to run check_input_data_list script
+  check_input_data_list:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+      
+      # Run the test
+      - name: Run the check_input_data_list script
+        run: python tests/check_input_data_list.py
         
   # Job to run the black formatter for cime_config, see black documentation for more info
   check_black_format_for_cime_config:
