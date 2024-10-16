@@ -4,16 +4,17 @@ import yaml
 import re
 
 
-# List of regex patterns to exclude known non-input files
-EXCEPTIONS = ["._velocity_truncations"]
+# List of filename regex patterns to exclude from the check between MOM_input.yaml and input_data_list.yaml
+EXCEPTIONS = [
+    "._velocity_truncations",
+]
 
 
 def filter_files(func):
     """This decorator function filters out all non-input file names from the set of file names
     returned by the decorated function. The decorator function removes all entries that are not
-    strings, all entries that contain expandable variables other than $DIN_LOC_ROOT and $INPUTDIR.
-    It also extracts only the file name from entries that contain relative or absolute paths.
-    Finally, it filters out known exceptions.
+    strings, all entries that contain case specific strs in them, as well as all entries matching
+    known exceptions. The function returns only the file names, not the relative/absolute paths.
     """
 
     def wrapper():
@@ -23,28 +24,15 @@ def filter_files(func):
         # Remove all entries that are not strings
         files = {f for f in files if isinstance(f, str)}
 
-        # Remove all entries that contain expandable variables other than DIN_LOC_ROOT and INPUTDIR:
-        files = {
-            f for f in files if "$" not in f or "DIN_LOC_ROOT" in f or "INPUTDIR" in f
-        }
-
-        # In file names, replace all occurrences of DIN_LOC_ROOT:
-        files = {
-            f.replace("${DIN_LOC_ROOT}/", "").replace("{$DIN_LOC_ROOT}/", "")
-            for f in files
-        }
-
-        # In file names, replace all occurrences of INPUTDIR:
-        files = {
-            f.replace("${INPUTDIR}/", "").replace("{$INPUTDIR}/", "") for f in files
-        }
-
-        # For entries corresponding to relative or absolute paths, retrieve only the file name:
+        # If relative/absolute paths, extract only the file names
         files = {f.split("/")[-1] for f in files}
+
+        # Exclude entries containing CASE-specific XML variables, as these indicate output files rather than inputs.
+        files = {f for f in files if not re.search(r"\$\{.*CASE.*\}|\{\$.*CASE.*\}", f)}
 
         # Filter out known exceptions:
         for pattern in EXCEPTIONS:
-            files = {f for f in files if not re.match(pattern, f)}
+            files = {f for f in files if not re.search(pattern, f)}
 
         return files
 
