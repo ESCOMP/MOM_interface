@@ -104,7 +104,7 @@ jobs:
         run: python tests/check_input_data_list.py
 
   # Job to run check_input_data_repo script
-  check_input_data_list:
+  check_input_data_repo:
     
     runs-on: ubuntu-latest
     
