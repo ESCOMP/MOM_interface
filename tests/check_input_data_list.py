@@ -56,7 +56,7 @@ def get_input_files_in_MOM_input():
     To do so, it looks for all parameters ending with _FILE and all parameters with values of the form '*.FILE: ...'.
     """
 
-    MOM_input_yaml = yaml.safe_load(open("../param_templates/MOM_input.yaml", "r"))
+    MOM_input_yaml = yaml.safe_load(open("./param_templates/MOM_input.yaml", "r"))
 
     files = set()
 
@@ -103,7 +103,7 @@ def get_input_data_list_files():
             yield d
 
     input_data_list_yaml = yaml.safe_load(
-        open("../param_templates/input_data_list.yaml", "r")
+        open("./param_templates/input_data_list.yaml", "r")
     )
     input_data_list = input_data_list_yaml["mom.input_data_list"]
 
