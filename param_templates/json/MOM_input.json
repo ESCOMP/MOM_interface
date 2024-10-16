@@ -2195,10 +2195,7 @@
       "IC_OUTPUT_FILE": {
          "description": "\"default = 'MOM_IC'\nThe file into which to write the initial conditions.\"\n",
          "datatype": "string",
-         "value": {
-            "$OCN_GRID == \"MISOMIP\"": "MISOMIP_IC",
-            "else": "= \"${CASE}.mom6.ic.${RUN_STARTDATE}.nc\""
-         }
+         "value": "= \"${CASE}.mom6.ic.${RUN_STARTDATE}.nc\""
       },
       "TRIMMING_USES_REMAPPING": {
          "description": "\"[Boolean] default = False\nWhen trimming the column, also remap T and S.\"\n",
