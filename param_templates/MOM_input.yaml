@@ -2210,7 +2210,7 @@ Global:
              The background gustiness in the winds."
         datatype: real
         units: Pa
-        value: 0.02
+        value: 0.0004
     FIX_USTAR_GUSTLESS_BUG:
         description: |
             "[Boolean] default = False
@@ -2730,6 +2730,23 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.25v1": True
+    FPMIX:
+        description: |
+            "[Boolean] default = False
+            If true, add non-local momentum flux increments and diffuse down the Eulerian
+            gradient.
+        datatype: logical
+        units: Boolean
+        value:
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
+    CEMP_NL:
+        description: |
+            "default = 3.6
+            Empirical coefficient of non-local momentum mixing."
+        datatype: real
+        units: nondim
+        value:
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: 2.0
 
     # MISOMIP-only variables:
 
@@ -3694,5 +3711,12 @@ KPP:
         datatype: string
         value:
             $COMP_WAV == "ww3": VR12
+    STOKES_MOST:
+        description: |
+            default = False
+            If True, use Stokes Similarity package.
+        datatype: logical
+        value:
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True    
 
 ...

@@ -1731,7 +1731,7 @@
          "description": "\"[Pa] default = 0.02\n The background gustiness in the winds.\"\n",
          "datatype": "real",
          "units": "Pa",
-         "value": 0.02
+         "value": 0.0004
       },
       "FIX_USTAR_GUSTLESS_BUG": {
          "description": "\"[Boolean] default = False\nIf true correct a bug in the time-averaging of the gustless wind\nfriction velocity.\"\n",
@@ -2166,6 +2166,22 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": true
+         }
+      },
+      "FPMIX": {
+         "description": "\"[Boolean] default = False\nIf true, add non-local momentum flux increments and diffuse down the Eulerian\ngradient.\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
+         }
+      },
+      "CEMP_NL": {
+         "description": "\"default = 3.6\nEmpirical coefficient of non-local momentum mixing.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": 2.0
          }
       },
       "REENTRANT_X": {
@@ -2990,6 +3006,13 @@
          "datatype": "string",
          "value": {
             "$COMP_WAV == \"ww3\"": "VR12"
+         }
+      },
+      "STOKES_MOST": {
+         "description": "default = False\nIf True, use Stokes Similarity package.\n",
+         "datatype": "logical",
+         "value": {
+            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
          }
       }
    }
