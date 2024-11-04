@@ -388,10 +388,15 @@ def prechecks(case, inst_suffixes):
     # check if rpointer files are present in rundir
     if not testcase and (run_type != "startup" or continue_run):
         for inst_suffix in inst_suffixes:
-            pointer_file = os.path.join(rundir, "rpointer.ocn" + inst_suffix)
+            rpointer_pattern = (
+                r"rpointer\.ocn" + inst_suffix + r"\.\d{4}-\d{2}-\d{2}-\d{5}"
+            )
+            rpointer_files = [
+                f for f in os.listdir(rundir) if re.match(rpointer_pattern, f)
+            ]
             expect(
-                os.path.exists(pointer_file),
-                f"Missing rpointer file rpointer.ocn{inst_suffix} in rundir.",
+                len(rpointer_files) > 0,
+                f"Missing rpointer files in rundir. Expected files with pattern {rpointer_pattern}.",
             )
         
     # check if the restart file is present in rundir
