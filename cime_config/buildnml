@@ -389,7 +389,7 @@ def prechecks(case, inst_suffixes):
     if not testcase and (run_type != "startup" or continue_run):
         for inst_suffix in inst_suffixes:
             rpointer_pattern = (
-                r"rpointer\.ocn" + inst_suffix + r"\.\d{4}-\d{2}-\d{2}-\d{5}"
+                r"rpointer\.ocn" + inst_suffix + r"(\.\d{4}-\d{2}-\d{2}-\d{5})?$"
             )
             rpointer_files = [
                 f for f in os.listdir(rundir) if re.match(rpointer_pattern, f)
