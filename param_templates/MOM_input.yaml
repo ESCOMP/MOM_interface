@@ -2782,9 +2782,7 @@ Global:
             "default = 'MOM_IC'
             The file into which to write the initial conditions."
         datatype: string
-        value:
-            $OCN_GRID == "MISOMIP": "MISOMIP_IC"
-            else: = "${CASE}.mom6.ic.${RUN_STARTDATE}.nc"
+        value: = "${CASE}.mom6.ic.${RUN_STARTDATE}.nc"
     TRIMMING_USES_REMAPPING:
         description: |
             "[Boolean] default = False
