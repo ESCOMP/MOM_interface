@@ -1,0 +1,110 @@
+name: General MOM_interface CI
+
+# This CI workflow tests against the following questions: 
+# 1. Does standalone mom build and run?
+# 2. Does it pass the tests/check_default_params.py test?
+# 3. Do the scripts in cime_config pass the black formatter? 
+# Please see Issue #138 for more information
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the listed branches
+  push:
+    branches: ["main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  
+  check_standalone_mom_build_and_run_lightweight_examples:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    # Copied from NCAR/MOM6 - Install Basic Build Packages for MOM6
+      - name: Install Ubuntu Linux packages
+        shell: bash
+        run: |
+          echo "::group::Install linux packages"
+          sudo apt-get update
+          sudo apt-get install netcdf-bin
+          sudo apt-get install libnetcdf-dev
+          sudo apt-get install libnetcdff-dev
+          sudo apt-get install openmpi-bin
+          sudo apt-get install libopenmpi-dev
+          sudo apt-get install linux-tools-common
+          sudo apt-get install -y csh
+          echo "::endgroup::"
+          
+      # Checkout CESM (default branch) and externals
+      - name: Checkout CESM and Externals
+        run: |
+          git clone https://github.com/ESCOMP/CESM.git 
+          cd CESM
+          ./bin/git-fleximod update
+          
+      # Checkout the correct MOM Branch
+      - name: Checkout initial event (Pull Request)
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo "Handling pull request"
+          cd $GITHUB_WORKSPACE/CESM/components/mom/
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
+          git checkout pr-${{ github.event.pull_request.number }}
+
+      - name: Checkout initial event (Push)
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "Handling push"
+          cd $GITHUB_WORKSPACE/CESM/components/mom/
+          git checkout ${{ github.sha }}
+
+      # Build the standalone mom using the macos script. build_examples-ncar doesn't work.    
+      - name: Build Standalone MOM
+        run: |
+          cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/build
+          ./build_examples.sh --compiler gnu --machine ubuntu
+          
+      # CD into a couple MOM examples and run MOM in them. These are very light weight and quick.
+      - name: Run Double Gyre Test
+        run: |
+          cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/examples/double_gyre
+          $GITHUB_WORKSPACE/CESM/components/mom/standalone/build/gnu/MOM6/MOM6
+      - name: Run Single Column KPP Test
+        run: |
+          cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/examples/single_column/KPP
+          $GITHUB_WORKSPACE/CESM/components/mom/standalone/build/gnu/MOM6/MOM6
+          
+
+  # Job to run the check_default_params script, which is a test
+  check_default_params:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+      
+      # Run the test
+      - name: Run the check_default_params script
+        run: python tests/check_default_params.py
+        
+  # Job to run the black formatter for cime_config, see black documentation for more info
+  check_black_format_for_cime_config:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+      
+      # Run black check
+      - uses: psf/black@stable
+        with:
+          options: "--check --verbose"
+          src: "./cime_config"
+      
+      
+
+  

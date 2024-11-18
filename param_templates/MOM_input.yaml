@@ -117,16 +117,6 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx2_3v2": False
-    DIABATIC_FIRST:
-        description: |
-            "[Boolean] default = False
-            If true, apply diabatic and thermodynamic processes,
-            including buoyancy forcing and mass gain or loss,
-            before stepping the dynamics forward."
-        datatype: logical
-        units: Boolean
-        value:
-            $OCN_GRID == "tx2_3v2": True
     USE_REGRIDDING:
         description: |
             "[Boolean] default = False
@@ -278,7 +268,7 @@ Global:
             by IC_OUTPUT_FILE."
         datatype: logical
         units: Boolean
-        value: True
+        value: = $CONTINUE_RUN == False
     GRID_ROTATION_ANGLE_BUGS:
         description: |
             "[Boolean] default = True
@@ -615,6 +605,16 @@ Global:
             PQM_IH6IH5  (5th-order accurate)"
         datatype: string
         value: "PPM_CW"
+    REMAP_VEL_CONSERVE_KE:
+        description: |
+            "[Boolean] default = False
+            If true, a correction is applied to the baroclinic component of velocity after
+            remapping so that total KE is conserved. KE may not be conserved when
+            (CS%BBL_h_vel_mask > 0.0) .and. (CS%h_vel_mask > 0.0)"
+        datatype: logical
+        units: Boolean
+        value:
+             $OCN_GRID == "tx2_3v2": True
     INIT_LAYERS_FROM_Z_FILE:
         description: |
             "[Boolean] default = False
@@ -662,6 +662,15 @@ Global:
         datatype: logical
         units: Boolean
         value: False
+    Z_INIT_REMAP_GENERAL:
+        description: |
+            "[Boolean] default = False
+            If false, only initializes to z* coordinates. If true, allows initialization
+            directly to general coordinates."
+        datatype: logical
+        units: Boolean
+        value:
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]: True
     USE_VARIABLE_MIXING:
         description: |
             "[Boolean] default = False
@@ -912,7 +921,7 @@ Global:
         datatype: real
         units: not defined
         value:
-            $MOM6_VERTICAL_GRID == "hycom1": 0.01
+            $MOM6_VERTICAL_GRID == "hycom1": 0.0
     MAXIMUM_INT_DEPTH_CONFIG:
         description: |
             "default = 'NONE'
@@ -942,7 +951,9 @@ Global:
             The list of maximum thickness for each layer."
         datatype: string
         value:
-            $MOM6_VERTICAL_GRID == "hycom1": '"FNC1:400,31000.0,0.1,.01"'
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]: |
+                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max_90th_quantile.nc,dz"'
+            else: '"FNC1:400,31000.0,0.1,.01"'
     BOUND_CORIOLIS:
         description: |
             "[Boolean] default = False
@@ -1365,6 +1376,24 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": 0.0
             $OCN_GRID == "MISOMIP": 0.0
+    KHTH_MIN:
+        description: |
+            "[m2 s-1] default = 0.0
+            The minimum horizontal thickness diffusivity"
+        datatype: real
+        units: m2 s-1
+        value:
+            $OCN_GRID == "tx2_3v2": 50.0
+    FULL_DEPTH_KHTH_MIN:
+        description: |
+            "[Boolean] default = False
+            KHTH_MIN is enforced throughout the whole water column. Otherwise,
+            KHTH_MIN is only enforced at the surface. This parameter is only available
+            when KHTH_USE_EBT_STRUCT=True and KHTH_MIN>0."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     KHTH_MAX_CFL:
         description: |
             "[nondimensional] default = 0.8
@@ -2000,7 +2029,18 @@ Global:
         datatype: integer
         value:
             $OCN_GRID == "tx0.25v1": 3
-            $OCN_GRID == "tx2_3v2": 3
+            $OCN_GRID == "tx2_3v2": 2
+    OPACITY_SCHEME:
+        description: |
+            "default = 'MANIZZA_05'
+            This character string specifies how chlorophyll concentrations are translated
+            into opacities. Currently valid options include:
+                   MANIZZA_05 - Use Manizza et al., GRL, 2005.
+                   MOREL_88 - Use Morel, JGR, 1988.
+                   OHLMANN_03 - Use Ohlmann, J Clim, 2003."
+        datatype: string
+        value:
+            $OCN_GRID == "tx2_3v2": "OHLMANN_03"
     TRACER_ADVECTION_SCHEME:
         description: |
             "default = 'PLM'
@@ -2035,6 +2075,16 @@ Global:
         units: m2 s-1
         value:
             $OCN_GRID == "tx2_3v2": 50.0
+    FULL_DEPTH_KHTR_MIN:
+        description: |
+            "[Boolean] default = False
+            KHTR_MIN is enforced throughout the whole water column. Otherwise,
+            KHTR_MIN is only enforced at the surface. This parameter is only available
+            when KHTR_USE_EBT_STRUCT=True and KHTR_MIN>0."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     DEBUG:
         description: |
             "If true, write out verbose debugging data."
@@ -2156,7 +2206,7 @@ Global:
              The background gustiness in the winds."
         datatype: real
         units: Pa
-        value: 0.02
+        value: 0.0004
     FIX_USTAR_GUSTLESS_BUG:
         description: |
             "[Boolean] default = False
@@ -2675,6 +2725,23 @@ Global:
         units: Boolean
         value:
             $OCN_GRID in ["tx0.25v1", "nwa12"]: True
+    FPMIX:
+        description: |
+            "[Boolean] default = False
+            If true, add non-local momentum flux increments and diffuse down the Eulerian
+            gradient.
+        datatype: logical
+        units: Boolean
+        value:
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
+    CEMP_NL:
+        description: |
+            "default = 3.6
+            Empirical coefficient of non-local momentum mixing."
+        datatype: real
+        units: nondim
+        value:
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: 2.0
 
     # MISOMIP-only variables:
 
@@ -2713,6 +2780,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "MISOMIP_IC"
+            else: = "${CASE}.mom6.ic.${RUN_STARTDATE}.nc"
     TRIMMING_USES_REMAPPING:
         description: |
             "[Boolean] default = False
@@ -3550,7 +3618,7 @@ Global:
             The file into which to write the ocean geometry.
         datatype: string
         value:
-            $CASE.mom6.h.ocean_geometry.nc
+            "${CASE}.mom6.h.ocean_geometry.nc"
     SKEB_NPASS:
         description: |
             "default = 3
@@ -3639,5 +3707,12 @@ KPP:
         datatype: string
         value:
             $COMP_WAV == "ww3": VR12
+    STOKES_MOST:
+        description: |
+            default = False
+            If True, use Stokes Similarity package.
+        datatype: logical
+        value:
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True    
 
 ...

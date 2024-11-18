@@ -73,6 +73,7 @@
     <valid_values>zstar_75L,zstar_65L,hycom1,sigma_shelf_zstar</valid_values>
     <default_value>zstar_65L</default_value>
     <values>
+      <value grid="oi%tx2_3v2">hycom1</value>
       <value grid="oi%tx0.25v1">hycom1</value>
       <value grid="oi%MISOMIP">sigma_shelf_zstar</value>
     </values>

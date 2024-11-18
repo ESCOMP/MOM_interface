@@ -5,14 +5,14 @@
          h[.optional stream name][._optional instance number].(date string).nc[.optional tile number] -->
     <hist_file_extension>h(\.\w+)?(\._\d*)?\.[-\d+]+\.nc(\.\d*)?$</hist_file_extension>
     <!-- match filenames of the form
-         h.static[._optional instance number].nc[.optional tile number] -->
-    <hist_file_extension>h\.static(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
+         h.(static|ocean_geometry)[._optional instance number].nc[.optional tile number] -->
+    <hist_file_extension>h\.(static|ocean_geometry)(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
     <!-- match filenames of the form
          h.bgc.*[._optional instance number].nc -->
     <hist_file_extension>h\.bgc\..*?.?[_\d+]+.nc$</hist_file_extension>
-    <hist_file_extension>h\.ocean_geometry(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
-    <!-- Match hist extension (i.e., stream name), used to identify last file
-         in each stream in baseline generation within testing -->
+    <!-- match filenames of the form
+         ic.(date string)[._optional instance number].nc[.optional tile number] -->
+    <hist_file_extension>ic.[-\d+]+(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
     <hist_file_ext_regex>\w+\.\w+(\._\d*)?</hist_file_ext_regex>
     <rpointer>
       <rpointer_file>rpointer.ocn$NINST_STRING</rpointer_file>
