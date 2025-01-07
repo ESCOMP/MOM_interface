@@ -83,6 +83,26 @@
     </desc>
   </entry>
 
+  <entry id="MOM6_WW3_CPL_METHOD">
+    <type>char</type>
+    <valid_values>none,legacy,most</valid_values>
+    <default_value>most</default_value>
+    <values>
+      <value grid="w%ww3a">legacy</value>
+      <value compset="_SWAV|_DWAV">none</value>
+    </values>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc> This variable determines the method used to couple MOM6 to WW3.
+           The method "most" corresponds to the newest coupling method 
+           that turns on FPMix parameterization, Stokes_Bands coupling,
+           and Stokes similarity package. The method "legacy" corresponds to
+           the older coupling method based on receiving a Langmuir number from
+           WW3 and passing it to CVMix. When set to "none", no wave
+           parameterization is used.
+    </desc>
+  </entry>
+
   <entry id="OCN_DIAG_MODE">
     <type>char</type>
     <valid_values>spinup,production,development,none</valid_values>
