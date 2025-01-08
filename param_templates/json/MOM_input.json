@@ -426,6 +426,14 @@
             "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc"
          }
       },
+      "TOPO_EDITS_FILE": {
+         "description": "\"default =\nThe file from which to read a list of i,j,z topography overrides.\"\n",
+         "datatype": "string",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "topo_edits_tx2_3v2_250107.nc",
+            "else": ""
+         }
+      },
       "MAXIMUM_DEPTH": {
          "description": "\"[m]\nThe maximum depth of the ocean.\"\n",
          "datatype": "real",
@@ -799,8 +807,8 @@
             "$OCN_GRID == \"MISOMIP\"": 0.001
          }
       },
-      "LEITH_AH": {
-         "description": "\"[Boolean] default = False\nIf true, use a biharmonic Leith nonlinear eddy viscosity.\"\n",
+      "USE_LEITHY": {
+         "description": "\"[Boolean] default = False\nIf true, use a modified version of the biharmonic Leith nonlinear\neddy viscosity. This implementation can include harmonic backscatter\nwhen LEITHY_CK > 0.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
@@ -812,7 +820,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 128.0
+            "$OCN_GRID == \"tx2_3v2\"": 90.0
          }
       },
       "USE_LAND_MASK_FOR_HVISC": {
@@ -1125,8 +1133,22 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0
+         }
+      },
+      "MLE_FRONT_LENGTH_FROM_FILE": {
+         "description": "\"[Boolean] default = False\nIf true, the MLE front-length scale is read from a file.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "MLE_FL_FILE": {
+         "description": "\"The path to the file containing the MLE\nfront-length scale..\"\n",
+         "datatype": "string",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "mle-lf-clim-tx2_3v2_20250108.nc"
          }
       },
       "MLE_MLD_DECAY_TIME": {
@@ -1195,7 +1217,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0,
+            "$OCN_GRID == \"tx2_3v2\"": 1e-07,
             "$OCN_GRID == \"tx0.25v1\"": 1.5e-05,
             "$OCN_GRID == \"MISOMIP\"": 5e-05,
             "else": 2e-05
@@ -1214,7 +1236,7 @@
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "= 1.0E-04 / 1.5E-05",
             "$OCN_GRID == \"MISOMIP\"": "= 1.0E-04 / 5.0E-05",
-            "else": "= 1.0E-04 / 2.0E-05"
+            "else": "= 1.0E-06 / 1.0E-07"
          }
       },
       "KD_MIN": {
@@ -1222,7 +1244,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 2e-07,
+            "$OCN_GRID == \"tx2_3v2\"": 1e-07,
             "else": 2e-06
          }
       },
@@ -2040,7 +2062,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "MOM_channels_global_025",
-            "$OCN_GRID == \"tx2_3v2\"": "MOM_channels_global_tx2_3v2_240501"
+            "$OCN_GRID == \"tx2_3v2\"": "channels_tx2_3v2_250107.txt"
          }
       },
       "SMAG_BI_CONST": {
@@ -2151,13 +2173,6 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": true,
             "$OCN_GRID == \"tx0.25v1\"": true
-         }
-      },
-      "TOPO_EDITS_FILE": {
-         "description": "\"default =\nThe file from which to read a list of i,j,z topography overrides.\"\n",
-         "datatype": "string",
-         "value": {
-            "$OCN_GRID == \"tx0.25v1\"": "All_edits.nc"
          }
       },
       "PARALLEL_RESTARTFILES": {
@@ -2535,7 +2550,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0,
+            "$OCN_GRID == \"tx2_3v2\"": 1e-06,
             "else": 0.0001
          }
       },
@@ -3010,6 +3025,14 @@
          "datatype": "logical",
          "value": {
             "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
+         }
+      },
+      "COMPUTE_MONIN_OBUKHOV": {
+         "description": "default = False\nIf True, limit the OBL depth to be no deeper than Monin-Obukhov depth.\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       }
    }

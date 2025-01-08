@@ -558,6 +558,15 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": "ocean_topo_tx2_3v2_240501.nc"
             $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
+    TOPO_EDITS_FILE:
+        description: |
+            "default = ''
+            The file from which to read a list of i,j,z topography overrides."
+        datatype: string
+        value:
+            $OCN_GRID == "tx2_3v2": "ocean_topo_tx2_3v2_240501.nc"
+            $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
+
     MAXIMUM_DEPTH:
         description: |
             "[m]
@@ -1050,10 +1059,12 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 0.01
             $OCN_GRID == "MISOMIP": 0.001
-    LEITH_AH:
+    USE_LEITHY:
         description: |
             "[Boolean] default = False
-            If true, use a biharmonic Leith nonlinear eddy viscosity."
+            If true, use a modified version of the biharmonic Leith nonlinear
+            eddy viscosity. This implementation can include harmonic backscatter
+            when LEITHY_CK > 0."
         datatype: logical
         units: Boolean
         value:
@@ -1066,7 +1077,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx2_3v2": 128.0
+            $OCN_GRID == "tx2_3v2": 90.0
     USE_LAND_MASK_FOR_HVISC:
         description: |
             "[Boolean] default = False
@@ -1500,8 +1511,22 @@ Global:
         datatype: real
         units: m
         value:
-            $OCN_GRID == "tx2_3v2": 1000.0
             $OCN_GRID == "tx0.25v1": 500.0
+    MLE_FRONT_LENGTH_FROM_FILE:
+        description: |
+            "[Boolean] default = False
+            If true, the MLE front-length scale is read from a file."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    MLE_FL_FILE:
+        description: |
+            "The path to the file containing the MLE
+            front-length scale.."
+        datatype: string
+        value:
+            $OCN_GRID == "tx2_3v2": "mle-lf-clim-tx2_3v2_20250108.nc"
     MLE_MLD_DECAY_TIME:
         description: |
             "[s] default = 0.0
@@ -1585,7 +1610,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "tx2_3v2": 0.0
+            $OCN_GRID == "tx2_3v2": 1.0E-07
             $OCN_GRID == "tx0.25v1": 1.5E-05
             $OCN_GRID == "MISOMIP": 5.0E-05
             else: 2.0E-05
@@ -1607,7 +1632,7 @@ Global:
         value: # KV/KD:
             $OCN_GRID == "tx0.25v1": = 1.0E-04 / 1.5E-05
             $OCN_GRID == "MISOMIP": = 1.0E-04 / 5.0E-05
-            else: = 1.0E-04 / 2.0E-05
+            else: = 1.0E-06 / 1.0E-07
     KD_MIN:
         description: |
             "[m2 s-1] default = 2.0E-07
@@ -1618,7 +1643,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "tx2_3v2":  2.0E-07
+            $OCN_GRID == "tx2_3v2":  1.0E-07
             else: 2.0E-06
     INT_TIDE_DECAY_SCALE:
         description: |
@@ -2581,7 +2606,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.25v1": "MOM_channels_global_025"
-            $OCN_GRID == "tx2_3v2":  "MOM_channels_global_tx2_3v2_240501"
+            $OCN_GRID == "tx2_3v2":  "channels_tx2_3v2_250107.txt"
     SMAG_BI_CONST:
         description: |
             "[nondim] default = 0.0
@@ -2720,7 +2745,8 @@ Global:
             The file from which to read a list of i,j,z topography overrides."
         datatype: string
         value:
-            $OCN_GRID == "tx0.25v1": "All_edits.nc"
+            $OCN_GRID == "tx2_3v2": 'topo_edits_tx2_3v2_250107.nc'
+            else: ''
     PARALLEL_RESTARTFILES:
         description: |
             "[Boolean] default = False
@@ -3167,7 +3193,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "tx2_3v2": 0.0
+            $OCN_GRID == "tx2_3v2": 1.0E-06
             else: 1.0E-04
     KV_BBL_MIN:
         description: |
@@ -3715,6 +3741,13 @@ KPP:
             If True, use Stokes Similarity package.
         datatype: logical
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True    
-
+            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
+    COMPUTE_MONIN_OBUKHOV:
+        description: |
+            default = False
+            If True, limit the OBL depth to be no deeper than Monin-Obukhov depth.
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
 ...
