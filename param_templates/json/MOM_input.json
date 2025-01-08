@@ -140,7 +140,10 @@
          "description": "\"[PPT] default = 0.01\n The minimum value of salinity when BOUND_SALINITY=True. The default is 0.01\n for backward compatibility but ideally should be 0.\"\n",
          "datatype": "real",
          "units": "PPT",
-         "value": 0.0
+         "value": {
+            "$COMP_ATM == \"cam\"": 1e-06,
+            "else": 0.0
+         }
       },
       "BOUND_SALINITY": {
          "description": "\"[Boolean] default = False\nIf true, limit salinity to being positive. (The sea-ice\nmodel may ask for more salt than is available and\ndrive the salinity negative otherwise.)\"\n",
@@ -1831,8 +1834,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.15,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
+            "$OCN_GRID == \"tx0.25v1\"": 0.15
          }
       },
       "MEKE_ALPHA_EADY": {
@@ -1844,36 +1846,20 @@
             "$OCN_GRID == \"tx2_3v2\"": 1.0
          }
       },
-      "MEKE_ALPHA_DEFORM": {
-         "description": "\"[nondim] default = 0.0\nIf positive, is a coefficient weighting the deformation scale in the\nexpression for mixing length used in MEKE-derived diffusivity.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
-         }
-      },
-      "MEKE_ALPHA_FRICT": {
-         "description": "\"[nondim] default = 0.0\nIf positive, is a coefficient weighting the frictional arrest scale in the\nexpression for mixing length used in MEKE-derived diffusivity.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
-         }
-      },
-      "MEKE_ALPHA_GRID": {
-         "description": "\"[nondim] default = 0.0\nIf positive, is a coefficient weighting the grid-spacing as a scale in the\nexpression for mixing length used in MEKE-derived diffusivity.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
-         }
-      },
       "MEKE_FRCOEFF": {
          "description": "\"[nondim] default = -1.0\nIf positive, is a coefficient weighting the grid-spacing as a scale in the\nexpression for mixing length used in MEKE-derived diffusivity.\"\n",
          "datatype": "real",
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 0.3
+         }
+      },
+      "MEKE_CT": {
+         "description": "\"[nondim] default = 50.0\n! A coefficient in the expression for the ratio of barotropic eddy energy and\n! mean column energy (see Jansen et al. 2015).\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.0
          }
       },
       "MEKE_POSITIVE": {
@@ -2173,7 +2159,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": true
          }
       },
       "CEMP_NL": {
@@ -2181,7 +2167,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": 2.0
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": 2.0
          }
       },
       "REENTRANT_X": {
@@ -2869,57 +2855,57 @@
          "description": "\"default = False\nIf true, enables surface wave modules.\"\n",
          "datatype": "logical",
          "value": {
-            "$COMP_WAV == \"ww3\"": true
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD != \"none\"": true
          }
       },
       "WAVE_METHOD": {
          "description": "\"Choice of wave method, valid options include:\n TEST_PROFILE  - Prescribed from surface Stokes drift...\n SURFACE_BANDS - Computed from multiple surface values...\n DHH85         - Uses Donelan et al. 1985 empirical...\n LF17          - Infers Stokes drift profile from wind...\n EFACTOR       - Applies an enhancement factor to the KPP...\"\"\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID == \"ww3a\"": "EFACTOR",
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": "SURFACE_BANDS"
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"legacy\"": "EFACTOR",
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": "SURFACE_BANDS"
          }
       },
       "SURFBAND_SOURCE": {
          "description": "Choice of SURFACE_BANDS data mode, valid options include:\nDATAOVERRIDE  - Read from NetCDF using FMS DataOverride.\nCOUPLER       - Look for variables from coupler pass\nINPUT         - Testing with fixed values.\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": "COUPLER"
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": "COUPLER"
          }
       },
       "STOKES_DDT": {
          "description": "default = False\nFlag to use Stokes d/dt\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": true
          }
       },
       "STOKES_VF": {
          "description": "default = False\nFlag to use Stokes vortex force\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": true
          }
       },
       "STOKES_PGF": {
          "description": "default = False\nFlag to use Stokes pressure gradient force\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": true
          }
       },
       "STK_BAND_COUPLER": {
          "description": "default = 1\nSTK_BAND_COUPLER is the number of Stokes drift bands in the coupler. This has\nto be consistent with the number of Stokes drift bands in WW3, or the model\nwill fail.\n",
          "datatype": "int",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": 3
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": 3
          }
       },
       "SURFBAND_WAVENUMBERS": {
          "description": "[rad/m] default = 0.12566\nCentral wavenumbers for surface Stokes drift bands.\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": "0.04, 0.11, 0.33"
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": "0.04, 0.11, 0.33"
          }
       },
       "AUTO_MASKTABLE": {
@@ -2980,7 +2966,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID == \"ww3a\"": true
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"legacy\"": true
          }
       },
       "USE_KPP_LT_VT2": {
@@ -2988,7 +2974,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID == \"ww3a\"": true
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"legacy\"": true
          }
       },
       "KPP_LT_K_METHOD": {
@@ -3009,7 +2995,7 @@
          "description": "default = False\nIf True, use Stokes Similarity package.\n",
          "datatype": "logical",
          "value": {
-            "$COMP_WAV == \"ww3\" and $WAV_GRID in [\"wtx2_3v2\", \"wgx3v7\"]": true
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": true
          }
       }
    }
