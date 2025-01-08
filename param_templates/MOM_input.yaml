@@ -220,7 +220,9 @@ Global:
              for backward compatibility but ideally should be 0."
         datatype: real
         units: PPT
-        value: 0.0
+        value:
+            $COMP_ATM == "cam": 1.0e-6
+            else: 0.0
     BOUND_SALINITY:
         description: |
             "[Boolean] default = False
@@ -2356,7 +2358,6 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 0.15
-            $OCN_GRID == "tx2_3v2": 1.0
     MEKE_ALPHA_EADY:
         description: |
             "[nondim] default = 0.05
@@ -2367,33 +2368,6 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 0.15
             $OCN_GRID == "tx2_3v2": 1.0
-    MEKE_ALPHA_DEFORM:
-        description: |
-            "[nondim] default = 0.0
-            If positive, is a coefficient weighting the deformation scale in the
-            expression for mixing length used in MEKE-derived diffusivity."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "tx2_3v2": 1.0
-    MEKE_ALPHA_FRICT:
-        description: |
-            "[nondim] default = 0.0
-            If positive, is a coefficient weighting the frictional arrest scale in the
-            expression for mixing length used in MEKE-derived diffusivity."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "tx2_3v2": 1.0
-    MEKE_ALPHA_GRID:
-        description: |
-            "[nondim] default = 0.0
-            If positive, is a coefficient weighting the grid-spacing as a scale in the
-            expression for mixing length used in MEKE-derived diffusivity."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "tx2_3v2": 1.0
     MEKE_FRCOEFF:
         description: |
             "[nondim] default = -1.0
@@ -2403,6 +2377,15 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx2_3v2": 0.3
+    MEKE_CT:
+        description: |
+            "[nondim] default = 50.0
+            ! A coefficient in the expression for the ratio of barotropic eddy energy and
+            ! mean column energy (see Jansen et al. 2015)."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.0
     MEKE_POSITIVE:
         description: |
             "[Boolean] default = False
@@ -2764,7 +2747,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True
     CEMP_NL:
         description: |
             "default = 3.6
@@ -2772,7 +2755,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: 2.0
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": 2.0
 
     # MISOMIP-only variables:
 
@@ -3567,7 +3550,7 @@ Global:
             If true, enables surface wave modules."
         datatype: logical
         value:
-            $COMP_WAV == "ww3": True
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD != "none": True
     WAVE_METHOD:
         description: |
             "Choice of wave method, valid options include:
@@ -3578,8 +3561,8 @@ Global:
              EFACTOR       - Applies an enhancement factor to the KPP...""
         datatype: string
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : "EFACTOR"
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "SURFACE_BANDS"
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "legacy" : "EFACTOR"
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": "SURFACE_BANDS"
     SURFBAND_SOURCE:
         description: |
             Choice of SURFACE_BANDS data mode, valid options include:
@@ -3588,28 +3571,28 @@ Global:
             INPUT         - Testing with fixed values.
         datatype: string
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "COUPLER"
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": "COUPLER"
     STOKES_DDT:
         description: |
             default = False
             Flag to use Stokes d/dt
         datatype: string
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True
     STOKES_VF:
         description: |
             default = False
             Flag to use Stokes vortex force
         datatype: string
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True
     STOKES_PGF:
         description: |
             default = False
             Flag to use Stokes pressure gradient force
         datatype: string
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True
     STK_BAND_COUPLER:
         description: |
             default = 1
@@ -3618,14 +3601,14 @@ Global:
             will fail.
         datatype: int
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: 3
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": 3
     SURFBAND_WAVENUMBERS:
         description: |
             [rad/m] default = 0.12566
             Central wavenumbers for surface Stokes drift bands.
         datatype: string
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: "0.04, 0.11, 0.33"
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": "0.04, 0.11, 0.33"
     IO_LAYOUT:
         description: |
             The processor layout to be used, or 0,0 to automatically set the io_layout to
@@ -3705,7 +3688,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : True
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "legacy": True
     USE_KPP_LT_VT2:
         description: |
             default = False
@@ -3713,7 +3696,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID == "ww3a" : True
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "legacy": True
     KPP_LT_K_METHOD:
         description: |
             default = "CONSTANT"
@@ -3741,7 +3724,7 @@ KPP:
             If True, use Stokes Similarity package.
         datatype: logical
         value:
-            $COMP_WAV == "ww3" and $WAV_GRID in ["wtx2_3v2", "wgx3v7"]: True
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True
     COMPUTE_MONIN_OBUKHOV:
         description: |
             default = False
