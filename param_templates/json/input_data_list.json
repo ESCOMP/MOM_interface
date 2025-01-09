@@ -22,7 +22,7 @@
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/ocean_topog.nc"
       },
       "TOPO_EDITS_FILE": {
-         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/ocean_topo_tx2_3v2_240501.nc",
+         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/topo_edits_tx2_3v2_250107.nc",
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/All_edits.nc"
       },
       "TEMP_SALT_Z_INIT_FILE": {
