@@ -566,9 +566,8 @@ Global:
             The file from which to read a list of i,j,z topography overrides."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "ocean_topo_tx2_3v2_240501.nc"
-            $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
-
+            $OCN_GRID == "tx2_3v2": "topo_edits_tx2_3v2_250107.nc"
+            $OCN_GRID == "tx0.25v1": "All_edits.nc"
     MAXIMUM_DEPTH:
         description: |
             "[m]
@@ -2722,14 +2721,6 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
-    TOPO_EDITS_FILE:
-        description: |
-            "default =
-            The file from which to read a list of i,j,z topography overrides."
-        datatype: string
-        value:
-            $OCN_GRID == "tx2_3v2": 'topo_edits_tx2_3v2_250107.nc'
-            else: ''
     PARALLEL_RESTARTFILES:
         description: |
             "[Boolean] default = False
