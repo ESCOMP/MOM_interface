@@ -184,7 +184,7 @@
           <ntasks_rof>128</ntasks_rof>
           <ntasks_cpl>128</ntasks_cpl>
           <ntasks_ice>128</ntasks_ice>
-          <ntasks_ocn>1024</ntasks_ocn>
+          <ntasks_ocn>896</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>256</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
@@ -389,7 +389,7 @@
           <ntasks_rof>128</ntasks_rof>
           <ntasks_cpl>128</ntasks_cpl>
           <ntasks_ice>128</ntasks_ice>
-          <ntasks_ocn>1024</ntasks_ocn>
+          <ntasks_ocn>896</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
@@ -422,7 +422,7 @@
           <ntasks_rof>128</ntasks_rof>
           <ntasks_cpl>128</ntasks_cpl>
           <ntasks_ice>256</ntasks_ice>
-          <ntasks_ocn>1024</ntasks_ocn>
+          <ntasks_ocn>896</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
           <ntasks_wav>1</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
