@@ -3020,6 +3020,13 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": true
          }
+      },
+      "MINIMUM_OBL_DEPTH": {
+         "description": "\"[m] default = 0.0\nIf non-zero, a minimum depth to use for KPP OBL depth. Independent of this\nparameter, the OBL depth is always at least as deep as the first layer.\"\n",
+         "datatype": "real",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 2.5
+         }
       }
    }
 }
