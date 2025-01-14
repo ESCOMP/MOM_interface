@@ -18,6 +18,7 @@ mom.input_data_list:
         $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/ocean_topo_tx2_3v2_240501.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/ocean_topog.nc"
     TOPO_EDITS_FILE:
+        $OCN_GRID == "tx2_3v2": "${INPUTDIR}/topo_edits_tx2_3v2_250107.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/All_edits.nc"
     TEMP_SALT_Z_INIT_FILE:
         $OCN_GRID in ["tx2_3v2", "tx0.25v1"]:
@@ -34,7 +35,7 @@ mom.input_data_list:
         $OCN_GRID == "tx2_3v2": "${INPUTDIR}/energy_new_tx2_3_conserve_230415_cdf5.nc"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/tidal_amplitude.v20140616.nc"
     CHANNEL_LIST_FILE:
-        $OCN_GRID == "tx2_3v2": "${INPUTDIR}/MOM_channels_global_tx2_3v2_240501"
+        $OCN_GRID == "tx2_3v2": "${INPUTDIR}/channels_tx2_3v2_250107.txt"
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/MOM_channels_global_025"
     GEOTHERMAL_FILE:
         $OCN_GRID == "tx2_3v2": "${INPUTDIR}/geothermal_davies2013_tx2_3_20240318_cdf5.nc"
@@ -42,6 +43,8 @@ mom.input_data_list:
     CHL_FILE:
         $OCN_GRID == "tx0.25v1": "${INPUTDIR}/seawifs-clim-1997-2010.1440x1080.v20180328.nc"
         $OCN_GRID == "tx2_3v2": "${INPUTDIR}/seawifs-clim-1997-2010-tx2_3v2.230416.nc"
+    MLE_FL_FILE:
+        $OCN_GRID == "tx2_3v2": "${INPUTDIR}/mle-lf-clim-tx2_3v2_20250108.nc"
     CFC_BC_FILE: "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc"
     DIAG_COORD_DEF_RHO2:
         $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/ocean_rho2_190917.nc"
