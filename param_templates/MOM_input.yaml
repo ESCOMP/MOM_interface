@@ -1090,6 +1090,15 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    FRICTWORK_BUG:
+        description: |
+            "[Boolean] default = True
+            If true, retain an answer-changing bug in calculating the FrictWork, which
+            cancels the h in thickness flux and the h at velocity point. This is not
+            recommended."
+        datatype: logical
+        units: Boolean
+        value: False
     HMIX_FIXED:
         description: |
             "[m]
@@ -2747,6 +2756,16 @@ Global:
         units: nondim
         value:
             $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": 2.0
+    VISC_REM_BUG:
+        description: |
+            "[Boolean] default = True
+            If true, visc_rem_[uv] in split mode is incorrectly calculated or accounted
+            for in two places. This parameter controls the defaults of two individual
+            flags, VISC_REM_TIMESTEP_BUG in MOM_dynamics_split_RK2(b) and
+            VISC_REM_BT_WEIGHT_BUG in MOM_barotropic."
+        datatype: logical
+        units: Boolean
+        value: False
 
     # MISOMIP-only variables:
 
