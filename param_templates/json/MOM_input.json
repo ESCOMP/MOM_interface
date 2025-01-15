@@ -1157,7 +1157,7 @@
          "description": "\"The path to the file containing the MLE\nfront-length scale..\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "mle-lf-clim-tx2_3v2_20250108.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "mle-lf-clim-tx2_3v2_20250115.nc"
          }
       },
       "MLE_MLD_DECAY_TIME": {
