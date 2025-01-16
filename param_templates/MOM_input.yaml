@@ -1078,7 +1078,15 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx2_3v2": 90.0
+            $OCN_GRID == "tx2_3v2": 75.0
+    LEITHY_CK:
+        description: |
+            "[nondim] default = 1.0
+            Fraction of biharmonic dissipation that gets backscattered, in Leith+E."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.0
     USE_LAND_MASK_FOR_HVISC:
         description: |
             "[Boolean] default = False
