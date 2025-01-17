@@ -755,7 +755,10 @@
          "description": "\"[Boolean] default = False\nIf true, use a Laplacian horizontal viscosity.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": true
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": false,
+            "else": true
+         }
       },
       "KH": {
          "description": "\"[m2 s-1] default = 0.0\nThe background Laplacian horizontal viscosity.\"\n",
@@ -815,6 +818,14 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": false
+         }
+      },
+      "LEITH_AH": {
+         "description": "\"[Boolean] default = False\nIf true, use a biharmonic Leith nonlinear eddy viscosity.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
@@ -823,7 +834,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 75.0
+            "$OCN_GRID == \"tx2_3v2\"": 128.0
          }
       },
       "LEITHY_CK": {
@@ -1150,6 +1161,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0
          }
       },
@@ -1158,7 +1170,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
       "MLE_FL_FILE": {
