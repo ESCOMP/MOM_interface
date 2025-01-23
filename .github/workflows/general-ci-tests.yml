@@ -112,7 +112,7 @@ jobs:
       # Run the test
       - name: Run the check_input_data_repo script
         run: |
-          sudo apt-get install -y subversion
+          sudo apt-get update && sudo apt-get install -y subversion
           pip install 'svn>=1,<1.1'
           python tests/check_input_data_repo.py
 
