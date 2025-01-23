@@ -1,10 +1,7 @@
 name: General MOM_interface CI
 
-# This CI workflow tests against the following questions: 
-# 1. Does standalone mom build and run?
-# 2. Does it pass the tests/check_default_params.py test?
-# 3. Do the scripts in cime_config pass the black formatter? 
-# Please see Issue #138 for more information
+ 
+# Please see Issue #138 for more information on this CI workflow
 
 # Controls when the workflow will run
 on:
@@ -60,7 +57,7 @@ jobs:
           cd $GITHUB_WORKSPACE/CESM/components/mom/
           git checkout ${{ github.sha }}
 
-      # Build the standalone mom using the macos script. build_examples-ncar doesn't work.    
+      # Build the standalone mom using the ubuntu script. build_examples-ncar doesn't work.    
       - name: Build Standalone MOM
         run: |
           cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/build
@@ -111,6 +108,8 @@ jobs:
     steps:
       # Checkout the repo
       - uses: actions/checkout@v4
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
       
       # Run the test
       - name: Run the check_input_data_repo script
