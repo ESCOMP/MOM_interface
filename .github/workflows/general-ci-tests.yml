@@ -1,5 +1,4 @@
 name: General MOM_interface CI
-
  
 # Please see Issue #138 for more information on this CI workflow
 
@@ -57,7 +56,7 @@ jobs:
           cd $GITHUB_WORKSPACE/CESM/components/mom/
           git checkout ${{ github.sha }}
 
-      # Build the standalone mom using the ubuntu script. build_examples-ncar doesn't work.    
+      # Build the standalone mom using the ubuntu script. 
       - name: Build Standalone MOM
         run: |
           cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/build
