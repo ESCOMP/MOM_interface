@@ -189,6 +189,9 @@
          "cfc12_flux",
          "ice_fraction",
          "u10_sqr"
+      ],
+      [
+         "Geo_heat"
       ]
    ],
    "Files": {
@@ -632,7 +635,14 @@
                   "C_P",
                   "Rho_0"
                ]
-            ]
+            ],
+            "lists2": {
+               "$DO_GEOTHERMAL == \"True\"": [
+                  [
+                     "Geo_heat"
+                  ]
+               ]
+            }
          }
       },
       "Agulhas": {

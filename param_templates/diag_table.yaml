@@ -59,6 +59,8 @@ FieldLists:
 
     - &cfc_2d  ["cfc11_flux", "cfc12_flux", "ice_fraction", "u10_sqr"]
 
+    - &geothermal  ["Geo_heat"]
+
 ###############################################################################
 # Section 2: File lists:
 #   List of files to be added in diag_table
@@ -230,6 +232,9 @@ Files:
             module:   "ocean_model"   # native
             packing: = 1 if $TEST else 2
             lists:    [ *static_flds ]
+            lists2:
+                $DO_GEOTHERMAL == "True":
+                    [ *geothermal ]
 
 
     # Sections ------------------------------------
