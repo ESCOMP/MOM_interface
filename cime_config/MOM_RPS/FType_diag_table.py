@@ -159,55 +159,44 @@ class FType_diag_table(ParamGen):
                     packing = field_block["packing"]
                     field_list_1d = get_all_fields(field_block)
 
-                    # seperate field_name and output_name:
+                    # seperate field_name, alias, and reduction method
+                    # (the latter two are optional)
                     field_list_1d_seperated = []
                     for field in field_list_1d:
                         field_split = field.split(":")
-                        if len(field_split) == 2:
-                            field = field_split[0], field_split[1]
-                        elif len(field_split) == 1:
-                            field = field_split[0], field_split[0]
-                        else:
-                            raise RuntimeError(
-                                "Cannot infer field name and output name for " + field
-                            )
-                        field_list_1d_seperated.append(field)
+                        field_name = field_split[0]
+                        alias = field_name
+                        reduction = file_block["reduction_method"]
+                        assert 1 <= len(field_split) <= 3, (
+                            "Invalid field format: " + field
+                        )
+                        if len(field_split) >= 2:
+                            alias = field_split[1]
+                        if len(field_split) >= 3:
+                            reduction = field_split[2]
+
+                        field_list_1d_seperated.append((field_name, alias, reduction))
 
                     # check if there are any duplicate fields in the same file:
-                    for field_name, output_name in field_list_1d_seperated:
-                        assert field_name not in all_fields, (
-                            'Field "'
-                            + field_name
-                            + '" is listed more than once'
-                            + " in file: "
-                            + file_block["suffix"]
-                        )
-                        all_fields.append(field_name)
+                    field_set = set()
+                    for field_name, alias, reduction in field_list_1d_seperated:
+                        if alias in field_set:
+                            raise ValueError(
+                                'Field "'
+                                + alias
+                                + '" is listed more than once'
+                                + " in file: "
+                                + file_block["suffix"]
+                            )
+                        field_set.add(alias)
 
                     mfnl = max([len(field) for field in field_list_1d]) + 3
                     mfnl = min(16, mfnl)  # limit to 16
-                    for field_name, output_name in field_list_1d_seperated:
+                    w = lambda s: f'"{s}",'  # wrap string in quotes and add comma
+                    for field_name, alias, reduction in field_list_1d_seperated:
                         diag_table.write(
-                            (
-                                "{module_name:14s} {field_name:"
-                                + str(mfnl)
-                                + "}{output_name:"
-                                + str(mfnl)
-                                + "}"
-                                '{fname} "all", {reduction_method} {regional_section} {packing}\n'
-                            ).format(
-                                module_name='"' + module + '",',
-                                field_name='"' + field_name + '",',
-                                output_name='"' + output_name + '",',
-                                fname=fname + ",",
-                                reduction_method='"'
-                                + str(file_block["reduction_method"])
-                                + '",',
-                                regional_section='"'
-                                + str(file_block["regional_section"])
-                                + '",',
-                                packing=str(packing),
-                            )
+                            f'{w(module)} {w(field_name):{mfnl}}{w(alias):{mfnl}}{fname}, "all", '
+                            f'{w(reduction)} {w(file_block["regional_section"])} {packing}\n'
                         )
 
                 diag_table.write("\n")
