@@ -8,6 +8,7 @@
          "thetao",
          "so",
          "KE",
+         "MEKE",
          "rhopot0"
       ],
       [
@@ -31,7 +32,8 @@
          "uh",
          "vh",
          "vhbt",
-         "uhbt"
+         "uhbt",
+         "rsdo"
       ],
       [
          "agessc",
@@ -43,20 +45,36 @@
          "T_hbd_diffy_2d"
       ],
       [
-         "SSH",
          "tos",
+         "tos:tos_min:min",
+         "tos:tos_max:max",
          "sos",
+         "sos:sos_min:min",
+         "sos:sos_max:max",
          "SSU",
          "SSV",
-         "mass_wt",
          "opottempmint",
          "somint",
          "Rd_dx",
          "speed",
-         "mlotst"
+         "mlotst",
+         "mlotst:mlots_min:min",
+         "mlotst:mlots_max:max"
       ],
       [
-         "KPP_OBLdepth:oml"
+         "zos",
+         "zossq"
+      ],
+      [
+         "sst_global",
+         "sss_global",
+         "SSH",
+         "mass_wt"
+      ],
+      [
+         "KPP_OBLdepth:oml",
+         "KPP_OBLdepth:oml_min:min",
+         "KPP_OBLdepth:oml_max:max"
       ],
       [
          "tauuo",
@@ -135,7 +153,9 @@
          "areacello_cv",
          "areacello_bu",
          "sin_rot",
-         "cos_rot"
+         "cos_rot",
+         "C_P",
+         "Rho_0"
       ],
       [
          "volcello",
@@ -250,7 +270,8 @@
                      "uh",
                      "vh",
                      "vhbt",
-                     "uhbt"
+                     "uhbt",
+                     "rsdo"
                   ],
                   [
                      "agessc",
@@ -287,10 +308,13 @@
                         "thetao",
                         "so",
                         "KE",
+                        "MEKE",
                         "rhopot0"
                      ],
                      [
-                        "KPP_OBLdepth:oml"
+                        "KPP_OBLdepth:oml",
+                        "KPP_OBLdepth:oml_min:min",
+                        "KPP_OBLdepth:oml_max:max"
                      ],
                      [
                         "tauuo",
@@ -327,17 +351,27 @@
                         "heat_content_evap"
                      ],
                      [
-                        "SSH",
                         "tos",
+                        "tos:tos_min:min",
+                        "tos:tos_max:max",
                         "sos",
+                        "sos:sos_min:min",
+                        "sos:sos_max:max",
                         "SSU",
                         "SSV",
-                        "mass_wt",
                         "opottempmint",
                         "somint",
                         "Rd_dx",
                         "speed",
-                        "mlotst"
+                        "mlotst",
+                        "mlotst:mlots_min:min",
+                        "mlotst:mlots_max:max"
+                     ],
+                     [
+                        "sst_global",
+                        "sss_global",
+                        "SSH",
+                        "mass_wt"
                      ]
                   ]
                },
@@ -432,20 +466,30 @@
                "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
-                     "SSH",
                      "tos",
+                     "tos:tos_min:min",
+                     "tos:tos_max:max",
                      "sos",
+                     "sos:sos_min:min",
+                     "sos:sos_max:max",
                      "SSU",
                      "SSV",
-                     "mass_wt",
                      "opottempmint",
                      "somint",
                      "Rd_dx",
                      "speed",
-                     "mlotst"
+                     "mlotst",
+                     "mlotst:mlots_min:min",
+                     "mlotst:mlots_max:max"
                   ],
                   [
-                     "KPP_OBLdepth:oml"
+                     "zos",
+                     "zossq"
+                  ],
+                  [
+                     "KPP_OBLdepth:oml",
+                     "KPP_OBLdepth:oml_min:min",
+                     "KPP_OBLdepth:oml_max:max"
                   ]
                ]
             }
@@ -584,7 +628,9 @@
                   "areacello_cv",
                   "areacello_bu",
                   "sin_rot",
-                  "cos_rot"
+                  "cos_rot",
+                  "C_P",
+                  "Rho_0"
                ]
             ]
          }

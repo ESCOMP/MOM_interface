@@ -4,21 +4,27 @@
 ###############################################################################
 ---
 FieldLists:
-    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "rhopot0"]
+    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "MEKE", "rhopot0"]
 
     - &prognostic_z     ["uo", "vo", "h", "thetao", "so", "agessc", "rhopot0", "N2_int"]
 
     - &prognostic_rho2  ["thetao", "so", "agessc"]
 
-    - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt"]
+    - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt", "rsdo"]
 
     - &tracers          ["agessc", "T_ady_2d", "T_adx_2d", "T_diffy_2d", "T_diffx_2d",
                          "T_hbd_diffx_2d", 'T_hbd_diffy_2d']
 
-    - &surface_flds     ["SSH", "tos", "sos", "SSU", "SSV", "mass_wt", "opottempmint",
-                         "somint", "Rd_dx", "speed", "mlotst"]
+    - &surface_flds_common ["tos", "tos:tos_min:min", "tos:tos_max:max", 
+                         "sos", "sos:sos_min:min", "sos:sos_max:max", 
+                         "SSU", "SSV", "opottempmint", "somint", "Rd_dx", "speed",
+                         "mlotst", "mlotst:mlots_min:min", "mlotst:mlots_max:max"]
+    
+    - &surface_flds_daily ["zos", "zossq"]
 
-    - &kpp_diags        ["KPP_OBLdepth:oml"]
+    - &surface_flds_monthly ["sst_global", "sss_global", "SSH", "mass_wt"]
+
+    - &kpp_diags        ["KPP_OBLdepth:oml", "KPP_OBLdepth:oml_min:min", "KPP_OBLdepth:oml_max:max"]
 
     - &forcing_flds     ["tauuo", "tauvo", "friver", "prsn", "prlq", "evs", "hfsso", "rlntds",
                          "hfsnthermds", "sfdsi", "rsntds", "hfds", "ustar",
@@ -41,7 +47,7 @@ FieldLists:
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
                          "geolon_v", "geolat_v", "deptho", "wet", "wet_c", "wet_u",
                          "wet_v", "Coriolis", "areacello", "areacello_cu", "areacello_cv",
-                         "areacello_bu", "sin_rot", "cos_rot"]
+                         "areacello_bu", "sin_rot", "cos_rot", "C_P", "Rho_0"]
 
     - &transports       ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
 
@@ -115,7 +121,8 @@ Files:
                           *kpp_diags,
                           *forcing_flds,
                           *enthalpy_flds,
-                          *surface_flds]
+                          *surface_flds_common,
+                          *surface_flds_monthly]
                 lists3:
                     $USE_CFC_CAP == "True":
                         [ *cfc_2d ]
@@ -166,7 +173,8 @@ Files:
             $OCN_DIAG_MODE != "none" and $TEST is not True :
                 module:   "ocean_model"    # native
                 packing: = 1 if $TEST else 2
-                lists:    [ *surface_flds,
+                lists:    [ *surface_flds_common,
+                            *surface_flds_daily,
                             *kpp_diags ]
     forcing_avg:
         suffix: 
