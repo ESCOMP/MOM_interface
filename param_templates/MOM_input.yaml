@@ -220,7 +220,7 @@ Global:
              for backward compatibility but ideally should be 0."
         datatype: real
         units: PPT
-        value: 
+        value:
             $COMP_ATM == "cam": 1.0e-6
             else: 0.0
     BOUND_SALINITY:
@@ -560,6 +560,14 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": "ocean_topo_tx2_3v2_240501.nc"
             $OCN_GRID == "tx0.25v1": "ocean_topog.nc"
+    TOPO_EDITS_FILE:
+        description: |
+            "default = ''
+            The file from which to read a list of i,j,z topography overrides."
+        datatype: string
+        value:
+            $OCN_GRID == "tx2_3v2": "topo_edits_tx2_3v2_250107.nc"
+            $OCN_GRID == "tx0.25v1": "All_edits.nc"
     MAXIMUM_DEPTH:
         description: |
             "[m]
@@ -990,7 +998,9 @@ Global:
             If true, use a Laplacian horizontal viscosity."
         datatype: logical
         units: Boolean
-        value: True
+        value:
+            $OCN_GRID == "tx2_3v2": False
+            else: True
     KH:
         description: |
             "[m2 s-1] default = 0.0
@@ -1052,6 +1062,16 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 0.01
             $OCN_GRID == "MISOMIP": 0.001
+    USE_LEITHY:
+        description: |
+            "[Boolean] default = False
+            If true, use a modified version of the biharmonic Leith nonlinear
+            eddy viscosity. This implementation can include harmonic backscatter
+            when LEITHY_CK > 0."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": False
     LEITH_AH:
         description: |
             "[Boolean] default = False
@@ -1069,6 +1089,14 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx2_3v2": 128.0
+    LEITHY_CK:
+        description: |
+            "[nondim] default = 1.0
+            Fraction of biharmonic dissipation that gets backscattered, in Leith+E."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.0
     USE_LAND_MASK_FOR_HVISC:
         description: |
             "[Boolean] default = False
@@ -1080,6 +1108,15 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    FRICTWORK_BUG:
+        description: |
+            "[Boolean] default = True
+            If true, retain an answer-changing bug in calculating the FrictWork, which
+            cancels the h in thickness flux and the h at velocity point. This is not
+            recommended."
+        datatype: logical
+        units: Boolean
+        value: False
     HMIX_FIXED:
         description: |
             "[m]
@@ -1504,6 +1541,21 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": 1000.0
             $OCN_GRID == "tx0.25v1": 500.0
+    MLE_FRONT_LENGTH_FROM_FILE:
+        description: |
+            "[Boolean] default = False
+            If true, the MLE front-length scale is read from a file."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": False
+    MLE_FL_FILE:
+        description: |
+            "The path to the file containing the MLE
+            front-length scale.."
+        datatype: string
+        value:
+            $OCN_GRID == "tx2_3v2": "mle-lf-clim-tx2_3v2_20250115.nc"
     MLE_MLD_DECAY_TIME:
         description: |
             "[s] default = 0.0
@@ -1587,7 +1639,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "tx2_3v2": 0.0
+            $OCN_GRID == "tx2_3v2": 1.0E-07
             $OCN_GRID == "tx0.25v1": 1.5E-05
             $OCN_GRID == "MISOMIP": 5.0E-05
             else: 2.0E-05
@@ -1609,7 +1661,7 @@ Global:
         value: # KV/KD:
             $OCN_GRID == "tx0.25v1": = 1.0E-04 / 1.5E-05
             $OCN_GRID == "MISOMIP": = 1.0E-04 / 5.0E-05
-            else: = 1.0E-04 / 2.0E-05
+            else: = 1.0E-06 / 1.0E-07
     KD_MIN:
         description: |
             "[m2 s-1] default = 2.0E-07
@@ -1620,7 +1672,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "tx2_3v2":  2.0E-07
+            $OCN_GRID == "tx2_3v2":  1.0E-07
             else: 2.0E-06
     INT_TIDE_DECAY_SCALE:
         description: |
@@ -2564,7 +2616,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "tx0.25v1": "MOM_channels_global_025"
-            $OCN_GRID == "tx2_3v2":  "MOM_channels_global_tx2_3v2_240501"
+            $OCN_GRID == "tx2_3v2":  "channels_tx2_3v2_250107.txt"
     SMAG_BI_CONST:
         description: |
             "[nondim] default = 0.0
@@ -2697,13 +2749,6 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
-    TOPO_EDITS_FILE:
-        description: |
-            "default =
-            The file from which to read a list of i,j,z topography overrides."
-        datatype: string
-        value:
-            $OCN_GRID == "tx0.25v1": "All_edits.nc"
     PARALLEL_RESTARTFILES:
         description: |
             "[Boolean] default = False
@@ -2730,6 +2775,16 @@ Global:
         units: nondim
         value:
             $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": 2.0
+    VISC_REM_BUG:
+        description: |
+            "[Boolean] default = True
+            If true, visc_rem_[uv] in split mode is incorrectly calculated or accounted
+            for in two places. This parameter controls the defaults of two individual
+            flags, VISC_REM_TIMESTEP_BUG in MOM_dynamics_split_RK2(b) and
+            VISC_REM_BT_WEIGHT_BUG in MOM_barotropic."
+        datatype: logical
+        units: Boolean
+        value: False
 
     # MISOMIP-only variables:
 
@@ -3150,7 +3205,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
-            $OCN_GRID == "tx2_3v2": 0.0
+            $OCN_GRID == "tx2_3v2": 1.0E-06
             else: 1.0E-04
     KV_BBL_MIN:
         description: |
@@ -3698,6 +3753,22 @@ KPP:
             If True, use Stokes Similarity package.
         datatype: logical
         value:
-            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True    
-
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True
+    COMPUTE_MONIN_OBUKHOV:
+        description: |
+            default = False
+            If True, limit the OBL depth to be no deeper than Monin-Obukhov depth.
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    MINIMUM_OBL_DEPTH:
+        description: |
+            "[m] default = 0.0
+            If non-zero, a minimum depth to use for KPP OBL depth. Independent of this
+            parameter, the OBL depth is always at least as deep as the first layer."
+        datatype: real
+        value:
+           $OCN_GRID == "tx2_3v2": 2.5
 ...
+
