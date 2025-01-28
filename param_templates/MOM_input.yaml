@@ -998,9 +998,7 @@ Global:
             If true, use a Laplacian horizontal viscosity."
         datatype: logical
         units: Boolean
-        value:
-            $OCN_GRID == "tx2_3v2": False
-            else: True
+        value: True
     KH:
         description: |
             "[m2 s-1] default = 0.0
@@ -1071,7 +1069,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": False
+            $OCN_GRID == "tx2_3v2": True
     LEITH_AH:
         description: |
             "[Boolean] default = False
@@ -1079,7 +1077,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
+            $OCN_GRID == "tx2_3v2": False
     LEITH_BI_CONST:
         description: |
             "[nondim] default = 0.0
@@ -1088,7 +1086,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx2_3v2": 128.0
+            $OCN_GRID == "tx2_3v2": 75.0
     LEITHY_CK:
         description: |
             "[nondim] default = 1.0
@@ -3769,6 +3767,6 @@ KPP:
             parameter, the OBL depth is always at least as deep as the first layer."
         datatype: real
         value:
-           $OCN_GRID == "tx2_3v2": 2.5
+           $OCN_GRID == "tx2_3v2": 5.0
 ...
 

@@ -755,10 +755,7 @@
          "description": "\"[Boolean] default = False\nIf true, use a Laplacian horizontal viscosity.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false,
-            "else": true
-         }
+         "value": true
       },
       "KH": {
          "description": "\"[m2 s-1] default = 0.0\nThe background Laplacian horizontal viscosity.\"\n",
@@ -818,7 +815,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "LEITH_AH": {
@@ -826,7 +823,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
       "LEITH_BI_CONST": {
@@ -834,7 +831,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 128.0
+            "$OCN_GRID == \"tx2_3v2\"": 75.0
          }
       },
       "LEITHY_CK": {
@@ -3057,7 +3054,7 @@
          "description": "\"[m] default = 0.0\nIf non-zero, a minimum depth to use for KPP OBL depth. Independent of this\nparameter, the OBL depth is always at least as deep as the first layer.\"\n",
          "datatype": "real",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 2.5
+            "$OCN_GRID == \"tx2_3v2\"": 5.0
          }
       }
    }
