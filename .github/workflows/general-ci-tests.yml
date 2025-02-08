@@ -56,6 +56,13 @@ jobs:
           cd $GITHUB_WORKSPACE/CESM/components/mom/
           git checkout ${{ github.sha }}
 
+      - name: check-cleanliness
+        run: |
+          echo
+          echo "Checking if git fleximod matches expected externals"
+          echo
+          git diff --exit-code
+
       # Build the standalone mom using the ubuntu script. 
       - name: Build Standalone MOM
         run: |
