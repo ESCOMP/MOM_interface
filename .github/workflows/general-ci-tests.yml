@@ -86,6 +86,19 @@ jobs:
       - name: Run the check_default_params script
         run: python tests/check_default_params.py
   
+  # Check that MOM6 submodule commit hashes are consistent
+  check_commit_hashes:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+      
+      # Run the test
+      - name: Run the check_commit_hashes script
+        run: python tests/check_commit_hashes.py
+  
   # Job to run check_input_data_list script
   check_input_data_list:
     
