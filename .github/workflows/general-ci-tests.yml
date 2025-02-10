@@ -48,6 +48,7 @@ jobs:
           cd $GITHUB_WORKSPACE/CESM/components/mom/
           git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
           git checkout pr-${{ github.event.pull_request.number }}
+          git submodule update --init --recursive
 
       - name: Checkout initial event (Push)
         if: ${{ github.event_name == 'push' }}
@@ -55,6 +56,13 @@ jobs:
           echo "Handling push"
           cd $GITHUB_WORKSPACE/CESM/components/mom/
           git checkout ${{ github.sha }}
+          git submodule update --init --recursive
+
+      - name: Check submodule hash consistency
+        run: |
+          echo "Checking if .gitmodules and external hashes are consistent"
+          cd $GITHUB_WORKSPACE/CESM/components/mom/
+          ../../bin/git-fleximod test
 
       # Build the standalone mom using the ubuntu script. 
       - name: Build Standalone MOM
