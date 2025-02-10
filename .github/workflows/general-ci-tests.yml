@@ -62,8 +62,7 @@ jobs:
         run: |
           echo "Checking if .gitmodules and external hashes are consistent"
           cd $GITHUB_WORKSPACE/CESM/components/mom/
-          ../../bin/git-fleximod update
-          git diff --exit-code
+          ../../bin/git-fleximod test
 
       # Build the standalone mom using the ubuntu script. 
       - name: Build Standalone MOM
