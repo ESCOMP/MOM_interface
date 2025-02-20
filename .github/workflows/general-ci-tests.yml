@@ -1,10 +1,6 @@
 name: General MOM_interface CI
-
-# This CI workflow tests against the following questions: 
-# 1. Does standalone mom build and run?
-# 2. Does it pass the tests/check_default_params.py test?
-# 3. Do the scripts in cime_config pass the black formatter? 
-# Please see Issue #138 for more information
+ 
+# Please see Issue #138 for more information on this CI workflow
 
 # Controls when the workflow will run
 on:
@@ -52,6 +48,7 @@ jobs:
           cd $GITHUB_WORKSPACE/CESM/components/mom/
           git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
           git checkout pr-${{ github.event.pull_request.number }}
+          git submodule update --init --recursive
 
       - name: Checkout initial event (Push)
         if: ${{ github.event_name == 'push' }}
@@ -59,8 +56,15 @@ jobs:
           echo "Handling push"
           cd $GITHUB_WORKSPACE/CESM/components/mom/
           git checkout ${{ github.sha }}
+          git submodule update --init --recursive
 
-      # Build the standalone mom using the macos script. build_examples-ncar doesn't work.    
+      - name: Check submodule hash consistency
+        run: |
+          echo "Checking if .gitmodules and external hashes are consistent"
+          cd $GITHUB_WORKSPACE/CESM/components/mom/
+          ../../bin/git-fleximod test
+
+      # Build the standalone mom using the ubuntu script. 
       - name: Build Standalone MOM
         run: |
           cd $GITHUB_WORKSPACE/CESM/components/mom/standalone/build
@@ -89,7 +93,36 @@ jobs:
       # Run the test
       - name: Run the check_default_params script
         run: python tests/check_default_params.py
-        
+  
+  # Job to run check_input_data_list script
+  check_input_data_list:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+      
+      # Run the test
+      - name: Run the check_input_data_list script
+        run: python tests/check_input_data_list.py
+
+  # Job to run check_input_data_repo script
+  check_input_data_repo:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+
+      # Run the test
+      - name: Run the check_input_data_repo script
+        run: |
+          sudo apt-get update && sudo apt-get install -y subversion
+          pip install 'svn>=1,<1.1'
+          python tests/check_input_data_repo.py
+
   # Job to run the black formatter for cime_config, see black documentation for more info
   check_black_format_for_cime_config:
     
