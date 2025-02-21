@@ -68,12 +68,12 @@
       },
       "MARBL_FESEDFLUX_FILE": {
          "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx2_3v2.c250220.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fesedflux_2024algo_tx2_3v2.c250220.nc"
          }
       },
       "MARBL_FESEDFLUXRED_FILE": {
          "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fesedfluxRed_total_reduce_oxic_tx2_3v2.c250220.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fesedfluxRed_2024algo_tx2_3v2.c250220.nc"
          }
       },
       "MARBL_FEVENTFLUX_FILE": {
