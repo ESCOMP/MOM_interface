@@ -49,11 +49,14 @@ mom.input_data_list:
     DIAG_COORD_DEF_RHO2:
         $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/ocean_rho2_190917.nc"
     MARBL_TRACERS_IC_FILE:
-        $MARBL_CONFIG == "latest": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c230331.nc"
-        $MARBL_CONFIG == "latest+4p2z": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c231221.nc"
+        $MARBL_CONFIG == "latest": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c250116.nc"
+        $MARBL_CONFIG == "latest+4p2z": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c250116.nc"
     MARBL_FESEDFLUX_FILE:
         '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS':
-            $OCN_GRID == "tx2_3v2": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx2_3v2.c231205.nc"
+            $OCN_GRID == "tx2_3v2": "${INPUTDIR}/fesedflux_total_reduce_oxic_tx2_3v2.c250220.nc"
+    MARBL_FESEDFLUXRED_FILE:
+        '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS':
+            $OCN_GRID == "tx2_3v2": "${INPUTDIR}/fesedfluxRed_total_reduce_oxic_tx2_3v2.c250220.nc"
     MARBL_FEVENTFLUX_FILE:
         '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS':
             $OCN_GRID == "tx2_3v2": "${INPUTDIR}/feventflux_5gmol_tx2_3v2.c231205.nc"
