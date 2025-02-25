@@ -32,11 +32,13 @@ jobs:
           sudo apt-get install linux-tools-common
           sudo apt-get install -y csh
           echo "::endgroup::"
+          
       - name: Checkout MOM_interface to temp folder
         uses: actions/checkout@v4
         with:
           submodules: recursive
           path: MOM_interface_temp
+
       # Checkout CESM (default branch) and externals
       - name: Checkout CESM
         uses: actions/checkout@v4
@@ -52,8 +54,8 @@ jobs:
           cd CESM
           ./bin/git-fleximod update
 
-      # Copy the correct MOM Branch to the CESM
-      - name: Checkout initial event (Pull Request)
+      # Copy the correct MOM_interface Branch to the CESM
+      - name: Copy MOM_interface over to the correct place in CESM
         run: |
           cp -r $GITHUB_WORKSPACE/MOM_interface_temp/* $GITHUB_WORKSPACE/CESM/components/mom/
 
