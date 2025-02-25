@@ -54,16 +54,16 @@ jobs:
           cd CESM
           ./bin/git-fleximod update
 
+      - name: Check submodule hash consistency (Seperate Test)
+        run: |
+          echo "Checking if .gitmodules and external hashes are consistent"
+          cd $GITHUB_WORKSPACE/CESM/components/mom/
+          ../../bin/git-fleximod test
+
       # Copy the correct MOM_interface Branch to the CESM
       - name: Copy MOM_interface over to the correct place in CESM
         run: |
           cp -r $GITHUB_WORKSPACE/MOM_interface_temp/* $GITHUB_WORKSPACE/CESM/components/mom/
-
-      - name: Check submodule hash consistency
-        run: |
-          echo "Checking if .gitmodules and external hashes are consistent"
-          cd $GITHUB_WORKSPACE/CESM/components/mom/
-#          ../../bin/git-fleximod test
 
       # Build the standalone mom using the ubuntu script. 
       - name: Build Standalone MOM
