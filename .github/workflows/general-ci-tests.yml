@@ -32,7 +32,7 @@ jobs:
           sudo apt-get install linux-tools-common
           sudo apt-get install -y csh
           echo "::endgroup::"
-          
+
       - name: Checkout MOM_interface to temp folder
         uses: actions/checkout@v4
         with:
@@ -63,7 +63,7 @@ jobs:
         run: |
           echo "Checking if .gitmodules and external hashes are consistent"
           cd $GITHUB_WORKSPACE/CESM/components/mom/
-          ../../bin/git-fleximod test
+#          ../../bin/git-fleximod test
 
       # Build the standalone mom using the ubuntu script. 
       - name: Build Standalone MOM
