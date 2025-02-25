@@ -32,31 +32,30 @@ jobs:
           sudo apt-get install linux-tools-common
           sudo apt-get install -y csh
           echo "::endgroup::"
-          
+      - name: Checkout MOM_interface to temp folder
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          path: MOM_interface_temp
       # Checkout CESM (default branch) and externals
-      - name: Checkout CESM and Externals
+      - name: Checkout CESM
+        uses: actions/checkout@v4
+        with:
+          repository: ESCOMP/CESM
+          path: CESM
+
+      # Run git-fleximod
+      - name: checkout CESM
+        env:
+          GIT_CLONE_PROTECTION_ACTIVE: false
         run: |
-          git clone https://github.com/ESCOMP/CESM.git 
           cd CESM
           ./bin/git-fleximod update
-          
-      # Checkout the correct MOM Branch
-      - name: Checkout initial event (Pull Request)
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          echo "Handling pull request"
-          cd $GITHUB_WORKSPACE/CESM/components/mom/
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
-          git checkout pr-${{ github.event.pull_request.number }}
-          git submodule update --init --recursive
 
-      - name: Checkout initial event (Push)
-        if: ${{ github.event_name == 'push' }}
+      # Copy the correct MOM Branch to the CESM
+      - name: Checkout initial event (Pull Request)
         run: |
-          echo "Handling push"
-          cd $GITHUB_WORKSPACE/CESM/components/mom/
-          git checkout ${{ github.sha }}
-          git submodule update --init --recursive
+          cp -r $GITHUB_WORKSPACE/MOM_interface_temp/* $GITHUB_WORKSPACE/CESM/components/mom/
 
       - name: Check submodule hash consistency
         run: |
