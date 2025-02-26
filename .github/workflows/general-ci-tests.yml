@@ -47,7 +47,7 @@ jobs:
           path: CESM
 
       # Run git-fleximod
-      - name: checkout CESM
+      - name: Checkout CESM Submodules
         env:
           GIT_CLONE_PROTECTION_ACTIVE: false
         run: |
@@ -61,7 +61,7 @@ jobs:
           ../../bin/git-fleximod test
 
       # Copy the correct MOM_interface Branch to the CESM
-      - name: Copy MOM_interface over to the correct place in CESM
+      - name: Copy the current MOM_interface to the correct place in CESM
         run: |
           cp -r $GITHUB_WORKSPACE/MOM_interface_temp/* $GITHUB_WORKSPACE/CESM/components/mom/
 
