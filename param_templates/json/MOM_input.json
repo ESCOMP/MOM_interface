@@ -2959,6 +2959,14 @@
             "$OCN_GRID in [\"tx2_3v2\", \"tx0.25v1\"]": true
          }
       },
+      "TARGET_IO_PES": {
+         "description": "When AUTO_MASKTABLE is enabled, target number of IO PEs. If the given target\nnumber of IO PEs is not achievable, the target number of IO PEs is set to the\nnearest smaller number of PEs that is achievable.\n",
+         "datatype": "integer",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "= - ( - $NTASKS_OCN // 256)",
+            "$OCN_GRID == \"tx0.25v1\"": "= - ( - $NTASKS_OCN // 128)"
+         }
+      },
       "GEOM_FILE": {
          "description": "default = ocean_geometry.nc\nThe file into which to write the ocean geometry.\n",
          "datatype": "string",
