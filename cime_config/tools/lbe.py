@@ -83,16 +83,19 @@ def gen_auto_mask_table(
         Output directory to write the mask table.
     """
 
-    ds_topog = xr.open_dataset(topo_file_path)
-    ny, nx = ds_topog.mask.shape
-
     ibuf = 2
     jbuf = 2
     num_masked_blocks = 0
 
-    mask = np.zeros((ny + 2 * jbuf, nx + 2 * ibuf))
-
-    mask[jbuf : ny + jbuf, ibuf : nx + ibuf] = ds_topog.mask.data
+    ds_topog = xr.open_dataset(topo_file_path)
+    if 'mask' in ds_topog:
+        ny, nx = ds_topog.mask.shape
+        mask = np.zeros((ny + 2 * jbuf, nx + 2 * ibuf))
+        mask[jbuf : ny + jbuf, ibuf : nx + ibuf] = ds_topog.mask.data
+    elif 'wet' in ds_topog:
+        ny, nx = ds_topog.wet.shape
+        mask = np.zeros((ny + 2 * jbuf, nx + 2 * ibuf))
+        mask[jbuf : ny + jbuf, ibuf : nx + ibuf] = ds_topog.wet.data
 
     # fill in buffer cells
     if reentrant_x:
@@ -123,28 +126,63 @@ def gen_auto_mask_table(
     # ratio of ocean cells to total number of cells
     glob_ocn_frac = mask[jbuf : ny + jbuf, ibuf : nx + ibuf].sum() / (ny * nx)
 
+    pfrac = 0.01
+    max_feasible_p = 0
+    target_io_pes = args.tiopes 
+    found_feasible_layout = False
+
     # Iteratively check for all possible division counts starting from the upper bound of npes/glob_ocn_frac,
-    # which is over-optimistic for realistic domains, but may be satisfied with idealized domains.
-    for p in range(int(np.ceil(npes / glob_ocn_frac)), npes, -1):
+    # which is over-optimistic for realistic domains, but may be satisfied with idealized domains. The first encountered
+    # feasible division count is stored in max_feasible_p. If the target_io_pes is not achievable with this layout,
+    # the iteration continues until max_feasible_p * (1 - pfrac) is reached or the target_io_pes is satisfiable.
+    # If not, the target_io_pes is decremented and the iteration is re-done from max_feasible_p to max_feasible_p * (1 - pfrac).
 
-        # compute the layout for the current division count, p
-        idiv, jdiv = MOM_define_layout(nx, ny, p)
+    for i in range(target_io_pes, 0, -1):
 
-        # don't bother checking this p if the aspect ratio is extreme
-        r_p = (nx / idiv) / (ny / jdiv)
-        if r_p * r_extreme < 1.0 or r_extreme < r_p:
-            continue
-
-        # Get the number of masked_blocks for this particular division count
-        mask_table = determine_land_blocks(mask, nx, ny, idiv, jdiv, ibuf, jbuf)
-
-        # If we can eliminate enough blocks to reach the target npes, adopt
-        # this p (and the associated layout) and terminate the iteration.
-        num_masked_blocks = len(mask_table)
-        if p - num_masked_blocks <= npes:
-            print("Found the optimum layout for auto-masking. Terminating iteration...")
-            print(f"\t new ndivs: {p}, num_masked_blocks: {p-npes}")
+        if found_feasible_layout:
             break
+
+        if (max_feasible_p == 0): # first iteration
+            p_up = int(np.ceil(npes / glob_ocn_frac))
+        else:
+            p_up = max_feasible_p
+
+        for p in range(p_up, npes, -1):
+
+            # compute the layout for the current division count, p
+            idiv, jdiv = MOM_define_layout(nx, ny, p)
+
+            # don't bother checking this p if the aspect ratio is extreme
+            ar = (nx / idiv) / (ny / jdiv)
+            if ar * r_extreme < 1.0 or r_extreme < ar:
+                continue
+
+            # Get the number of masked_blocks for this particular division count
+            mask_table = determine_land_blocks(mask, nx, ny, idiv, jdiv, ibuf, jbuf)
+
+            # If we can eliminate enough blocks to reach the target npes, adopt
+            # this p (and the associated layout) and terminate the iteration.
+            num_masked_blocks = len(mask_table)
+
+            if p - num_masked_blocks <= npes:
+                print(f"ndivs: {p}, masked_blocks: {num_masked_blocks}", "  idiv: ", idiv, "jdiv", jdiv)
+
+                if max_feasible_p == 0:
+                    print("^^^^^^^^^^^^^^^ first feasible layout ^^^^^^^^^^^^^^^")
+                    max_feasible_p = p
+                if (idiv * jdiv) % i == 0:
+                    idiv_io, jdiv_io = determine_io_layout(idiv, jdiv, i)
+                    # if the io layout ratio is extreme, skip this layout
+                    ar = (idiv / idiv_io) / (jdiv / jdiv_io)
+                    if ar * r_extreme < 1.0 or r_extreme < ar:
+                        continue
+                    print(f"IO layout: {idiv_io} x {jdiv_io}")
+                    print("Found the optimum layout for auto-masking. Terminating iteration.")
+                    found_feasible_layout = True
+                    break
+            
+            if p <= max_feasible_p * (1 - pfrac):
+                break
 
     if num_masked_blocks == 0:
         raise RuntimeError(
@@ -153,7 +191,24 @@ def gen_auto_mask_table(
 
     # Call determine_land_blocks once again, this time to retrieve and write out the mask_table.
     mask_table = determine_land_blocks(mask, nx, ny, idiv, jdiv, ibuf, jbuf)
-    write_auto_mask_file(mask_table, idiv, jdiv, npes, output_dir)
+
+def determine_io_layout(idiv, jdiv, nio):
+    """Determines the optimal I/O layout given the number of partitions in x and y direction and the number of I/O PEs."""
+    min_ratio_diff = float('inf')
+    best_idiv_io, best_jdiv_io = 1, nio
+
+    for f in range(1, nio + 1):
+        if nio % f == 0:
+            idiv_io, jdiv_io = f, nio // f
+
+            if idiv % idiv_io == 0 and jdiv % jdiv_io == 0:
+                ratio_diff = abs((idiv_io / jdiv_io) - (idiv / jdiv))
+
+                if ratio_diff < min_ratio_diff:
+                    min_ratio_diff = ratio_diff
+                    best_idiv_io, best_jdiv_io = idiv_io, jdiv_io
+
+    return best_idiv_io, best_jdiv_io
 
 
 def write_auto_mask_file(
@@ -209,6 +264,13 @@ if __name__ == "__main__":
         required=True,
         help="Number of MOM6 PEs (NTASKS_OCN)",
     )
+    parser.add_argument(
+        "--tiopes",
+        default=1,
+        type=int,
+        required=False,
+        help="Number of target I/O PEs (NTASKS_IO) (default: 1)",
+        )
     parser.add_argument(
         "-rx",
         default=False,
