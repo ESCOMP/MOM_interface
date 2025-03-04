@@ -88,11 +88,11 @@ def gen_auto_mask_table(
     num_masked_blocks = 0
 
     ds_topog = xr.open_dataset(topo_file_path)
-    if 'mask' in ds_topog:
+    if "mask" in ds_topog:
         ny, nx = ds_topog.mask.shape
         mask = np.zeros((ny + 2 * jbuf, nx + 2 * ibuf))
         mask[jbuf : ny + jbuf, ibuf : nx + ibuf] = ds_topog.mask.data
-    elif 'wet' in ds_topog:
+    elif "wet" in ds_topog:
         ny, nx = ds_topog.wet.shape
         mask = np.zeros((ny + 2 * jbuf, nx + 2 * ibuf))
         mask[jbuf : ny + jbuf, ibuf : nx + ibuf] = ds_topog.wet.data
@@ -128,7 +128,7 @@ def gen_auto_mask_table(
 
     pfrac = 0.01
     max_feasible_p = 0
-    target_io_pes = args.tiopes 
+    target_io_pes = args.tiopes
     found_feasible_layout = False
 
     # Iteratively check for all possible division counts starting from the upper bound of npes/glob_ocn_frac,
@@ -142,7 +142,7 @@ def gen_auto_mask_table(
         if found_feasible_layout:
             break
 
-        if (max_feasible_p == 0): # first iteration
+        if max_feasible_p == 0:  # first iteration
             p_up = int(np.ceil(npes / glob_ocn_frac))
         else:
             p_up = max_feasible_p
@@ -165,7 +165,13 @@ def gen_auto_mask_table(
             num_masked_blocks = len(mask_table)
 
             if p - num_masked_blocks <= npes:
-                print(f"ndivs: {p}, masked_blocks: {num_masked_blocks}", "  idiv: ", idiv, "jdiv", jdiv)
+                print(
+                    f"ndivs: {p}, masked_blocks: {num_masked_blocks}",
+                    "  idiv: ",
+                    idiv,
+                    "jdiv",
+                    jdiv,
+                )
 
                 if max_feasible_p == 0:
                     print("^^^^^^^^^^^^^^^ first feasible layout ^^^^^^^^^^^^^^^")
@@ -177,10 +183,12 @@ def gen_auto_mask_table(
                     if ar * r_extreme < 1.0 or r_extreme < ar:
                         continue
                     print(f"IO layout: {idiv_io} x {jdiv_io}")
-                    print("Found the optimum layout for auto-masking. Terminating iteration.")
+                    print(
+                        "Found the optimum layout for auto-masking. Terminating iteration."
+                    )
                     found_feasible_layout = True
                     break
-            
+
             if p <= max_feasible_p * (1 - pfrac):
                 break
 
@@ -192,9 +200,10 @@ def gen_auto_mask_table(
     # Call determine_land_blocks once again, this time to retrieve and write out the mask_table.
     mask_table = determine_land_blocks(mask, nx, ny, idiv, jdiv, ibuf, jbuf)
 
+
 def determine_io_layout(idiv, jdiv, nio):
     """Determines the optimal I/O layout given the number of partitions in x and y direction and the number of I/O PEs."""
-    min_ratio_diff = float('inf')
+    min_ratio_diff = float("inf")
     best_idiv_io, best_jdiv_io = 1, nio
 
     for f in range(1, nio + 1):
@@ -270,7 +279,7 @@ if __name__ == "__main__":
         type=int,
         required=False,
         help="Number of target I/O PEs (NTASKS_IO) (default: 1)",
-        )
+    )
     parser.add_argument(
         "-rx",
         default=False,
