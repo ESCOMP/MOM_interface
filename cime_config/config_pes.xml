@@ -219,7 +219,7 @@
           <ntasks_ice>128</ntasks_ice>
           <ntasks_ocn>2560</ntasks_ocn>
           <ntasks_lnd>1</ntasks_lnd>
-          <ntasks_wav>256</ntasks_wav>
+          <ntasks_wav>128</ntasks_wav>
           <ntasks_glc>1</ntasks_glc>
         </ntasks>
         <nthrds>
@@ -237,7 +237,7 @@
           <rootpe_rof>0</rootpe_rof>
           <rootpe_cpl>0</rootpe_cpl>
           <rootpe_ice>0</rootpe_ice>
-          <rootpe_ocn>384</rootpe_ocn>
+          <rootpe_ocn>256</rootpe_ocn>
           <rootpe_lnd>0</rootpe_lnd>
           <rootpe_wav>128</rootpe_wav>
           <rootpe_glc>0</rootpe_glc>
