@@ -9,7 +9,14 @@
          "so",
          "KE",
          "MEKE",
-         "rhopot0"
+         "rhopot0",
+         "rhopot2",
+         "difvho",
+         "difvso",
+         "Kv_u",
+         "Kv_v",
+         "taux_bot",
+         "tauy_bot"
       ],
       [
          "uo",
@@ -19,12 +26,18 @@
          "so",
          "agessc",
          "rhopot0",
-         "N2_int"
+         "N2_int",
+         "rhopot2",
+         "difvho",
+         "difvso",
+         "Kv_u",
+         "Kv_v"
       ],
       [
          "thetao",
          "so",
-         "agessc"
+         "agessc",
+         "e"
       ],
       [
          "soga",
@@ -192,6 +205,18 @@
       ],
       [
          "Geo_heat"
+      ],
+      [
+         "frunoff_glc",
+         "lrunoff_glc"
+      ],
+      [
+         "KPP_QminusSW",
+         "KPP_netSalt",
+         "KPP_NLT_dTdt",
+         "KPP_NLT_dSdT",
+         "KPP_NLT_temp_budget",
+         "KPP_NLT_saln_budget"
       ]
    ],
    "Files": {
@@ -230,7 +255,8 @@
                   [
                      "thetao",
                      "so",
-                     "agessc"
+                     "agessc",
+                     "e"
                   ]
                ],
                "lists2": {
@@ -312,7 +338,14 @@
                         "so",
                         "KE",
                         "MEKE",
-                        "rhopot0"
+                        "rhopot0",
+                        "rhopot2",
+                        "difvho",
+                        "difvso",
+                        "Kv_u",
+                        "Kv_v",
+                        "taux_bot",
+                        "tauy_bot"
                      ],
                      [
                         "KPP_OBLdepth:oml",
@@ -387,6 +420,26 @@
                         "u10_sqr"
                      ]
                   ]
+               },
+               "lists4": {
+                  "$COMP_ATM == \"cam\"": [
+                     [
+                        "frunoff_glc",
+                        "lrunoff_glc"
+                     ]
+                  ]
+               },
+               "lists5": {
+                  "$TEST == True": [
+                     [
+                        "KPP_QminusSW",
+                        "KPP_netSalt",
+                        "KPP_NLT_dTdt",
+                        "KPP_NLT_dSdT",
+                        "KPP_NLT_temp_budget",
+                        "KPP_NLT_saln_budget"
+                     ]
+                  ]
                }
             }
          }
@@ -422,7 +475,12 @@
                      "so",
                      "agessc",
                      "rhopot0",
-                     "N2_int"
+                     "N2_int",
+                     "rhopot2",
+                     "difvho",
+                     "difvso",
+                     "Kv_u",
+                     "Kv_v"
                   ],
                   [
                      "volcello",
