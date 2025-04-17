@@ -214,7 +214,7 @@
          "KPP_QminusSW",
          "KPP_netSalt",
          "KPP_NLT_dTdt",
-         "KPP_NLT_dSdT",
+         "KPP_NLT_dSdt",
          "KPP_NLT_temp_budget",
          "KPP_NLT_saln_budget"
       ]
@@ -435,7 +435,7 @@
                         "KPP_QminusSW",
                         "KPP_netSalt",
                         "KPP_NLT_dTdt",
-                        "KPP_NLT_dSdT",
+                        "KPP_NLT_dSdt",
                         "KPP_NLT_temp_budget",
                         "KPP_NLT_saln_budget"
                      ]
@@ -505,7 +505,7 @@
       },
       "surface_avg": {
          "suffix": {
-            "$TEST == True": "h.sfc%4yr-%2mo-2dy",
+            "$TEST == True": "h.sfc%4yr-%2mo-%2dy",
             "else": "h.sfc%4yr-%2mo"
          },
          "output_freq": {
@@ -522,7 +522,7 @@
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "$OCN_DIAG_MODE != \"none\" and $TEST is not True": {
+            "$OCN_DIAG_MODE != \"none\"": {
                "module": "ocean_model",
                "packing": "= 1 if $TEST else 2",
                "lists": [
