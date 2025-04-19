@@ -67,7 +67,7 @@ class DiagTableClass(object):
         new_file_freq_units = "days" if self._nstep_output else None
         suffix_dict = {
             '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual%4yr",
-            "$TEST == True": "h.bgc.native%4yr-%2mo",
+            "$TEST == True": "h.bgc.native%4yr-%2mo-%2dy",
             "else": "h.bgc.native%4yr-%2mo",
         }
         output_freq_units_dict = {
@@ -83,7 +83,7 @@ class DiagTableClass(object):
         if vert_grid in ["interpolated", "both"]:
             suffix_dict = {
                 '$OCN_DIAG_MODE == "spinup"': "h.bgc.z_annual%4yr",
-                "$TEST == True": "h.bgc.z%4yr-%2mo",
+                "$TEST == True": "h.bgc.z%4yr-%2mo-%2dy",
                 f"{self._nstep_output} == True": "h.bgc.z_nstep%4yr-%2mo-%2dy",
                 "else": "h.bgc.z%4yr-%2mo",
             }
