@@ -3648,8 +3648,7 @@ Global:
         description: |
             Turn on automatic mask table generation to eliminate land blocks
         datatype: list
-        value:
-            $OCN_GRID in ["tx2_3v2", "tx0.25v1"]: True
+        value: False
     TARGET_IO_PES:
         description: |
             When AUTO_MASKTABLE is enabled, target number of IO PEs. If the given target
