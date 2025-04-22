@@ -2981,6 +2981,11 @@
          "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
          "datatype": "real",
          "value": 0.75
+      },
+      "RESTART_CHECKSUMS_REQUIRED": {
+         "description": "\"[Boolean] default = True\nIf true, require the restart checksums to match and error out otherwise. Users\nmay want to avoid this comparison if for example the restarts are made from a\nrun with a different mask_table than the current run, in which case the\nchecksums will not match and cause crash.\n",
+         "datatype": "logical",
+         "value": "$TEST"
       }
    },
    "KPP": {
