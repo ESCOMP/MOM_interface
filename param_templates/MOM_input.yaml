@@ -3705,8 +3705,7 @@ KPP:
         description: |
             "default = 0
             The number of times the 1-1-4-1-1 Laplacian filter is applied on
-            OBL depth.
-            purely for diagnostic purposes."
+            OBL depth purely for diagnostic purposes."
         datatype: integer
         value:
             $OCN_GRID == "tx2_3v2": 3
@@ -3834,11 +3833,11 @@ MLE:
         description: |
             "[Boolean] default = False
             If true, the Bodner parameterization will use the mixed-layer depth detected
-            via the density difference criterion defined by MLE_DENSITY_DIFF.
+            via the density difference criterion defined by MLE_DENSITY_DIFF."
         datatype: bool
         units: none
         value:
-            $OCN_GRID == "tx2_3v2": true
+            $OCN_GRID == "tx2_3v2": True
     MIN_WSTAR2:
         description: |
             "[m2 s-2] default = 1.0E-24

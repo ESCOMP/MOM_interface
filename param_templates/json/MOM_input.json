@@ -2999,7 +2999,7 @@
    },
    "KPP": {
       "N_SMOOTH": {
-         "description": "\"default = 0\nThe number of times the 1-1-4-1-1 Laplacian filter is applied on\nOBL depth.\npurely for diagnostic purposes.\"\n",
+         "description": "\"default = 0\nThe number of times the 1-1-4-1-1 Laplacian filter is applied on\nOBL depth purely for diagnostic purposes.\"\n",
          "datatype": "integer",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 3
@@ -3113,7 +3113,7 @@
          }
       },
       "BODNER_DETECT_MLD": {
-         "description": "\"[Boolean] default = False\nIf true, the Bodner parameterization will use the mixed-layer depth detected\nvia the density difference criterion defined by MLE_DENSITY_DIFF.\n",
+         "description": "\"[Boolean] default = False\nIf true, the Bodner parameterization will use the mixed-layer depth detected\nvia the density difference criterion defined by MLE_DENSITY_DIFF.\"\n",
          "datatype": "bool",
          "units": "none",
          "value": {
