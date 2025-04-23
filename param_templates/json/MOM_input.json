@@ -1152,83 +1152,12 @@
             "else": true
          }
       },
-      "USE_BODNER23": {
-         "description": "\"[Boolean] default = False\nIf true, use the Bodner et al., 2023, formulation of the re-stratifying\nmixed-layer restratification parameterization. This only works in ALE mode.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
-         }
-      },
-      "USE_CR_GRID": {
-         "description": "\"[Boolean] default = False\ntrue, read in a spatially varying Cr field.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
-         }
-      },
-      "CR_FILE": {
-         "description": "\"The path to the file containing the Cr fields.\"\n",
-         "datatype": "string",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-tx2_3v2-v10_20250422.nc"
-         }
-      },
-      "BODNER_DETECT_MLD": {
-         "description": "\"[Boolean] default = False\nIf true, the Bodner parameterization will use the mixed-layer depth detected\nvia the density difference criterion defined by MLE_DENSITY_DIFF.\n",
-         "datatype": "bool",
-         "units": "none",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
-         }
-      },
       "MLE_DENSITY_DIFF": {
          "description": "\"[kg/m3] default = 0.03\nDensity difference used to detect the mixed-layer depth for the\nmixed-layer eddy parameterization by Fox-Kemper et al. (2010).\"\n",
          "datatype": "real",
          "units": "kg/m3",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 0.02
-         }
-      },
-      "MIN_WSTAR2": {
-         "description": "\"[m2 s-2] default = 1.0E-24\nThe minimum lower bound applied to the vertical momentum flux, w'u', in the\nBodner et al. restratification parameterization. This avoids a division-by-zero\nin the limit when u* and the buoyancy flux are zero. The default is smaller\nthan the product of the molecular viscosity of water and the Coriolis parameter\none micron from the equator.\"\n",
-         "datatype": "real",
-         "units": "m2 s-2",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1e-09
-         }
-      },
-      "BLD_DECAYING_TFILTER": {
-         "description": "\"default = 0.0\nThe time scale for a running-mean filter applied to the boundary layer depth (BLD)\nwhen the BLD is shallower than the running mean. A value of 0 instantaneously sets\nthe running mean to the current BLD value.\"\n",
-         "datatype": "real",
-         "units": "s",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 86400.0
-         }
-      },
-      "BLD_GROWING_TFILTER": {
-         "description": "\"[s] default = 0.0\nThe time scale for a running-mean filter applied to the boundary layer depth (BLD)\nwhen the BLD is deeper than the running mean. A value of 0 instantaneously sets\nthe running mean to the current BLD value.\"\n",
-         "datatype": "real",
-         "units": "s",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 300.0
-         }
-      },
-      "MLD_GROWING_TFILTER": {
-         "description": "\"[s] default = 0.0\nThe time scale for a running-mean filter applied to the time-filtered boundary layer depth (BLD),\nwhen the filtered BLD is deeper than the running mean. A value of 0 instantaneously sets\nthe running mean to the current filtered BLD value.\"\n",
-         "datatype": "real",
-         "units": "s",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 3600.0
-         }
-      },
-      "MLD_DECAYING_TFILTER": {
-         "description": "\"[s] default = 0.0\nThe time scale for a running-mean filter applied to the time-filtered boundary layer depth (BLD),\nwhen the filtered BLD is shallower than the running mean. A value of 0 instantaneously sets\nthe running mean to the current filtered BLD value.\"\n",
-         "datatype": "real",
-         "units": "s",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 2592000.0
          }
       },
       "FOX_KEMPER_ML_RESTRAT_COEF": {
@@ -3156,6 +3085,79 @@
          "datatype": "real",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 5.0
+         }
+      }
+   },
+   "MLE": {
+      "USE_BODNER23": {
+         "description": "\"[Boolean] default = False\nIf true, use the Bodner et al., 2023, formulation of the re-stratifying\nmixed-layer restratification parameterization. This only works in ALE mode.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "USE_CR_GRID": {
+         "description": "\"[Boolean] default = False\ntrue, read in a spatially varying Cr field.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "CR_FILE": {
+         "description": "\"The path to the file containing the Cr fields.\"\n",
+         "datatype": "string",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-tx2_3v2-v10_20250422.nc"
+         }
+      },
+      "BODNER_DETECT_MLD": {
+         "description": "\"[Boolean] default = False\nIf true, the Bodner parameterization will use the mixed-layer depth detected\nvia the density difference criterion defined by MLE_DENSITY_DIFF.\n",
+         "datatype": "bool",
+         "units": "none",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "MIN_WSTAR2": {
+         "description": "\"[m2 s-2] default = 1.0E-24\nThe minimum lower bound applied to the vertical momentum flux, w'u', in the\nBodner et al. restratification parameterization. This avoids a division-by-zero\nin the limit when u* and the buoyancy flux are zero. The default is smaller\nthan the product of the molecular viscosity of water and the Coriolis parameter\none micron from the equator.\"\n",
+         "datatype": "real",
+         "units": "m2 s-2",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 1e-09
+         }
+      },
+      "BLD_DECAYING_TFILTER": {
+         "description": "\"default = 0.0\nThe time scale for a running-mean filter applied to the boundary layer depth (BLD)\nwhen the BLD is shallower than the running mean. A value of 0 instantaneously sets\nthe running mean to the current BLD value.\"\n",
+         "datatype": "real",
+         "units": "s",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 86400.0
+         }
+      },
+      "BLD_GROWING_TFILTER": {
+         "description": "\"[s] default = 0.0\nThe time scale for a running-mean filter applied to the boundary layer depth (BLD)\nwhen the BLD is deeper than the running mean. A value of 0 instantaneously sets\nthe running mean to the current BLD value.\"\n",
+         "datatype": "real",
+         "units": "s",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 300.0
+         }
+      },
+      "MLD_GROWING_TFILTER": {
+         "description": "\"[s] default = 0.0\nThe time scale for a running-mean filter applied to the time-filtered boundary layer depth (BLD),\nwhen the filtered BLD is deeper than the running mean. A value of 0 instantaneously sets\nthe running mean to the current filtered BLD value.\"\n",
+         "datatype": "real",
+         "units": "s",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 3600.0
+         }
+      },
+      "MLD_DECAYING_TFILTER": {
+         "description": "\"[s] default = 0.0\nThe time scale for a running-mean filter applied to the time-filtered boundary layer depth (BLD),\nwhen the filtered BLD is shallower than the running mean. A value of 0 instantaneously sets\nthe running mean to the current filtered BLD value.\"\n",
+         "datatype": "real",
+         "units": "s",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 2592000.0
          }
       }
    }
