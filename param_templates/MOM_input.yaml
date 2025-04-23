@@ -3829,7 +3829,7 @@ MLE:
             "The path to the file containing the Cr fields."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "mle-cr-tx2_3v2-v10_20250422.nc"
+            $OCN_GRID == "tx2_3v2": "mle-cr-tx2_3v2-v10_20250423.nc"
     BODNER_DETECT_MLD:
         description: |
             "[Boolean] default = False
