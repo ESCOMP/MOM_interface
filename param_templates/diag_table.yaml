@@ -4,11 +4,11 @@
 ###############################################################################
 ---
 FieldLists:
-    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "MEKE", "rhopot0"]
+    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "MEKE", "rhopot0", "rhopot2", "difvho", "difvso", "Kv_u", "Kv_v", "taux_bot", "tauy_bot"]
 
-    - &prognostic_z     ["uo", "vo", "h", "thetao", "so", "agessc", "rhopot0", "N2_int"]
+    - &prognostic_z     ["uo", "vo", "h", "thetao", "so", "agessc", "rhopot0", "N2_int", "rhopot2", "difvho", "difvso", "Kv_u", "Kv_v"]
 
-    - &prognostic_rho2  ["thetao", "so", "agessc"]
+    - &prognostic_rho2  ["thetao", "so", "agessc", "e"]
 
     - &hist_additional  ["soga", "thetaoga", "uh", "vh", "vhbt", "uhbt", "rsdo"]
 
@@ -60,6 +60,10 @@ FieldLists:
     - &cfc_2d  ["cfc11_flux", "cfc12_flux", "ice_fraction", "u10_sqr"]
 
     - &geothermal  ["Geo_heat"]
+
+    - &glc_terms ["frunoff_glc", "lrunoff_glc"]
+
+    - &kpp_test ["KPP_QminusSW", "KPP_netSalt", "KPP_NLT_dTdt", "KPP_NLT_dSdt", "KPP_NLT_temp_budget", "KPP_NLT_saln_budget"]
 
 ###############################################################################
 # Section 2: File lists:
@@ -128,6 +132,12 @@ Files:
                 lists3:
                     $USE_CFC_CAP == "True":
                         [ *cfc_2d ]
+                lists4:
+                    $COMP_ATM == "cam":
+                        [ *glc_terms ]
+                lists5:
+                    $TEST == True:
+                        [ *kpp_test ]
 
     # essential variable mapped to z_space
     hist_z_space:
@@ -158,7 +168,7 @@ Files:
 
     surface_avg:
         suffix:
-            $TEST == True: "h.sfc%4yr-%2mo-2dy"
+            $TEST == True: "h.sfc%4yr-%2mo-%2dy"
             else: "h.sfc%4yr-%2mo"
         output_freq:
             $OCN_DIAG_MODE == "spinup": 5
@@ -172,7 +182,7 @@ Files:
         reduction_method: "mean"    # time average
         regional_section: "none"    # global
         fields:
-            $OCN_DIAG_MODE != "none" and $TEST is not True :
+            $OCN_DIAG_MODE != "none":
                 module:   "ocean_model"    # native
                 packing: = 1 if $TEST else 2
                 lists:    [ *surface_flds_common,

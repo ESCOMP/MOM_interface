@@ -3775,7 +3775,15 @@ Global:
             Fraction of GM work that is added to backscatter rate."
         datatype: real
         value: 0.75
-
+    RESTART_CHECKSUMS_REQUIRED:
+        description: |
+            "[Boolean] default = True
+            If true, require the restart checksums to match and error out otherwise. Users
+            may want to avoid this comparison if for example the restarts are made from a
+            run with a different mask_table than the current run, in which case the
+            checksums will not match and cause crash.
+        datatype: logical
+        value: $TEST
 KPP:
     N_SMOOTH:
         description: |
