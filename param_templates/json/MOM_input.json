@@ -1152,6 +1152,14 @@
             "else": true
          }
       },
+      "BODNER_DETECT_MLD": {
+         "description": "\"[Boolean] default = False\nIf true, the Bodner parameterization will use the mixed-layer depth detected\nvia the density difference criterion defined by MLE_DENSITY_DIFF.\"\n",
+         "datatype": "bool",
+         "units": "none",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
       "MLE_DENSITY_DIFF": {
          "description": "\"[kg/m3] default = 0.03\nDensity difference used to detect the mixed-layer depth for the\nmixed-layer eddy parameterization by Fox-Kemper et al. (2010).\"\n",
          "datatype": "real",
@@ -3110,14 +3118,6 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": "mle-cr-tx2_3v2-v10_20250423.nc"
-         }
-      },
-      "BODNER_DETECT_MLD": {
-         "description": "\"[Boolean] default = False\nIf true, the Bodner parameterization will use the mixed-layer depth detected\nvia the density difference criterion defined by MLE_DENSITY_DIFF.\"\n",
-         "datatype": "bool",
-         "units": "none",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "MIN_WSTAR2": {

@@ -1517,6 +1517,15 @@ Global:
         value:
             $OCN_GRID == "MISOMIP": False
             else: True
+    BODNER_DETECT_MLD:
+        description: |
+            "[Boolean] default = False
+            If true, the Bodner parameterization will use the mixed-layer depth detected
+            via the density difference criterion defined by MLE_DENSITY_DIFF."
+        datatype: bool
+        units: none
+        value:
+            $OCN_GRID == "tx2_3v2": True
     MLE_DENSITY_DIFF:
         description: |
             "[kg/m3] default = 0.03
@@ -3829,15 +3838,6 @@ MLE:
         datatype: string
         value:
             $OCN_GRID == "tx2_3v2": "mle-cr-tx2_3v2-v10_20250423.nc"
-    BODNER_DETECT_MLD:
-        description: |
-            "[Boolean] default = False
-            If true, the Bodner parameterization will use the mixed-layer depth detected
-            via the density difference criterion defined by MLE_DENSITY_DIFF."
-        datatype: bool
-        units: none
-        value:
-            $OCN_GRID == "tx2_3v2": True
     MIN_WSTAR2:
         description: |
             "[m2 s-2] default = 1.0E-24
