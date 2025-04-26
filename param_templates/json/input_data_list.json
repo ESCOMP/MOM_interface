@@ -56,7 +56,7 @@
          "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/seawifs-clim-1997-2010-tx2_3v2.230416.nc"
       },
       "CR_FILE": {
-         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/mle-cr-tx2_3v2-v10_20250423.nc"
+         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/mle-cr-tx2_3v2-v10_20250426.nc"
       },
       "CFC_BC_FILE": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc",
       "DIAG_COORD_DEF_RHO2": {

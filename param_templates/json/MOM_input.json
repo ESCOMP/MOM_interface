@@ -3117,7 +3117,7 @@
          "description": "\"The path to the file containing the Cr fields.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-tx2_3v2-v10_20250423.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-tx2_3v2-v10_20250426.nc"
          }
       },
       "MIN_WSTAR2": {
