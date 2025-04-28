@@ -71,8 +71,8 @@
          "Rd_dx",
          "speed",
          "mlotst",
-         "mlotst:mlots_min:min",
-         "mlotst:mlots_max:max"
+         "mlotst:mlotst_min:min",
+         "mlotst:mlotst_max:max"
       ],
       [
          "zos",
@@ -400,8 +400,8 @@
                         "Rd_dx",
                         "speed",
                         "mlotst",
-                        "mlotst:mlots_min:min",
-                        "mlotst:mlots_max:max"
+                        "mlotst:mlotst_min:min",
+                        "mlotst:mlotst_max:max"
                      ],
                      [
                         "sst_global",
@@ -540,8 +540,8 @@
                      "Rd_dx",
                      "speed",
                      "mlotst",
-                     "mlotst:mlots_min:min",
-                     "mlotst:mlots_max:max"
+                     "mlotst:mlotst_min:min",
+                     "mlotst:mlotst_max:max"
                   ],
                   [
                      "zos",

@@ -15,11 +15,11 @@ FieldLists:
     - &tracers          ["agessc", "T_ady_2d", "T_adx_2d", "T_diffy_2d", "T_diffx_2d",
                          "T_hbd_diffx_2d", 'T_hbd_diffy_2d']
 
-    - &surface_flds_common ["tos", "tos:tos_min:min", "tos:tos_max:max", 
-                         "sos", "sos:sos_min:min", "sos:sos_max:max", 
+    - &surface_flds_common ["tos", "tos:tos_min:min", "tos:tos_max:max",
+                         "sos", "sos:sos_min:min", "sos:sos_max:max",
                          "SSU", "SSV", "opottempmint", "somint", "Rd_dx", "speed",
-                         "mlotst", "mlotst:mlots_min:min", "mlotst:mlots_max:max"]
-    
+                         "mlotst", "mlotst:mlotst_min:min", "mlotst:mlotst_max:max"]
+
     - &surface_flds_daily ["zos", "zossq"]
 
     - &surface_flds_monthly ["sst_global", "sss_global", "SSH", "mass_wt"]
@@ -73,8 +73,8 @@ FieldLists:
 Files:
     # sigma2
     sigma2_hist:
-        suffix: 
-            $TEST == True: "h.rho2%4yr-%2mo-%2dy" 
+        suffix:
+            $TEST == True: "h.rho2%4yr-%2mo-%2dy"
             else: "h.rho2%4yr-%2mo"
         output_freq: 1
         output_freq_units:
@@ -98,8 +98,8 @@ Files:
                         [ *cfc_3d ]
     # native grid
     hist:
-        suffix: 
-            $TEST == True: "h.native%4yr-%2mo-%2dy" 
+        suffix:
+            $TEST == True: "h.native%4yr-%2mo-%2dy"
             else: "h.native%4yr-%2mo"
         output_freq: 1
         output_freq_units:
@@ -141,7 +141,7 @@ Files:
 
     # essential variable mapped to z_space
     hist_z_space:
-        suffix: 
+        suffix:
             $TEST == True: "h.z%4yr-%2mo-%2dy"
             else: "h.z%4yr-%2mo"
         output_freq: 1
@@ -167,7 +167,7 @@ Files:
                         [ *cfc_3d ]
 
     surface_avg:
-        suffix: 
+        suffix:
             $TEST == True: "h.sfc%4yr-%2mo-%2dy"
             else: "h.sfc%4yr-%2mo"
         output_freq:
@@ -189,7 +189,7 @@ Files:
                             *surface_flds_daily,
                             *kpp_diags ]
     forcing_avg:
-        suffix: 
+        suffix:
             $TEST == True: "h.frc%4yr-%2mo-%2dy"
             else: "h.frc%4yr-%2mo"
         output_freq: 1
