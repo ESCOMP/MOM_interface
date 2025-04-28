@@ -3658,7 +3658,7 @@ Global:
         datatype: integer
         value:
             $OCN_GRID == "tx2_3v2" and $TEST: = - ( - $NTASKS_OCN // 256)
-            $OCN_GRID == "tx0.25v1": = - ( - $NTASKS_OCN // 128) 
+            $OCN_GRID == "tx0.25v1": = - ( - $NTASKS_OCN // 128)
     GEOM_FILE:
         description: |
             default = ocean_geometry.nc
