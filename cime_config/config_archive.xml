@@ -8,18 +8,31 @@
          h.(static|ocean_geometry)[._optional instance number].nc[.optional tile number] -->
     <hist_file_extension>h\.(static|ocean_geometry)(\._\d*)?\.nc(\.\d*)?(\.gz)?$</hist_file_extension>
     <!-- match filenames of the form
-         h.bgc.*[._optional instance number].nc 
-         How is .*?.? parsed?  I think it should be 
-    <hist_file_extension>h\.bgc\..*(\._\d+)?\.nc(\.gz)?$</hist_file_extension> -->
+         h.bgc.*[._optional instance number].nc -->
     <hist_file_extension>h\.bgc\..*?.?[_\d+]+\.nc(\.gz)?$</hist_file_extension>
     <!-- match filenames of the form
-         ic.(date string)[._optional instance number].nc[.optional tile number] -->
-    <hist_file_extension>ic.[-\d+]+(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
+         ic.(date string[_optional id for splitting date over many files)[._optional instance number].nc[.optional tile number] -->
+    <hist_file_extension>ic.[-\d(_\d)?+]+(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
     <hist_file_extension>e</hist_file_extension>
-    <hist_file_ext_regex>\w+\.\w+(\._\d*)?</hist_file_ext_regex>
+    <hist_file_ext_regex>\w+\.\w+(\.\w+)?(\._\d*)?</hist_file_ext_regex>
     <rpointer>
-      <rpointer_file>rpointer.ocn$NINST_STRING</rpointer_file>
+      <rpointer_file>rpointer.ocn$NINST_STRING.$DATENAME</rpointer_file>
       <rpointer_content>$CASE.mom6$NINST_STRING.r.$DATENAME.nc</rpointer_content>
     </rpointer>
+      <test_file_names>
+        <tfile disposition="copy">rpointer.ocn.1976-01-01-00000</tfile>
+        <tfile disposition="copy">casename.mom6.r.1976-01-01-00000.nc</tfile>
+        <tfile disposition="copy">casename.mom6.r.1976-01-01-00000_1.nc</tfile>
+        <tfile disposition="move">casename.mom6.h.bgc.native.1976-01-01.nc</tfile>
+        <tfile disposition="move">casename.mom6.h.bgc.z.1976-01-01.nc</tfile>
+        <tfile disposition="move">casename.mom6.h.native.1976-01-01-00000.nc</tfile>
+        <tfile disposition="move">casename.mom6.h.ocean_geometry.nc</tfile>
+        <tfile disposition="move">casename.mom6.h.rho2.1976-01-01-00000.nc</tfile>
+        <tfile disposition="move">casename.mom6.h.sfc.1976-01-01-00000.nc</tfile>
+        <tfile disposition="move">casename.mom6.h.static.nc</tfile>
+        <tfile disposition="move">casename.mom6.h.z.1976-01-01-00000.nc</tfile>
+        <tfile disposition="move">casename.mom6.ic.1976-01-01-00000.nc</tfile>
+        <tfile disposition="move">casename.mom6.ic.1976-01-01-00000_1.nc</tfile>
+      </test_file_names>
   </comp_archive_spec>
 </components>

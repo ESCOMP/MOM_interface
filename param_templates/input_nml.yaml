@@ -49,7 +49,8 @@ diag_manager_nml:
         values: 90
     auto_merge_nc:
         values:
-            $OCN_GRID in ["tx2_3v2", "tx0.25v1"]: .true.
+            $OCN_GRID == "tx2_3v2" and $TEST: .true.
+            $OCN_GRID == "tx0.25v1": .true.
             else: .false.
 
 mpp_io_nml:
