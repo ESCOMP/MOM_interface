@@ -3709,6 +3709,15 @@ Global:
             checksums will not match and cause crash.
         datatype: logical
         value: $TEST
+    RESTARTFILE_APPENDIX_PREFIX:
+        description: |
+            "default = ''
+            The prefix for the restart file appendix (i.e., ensemble id for ensemble
+            runs). If this prefix is found in the restart file name, the appendix is added
+            right after the first occurrence of the prefix. If not found, the appendix is
+            added to the end of the file name. This parameter is ignored for non-ensemble runs."
+        datatype: string
+        value: ".mom6"
 KPP:
     N_SMOOTH:
         description: |

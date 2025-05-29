@@ -3003,6 +3003,11 @@
          "description": "\"[Boolean] default = True\nIf true, require the restart checksums to match and error out otherwise. Users\nmay want to avoid this comparison if for example the restarts are made from a\nrun with a different mask_table than the current run, in which case the\nchecksums will not match and cause crash.\n",
          "datatype": "logical",
          "value": "$TEST"
+      },
+      "RESTARTFILE_APPENDIX_PREFIX": {
+         "description": "\"default = ''\nThe prefix for the restart file appendix (i.e., ensemble id for ensemble\nruns). If this prefix is found in the restart file name, the appendix is added\nright after the first occurrence of the prefix. If not found, the appendix is\nadded to the end of the file name. This parameter is ignored for non-ensemble runs.\"\n",
+         "datatype": "string",
+         "value": ".mom6"
       }
    },
    "KPP": {
