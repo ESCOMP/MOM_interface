@@ -423,7 +423,18 @@ def postchecks(case,  MOM_input_final):
             f"  Domain decomposition: NIPROC={niproc}, NJPROC={njproc}\n"
             f"  Unable to find a feasible MOM6 domain decomposition! Try a different NTASKS_OCN."
         )
+    postchecks_ntasks_vs_grid_size(case, MOM_input_final)
 
+def postchecks_ntasks_vs_grid_size(case, MOM_input_final):
+    """Checks very loosely whether the number of tasks is impossible for the grid size."""
+    ntasks_ocn = case.get_value("NTASKS_OCN")
+    niglobal = int(MOM_input_final._data["Global"]["NIGLOBAL"]['value'])
+    njglobal = int(MOM_input_final._data["Global"]["NJGLOBAL"]['value'])
+
+    if niglobal*njglobal < ntasks_ocn:
+        raise SystemExit(
+            f"ERROR: NTASKS_OCN={ntasks_ocn} is greater than the number of grid cells {niglobal*njglobal}. MOM6 will be unable to find a domain decomposition. Try a lower NTASKS_OCN. "
+        )
 # pylint: disable=unused-argument
 ###############################################################################
 def buildnml(case, caseroot, compname):
