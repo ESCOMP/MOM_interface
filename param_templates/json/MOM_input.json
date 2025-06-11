@@ -1599,8 +1599,7 @@
          "datatype": "integer",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 3,
-            "$OCN_GRID == \"tx2_3v2\"": 3,
-            "$MOM6_REGIONAL_MODE == True": 3
+            "$OCN_GRID == \"tx2_3v2\"": 3
          }
       },
       "TRACER_ADVECTION_SCHEME": {
