@@ -1505,7 +1505,7 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": 1000.0
             $OCN_GRID == "tx0.25v1": 500.0
-            $MOM6_REGIONAL_MODE == True: MLE_FRONT_LENGTH
+            $MOM6_REGIONAL_MODE == True: 1500.0
     MLE_MLD_DECAY_TIME:
         description: |
             "[s] default = 0.0
@@ -2775,7 +2775,7 @@ Global:
         datatype: string
         value:
             $OCN_GRID == "MISOMIP": "MISOMIP_IC"
-            $MOM6_REGIONAL_MODE == True: $CASE.mom6.ic
+            $MOM6_REGIONAL_MODE == True: ${CASE}.mom6.ic
     TRIMMING_USES_REMAPPING:
         description: |
             "[Boolean] default = False
@@ -3626,7 +3626,7 @@ Global:
             The file into which to write the ocean geometry.
         datatype: string
         value:
-            $CASE.mom6.h.ocean_geometry.nc
+            ${CASE}.mom6.h.ocean_geometry.nc
     SKEB_NPASS:
         description: |
             "default = 3

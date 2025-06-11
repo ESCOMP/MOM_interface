@@ -1130,7 +1130,7 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0,
-            "$MOM6_REGIONAL_MODE == True": "MLE_FRONT_LENGTH"
+            "$MOM6_REGIONAL_MODE == True": 1500.0
          }
       },
       "MLE_MLD_DECAY_TIME": {
@@ -2211,7 +2211,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": "MISOMIP_IC",
-            "$MOM6_REGIONAL_MODE == True": "$CASE.mom6.ic"
+            "$MOM6_REGIONAL_MODE == True": "${CASE}.mom6.ic"
          }
       },
       "TRIMMING_USES_REMAPPING": {
@@ -2941,7 +2941,7 @@
       "GEOM_FILE": {
          "description": "default = ocean_geometry.nc\nThe file into which to write the ocean geometry.\n",
          "datatype": "string",
-         "value": "$CASE.mom6.h.ocean_geometry.nc"
+         "value": "${CASE}.mom6.h.ocean_geometry.nc"
       },
       "SKEB_NPASS": {
          "description": "\"default = 3\nnumber of passes of a 9-point smoother of the dissipation estimate.\"\n",
