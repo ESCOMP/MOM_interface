@@ -65,7 +65,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID == \"tx2_3v2\"": false,
+            "$MOM6_REGIONAL_MODE == True": false
          }
       },
       "DIABATIC_FIRST": {
@@ -73,7 +74,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "USE_REGRIDDING": {
@@ -163,7 +165,8 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 3992.0,
             "$OCN_GRID == \"tx0.25v1\"": 3992.0,
-            "$OCN_GRID == \"MISOMIP\"": 3974.0
+            "$OCN_GRID == \"MISOMIP\"": 3974.0,
+            "$MOM6_REGIONAL_MODE == True": 3992.0
          }
       },
       "USE_PSURF_IN_EOS": {
@@ -178,7 +181,8 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "SAVE_INITIAL_CONDS": {
@@ -203,7 +207,8 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": -7.75e-08,
             "$OCN_GRID == \"tx0.25v1\"": -7.75e-08,
-            "$OCN_GRID == \"MISOMIP\"": -7.53e-08
+            "$OCN_GRID == \"MISOMIP\"": -7.53e-08,
+            "$MOM6_REGIONAL_MODE == True": -7.75e-08
          }
       },
       "USE_IDEAL_AGE_TRACER": {
@@ -369,7 +374,8 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "file",
-            "$OCN_GRID == \"MISOMIP\"": "linear"
+            "$OCN_GRID == \"MISOMIP\"": "linear",
+            "$MOM6_REGIONAL_MODE == True": "ALE"
          }
       },
       "REMAP_UV_USING_OLD_ALG": {
@@ -465,7 +471,10 @@
       "REMAPPING_SCHEME": {
          "description": "\"default = 'PLM'\nThis sets the reconstruction scheme used\nfor vertical remapping for all variables.\nIt can be one of the following schemes:\nPCM         (1st-order accurate)\nPLM         (2nd-order accurate)\nPPM_H4      (3rd-order accurate)\nPPM_IH4     (3rd-order accurate)\nPQM_IH4IH3  (4th-order accurate)\nPQM_IH6IH5  (5th-order accurate)\"\n",
          "datatype": "string",
-         "value": "PPM_CW"
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": "PPM_H4",
+            "else": "PPM_CW"
+         }
       },
       "INIT_LAYERS_FROM_Z_FILE": {
          "description": "\"[Boolean] default = False\nIf true, intialize the layer thicknesses, temperatures,\nand salnities from a Z-space file on a latitude-\nlongitude grid.\"\n",
@@ -511,7 +520,8 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "RESOLN_SCALED_KH": {
@@ -593,7 +603,8 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "USE_STANLEY_ISO": {
@@ -676,7 +687,8 @@
          "value": {
             "$MOM6_VERTICAL_GRID in [\"zstar_65L\", \"zstar_75L\"]": "Z*",
             "$MOM6_VERTICAL_GRID == \"hycom1\"": "HYCOM1",
-            "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": "SIGMA_SHELF_ZSTAR"
+            "$MOM6_VERTICAL_GRID == \"sigma_shelf_zstar\"": "SIGMA_SHELF_ZSTAR",
+            "$MOM6_REGIONAL_MODE == True": "Z*"
          }
       },
       "ALE_COORDINATE_CONFIG": {
@@ -787,7 +799,8 @@
          "units": "m s-1",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.01,
-            "$OCN_GRID == \"MISOMIP\"": 0.001
+            "$OCN_GRID == \"MISOMIP\"": 0.001,
+            "$MOM6_REGIONAL_MODE == True": 0.01
          }
       },
       "LEITH_AH": {
@@ -818,6 +831,7 @@
          "units": "m",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 20.0,
+            "$MOM6_REGIONAL_MODE == True": 0.9,
             "else": 0.5
          }
       },
@@ -842,7 +856,8 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"tx0.25v1\"": 1.25
+            "$OCN_GRID == \"tx0.25v1\"": 1.25,
+            "$MOM6_REGIONAL_MODE == True": 1.25
          }
       },
       "U_TRUNC_FILE": {
@@ -962,7 +977,16 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
+         }
+      },
+      "BT_NONLIN_STRESS": {
+         "description": "\"[Boolean] default = False\nIf true, use the full depth of the ocean at the start of the barotropic step\nwhen calculating the surface stress contribution to the barotropic\nacclerations.  Otherwise use the depth based on bathyT.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "BT_THICK_SCHEME": {
@@ -993,6 +1017,7 @@
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": -0.9,
             "$OCN_GRID == \"MISOMIP\"": -0.9,
+            "$MOM6_REGIONAL_MODE == True": -0.9,
             "else": -0.95
          }
       },
@@ -1009,7 +1034,8 @@
          "datatype": "real",
          "units": "Pa",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.0
+            "$OCN_GRID == \"tx0.25v1\"": 0.0,
+            "$MOM6_REGIONAL_MODE == True": 0.0
          }
       },
       "KHTH": {
@@ -1026,7 +1052,8 @@
          "datatype": "real",
          "units": "nondimensional",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.1
+            "$OCN_GRID == \"tx0.25v1\"": 0.1,
+            "$MOM6_REGIONAL_MODE == True": 0.1
          }
       },
       "STOCH_EOS": {
@@ -1092,7 +1119,8 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"tx0.25v1\"": 1.0
+            "$OCN_GRID == \"tx0.25v1\"": 1.0,
+            "$MOM6_REGIONAL_MODE == True": 1.0
          }
       },
       "MLE_FRONT_LENGTH": {
@@ -1101,7 +1129,8 @@
          "units": "m",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 1000.0,
-            "$OCN_GRID == \"tx0.25v1\"": 500.0
+            "$OCN_GRID == \"tx0.25v1\"": 500.0,
+            "$MOM6_REGIONAL_MODE == True": "MLE_FRONT_LENGTH"
          }
       },
       "MLE_MLD_DECAY_TIME": {
@@ -1110,7 +1139,8 @@
          "units": "s",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 345600.0,
-            "$OCN_GRID == \"tx0.25v1\"": 2592000.0
+            "$OCN_GRID == \"tx0.25v1\"": 2592000.0,
+            "$MOM6_REGIONAL_MODE == True": 2592000.0
          }
       },
       "USE_STANLEY_ML": {
@@ -1126,7 +1156,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "BBL_MIXING_AS_MAX": {
@@ -1135,7 +1166,8 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": false,
-            "$OCN_GRID == \"tx0.25v1\"": false
+            "$OCN_GRID == \"tx0.25v1\"": false,
+            "$MOM6_REGIONAL_MODE == True": false
          }
       },
       "USE_LOTW_BBL_DIFFUSIVITY": {
@@ -1173,6 +1205,7 @@
             "$OCN_GRID == \"tx2_3v2\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.5e-05,
             "$OCN_GRID == \"MISOMIP\"": 5e-05,
+            "$MOM6_REGIONAL_MODE == True": 1e-06,
             "else": 2e-05
          }
       },
@@ -1198,6 +1231,7 @@
          "units": "m2 s-1",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 2e-07,
+            "$MOM6_REGIONAL_MODE == True": 2e-07,
             "else": 2e-06
          }
       },
@@ -1229,7 +1263,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 0.0018
+            "$OCN_GRID == \"tx0.25v1\"": 0.0018,
+            "$MOM6_REGIONAL_MODE == True": 0.0018
          }
       },
       "USE_RIGID_SEA_ICE": {
@@ -1237,7 +1272,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "SEA_ICE_RIGID_MASS": {
@@ -1245,7 +1281,8 @@
          "datatype": "real",
          "units": "kg m-2",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 100.0
+            "$OCN_GRID == \"tx0.25v1\"": 100.0,
+            "$MOM6_REGIONAL_MODE == True": 100.0
          }
       },
       "H2_FILE": {
@@ -1260,7 +1297,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "USE_CVMix_TIDAL": {
@@ -1306,7 +1344,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "N_SMOOTH_RI": {
@@ -1314,7 +1353,8 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1
+            "$OCN_GRID == \"tx2_3v2\"": 1,
+            "$MOM6_REGIONAL_MODE == True": 1
          }
       },
       "USE_CVMIX_DDIFF": {
@@ -1322,7 +1362,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "MAX_ENT_IT": {
@@ -1357,7 +1398,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "MSTAR_MODE": {
@@ -1557,7 +1599,8 @@
          "datatype": "integer",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 3,
-            "$OCN_GRID == \"tx2_3v2\"": 3
+            "$OCN_GRID == \"tx2_3v2\"": 3,
+            "$MOM6_REGIONAL_MODE == True": 3
          }
       },
       "TRACER_ADVECTION_SCHEME": {
@@ -1565,7 +1608,8 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": "\"PPM:H3\"",
-            "$OCN_GRID == \"tx0.25v1\"": "\"PPM:H3\""
+            "$OCN_GRID == \"tx0.25v1\"": "\"PPM:H3\"",
+            "$MOM6_REGIONAL_MODE == True": "\"PPM:H3\""
          }
       },
       "KHTR_USE_EBT_STRUCT": {
@@ -1604,7 +1648,8 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "MAX_TR_DIFFUSION_CFL": {
@@ -1723,7 +1768,8 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.25,
-            "$OCN_GRID == \"MISOMIP\"": 1.0
+            "$OCN_GRID == \"MISOMIP\"": 1.0,
+            "$MOM6_REGIONAL_MODE == True": 0.25
          }
       },
       "ENERGETICS_SFC_PBL": {
@@ -2009,7 +2055,8 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.06,
-            "$OCN_GRID == \"MISOMIP\"": 0.06
+            "$OCN_GRID == \"MISOMIP\"": 0.06,
+            "$MOM6_REGIONAL_MODE == True": 0.015
          }
       },
       "USE_JACKSON_PARAM": {
@@ -2038,7 +2085,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "BAD_VAL_SSH_MAX": {
@@ -2046,7 +2094,8 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 50.0
+            "$OCN_GRID == \"tx0.25v1\"": 50.0,
+            "$MOM6_REGIONAL_MODE == True": 50.0
          }
       },
       "BAD_VAL_SSS_MAX": {
@@ -2062,7 +2111,8 @@
          "datatype": "real",
          "units": "deg C",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": 65.0
+            "$OCN_GRID == \"tx0.25v1\"": 65.0,
+            "$MOM6_REGIONAL_MODE == True": 65.0
          }
       },
       "BAD_VAL_SST_MIN": {
@@ -2071,7 +2121,8 @@
          "units": "degC",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": -3.0,
-            "$OCN_GRID == \"tx0.25v1\"": -3.0
+            "$OCN_GRID == \"tx0.25v1\"": -3.0,
+            "$MOM6_REGIONAL_MODE == True": -3.0
          }
       },
       "DEFAULT_ANSWER_DATE": {
@@ -2110,7 +2161,8 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "TOPO_EDITS_FILE": {
@@ -2125,7 +2177,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "REENTRANT_X": {
@@ -2133,7 +2186,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": false
+            "$OCN_GRID == \"MISOMIP\"": false,
+            "$MOM6_REGIONAL_MODE == True": false
          }
       },
       "RHO_0": {
@@ -2156,7 +2210,8 @@
          "description": "\"default = 'MOM_IC'\nThe file into which to write the initial conditions.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": "MISOMIP_IC"
+            "$OCN_GRID == \"MISOMIP\"": "MISOMIP_IC",
+            "$MOM6_REGIONAL_MODE == True": "$CASE.mom6.ic"
          }
       },
       "TRIMMING_USES_REMAPPING": {
@@ -2343,7 +2398,8 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": 1e-12
+            "$OCN_GRID == \"MISOMIP\"": 1e-12,
+            "$MOM6_REGIONAL_MODE == True": 1e-06
          }
       },
       "HYCOM1_ONLY_IMPROVES": {
@@ -2482,6 +2538,7 @@
          "units": "m2 s-1",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 0.0,
+            "$MOM6_REGIONAL_MODE == True": 1e-06,
             "else": 0.0001
          }
       },
@@ -2522,7 +2579,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": true
+            "$OCN_GRID == \"MISOMIP\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "HARMONIC_BL_SCALE": {
@@ -2539,7 +2597,8 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"MISOMIP\"": true,
-            "$OCN_GRID == \"tx0.25v1\"": true
+            "$OCN_GRID == \"tx0.25v1\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "CORRECT_DENSITY": {
@@ -2555,7 +2614,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": 0.0
+            "$OCN_GRID == \"MISOMIP\"": 0.0,
+            "$MOM6_REGIONAL_MODE == True": 0.0
          }
       },
       "IGNORE_FLUXES_OVER_LAND": {
@@ -2737,7 +2797,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": false
+            "$OCN_GRID == \"MISOMIP\"": false,
+            "$MOM6_REGIONAL_MODE == True": false
          }
       },
       "DATE_STAMPED_STDOUT": {
@@ -2765,11 +2826,12 @@
          }
       },
       "MLE_USE_PBL_MLD": {
-         "description": "\"TODO\"\n",
+         "description": "\"TODO\n\n[Boolean] default = False\nIf true, the MLE parameterization will use the mixed-layer depth provided by\nthe active PBL parameterization. If false, MLE will estimate a MLD based on a\ndensity difference with the surface using the parameter MLE_DENSITY_DIFF.\"\n",
          "datatype": "logical",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": true,
-            "$OCN_GRID == \"MISOMIP\"": true
+            "$OCN_GRID == \"MISOMIP\"": true,
+            "$MOM6_REGIONAL_MODE == True": true
          }
       },
       "EPBL_IS_ADDITIVE": {
@@ -2777,7 +2839,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx0.25v1\"": false
+            "$OCN_GRID == \"tx0.25v1\"": false,
+            "$MOM6_REGIONAL_MODE == True": false
          }
       },
       "GEOTHERMAL_SCALE": {
@@ -2889,6 +2952,118 @@
          "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
          "datatype": "real",
          "value": 0.75
+      },
+      "OBC_FREESLIP_VORTICITY": {
+         "description": "\"[Boolean] default = True\n If true, sets the normal gradient of tangential velocity to zero in the\n relative vorticity on open boundaries. This cannot be true if another\n OBC_XXX_VORTICITY option is True.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": false
+         }
+      },
+      "OBC_COMPUTED_VORTICITY": {
+         "description": "\"[Boolean] default = False\n If true, uses the external values of tangential velocity in the relative\n vorticity on open boundaries. This cannot be true if another OBC_XXX_VORTICITY\n option is True.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": true
+         }
+      },
+      "OBC_FREESLIP_STRAIN": {
+         "description": "\"[Boolean] default = True\n If true, sets the normal gradient of tangential velocity to zero in the strain\n use in the stress tensor on open boundaries. This cannot be true if another\n OBC_XXX_STRAIN option is True.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": false
+         }
+      },
+      "OBC_COMPUTED_STRAIN": {
+         "description": "\"[Boolean] default = False\n  If true, sets the normal gradient of tangential velocity to zero in the strain\n  use in the stress tensor on open boundaries. This cannot be true if another\n  OBC_XXX_STRAIN option is True.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": true
+         }
+      },
+      "OBC_ZERO_BIHARMONIC": {
+         "description": "\"[Boolean] default = False\n If true, zeros the Laplacian of flow on open boundaries in the biharmonic\n viscosity term.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": true
+         }
+      },
+      "OBC_RAMP_TIMESCALE": {
+         "description": "\"[days] default = 1.0\n If RAMP_OBCS is true, this sets the ramping timescale.\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": 2.0
+         }
+      },
+      "OBC_TRACER_RESERVOIR_LENGTH_SCALE_OUT": {
+         "description": "\"[m] default = 0.0\nAn effective length scale for restoring the tracer concentration at the\nboundaries to externally imposed values when the flow is exiting the domain.\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": 9000.0
+         }
+      },
+      "OBC_TRACER_RESERVOIR_LENGTH_SCALE_IN": {
+         "description": "\"[m] default = 0.0\nAn effective length scale for restoring the tracer concentration at the\nboundaries to values from the interior when the flow is entering the domain.\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": 9000.0
+         }
+      },
+      "DEPRESS_INITIAL_SURFACE": {
+         "description": "\"[Boolean] default = False\n If true,  depress the initial surface to avoid huge tsunamis when a large\n surface pressure is applied.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": true
+         }
+      },
+      "CHANNEL_DRAG_MAX_BBL_THICK": {
+         "description": "\"[m] default = -1.0\n The maximum bottom boundary layer thickness over which the channel drag is\n exerted, or a negative value for no fixed limit, instead basing the BBL\n thickness on the bottom stress, rotation and stratification.  The default is\n proportional to HBBL if USE_JACKSON_PARAM or DRAG_AS_BODY_FORCE is true.\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": 5.0
+         }
+      },
+      "DIRECT_STRESS": {
+         "description": "\"[Boolean] default = False\nIf true, the wind stress is distributed over the topmost HMIX_STRESS of fluid\n(like in HYCOM), and an added mixed layer viscosity or a physically based\nboundary layer turbulence parameterization is not needed for stability.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": true
+         }
+      },
+      "SADOURNY": {
+         "description": "\"[Boolean] default = True\n If true, the Coriolis terms are discretized with the Sadourny (1975) energy\n conserving scheme, otherwise the Arakawa & Hsu scheme is used.  If the\n internal deformation radius is not resolved, the Sadourny scheme should\n probably be used.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": false
+         }
+      },
+      "BT_STRONG_DRAG": {
+         "description": "\"[Boolean] default = False\n If true, use a stronger estimate of the retarding effects of strong bottom\n drag, by making it implicit with the barotropic time-step instead of implicit\n with the baroclinic time-step and dividing by the number of barotropic steps.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": true
+         }
+      },
+      "LINEARIZED_BT_CORIOLIS": {
+         "description": "\"[Boolean] default = True\nIf true use the bottom depth instead of the total water column thickness in\nthe barotropic Coriolis term calculations.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": false
+         }
+      },
+      "LATENT_HEAT_FUSION": {
+         "description": "\"[J/kg] default = 3.337E+05\n The latent heat of fusion.\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": 334000.0
+         }
+      },
+      "LATENT_HEAT_VAPORIZATION": {
+         "description": "\"[J/kg] default = 2.501E+06\nThe latent heat of fusion.\n\"\n",
+         "datatype": "real",
+         "value": {
+            "$MOM6_REGIONAL_MODE == True": 2500000.0
+         }
       }
    },
    "KPP": {
@@ -2896,14 +3071,16 @@
          "description": "\"default = 0\nThe number of times the 1-1-4-1-1 Laplacian filter is applied on\nOBL depth.\npurely for diagnostic purposes.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 3
+            "$OCN_GRID == \"tx2_3v2\"": 3,
+            "$MOM6_REGIONAL_MODE == True": 3
          }
       },
       "MATCH_TECHNIQUE": {
          "description": "\"default = 'SimpleShapes'\nCVMix method to set profile function for diffusivity and NLT,\nas well as matching across OBL base. Allowed values are:\nSimpleShapes      = sigma*(1-sigma)^2 for both diffusivity and NLT\nMatchGradient     = sigma*(1-sigma)^2 for NLT; diffusivity profile from matching\nMatchBoth         = match gradient for both diffusivity and NLT\nParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "MatchGradient"
+            "$OCN_GRID == \"tx2_3v2\"": "MatchGradient",
+            "$MOM6_REGIONAL_MODE == True": "MatchGradient"
          }
       },
       "INTERP_TYPE2": {
@@ -2918,7 +3095,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID == \"tx2_3v2\"": false,
+            "$MOM6_REGIONAL_MODE == True": false
          }
       },
       "USE_KPP_LT_K": {
