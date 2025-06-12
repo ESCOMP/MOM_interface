@@ -632,6 +632,17 @@ Global:
         units: Boolean
         value:
              $OCN_GRID == "tx2_3v2": True
+    REMAPPING_USE_OM4_SUBCELLS:
+        description: |
+            "[Boolean] default = True
+            This selects the remapping algorithm used in OM4 that does not use the full
+            reconstruction for the top- and lower-most sub-layers. Instead, it assumes
+            they are always vanished (which is untrue) and uses only their edge values.
+            It is recommended to set this option to false."
+        datatype: bool
+        units: none
+        value:
+            $OCN_GRID == "tx2_3v2": False
     INIT_LAYERS_FROM_Z_FILE:
         description: |
             "[Boolean] default = False
@@ -1513,6 +1524,24 @@ Global:
         value:
             $OCN_GRID == "MISOMIP": False
             else: True
+    BODNER_DETECT_MLD:
+        description: |
+            "[Boolean] default = False
+            If true, the Bodner parameterization will use the mixed-layer depth detected
+            via the density difference criterion defined by MLE_DENSITY_DIFF."
+        datatype: bool
+        units: none
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    MLE_DENSITY_DIFF:
+        description: |
+            "[kg/m3] default = 0.03
+            Density difference used to detect the mixed-layer depth for the
+            mixed-layer eddy parameterization by Fox-Kemper et al. (2010)."
+        datatype: real
+        units: kg/m3
+        value:
+            $OCN_GRID == "tx2_3v2": 0.02
     FOX_KEMPER_ML_RESTRAT_COEF:
         description: |
             "[nondim] default = 0.0
@@ -1554,13 +1583,6 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx2_3v2": False
-    MLE_FL_FILE:
-        description: |
-            "The path to the file containing the MLE
-            front-length scale.."
-        datatype: string
-        value:
-            $OCN_GRID == "tx2_3v2": "mle-lf-clim-tx2_3v2_20250115.nc"
     MLE_MLD_DECAY_TIME:
         description: |
             "[s] default = 0.0
@@ -3657,6 +3679,15 @@ Global:
         datatype: list
         value:
             $OCN_GRID in ["tx2_3v2", "tx0.25v1"]: True
+    TARGET_IO_PES:
+        description: |
+            When AUTO_MASKTABLE is enabled, target number of IO PEs. If the given target
+            number of IO PEs is not achievable, the target number of IO PEs is set to the
+            nearest smaller number of PEs that is achievable.
+        datatype: integer
+        value:
+            $OCN_GRID == "tx2_3v2" and $TEST: = - ( - $NTASKS_OCN // 256)
+            $OCN_GRID == "tx0.25v1": = - ( - $NTASKS_OCN // 128)
     GEOM_FILE:
         description: |
             default = ocean_geometry.nc
@@ -3676,14 +3707,21 @@ Global:
             Fraction of GM work that is added to backscatter rate."
         datatype: real
         value: 0.75
-
+    RESTART_CHECKSUMS_REQUIRED:
+        description: |
+            "[Boolean] default = True
+            If true, require the restart checksums to match and error out otherwise. Users
+            may want to avoid this comparison if for example the restarts are made from a
+            run with a different mask_table than the current run, in which case the
+            checksums will not match and cause crash.
+        datatype: logical
+        value: $TEST
 KPP:
     N_SMOOTH:
         description: |
             "default = 0
             The number of times the 1-1-4-1-1 Laplacian filter is applied on
-            OBL depth.
-            purely for diagnostic purposes."
+            OBL depth purely for diagnostic purposes."
         datatype: integer
         value:
             $OCN_GRID == "tx2_3v2": 3
@@ -3752,6 +3790,14 @@ KPP:
         datatype: string
         value:
             $COMP_WAV == "ww3": VR12
+    KPP_CVt2:
+        description: |
+            "[nondim] default = 1.6
+            Parameter for Stokes MOST convection entrainment."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 1.0
     STOKES_MOST:
         description: |
             default = False
@@ -3775,5 +3821,80 @@ KPP:
         datatype: real
         value:
            $OCN_GRID == "tx2_3v2": 5.0
+MLE:
+    USE_BODNER23:
+        description: |
+            "[Boolean] default = False
+            If true, use the Bodner et al., 2023, formulation of the re-stratifying
+            mixed-layer restratification parameterization. This only works in ALE mode."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    USE_CR_GRID:
+        description: |
+            "[Boolean] default = False
+            true, read in a spatially varying Cr field."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    CR_FILE:
+        description: |
+            "The path to the file containing the Cr fields."
+        datatype: string
+        value:
+            $OCN_GRID == "tx2_3v2": "mle-cr-tx2_3v2-v10_20250426.nc"
+    MIN_WSTAR2:
+        description: |
+            "[m2 s-2] default = 1.0E-24
+            The minimum lower bound applied to the vertical momentum flux, w'u', in the
+            Bodner et al. restratification parameterization. This avoids a division-by-zero
+            in the limit when u* and the buoyancy flux are zero. The default is smaller
+            than the product of the molecular viscosity of water and the Coriolis parameter
+            one micron from the equator."
+        datatype: real
+        units: m2 s-2
+        value:
+            $OCN_GRID == "tx2_3v2": 1.0E-09
+    BLD_DECAYING_TFILTER:
+        description: |
+            "default = 0.0
+            The time scale for a running-mean filter applied to the boundary layer depth (BLD)
+            when the BLD is shallower than the running mean. A value of 0 instantaneously sets
+            the running mean to the current BLD value."
+        datatype: real
+        units: s
+        value:
+            $OCN_GRID == "tx2_3v2": 8.64E+04
+    BLD_GROWING_TFILTER:
+        description: |
+            "[s] default = 0.0
+            The time scale for a running-mean filter applied to the boundary layer depth (BLD)
+            when the BLD is deeper than the running mean. A value of 0 instantaneously sets
+            the running mean to the current BLD value."
+        datatype: real
+        units: s
+        value:
+            $OCN_GRID == "tx2_3v2": 300.0
+    MLD_GROWING_TFILTER:
+        description: |
+            "[s] default = 0.0
+            The time scale for a running-mean filter applied to the time-filtered boundary layer depth (BLD),
+            when the filtered BLD is deeper than the running mean. A value of 0 instantaneously sets
+            the running mean to the current filtered BLD value."
+        datatype: real
+        units: s
+        value:
+            $OCN_GRID == "tx2_3v2": 3600.0
+    MLD_DECAYING_TFILTER:
+        description: |
+            "[s] default = 0.0
+            The time scale for a running-mean filter applied to the time-filtered boundary layer depth (BLD),
+            when the filtered BLD is shallower than the running mean. A value of 0 instantaneously sets
+            the running mean to the current filtered BLD value."
+        datatype: real
+        units: s
+        value:
+            $OCN_GRID == "tx2_3v2": 2.592E+06
 ...
-
