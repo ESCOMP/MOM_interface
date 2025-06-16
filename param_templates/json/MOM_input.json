@@ -242,14 +242,14 @@
          "description": "\"Name of file containing iron sediment flux\n forcing field for the MARBL tracer package.\"\n",
          "datatype": "string",
          "value": {
-            "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS and $OCN_GRID == \"tx2_3v2\"": "fesedflux_2024algo_tx2_3v2.c250220.nc"
+            "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS and $OCN_GRID == \"tx2_3v2\"": "fesedflux_2024algo_tx2_3v2.c250616.nc"
          }
       },
       "MARBL_FESEDFLUXRED_FILE": {
          "description": "\"Name of file containing iron reducing sediment flux\n forcing field for the MARBL tracer package.\"\n",
          "datatype": "string",
          "value": {
-            "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS and $OCN_GRID == \"tx2_3v2\"": "fesedfluxRed_2024algo_tx2_3v2.c250220.nc"
+            "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS and $OCN_GRID == \"tx2_3v2\"": "fesedfluxRed_2024algo_tx2_3v2.c250616.nc"
          }
       },
       "MARBL_FEVENTFLUX_FILE": {
