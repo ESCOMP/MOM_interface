@@ -9,10 +9,10 @@
     <hist_file_extension>h\.(static|ocean_geometry)(\._\d*)?\.nc(\.\d*)?(\.gz)?$</hist_file_extension>
     <!-- match filenames of the form
          h.bgc.*[._optional instance number].nc -->
-    <hist_file_extension>h\.bgc\..*?.?[_\d+]+\.nc(\.gz)?$</hist_file_extension>
+    <hist_file_extension>h\.bgc\..*(\._\d+)?\.nc$</hist_file_extension>
     <!-- match filenames of the form
          ic.(date string)[._optional instance number].nc[.optional tile number] -->
-    <hist_file_extension>ic.[-\d+]+(\._\d*)?\.nc(\.\d*)?$</hist_file_extension>
+    <hist_file_extension>ic\.[-\d_]+(\._\d*(_\d)?)?\.nc(\.\d*)?$</hist_file_extension>
     <hist_file_extension>e</hist_file_extension>
     <hist_file_ext_regex>\w+\.\w+(\._\d*)?</hist_file_ext_regex>
     <rpointer>
