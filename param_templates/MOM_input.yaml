@@ -2769,6 +2769,7 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": True
             $OCN_GRID == "tx0.25v1": True
+            else: False
     PARALLEL_RESTARTFILES:
         description: |
             "[Boolean] default = False
