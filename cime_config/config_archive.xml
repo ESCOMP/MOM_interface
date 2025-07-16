@@ -1,6 +1,7 @@
 <components version="2.0">
   <comp_archive_spec compname="mom" compclass="ocn">
     <rest_file_extension>r</rest_file_extension>
+    <rest_file_extension>r_stoch</rest_file_extension>
     <!-- match filenames of the form
          h[.optional stream name][._optional instance number].(date string).nc[.optional tile number] -->
     <hist_file_extension>h(\.\w+)?(\._\d*)?\.[-\d+]+\.nc(\.\d*)?(\.gz)?$</hist_file_extension>
@@ -23,6 +24,7 @@
         <tfile disposition="copy">rpointer.ocn.1976-01-01-00000</tfile>
         <tfile disposition="copy">casename.mom6.r.1976-01-01-00000.nc</tfile>
         <tfile disposition="copy">casename.mom6.r.1976-01-01-00000_1.nc</tfile>
+        <tfile disposition="copy">casename.mom6.r_stoch.1976-01-01-00000.nc</tfile>
         <tfile disposition="move">casename.mom6.h.bgc.native.1976-01-01.nc</tfile>
         <tfile disposition="move">casename.mom6.h.bgc.z.1976-01-01.nc</tfile>
         <tfile disposition="move">casename.mom6.h.native.1976-01-01-00000.nc</tfile>
