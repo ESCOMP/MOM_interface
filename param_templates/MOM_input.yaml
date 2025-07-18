@@ -3713,6 +3713,22 @@ Global:
         datatype: real
         value:
             $MOM6_DOMAIN_TYPE == "REGIONAL": 9000.0
+    OBC_TIDE_ADD_EQ_PHASE:
+        description: | 
+            "[Boolean] default = False
+             If true, add the equilibrium phase argument to the specified tidal phases.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    OBC_TIDE_ADD_NODAL:
+        description: | 
+            "[Boolean] default = False
+             If true, include 18.6 year nodal modulation in the boundary tidal forcing.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     DEPRESS_INITIAL_SURFACE:
         description: | 
             "[Boolean] default = False

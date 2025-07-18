@@ -3008,6 +3008,20 @@
             "$MOM6_DOMAIN_TYPE == \"REGIONAL\"": 9000.0
          }
       },
+      "OBC_TIDE_ADD_EQ_PHASE": {
+         "description": "\"[Boolean] default = False\n If true, add the equilibrium phase argument to the specified tidal phases.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_DOMAIN_TYPE == \"REGIONAL\"": true
+         }
+      },
+      "OBC_TIDE_ADD_NODAL": {
+         "description": "\"[Boolean] default = False\n If true, include 18.6 year nodal modulation in the boundary tidal forcing.\n\"\n",
+         "datatype": "logical",
+         "value": {
+            "$MOM6_DOMAIN_TYPE == \"REGIONAL\"": true
+         }
+      },
       "DEPRESS_INITIAL_SURFACE": {
          "description": "\"[Boolean] default = False\n If true,  depress the initial surface to avoid huge tsunamis when a large\n surface pressure is applied.\n\"\n",
          "datatype": "logical",
