@@ -58,6 +58,10 @@ mpp_io_nml:
         values: .true.
 
 nam_stochy:
+    stochini:
+        values:
+          $CONTINUE_RUN == True: .true.
+          else: .false.
     new_lscale:
         values: .true.
     OCNSKEB:
