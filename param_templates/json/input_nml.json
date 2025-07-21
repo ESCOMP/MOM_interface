@@ -73,6 +73,7 @@
       "stochini": {
          "values": {
             "$CONTINUE_RUN == True": ".true.",
+            "$RUN_TYPE == \"branch\"": ".true.",
             "else": ".false."
          }
       },
