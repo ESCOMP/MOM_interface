@@ -4,6 +4,7 @@ from collections import OrderedDict
 
 from CIME.ParamGen.paramgen import ParamGen
 
+MAX_LINE_LENGTH = 1024
 
 class FType_MOM_params(ParamGen):
     """Encapsulates data and read/write methods for MOM6 case parameter files: MOM_input, user_nl."""
@@ -36,10 +37,11 @@ class FType_MOM_params(ParamGen):
         with open(input_path, "r") as param_file:
             within_comment_block = False
             curr_module = "Global"
-            for line in param_file:
-                line = line.strip()
+            logical_line = ""
+            for raw_line in param_file:
+                line = raw_line.strip()
                 if len(line) > 1:
-                    line_s = line.split()
+                    
 
                     # check if within comment block.
                     if (not within_comment_block) and line.strip()[0:2] == "/*":
@@ -48,14 +50,27 @@ class FType_MOM_params(ParamGen):
                     if within_comment_block and line.strip()[-2:] == "*/":
                         within_comment_block = False
                         continue
+                    # Join continuation lines ending with '&'
+                    if logical_line:
+                        # Continuing a logical line
+                        logical_line += " " + line.lstrip()
+                    else:
+                        logical_line = line
 
+                    # Check if logical_line ends with '&' for continuation
+                    if logical_line.endswith("&"):
+                        # Remove trailing '&' and continue reading next line
+                        logical_line = logical_line[:-1].rstrip()
+                        continue
+
+                    line_s = logical_line.split()
                     if (
                         not within_comment_block and line_s[0][0] != "!"
                     ):  # not a single comment line either
                         # check format:
-                        if (curr_module == "Global") and line.strip()[-1] == "%":
-                            curr_module = line.strip()[:-1]
-                        elif curr_module != "Global" and line.strip()[0] == "%":
+                        if (curr_module == "Global") and logical_line.strip()[-1] == "%":
+                            curr_module = logical_line.strip()[:-1]
+                        elif curr_module != "Global" and logical_line.strip()[0] == "%":
                             curr_module = "Global"
                         else:
                             # discard override keyword if provided:
@@ -91,8 +106,9 @@ class FType_MOM_params(ParamGen):
                             else:
                                 raise SystemExit(
                                     "ERROR: Cannot parse the following line in user_nl_mom: "
-                                    + line
+                                    + logical_line
                                 )
+                logical_line = "" # Reset for next parameter
 
             # Check if there is unclosed block:
             if within_comment_block:
@@ -155,7 +171,9 @@ class FType_MOM_params(ParamGen):
                             val_str += ".0"
                         MOM_input.write(var + " = " + val_str + "\n")
                     else:
-                        MOM_input.write(var + " = " + str(val) + "\n")
+                        wrapped_lines = wrap_MOM_string(var, str(val))
+                        for line in wrapped_lines:
+                            MOM_input.write(line + "\n")
 
                     # Write the variable description:
                     var_comments = self._data[module][var]["description"].split("\n")
@@ -193,11 +211,9 @@ class FType_MOM_params(ParamGen):
 
                         # values are different
                         if val != def_params.data[module][var]["value"]:
-                            MOM_override.write(
-                                "#override {varname} = {value}\n".format(
-                                    varname=var, value=val
-                                )
-                            )
+                            wrapped_lines = wrap_MOM_string(var, val, prefix="#override ")
+                            for line in wrapped_lines:
+                                MOM_override.write(line + "\n")
 
                         # values are the same
                         else:
@@ -209,10 +225,41 @@ class FType_MOM_params(ParamGen):
 
                     # parameter is provided only in user_nl_mom
                     else:
-                        MOM_override.write(
-                            "{varname} = {value}\n".format(varname=var, value=val)
-                        )
+                        wrapped_lines = wrap_MOM_string(var, val)
+                        for line in wrapped_lines:
+                            MOM_override.write(line + "\n")
 
                 # End module block:
                 if module != "Global":
                     MOM_override.write("%" + module + "\n\n")
+
+def wrap_MOM_string(var, val, prefix = None, max_len=MAX_LINE_LENGTH):
+    if prefix is None:
+        prefix = var + " = "
+    else:
+        prefix = prefix + var + " = "
+    val_str = str(val)
+    lines = []
+
+    while val_str:
+        if not lines:
+            # First line
+            space_left = max_len - len(prefix)
+            chunk = val_str[:space_left]
+            val_str = val_str[space_left:]
+            line = prefix + chunk
+            if val_str:
+                line += "\" &"
+            lines.append(line)
+        else:
+            # Continuation lines
+            continuation_prefix = "  \""
+            space_left = max_len - len(continuation_prefix)
+            chunk = val_str[:space_left]
+            val_str = val_str[space_left:]
+            line = continuation_prefix + chunk
+            if val_str:
+                line += "\" &"
+            lines.append(line)
+
+    return lines
