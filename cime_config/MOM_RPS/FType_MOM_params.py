@@ -249,17 +249,17 @@ def wrap_MOM_string(var, val, prefix = None, max_len=MAX_LINE_LENGTH):
             val_str = val_str[space_left:]
             line = prefix + chunk
             if val_str:
-                line += "\" &"
+                line += "\"&"
             lines.append(line)
         else:
             # Continuation lines
-            continuation_prefix = "  \""
+            continuation_prefix = "\""
             space_left = max_len - len(continuation_prefix)
             chunk = val_str[:space_left]
             val_str = val_str[space_left:]
             line = continuation_prefix + chunk
             if val_str:
-                line += "\" &"
+                line += "\"&"
             lines.append(line)
 
     return lines
