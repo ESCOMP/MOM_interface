@@ -15,7 +15,7 @@ import logging
 CIMEROOT = os.environ.get("CIMEROOT")
 if CIMEROOT is None:
     raise SystemExit("ERROR: must set CIMEROOT environment variable")
-sys.path.append(os.path.join(CIMEROOT, "scripts", "Tools"))
+sys.path.append(os.path.join(CIMEROOT, "CIME", "Tools"))
 
 # The scope of the following path expansion is limited to this script only,
 # and is needed to import MOM6 input file classes:
@@ -433,7 +433,13 @@ def buildnml(case, caseroot, compname):
     # Build the component namelist
     if compname != "mom":
         raise AttributeError
+    # add the FMS library to the list of cesm support libraries for the case
+    libs = case.get_values("CASE_SUPPORT_LIBRARIES")
+    if "FMS" not in libs:
+        libs.extend(["gptl","pio","csm_share","FMS"])
 
+    case.set_value("CASE_SUPPORT_LIBRARIES", ",".join(libs))
+    
     ninst = case.get_value("NINST_OCN")
     inst_suffixes = (
         ["_{:04d}".format(i + 1) for i in range(ninst)] if ninst > 1 else [""]
@@ -460,7 +466,7 @@ def buildnml(case, caseroot, compname):
 def _main_func():
 
     caseroot = parse_input(sys.argv)
-    with Case(caseroot) as case:
+    with Case(caseroot, read_only=False) as case:
         buildnml(case, caseroot, "mom")
 
 
