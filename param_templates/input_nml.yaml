@@ -47,12 +47,21 @@ diag_manager_nml:
             else: 30
     max_axes:
         values: 90
+    auto_merge_nc:
+        values:
+            $OCN_GRID == "tx2_3v2" and $TEST: .true.
+            $OCN_GRID == "tx0.25v1": .true.
+            else: .false.
 
 mpp_io_nml:
     cf_compliance:
         values: .true.
 
 nam_stochy:
+    stochini:
+        values:
+          $CONTINUE_RUN == True: .true.
+          else: .false.
     new_lscale:
         values: .true.
     OCNSKEB:

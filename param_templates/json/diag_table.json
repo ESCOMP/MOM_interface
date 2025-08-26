@@ -8,7 +8,15 @@
          "thetao",
          "so",
          "KE",
-         "rhopot0"
+         "MEKE",
+         "rhopot0",
+         "rhopot2",
+         "difvho",
+         "difvso",
+         "Kv_u",
+         "Kv_v",
+         "taux_bot",
+         "tauy_bot"
       ],
       [
          "uo",
@@ -18,12 +26,18 @@
          "so",
          "agessc",
          "rhopot0",
-         "N2_int"
+         "N2_int",
+         "rhopot2",
+         "difvho",
+         "difvso",
+         "Kv_u",
+         "Kv_v"
       ],
       [
          "thetao",
          "so",
-         "agessc"
+         "agessc",
+         "e"
       ],
       [
          "soga",
@@ -31,7 +45,8 @@
          "uh",
          "vh",
          "vhbt",
-         "uhbt"
+         "uhbt",
+         "rsdo"
       ],
       [
          "agessc",
@@ -43,20 +58,36 @@
          "T_hbd_diffy_2d"
       ],
       [
-         "SSH",
          "tos",
+         "tos:tos_min:min",
+         "tos:tos_max:max",
          "sos",
+         "sos:sos_min:min",
+         "sos:sos_max:max",
          "SSU",
          "SSV",
-         "mass_wt",
          "opottempmint",
          "somint",
          "Rd_dx",
          "speed",
-         "mlotst"
+         "mlotst",
+         "mlotst:mlotst_min:min",
+         "mlotst:mlotst_max:max"
       ],
       [
-         "KPP_OBLdepth:oml"
+         "zos",
+         "zossq"
+      ],
+      [
+         "sst_global",
+         "sss_global",
+         "SSH",
+         "mass_wt"
+      ],
+      [
+         "KPP_OBLdepth:oml",
+         "KPP_OBLdepth:oml_min:min",
+         "KPP_OBLdepth:oml_max:max"
       ],
       [
          "tauuo",
@@ -135,7 +166,9 @@
          "areacello_cv",
          "areacello_bu",
          "sin_rot",
-         "cos_rot"
+         "cos_rot",
+         "C_P",
+         "Rho_0"
       ],
       [
          "volcello",
@@ -169,11 +202,29 @@
          "cfc12_flux",
          "ice_fraction",
          "u10_sqr"
+      ],
+      [
+         "Geo_heat"
+      ],
+      [
+         "frunoff_glc",
+         "lrunoff_glc"
+      ],
+      [
+         "KPP_QminusSW",
+         "KPP_netSalt",
+         "KPP_NLT_dTdt",
+         "KPP_NLT_dSdt",
+         "KPP_NLT_temp_budget",
+         "KPP_NLT_saln_budget"
       ]
    ],
    "Files": {
       "sigma2_hist": {
-         "suffix": "h.rho2%4yr-%2mo",
+         "suffix": {
+            "$TEST == True": "h.rho2%4yr-%2mo-%2dy",
+            "else": "h.rho2%4yr-%2mo"
+         },
          "output_freq": 1,
          "output_freq_units": {
             "$TEST == True": "days",
@@ -204,7 +255,8 @@
                   [
                      "thetao",
                      "so",
-                     "agessc"
+                     "agessc",
+                     "e"
                   ]
                ],
                "lists2": {
@@ -219,7 +271,10 @@
          }
       },
       "hist": {
-         "suffix": "h.native%4yr-%2mo",
+         "suffix": {
+            "$TEST == True": "h.native%4yr-%2mo-%2dy",
+            "else": "h.native%4yr-%2mo"
+         },
          "output_freq": 1,
          "output_freq_units": {
             "$TEST == True": "days",
@@ -244,7 +299,8 @@
                      "uh",
                      "vh",
                      "vhbt",
-                     "uhbt"
+                     "uhbt",
+                     "rsdo"
                   ],
                   [
                      "agessc",
@@ -281,10 +337,20 @@
                         "thetao",
                         "so",
                         "KE",
-                        "rhopot0"
+                        "MEKE",
+                        "rhopot0",
+                        "rhopot2",
+                        "difvho",
+                        "difvso",
+                        "Kv_u",
+                        "Kv_v",
+                        "taux_bot",
+                        "tauy_bot"
                      ],
                      [
-                        "KPP_OBLdepth:oml"
+                        "KPP_OBLdepth:oml",
+                        "KPP_OBLdepth:oml_min:min",
+                        "KPP_OBLdepth:oml_max:max"
                      ],
                      [
                         "tauuo",
@@ -321,17 +387,27 @@
                         "heat_content_evap"
                      ],
                      [
-                        "SSH",
                         "tos",
+                        "tos:tos_min:min",
+                        "tos:tos_max:max",
                         "sos",
+                        "sos:sos_min:min",
+                        "sos:sos_max:max",
                         "SSU",
                         "SSV",
-                        "mass_wt",
                         "opottempmint",
                         "somint",
                         "Rd_dx",
                         "speed",
-                        "mlotst"
+                        "mlotst",
+                        "mlotst:mlotst_min:min",
+                        "mlotst:mlotst_max:max"
+                     ],
+                     [
+                        "sst_global",
+                        "sss_global",
+                        "SSH",
+                        "mass_wt"
                      ]
                   ]
                },
@@ -344,12 +420,35 @@
                         "u10_sqr"
                      ]
                   ]
+               },
+               "lists4": {
+                  "$COMP_ATM == \"cam\"": [
+                     [
+                        "frunoff_glc",
+                        "lrunoff_glc"
+                     ]
+                  ]
+               },
+               "lists5": {
+                  "$TEST == True": [
+                     [
+                        "KPP_QminusSW",
+                        "KPP_netSalt",
+                        "KPP_NLT_dTdt",
+                        "KPP_NLT_dSdt",
+                        "KPP_NLT_temp_budget",
+                        "KPP_NLT_saln_budget"
+                     ]
+                  ]
                }
             }
          }
       },
       "hist_z_space": {
-         "suffix": "h.z%4yr-%2mo",
+         "suffix": {
+            "$TEST == True": "h.z%4yr-%2mo-%2dy",
+            "else": "h.z%4yr-%2mo"
+         },
          "output_freq": 1,
          "output_freq_units": {
             "$TEST == True": "days",
@@ -376,7 +475,12 @@
                      "so",
                      "agessc",
                      "rhopot0",
-                     "N2_int"
+                     "N2_int",
+                     "rhopot2",
+                     "difvho",
+                     "difvso",
+                     "Kv_u",
+                     "Kv_v"
                   ],
                   [
                      "volcello",
@@ -400,7 +504,10 @@
          }
       },
       "surface_avg": {
-         "suffix": "h.sfc%4yr-%2mo",
+         "suffix": {
+            "$TEST == True": "h.sfc%4yr-%2mo-%2dy",
+            "else": "h.sfc%4yr-%2mo"
+         },
          "output_freq": {
             "$OCN_DIAG_MODE == \"spinup\"": 5,
             "else": 1
@@ -408,41 +515,63 @@
          "output_freq_units": "days",
          "time_axis_units": "days",
          "new_file_freq": 1,
-         "new_file_freq_units": "months",
+         "new_file_freq_units": {
+            "$TEST == True": "days",
+            "else": "months"
+         },
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
-            "$OCN_DIAG_MODE != \"none\" and $TEST is not True": {
+            "$OCN_DIAG_MODE != \"none\"": {
                "module": "ocean_model",
                "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
-                     "SSH",
                      "tos",
+                     "tos:tos_min:min",
+                     "tos:tos_max:max",
                      "sos",
+                     "sos:sos_min:min",
+                     "sos:sos_max:max",
                      "SSU",
                      "SSV",
-                     "mass_wt",
                      "opottempmint",
                      "somint",
                      "Rd_dx",
                      "speed",
-                     "mlotst"
+                     "mlotst",
+                     "mlotst:mlotst_min:min",
+                     "mlotst:mlotst_max:max"
                   ],
                   [
-                     "KPP_OBLdepth:oml"
+                     "zos",
+                     "zossq"
+                  ],
+                  [
+                     "KPP_OBLdepth:oml",
+                     "KPP_OBLdepth:oml_min:min",
+                     "KPP_OBLdepth:oml_max:max"
                   ]
                ]
             }
          }
       },
       "forcing_avg": {
-         "suffix": "h.frc%4yr-%2mo",
+         "suffix": {
+            "$TEST == True": "h.frc%4yr-%2mo-%2dy",
+            "else": "h.frc%4yr-%2mo"
+         },
          "output_freq": 1,
-         "output_freq_units": "months",
+         "output_freq_units": {
+            "$TEST == True": "days",
+            "else": "months"
+         },
          "time_axis_units": "days",
          "new_file_freq": 1,
-         "new_file_freq_units": "months",
+         "new_file_freq_units": {
+            "$TEST == True": "days",
+            "else": "months"
+         },
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
@@ -497,12 +626,21 @@
          }
       },
       "visc_and_diff_daily_avg": {
-         "suffix": "h.visc%4yr-%2mo",
+         "suffix": {
+            "$TEST == True": "h.visc%4yr-%2mo",
+            "else": "h.visc%4yr-%2mo"
+         },
          "output_freq": 1,
-         "output_freq_units": "months",
+         "output_freq_units": {
+            "$TEST == True": "days",
+            "else": "months"
+         },
          "time_axis_units": "days",
          "new_file_freq": 1,
-         "new_file_freq_units": "months",
+         "new_file_freq_units": {
+            "$TEST == True": "days",
+            "else": "months"
+         },
          "reduction_method": "mean",
          "regional_section": "none",
          "fields": {
@@ -551,9 +689,18 @@
                   "areacello_cv",
                   "areacello_bu",
                   "sin_rot",
-                  "cos_rot"
+                  "cos_rot",
+                  "C_P",
+                  "Rho_0"
                ]
-            ]
+            ],
+            "lists2": {
+               "$DO_GEOTHERMAL == \"True\"": [
+                  [
+                     "Geo_heat"
+                  ]
+               ]
+            }
          }
       },
       "Agulhas": {

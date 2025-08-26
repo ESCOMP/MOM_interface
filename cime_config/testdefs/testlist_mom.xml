@@ -21,6 +21,15 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
+  <test name="SMS_D_Ld2" grid="T62_t232" compset="G">
+    <machines>
+      <machine name="derecho" compiler="gnu" category="aux_mom"/>
+      <machine name="derecho" compiler="gnu" category="pr_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">01:00:00</option>
+    </options>
+  </test>
   <test name="ERS" grid="TL319_t232" compset="GW_JRA" testmods="mom/debug">
     <machines>
       <machine name="derecho" compiler="gnu" category="aux_mom"/>
@@ -82,7 +91,7 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
-  <test name="SMS_Ld2" grid="f09_t232" compset="B1850" testmods="mom/bcompset">
+  <test name="SMS_Ld2" grid="ne30pg3_t232" compset="BLT1850">
     <machines>
       <machine name="derecho" compiler="intel" category="aux_mom"/>
       <machine name="derecho" compiler="intel" category="pr_mom"/>
@@ -110,9 +119,11 @@
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
-  <test name="SMS_Ld2_D" grid="TL319_t232" compset="C1850MARBL_JRA">
+  <test name="SMS_Ld1_D" grid="TL319_t232" compset="C1850MARBL_JRA">
     <machines>
+      <machine name="derecho" compiler="intel" category="aux_mom"/>
       <machine name="derecho" compiler="intel" category="aux_mom_MARBL"/>
+      <machine name="derecho" compiler="intel" category="prebeta"/>
     </machines>
     <options>
       <option name="wallclock">00:30:00</option>
@@ -152,6 +163,14 @@
     </machines>
     <options>
       <option name="wallclock">02:00:00</option>
+    </options>
+  </test>
+    <test name="MCC" grid="T62_t232" compset="C">
+    <machines>
+      <machine name="derecho" compiler="gnu" category="aux_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">01:00:00</option>
     </options>
   </test>
 </testlist>

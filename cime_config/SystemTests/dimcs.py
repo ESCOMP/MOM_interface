@@ -32,8 +32,8 @@ nl_contents = [
     "H_RESCALE_POWER = -11",
     "Z_RESCALE_POWER = -11",
     "R_RESCALE_POWER = -11",
-    "Q_RESCALE_POWER = -11"
-    ]
+    "Q_RESCALE_POWER = -11",
+]
 
 run_suffixes = [
     "base",
@@ -67,27 +67,36 @@ run_descriptions = [
     "scale the dimension Q by 2**-11",
 ]
 
+
 class DIMCS(SystemTestsCompareN):
 
     def __init__(self, case):
         self.comp = case.get_value("COMP_OCN")
-        SystemTestsCompareN.__init__(self, case, N=len(nl_contents),
-                                     separate_builds = False,
-                                     run_suffixes = run_suffixes,
-                                     run_descriptions = run_descriptions,
-                                     ignore_fieldlist_diffs = True)
+        SystemTestsCompareN.__init__(
+            self,
+            case,
+            N=len(nl_contents),
+            separate_builds=False,
+            run_suffixes=run_suffixes,
+            run_descriptions=run_descriptions,
+            ignore_fieldlist_diffs=True,
+        )
 
     def _common_setup(self):
-        nl_contents_common = '''
+        nl_contents_common = """
             ! DIMCS test changes
-        '''
-        append_to_user_nl_files(caseroot = self._case.get_value("CASEROOT"),
-                                component = self.comp,
-                                contents = nl_contents_common)
+        """
+        append_to_user_nl_files(
+            caseroot=self._case.get_value("CASEROOT"),
+            component=self.comp,
+            contents=nl_contents_common,
+        )
 
     def _case_setup(self, i):
 
         # Second append user_nl change sepecific to case-i
-        append_to_user_nl_files(caseroot = self._case.get_value("CASEROOT"),
-                                component = self.comp,
-                                contents = nl_contents[i])
+        append_to_user_nl_files(
+            caseroot=self._case.get_value("CASEROOT"),
+            component=self.comp,
+            contents=nl_contents[i],
+        )

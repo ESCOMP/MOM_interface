@@ -1,51 +1,53 @@
-# template for the GNU fortran compiler
-
+# template for the GNU fortran compiler for Ubuntu (Used initially for Github Actions)
+# (assumes Ubuntu with apt installs of netcdf-bin, libnetcdf-dev, libnetcdff-dev, openmpi-bin, libopenmpi-dev, linux-tools-common)
 ############
 # commands #
 ############
-
 FC = mpif90
-CC = gcc
+CC = mpicc
 CXX = g++
 LD = mpif90 $(MAIN_PROGRAM)
 
-############
-#  flags   #
-############
-
+#########
+# flags #
+#########
 DEBUG =
-MAKEFLAGS += --jobs=$(shell grep '^processor' /proc/cpuinfo | wc -l)
+
+
+MAKEFLAGS += --jobs=2
+
+FPPFLAGS :=
+
+FFLAGS := -fcray-pointer -fdefault-double-8 -fdefault-real-8 -Waliasing -ffree-line-length-none -fno-range-check
+FFLAGS_REPRO = -O2 -fbounds-check
+FFLAGS_DEBUG = -O0 -g -W -fbounds-check -fbacktrace -ffpe-trap=invalid,zero,overflow
+
+
+CFLAGS := -D__IFC
+CFLAGS_REPRO= -O2
+CFLAGS_DEBUG = -O0 -g
+
 LDFLAGS :=
 
-FC_AUTO_R8 := -fdefault-real-8 -fdefault-double-8
-FPPFLAGS :=
-FFLAGS := $(FC_AUTO_R8) -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none -fallow-argument-mismatch  -fallow-invalid-boz -fcray-pointer
-FFLAGS_REPRO = -O
-FFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=zero,overflow -fcheck=bounds
-
-CFLAGS := -std=gnu99
-CFLAGS_REPRO = -O
-CFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=invalid,zero,overflow -fcheck=bounds
-
 ifeq ($(DEBUG),1)
-  FFLAGS += $(FFLAGS_DEBUG)
-  CFLAGS += $(CFLAGS_DEBUG)
+CFLAGS += $(CFLAGS_DEBUG)
+FFLAGS += $(FFLAGS_DEBUG)
 else
-  FFLAGS += $(FFLAGS_REPRO)
-  CFLAGS += $(CFLAGS_REPRO)
+CFLAGS += $(CFLAGS_REPRO)
+FFLAGS += $(FFLAGS_REPRO)
 endif
 
-# NetCDF Flags
-FFLAGS += -I$(shell nc-config --includedir)
+# NetCDF Things 
+FFLAGS += -I$(shell nf-config --includedir)
 CFLAGS += -I$(shell nc-config --includedir)
 
+# add the use_LARGEFILE cppdef
 ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
-  # add the use_LARGEFILE cppdef
   CPPDEFS += -Duse_LARGEFILE
 endif
 
-# Linking Flags
-LDFLAGS += $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
+LIBS := $(shell nc-config --libs) $(shell nf-config --flibs)
+LDFLAGS += $(LIBS)
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.

@@ -1,32 +1,34 @@
-# template for the GNU fortran compiler
+# Template for the PGI Compilers
 
 ############
 # commands #
 ############
 
-FC = mpif90
-CC = gcc
-CXX = g++
-LD = mpif90 $(MAIN_PROGRAM)
+FC = ftn
+CC = cc
+CXX = cc
+LD = ftn $(MAIN_PROGRAM)
 
 ############
 #  flags   #
 ############
 
 DEBUG =
-MAKEFLAGS += --jobs=$(shell grep '^processor' /proc/cpuinfo | wc -l)
+MAKEFLAGS += --jobs=8
 LDFLAGS :=
 
-FC_AUTO_R8 := -fdefault-real-8 -fdefault-double-8
-FPPFLAGS :=
-FFLAGS := $(FC_AUTO_R8) -fconvert=big-endian -ffree-line-length-none -ffixed-line-length-none -fallow-argument-mismatch  -fallow-invalid-boz -fcray-pointer
-FFLAGS_REPRO = -O
-FFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=zero,overflow -fcheck=bounds
+FC_AUTO_R8 = -r8
+FPPFLAGS := $(shell pkg-config --cflags yaml-0.1)
+FFLAGS = $(FC_AUTO_R8) -Mnofma -i4 -gopt  -time -Mextend -byteswapio -Mflushz -Kieee
+FFLAGS_DEBUG = -O0 -g  # -Mbounds fails compilation and -KTrap=fp fails run! seems like there is a floating point exception in netcdf_io_mod
+FFLAGS_REPRO = -O2 -tp=zen3
 
-CFLAGS := -std=gnu99
-CFLAGS_REPRO = -O
-CFLAGS_DEBUG = -g -Wall -Og -fbacktrace -ffpe-trap=invalid,zero,overflow -fcheck=bounds
+CFLAGS = -gopt -time -Mnofma
+CFLAGS_REPRO = -O2
+CFLAGS_DEBUG =
+CPPFLAGS := $(shell pkg-config --cflags yaml-0.1)
 
+# Get compile flags based on target macros.
 ifeq ($(DEBUG),1)
   FFLAGS += $(FFLAGS_DEBUG)
   CFLAGS += $(CFLAGS_DEBUG)
@@ -36,8 +38,8 @@ else
 endif
 
 # NetCDF Flags
-FFLAGS += -I$(shell nc-config --includedir)
-CFLAGS += -I$(shell nc-config --includedir)
+FFLAGS += $(shell nf-config --fflags)
+CFLAGS += $(shell nc-config --cflags)
 
 ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
   # add the use_LARGEFILE cppdef
@@ -45,7 +47,7 @@ ifneq ($(findstring -Duse_netCDF,$(CPPDEFS)),)
 endif
 
 # Linking Flags
-LDFLAGS += $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
+LDFLAGS += $(shell nc-config --libs) $(shell nf-config --flibs) -llapack -lblas -time -Wl,--allow-multiple-definition
 
 #---------------------------------------------------------------------------
 # you should never need to change any lines below.
@@ -67,7 +69,6 @@ LDFLAGS += $(shell nf-config --flibs) $(shell pkg-config --libs mpich2-f90)
 # The macro TMPFILES is provided to slate files like the above for removal.
 
 RM = rm -f
-SHELL = /bin/csh -f
 TMPFILES = .*.m *.B *.L *.i *.i90 *.l *.s *.mod *.opt
 
 .SUFFIXES: .F .F90 .H .L .T .f .f90 .h .i .i90 .l .o .s .opt .x
