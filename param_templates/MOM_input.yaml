@@ -3947,7 +3947,8 @@ Global:
             "
         datatype: real
         value:
-            $MOM6_DOMAIN_TYPE == "REGIONAL": 2.5E+06    RESTART_CHECKSUMS_REQUIRED:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 2.5E+06    
+    RESTART_CHECKSUMS_REQUIRED:
         description: |
             "[Boolean] default = True
             If true, require the restart checksums to match and error out otherwise. Users
