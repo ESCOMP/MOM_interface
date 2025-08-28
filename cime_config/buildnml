@@ -434,12 +434,14 @@ def buildnml(case, caseroot, compname):
     if compname != "mom":
         raise AttributeError
     # add the FMS library to the list of cesm support libraries for the case
-    libs = case.get_values("CASE_SUPPORT_LIBRARIES")
-    if "FMS" not in libs:
-        libs.extend(["gptl","pio","csm_share","FMS"])
-
-    case.set_value("CASE_SUPPORT_LIBRARIES", ",".join(libs))
-    
+    # designed to be backward compatible in case cmeps does not define CASE_SUPPORT_LIBRARIES
+    try:
+        libs = case.get_values("CASE_SUPPORT_LIBRARIES")
+        if libs is not None and "FMS" not in libs:
+            libs.extend(["gptl","pio","csm_share","FMS"])
+            case.set_value("CASE_SUPPORT_LIBRARIES", ",".join(libs))
+    except:
+        pass
     ninst = case.get_value("NINST_OCN")
     inst_suffixes = (
         ["_{:04d}".format(i + 1) for i in range(ninst)] if ninst > 1 else [""]
