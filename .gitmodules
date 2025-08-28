@@ -16,6 +16,6 @@
   path = externals/MARBL
   url = https://github.com/marbl-ecosys/MARBL.git
   fxDONOTUSEurl = https://github.com/marbl-ecosys/MARBL.git
-    fxtag = marbl0.48.2
+    fxtag = marbl0.48.3
     fxrequired = AlwaysRequired
 
