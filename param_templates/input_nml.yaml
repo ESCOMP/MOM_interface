@@ -60,7 +60,8 @@ mpp_io_nml:
 nam_stochy:
     stochini:
         values:
-          $CONTINUE_RUN == True: .true.
+          $CONTINUE_RUN == True : .true.
+          $RUN_TYPE == "branch" : .true.
           else: .false.
     new_lscale:
         values: .true.
