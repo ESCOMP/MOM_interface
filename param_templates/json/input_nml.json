@@ -91,5 +91,17 @@
       "ISEED_OCNSKEB": {
          "values": 20
       }
+   },
+   "time_interp_external_nml": {
+      "max_fields": {
+         "values": {
+            "$MARBL_CONFIG != \"off\" and $MOM6_DOMAIN_TYPE == \"REGIONAL\"": 200
+         }
+      },
+      "max_files": {
+         "values": {
+            "$MARBL_CONFIG != \"off\" and $MOM6_DOMAIN_TYPE == \"REGIONAL\"": 200
+         }
+      }
    }
 }
