@@ -74,7 +74,6 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
             "$MOM6_DOMAIN_TYPE == \"REGIONAL\"": true
          }
       },
