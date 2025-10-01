@@ -572,7 +572,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 250.0
+            "$OCN_GRID == \"tx2_3v2\"": 500.0
          }
       },
       "KHTR_SLOPE_CFF": {
