@@ -987,6 +987,16 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    RHO_PGF_REF_BUG:
+        description: |
+            "[Boolean] default = True
+            If true, recover a bug that RHO_0 (the mean seawater density in Boussinesq
+            mode) and RHO_PGF_REF (the subtracted reference density in finite volume
+            pressure gradient forces) are incorrectly interchanged in several instances in
+            Boussinesq mode."
+        datatype: logical
+        units: Boolean
+        value: False
     MASS_WEIGHT_IN_PRESSURE_GRADIENT:
         description: |
             "[Boolean] default = False

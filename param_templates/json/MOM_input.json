@@ -745,6 +745,12 @@
          "units": "Boolean",
          "value": true
       },
+      "RHO_PGF_REF_BUG": {
+         "description": "\"[Boolean] default = True\nIf true, recover a bug that RHO_0 (the mean seawater density in Boussinesq\nmode) and RHO_PGF_REF (the subtracted reference density in finite volume\npressure gradient forces) are incorrectly interchanged in several instances in\nBoussinesq mode.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": false
+      },
       "MASS_WEIGHT_IN_PRESSURE_GRADIENT": {
          "description": "\"[Boolean] default = False\nIf true, use mass weighting when interpolation T/S for\ntop/bottom integrals in AFV pressure gradient calculation.\"\n",
          "datatype": "logical",
