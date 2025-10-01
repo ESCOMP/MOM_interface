@@ -614,7 +614,7 @@ Global:
             PQM_IH4IH3  (4th-order accurate)
             PQM_IH6IH5  (5th-order accurate)"
         datatype: string
-        value: "PPM_CW"
+        value: "C_PPM_CW"
     REMAP_VEL_CONSERVE_KE:
         description: |
             "[Boolean] default = False

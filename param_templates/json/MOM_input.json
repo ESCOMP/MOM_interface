@@ -468,7 +468,7 @@
       "REMAPPING_SCHEME": {
          "description": "\"default = 'PLM'\nThis sets the reconstruction scheme used\nfor vertical remapping for all variables.\nIt can be one of the following schemes:\nPCM         (1st-order accurate)\nPLM         (2nd-order accurate)\nPPM_H4      (3rd-order accurate)\nPPM_IH4     (3rd-order accurate)\nPQM_IH4IH3  (4th-order accurate)\nPQM_IH6IH5  (5th-order accurate)\"\n",
          "datatype": "string",
-         "value": "PPM_CW"
+         "value": "C_PPM_CW"
       },
       "REMAP_VEL_CONSERVE_KE": {
          "description": "\"[Boolean] default = False\nIf true, a correction is applied to the baroclinic component of velocity after\nremapping so that total KE is conserved. KE may not be conserved when\n(CS%BBL_h_vel_mask > 0.0) .and. (CS%h_vel_mask > 0.0)\"\n",
