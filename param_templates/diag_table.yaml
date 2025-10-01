@@ -26,6 +26,8 @@ FieldLists:
 
     - &kpp_diags        ["KPP_OBLdepth:oml", "KPP_OBLdepth:oml_min:min", "KPP_OBLdepth:oml_max:max"]
 
+    - &stochastic_diags ["skeb_amp"]
+
     - &forcing_flds     ["tauuo", "tauvo", "friver", "prsn", "prlq", "evs", "hfsso", "rlntds",
                          "hfsnthermds", "sfdsi", "rsntds", "hfds", "ustar",
                          "hfsifrazil", "wfo", "vprec", "ficeberg", "fsitherm",
@@ -47,7 +49,8 @@ FieldLists:
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
                          "geolon_v", "geolat_v", "deptho", "wet", "wet_c", "wet_u",
                          "wet_v", "Coriolis", "areacello", "areacello_cu", "areacello_cv",
-                         "areacello_bu", "sin_rot", "cos_rot", "C_P", "Rho_0"]
+                         "areacello_bu", "sin_rot", "cos_rot", "C_P", "Rho_0", "skeb_taper_v",
+                         "skeb_taper_u"]
 
     - &transports       ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
 
@@ -125,6 +128,7 @@ Files:
                     $OCN_DIAG_MODE not in ["spinup", "none"]:
                         [ *prognostic,
                           *kpp_diags,
+                          *stochastic_diags,
                           *forcing_flds,
                           *enthalpy_flds,
                           *surface_flds_common,
