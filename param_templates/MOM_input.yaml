@@ -810,7 +810,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
+            $OCN_GRID == "tx2_3v2": False
     ETA_TOLERANCE:
         description: |
             "[m] default = 3.15E-09
@@ -1515,7 +1515,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
+            $OCN_GRID == "tx2_3v2": False
     MIXEDLAYER_RESTRAT:
         description: |
             "[Boolean] default = False
