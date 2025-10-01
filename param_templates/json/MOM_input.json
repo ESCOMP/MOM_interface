@@ -771,6 +771,22 @@
          "units": "Boolean",
          "value": true
       },
+      "SMAGORINSKY_KH": {
+         "description": "\"[Boolean] default = False\nIf true, use a Smagorinsky nonlinear eddy viscosity.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "SMAG_LAP_CONST": {
+         "description": "\"[nondim] default = 0.0\nThe nondimensional Laplacian Smagorinsky constant, often 0.15.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.15
+         }
+      },
       "KH": {
          "description": "\"[m2 s-1] default = 0.0\nThe background Laplacian horizontal viscosity.\"\n",
          "datatype": "real",

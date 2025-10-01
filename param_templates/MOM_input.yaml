@@ -1020,6 +1020,22 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    SMAGORINSKY_KH:
+        description: |
+            "[Boolean] default = False
+            If true, use a Smagorinsky nonlinear eddy viscosity."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SMAG_LAP_CONST:
+        description: |
+            "[nondim] default = 0.0
+            The nondimensional Laplacian Smagorinsky constant, often 0.15."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.15
     KH:
         description: |
             "[m2 s-1] default = 0.0
