@@ -72,4 +72,6 @@ nam_stochy:
         values: 21600
     ISEED_OCNSKEB:
         values: 20
+    ntrunc:
+        values: 192
 ...

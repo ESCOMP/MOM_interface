@@ -90,6 +90,9 @@
       },
       "ISEED_OCNSKEB": {
          "values": 20
+      },
+      "ntrunc": {
+         "values": 192
       }
    }
 }
