@@ -115,6 +115,15 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx2_3v2": False
+    HREF_FOR_MLD:
+        description: |
+            "[m] default = 0.0
+            Reference depth used to calculate the potential density used to find the mixed
+            layer depth based on a delta rho = 0.03 kg/m3."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID == "tx2_3v2": 10.0
     USE_REGRIDDING:
         description: |
             "[Boolean] default = False

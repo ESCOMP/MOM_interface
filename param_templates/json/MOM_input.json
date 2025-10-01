@@ -68,6 +68,14 @@
             "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
+      "HREF_FOR_MLD": {
+         "description": "\"[m] default = 0.0\nReference depth used to calculate the potential density used to find the mixed\nlayer depth based on a delta rho = 0.03 kg/m3.\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 10.0
+         }
+      },
       "USE_REGRIDDING": {
          "description": "\"[Boolean] default = False\nIf True, use the ALE algorithm (regridding/remapping).\nIf False, use the layered isopycnal algorithm.\"\n",
          "datatype": "logical",
