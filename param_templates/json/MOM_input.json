@@ -413,6 +413,12 @@
             "$OCN_GRID == \"tx0.25v1\"": false
          }
       },
+      "RAD_EARTH": {
+         "description": "\"[m] default = 6.378E+06\nThe radius of the Earth.\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": 6371220.0
+      },
       "TOPO_CONFIG": {
          "description": "\"This specifies how bathymetry is specified:\nfile - read bathymetric information from the file\nspecified by (TOPO_FILE).\nflat - flat bottom set to MAXIMUM_DEPTH.\nbowl - an analytically specified bowl-shaped basin\nranging between MAXIMUM_DEPTH and MINIMUM_DEPTH.\nspoon - a similar shape to 'bowl', but with an vertical\nwall at the southern face.\nhalfpipe - a zonally uniform channel with a half-sine\nprofile in the meridional direction.\nbenchmark - use the benchmark test case topography.\nDOME - use a slope and channel configuration for the\nDOME sill-overflow test case.\nDOME2D - use a shelf and slope configuration for the\nDOME2D gravity current/overflow test case.\nseamount - Gaussian bump for spontaneous motion test case.\nUSER - call a user modified routine.\"\n",
          "datatype": "string",

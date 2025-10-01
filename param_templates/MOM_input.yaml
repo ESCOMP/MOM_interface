@@ -529,6 +529,13 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": False
             $OCN_GRID == "tx0.25v1": False
+    RAD_EARTH:
+        description: |
+            "[m] default = 6.378E+06
+            The radius of the Earth."
+        datatype: real
+        units: m
+        value: 6.37122E+06
     TOPO_CONFIG:
         description: |
             "This specifies how bathymetry is specified:
