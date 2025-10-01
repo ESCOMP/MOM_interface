@@ -1752,6 +1752,11 @@
             "else": false
          }
       },
+      "WIND_STAGGER": {
+         "description": "\"default = 'C'\nA case-insensitive character string to indicate the staggering of the input\nwind stress field.  Valid values are 'A', 'B', or 'C'.\"\n",
+         "datatype": "string",
+         "value": "A"
+      },
       "ENTHALPY_FROM_COUPLER": {
          "description": "\"[Boolean] default = False\nIf True, the heat (enthalpy) associated with mass entering/leaving\nthe ocean is provided via coupler.\"\n",
          "datatype": "logical",

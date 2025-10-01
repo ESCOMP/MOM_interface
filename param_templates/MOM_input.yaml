@@ -2234,7 +2234,13 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2" and $COMP_ATM == "datm": True  # for C and G compsets on tx2_3v2
             else: False
-
+    WIND_STAGGER:
+        description: |
+            "default = 'C'
+            A case-insensitive character string to indicate the staggering of the input
+            wind stress field.  Valid values are 'A', 'B', or 'C'."
+        datatype: string
+        value: "A"
     ENTHALPY_FROM_COUPLER:
         description: |
             "[Boolean] default = False
@@ -2243,7 +2249,6 @@ Global:
         datatype: logical
         units: Boolean
         value: True
-
     FLUXCONST:
         description: |
             "[m day-1]
