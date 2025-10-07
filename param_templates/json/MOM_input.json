@@ -3042,6 +3042,16 @@
          "value": ".mom6"
       }
    },
+   "CVMix_CONVECTION": {
+      "BV_SQR_CONV": {
+         "description": "\"[1/s^2] default = 0.0\nThreshold for squared buoyancy frequency needed to trigger Brunt-Vaisala\nparameterization.\"\n",
+         "datatype": "real",
+         "units": "1/s^2",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": -1e-08
+         }
+      }
+   },
    "KPP": {
       "N_SMOOTH": {
          "description": "\"default = 0\nThe number of times the 1-1-4-1-1 Laplacian filter is applied on\nOBL depth purely for diagnostic purposes.\"\n",

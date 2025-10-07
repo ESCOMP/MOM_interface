@@ -3754,6 +3754,16 @@ Global:
             added to the end of the file name. This parameter is ignored for non-ensemble runs."
         datatype: string
         value: ".mom6"
+CVMix_CONVECTION:
+    BV_SQR_CONV:
+        description: |
+            "[1/s^2] default = 0.0
+            Threshold for squared buoyancy frequency needed to trigger Brunt-Vaisala
+            parameterization."
+        datatype: real
+        units: 1/s^2
+        value:
+            $OCN_GRID == "tx2_3v2": -1.0E-08
 KPP:
     N_SMOOTH:
         description: |
