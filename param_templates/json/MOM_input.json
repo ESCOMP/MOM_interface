@@ -2264,7 +2264,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": 2.0
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": 3.5
          }
       },
       "VISC_REM_BUG": {
@@ -3107,7 +3107,14 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 1.8
+         }
+      },
+      "ENHANCE_DIFFUSION": {
+         "description": "\"default = True\nIf True, adds enhanced diffusion at the based of the boundary layer.\"\n",
+         "datatype": "logical",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
       "STOKES_MOST": {
