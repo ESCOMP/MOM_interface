@@ -2034,7 +2034,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.09
+            "$OCN_GRID == \"tx2_3v2\"": 0.06
          }
       },
       "MEKE_KHTH_FAC": {
