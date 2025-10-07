@@ -3187,6 +3187,14 @@
             "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
+      "CR": {
+         "description": "\"[nondim] default = 0.0\nThe efficiency coefficient in eq 27 of Bodner et al., 2023.\"\n",
+         "datatype": "real",
+         "units": "nondim",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.01
+         }
+      },
       "USE_CR_GRID": {
          "description": "\"[Boolean] default = False\ntrue, read in a spatially varying Cr field.\"\n",
          "datatype": "logical",
@@ -3199,7 +3207,15 @@
          "description": "\"The path to the file containing the Cr fields.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-tx2_3v2-v10_20250426.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-mask_20250627.nc"
+         }
+      },
+      "WAVE_ENHANCED_USTAR": {
+         "description": "\"default = False\nIf true, enhance ustar using surface waves, following Eq. 28 in Bodner23.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
          }
       },
       "MIN_WSTAR2": {
