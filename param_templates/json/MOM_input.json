@@ -1896,7 +1896,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
+            "$OCN_GRID == \"tx2_3v2\"": 0.25
          }
       },
       "MEKE_BGSRC": {
@@ -3031,16 +3031,6 @@
          "datatype": "string",
          "value": "${CASE}.mom6.h.ocean_geometry.nc"
       },
-      "SKEB_NPASS": {
-         "description": "\"default = 3\nnumber of passes of a 9-point smoother of the dissipation estimate.\"\n",
-         "datatype": "integer",
-         "value": 10
-      },
-      "SKEB_GM_COEF": {
-         "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
-         "datatype": "real",
-         "value": 0.75
-      },
       "RESTART_CHECKSUMS_REQUIRED": {
          "description": "\"[Boolean] default = True\nIf true, require the restart checksums to match and error out otherwise. Users\nmay want to avoid this comparison if for example the restarts are made from a\nrun with a different mask_table than the current run, in which case the\nchecksums will not match and cause crash.\n",
          "datatype": "logical",
@@ -3121,14 +3111,14 @@
          }
       },
       "STOKES_MOST": {
-         "description": "default = False\nIf True, use Stokes Similarity package.\n",
+         "description": "\"default = False\nIf True, use Stokes Similarity package.\"\n",
          "datatype": "logical",
          "value": {
             "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"most\"": true
          }
       },
       "COMPUTE_MONIN_OBUKHOV": {
-         "description": "default = False\nIf True, limit the OBL depth to be no deeper than Monin-Obukhov depth.\n",
+         "description": "\"default = False\nIf True, limit the OBL depth to be no deeper than Monin-Obukhov depth.\"\n",
          "datatype": "logical",
          "units": "Boolean",
          "value": {
@@ -3140,6 +3130,44 @@
          "datatype": "real",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 5.0
+         }
+      },
+      "DO_SKEB": {
+         "description": "\"default = False\nIf true, then stochastically perturb the currents using the stochastic kinetic\nenergy backscatter scheme.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "SKEB_USE_FRICT": {
+         "description": "\"default = False\nIf true, adds horizontal friction dissipation rate to the SKEBS amplitude.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "SKEB_USE_GM": {
+         "description": "\"default = False\nIf true, adds GM work rate to the SKEBS amplitude.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "SKEB_NPASS": {
+         "description": "\"[nondim] default = 0\n number of passes of a 9-point smoother of the dissipation estimate.\"\n",
+         "datatype": "integer",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 8
+         }
+      },
+      "SKEB_GM_COEF": {
+         "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
+         "datatype": "real",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.75
          }
       }
    },

@@ -2406,7 +2406,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 1.0
-            $OCN_GRID == "tx2_3v2": 1.0
+            $OCN_GRID == "tx2_3v2": 0.25
     MEKE_BGSRC:
         description: |
             "[W kg-1] default = 0.0
@@ -3736,18 +3736,6 @@ Global:
         datatype: string
         value:
             "${CASE}.mom6.h.ocean_geometry.nc"
-    SKEB_NPASS:
-        description: |
-            "default = 3
-            number of passes of a 9-point smoother of the dissipation estimate."
-        datatype: integer
-        value: 10
-    SKEB_GM_COEF:
-        description: |
-            "[nondim] default = 0.0
-            Fraction of GM work that is added to backscatter rate."
-        datatype: real
-        value: 0.75
     RESTART_CHECKSUMS_REQUIRED:
         description: |
             "[Boolean] default = True
@@ -3850,15 +3838,15 @@ KPP:
             $OCN_GRID == "tx2_3v2": 1.0
     STOKES_MOST:
         description: |
-            default = False
-            If True, use Stokes Similarity package.
+            "default = False
+            If True, use Stokes Similarity package."
         datatype: logical
         value:
             $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True
     COMPUTE_MONIN_OBUKHOV:
         description: |
-            default = False
-            If True, limit the OBL depth to be no deeper than Monin-Obukhov depth.
+            "default = False
+            If True, limit the OBL depth to be no deeper than Monin-Obukhov depth."
         datatype: logical
         units: Boolean
         value:
@@ -3871,6 +3859,45 @@ KPP:
         datatype: real
         value:
            $OCN_GRID == "tx2_3v2": 5.0
+    DO_SKEB:
+        description: |
+            "default = False
+            If true, then stochastically perturb the currents using the stochastic kinetic
+            energy backscatter scheme."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_USE_FRICT:
+        description: |
+            "default = False
+            If true, adds horizontal friction dissipation rate to the SKEBS amplitude."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_USE_GM:
+        description: |
+            "default = False
+            If true, adds GM work rate to the SKEBS amplitude."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_NPASS:
+        description: |
+            "[nondim] default = 0
+             number of passes of a 9-point smoother of the dissipation estimate."
+        datatype: integer
+        value:
+           $OCN_GRID == "tx2_3v2": 8
+    SKEB_GM_COEF:
+        description: |
+            "[nondim] default = 0.0
+            Fraction of GM work that is added to backscatter rate."
+        datatype: real
+        value:
+           $OCN_GRID == "tx2_3v2": 0.75
 MLE:
     USE_BODNER23:
         description: |
