@@ -1858,6 +1858,23 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx2_3v2": True
+    NU_ZERO:
+        description: |
+            "[m2 s-1] default = 0.005
+            Leading coefficient in KPP shear mixing."
+        datatype: real
+        units: m2 s-1
+        value:
+            $OCN_GRID == "tx2_3v2": 0.0025
+    RI_ZERO:
+        description: |
+            "[nondim] default = 0.8
+            Critical Richardson for KPP shear mixing, NOTE this the internal mixing and
+            this is not for setting the boundary layer depth."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.5
     N_SMOOTH_RI:
         description: |
             "default = 0
