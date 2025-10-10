@@ -5,9 +5,10 @@
 <entry_id version="3.0">
 
   <description>
-    <desc ocn="MOM6[%MARBL-BIO][%MARBL-ABIO]">MOM6 OCEAN </desc>
+    <desc ocn="MOM6[%REGIONAL][%MARBL-BIO][%MARBL-ABIO]">MOM6 OCEAN </desc>
     <desc option="MARBL-BIO">MARBL Biogeochemistry Tracer Library base biotic tracers</desc>
     <desc option="MARBL-ABIO">MARBL Biogeochemistry Tracer Library abiotic DIC tracers</desc>
+    <desc option="REGIONAL">Regional </desc>
   </description>
 
   <entry id="COMP_OCN">
@@ -201,6 +202,19 @@
           "native" will output on whatever levels MOM is using (e.g. z*); stream will be mom6.h.bgc.native.*
           "interpolated" will output will be interpolated to static z levels; stream will be mom6.h.bgc.z.*
           "both" will write both h.bgc.native and h.bgc.z files
+    </desc>
+  </entry>
+
+  <entry id="MOM6_DOMAIN_TYPE">
+    <type>char</type>
+    <valid_values>REGIONAL,GLOBAL</valid_values>
+    <default_value>GLOBAL</default_value>
+    <values>
+      <value compset="_MOM6%REGIONAL">REGIONAL</value>
+    </values>
+    <group>case_comp</group>
+    <file>env_run.xml</file>
+    <desc> Flag to turn on/off the regional/global defaults for MOM_input
     </desc>
   </entry>
 
