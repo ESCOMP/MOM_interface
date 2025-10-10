@@ -5,9 +5,10 @@
 <entry_id version="3.0">
 
   <description>
-    <desc ocn="MOM6[%MARBL-BIO][%MARBL-ABIO]">MOM6 OCEAN </desc>
+    <desc ocn="MOM6[%REGIONAL][%MARBL-BIO][%MARBL-ABIO]">MOM6 OCEAN </desc>
     <desc option="MARBL-BIO">MARBL Biogeochemistry Tracer Library base biotic tracers</desc>
     <desc option="MARBL-ABIO">MARBL Biogeochemistry Tracer Library abiotic DIC tracers</desc>
+    <desc option="REGIONAL">Regional </desc>
   </description>
 
   <entry id="COMP_OCN">
