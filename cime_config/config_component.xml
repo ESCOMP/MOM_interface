@@ -208,6 +208,9 @@
     <type>char</type>
     <valid_values>REGIONAL,GLOBAL</valid_values>
     <default_value>GLOBAL</default_value>
+    <values>
+      <value compset="_MOM6%REGIONAL">REGIONAL</value>
+    </values>
     <group>case_comp</group>
     <file>env_run.xml</file>
     <desc> Flag to turn on/off the regional/global defaults for MOM_input
