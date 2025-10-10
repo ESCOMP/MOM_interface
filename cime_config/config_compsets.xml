@@ -74,7 +74,7 @@
   </compset>
 
   <!-- C Regional compsets -->
-  
+
   <compset>
     <alias>CR_JRA</alias>
     <lname>1850_DATM%JRA_SLND_SICE_MOM6%REGIONAL_SROF_SGLC_SWAV</lname>
@@ -82,7 +82,7 @@
 
   <compset>
     <alias>CR1850MARBL_JRA</alias>
-    <lname>1850_DATM%JRA_SLND_SICE_MOM6%REGIONAL_SROF_SGLC_SWAV</lname>
+    <lname>1850_DATM%JRA_SLND_SICE_MOM6%REGIONAL%MARBL-BIO_SROF_SGLC_SWAV</lname>
   </compset>
 
   <!-- G compsets -->
