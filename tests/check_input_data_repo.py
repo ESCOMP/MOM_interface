@@ -21,13 +21,13 @@ if __name__ == "__main__":
         input_data_list_yaml, MOM_input_files
     )
 
-    # all mom input file names in svn inputdata repository
+    # all mom input file names in gdex inputdata repository
     r = sr.RemoteClient(
-        "https://svn-ccsm-inputdata.cgd.ucar.edu/trunk/inputdata/ocn/mom/"
+        "https://osdf-data.gdex.ucar.edu/ncar/gdex/d651077/cesmdata/inputdata/ocn/mom/"
     )
     repo_files = {f["name"] for relpath, f in r.list_recursive() if f["kind"] == "file"}
 
-    # File names missing in the svn repository
+    # File names missing in the repository
     missing_files = (
         set(
             filename
@@ -39,10 +39,10 @@ if __name__ == "__main__":
     if missing_files:
         raise ValueError(
             "Below file names are listed in input_data_list.yaml but are missing "
-            "in the svn inputdata repository. If these files are not needed, "
+            "in the inputdata repository. If these files are not needed, "
             "please remove them from input_data_list.yaml. If they are needed, "
-            "please import them to the svn repository.\n\n  "
+            "please import them to the gdex repository.\n\n  "
             + "\n  ".join(missing_files)
         )
     else:
-        print("All files in input_data_list.yaml are present in the svn repository.")
+        print("All files in input_data_list.yaml are present in the gdex repository.")
