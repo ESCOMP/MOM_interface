@@ -30,7 +30,7 @@ mom.input_data_list:
                 "${INPUTDIR}/${TEMP_SALT_Z_INIT_FILE}"
     MAX_LAYER_THICKNESS_CONFIG:
         $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]:
-                  "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max_90th_quantile.nc"
+                  "${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/dz_max-2025-09-12.nc"
     SURFACE_PRESSURE_FILE:
         $OCN_GRID == "MISOMIP": "${INPUTDIR}/MISOMIP_181108.nc"
     SALT_RESTORE_FILE:

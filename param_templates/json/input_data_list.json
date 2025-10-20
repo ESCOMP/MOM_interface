@@ -15,7 +15,7 @@
          "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/lev-2025-09-12.nc"
       },
       "MAX_LAYER_THICKNESS_CONFIG": {
-         "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max_90th_quantile.nc"
+         "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/dz_max-2025-09-12.nc"
       },
       "DIAG_COORD_DEF_Z": {
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/interpolate_zgrid_40L.nc"

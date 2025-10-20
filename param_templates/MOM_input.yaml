@@ -998,7 +998,7 @@ Global:
         datatype: string
         value:
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]: |
-                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max-2025-09-12.nc,dz"'
+                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/dz_max-2025-09-12.nc,dz"'
             else: '"FNC1:400,31000.0,0.1,.01"'
     BOUND_CORIOLIS:
         description: |
