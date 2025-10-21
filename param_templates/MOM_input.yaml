@@ -636,7 +636,7 @@ Global:
             PQM_IH4IH3  (4th-order accurate)
             PQM_IH6IH5  (5th-order accurate)"
         datatype: string
-        value: "C_PPM_CW"
+        value: "PPM_CW"
     REMAP_VEL_CONSERVE_KE:
         description: |
             "[Boolean] default = False
@@ -981,7 +981,7 @@ Global:
         datatype: string
         value:
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]: |
-                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/lev-2025-09-12.nc,Z"'
+                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/lev-2025-09-12.nc,Z"'
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID == "tx0.25v1": '"FNC1:5,8000.0,1.0,.01"'
     MAX_LAYER_THICKNESS_CONFIG:
         description: |

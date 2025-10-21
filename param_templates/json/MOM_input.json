@@ -489,7 +489,7 @@
       "REMAPPING_SCHEME": {
          "description": "\"default = 'PLM'\nThis sets the reconstruction scheme used\nfor vertical remapping for all variables.\nIt can be one of the following schemes:\nPCM         (1st-order accurate)\nPLM         (2nd-order accurate)\nPPM_H4      (3rd-order accurate)\nPPM_IH4     (3rd-order accurate)\nPQM_IH4IH3  (4th-order accurate)\nPQM_IH6IH5  (5th-order accurate)\"\n",
          "datatype": "string",
-         "value": "C_PPM_CW"
+         "value": "PPM_CW"
       },
       "REMAP_VEL_CONSERVE_KE": {
          "description": "\"[Boolean] default = False\nIf true, a correction is applied to the baroclinic component of velocity after\nremapping so that total KE is conserved. KE may not be conserved when\n(CS%BBL_h_vel_mask > 0.0) .and. (CS%h_vel_mask > 0.0)\"\n",
@@ -749,7 +749,7 @@
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum interface depths.\nValid options are:\nNONE        - there are no maximum interface depths\nPARAM       - use the vector-parameter MAXIMUM_INTERFACE_DEPTHS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum depths for each interface.\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/lev-2025-09-12.nc,Z\"'\n",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/lev-2025-09-12.nc,Z\"'\n",
             "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx0.25v1\"": "\"FNC1:5,8000.0,1.0,.01\""
          }
       },
