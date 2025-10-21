@@ -115,6 +115,15 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx2_3v2": False
+    HREF_FOR_MLD:
+        description: |
+            "[m] default = 0.0
+            Reference depth used to calculate the potential density used to find the mixed
+            layer depth based on a delta rho = 0.03 kg/m3."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID == "tx2_3v2": 10.0
     USE_REGRIDDING:
         description: |
             "[Boolean] default = False
@@ -281,6 +290,12 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": False
             $OCN_GRID == "tx0.25v1": False
+    EQN_OF_STATE:
+        description: |
+            "default = WRIGHT_FULL
+            EQN_OF_STATE determines which ocean equation of state should be used."
+        datatype: string
+        value: "WRIGHT_FULL"
     DTFREEZE_DP:
         description: |
             "[deg C Pa-1] default = 0.0
@@ -529,6 +544,13 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": False
             $OCN_GRID == "tx0.25v1": False
+    RAD_EARTH:
+        description: |
+            "[m] default = 6.378E+06
+            The radius of the Earth."
+        datatype: real
+        units: m
+        value: 6.37122E+06
     TOPO_CONFIG:
         description: |
             "This specifies how bathymetry is specified:
@@ -745,7 +767,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx2_3v2": 250.0
+            $OCN_GRID == "tx2_3v2": 500.0
     KHTR_SLOPE_CFF:
         description: |
             "[nondim] default = 0.0
@@ -810,7 +832,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
+            $OCN_GRID == "tx2_3v2": False
     ETA_TOLERANCE:
         description: |
             "[m] default = 3.15E-09
@@ -932,7 +954,7 @@ Global:
         value:
             $MOM6_VERTICAL_GRID == "zstar_75L": '"FILE:zstar_75layer_2.5m_248.4m-2024-03-29.nc,dz"'
             $MOM6_VERTICAL_GRID == "zstar_65L": '"FILE:vgrid_65L_20200626.nc,dz"'
-            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": '"HYBRID:hybrid_75layer_zstar2.50m-2020-11-23.nc,sigma2,dz"'
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID != "tx0.25v1": '"HYBRID:hybrid_75layer_zstar_2.50m-2025-09-12.nc,sigma2,dz"'
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID == "tx0.25v1": '"HYBRID:hycom1_75_800m.nc,sigma2,FNC1:2,4000,4.5,.01"'
     REGRID_COMPRESSIBILITY_FRACTION:
         description: |
@@ -958,7 +980,9 @@ Global:
             The list of maximum depths for each interface."
         datatype: string
         value:
-            $MOM6_VERTICAL_GRID == "hycom1": '"FNC1:5,8000.0,1.0,.01"'
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]: |
+                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/lev-2025-09-12.nc,Z"'
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID == "tx0.25v1": '"FNC1:5,8000.0,1.0,.01"'
     MAX_LAYER_THICKNESS_CONFIG:
         description: |
             "default = 'NONE'
@@ -974,7 +998,7 @@ Global:
         datatype: string
         value:
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]: |
-                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max_90th_quantile.nc,dz"'
+                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/dz_max-2025-09-12.nc,dz"'
             else: '"FNC1:400,31000.0,0.1,.01"'
     BOUND_CORIOLIS:
         description: |
@@ -987,6 +1011,16 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    RHO_PGF_REF_BUG:
+        description: |
+            "[Boolean] default = True
+            If true, recover a bug that RHO_0 (the mean seawater density in Boussinesq
+            mode) and RHO_PGF_REF (the subtracted reference density in finite volume
+            pressure gradient forces) are incorrectly interchanged in several instances in
+            Boussinesq mode."
+        datatype: logical
+        units: Boolean
+        value: False
     MASS_WEIGHT_IN_PRESSURE_GRADIENT:
         description: |
             "[Boolean] default = False
@@ -1010,6 +1044,22 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    SMAGORINSKY_KH:
+        description: |
+            "[Boolean] default = False
+            If true, use a Smagorinsky nonlinear eddy viscosity."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SMAG_LAP_CONST:
+        description: |
+            "[nondim] default = 0.0
+            The nondimensional Laplacian Smagorinsky constant, often 0.15."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.15
     KH:
         description: |
             "[m2 s-1] default = 0.0
@@ -1505,7 +1555,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID == "tx2_3v2": True
+            $OCN_GRID == "tx2_3v2": False
     MIXEDLAYER_RESTRAT:
         description: |
             "[Boolean] default = False
@@ -1816,6 +1866,23 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx2_3v2": True
+    NU_ZERO:
+        description: |
+            "[m2 s-1] default = 0.005
+            Leading coefficient in KPP shear mixing."
+        datatype: real
+        units: m2 s-1
+        value:
+            $OCN_GRID == "tx2_3v2": 0.0025
+    RI_ZERO:
+        description: |
+            "[nondim] default = 0.8
+            Critical Richardson for KPP shear mixing, NOTE this the internal mixing and
+            this is not for setting the boundary layer depth."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.5
     N_SMOOTH_RI:
         description: |
             "default = 0
@@ -2224,7 +2291,13 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2" and $COMP_ATM == "datm": True  # for C and G compsets on tx2_3v2
             else: False
-
+    WIND_STAGGER:
+        description: |
+            "default = 'C'
+            A case-insensitive character string to indicate the staggering of the input
+            wind stress field.  Valid values are 'A', 'B', or 'C'."
+        datatype: string
+        value: "A"
     ENTHALPY_FROM_COUPLER:
         description: |
             "[Boolean] default = False
@@ -2233,7 +2306,6 @@ Global:
         datatype: logical
         units: Boolean
         value: True
-
     FLUXCONST:
         description: |
             "[m day-1]
@@ -2359,7 +2431,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 1.0
-            $OCN_GRID == "tx2_3v2": 1.0
+            $OCN_GRID == "tx2_3v2": 0.25
     MEKE_BGSRC:
         description: |
             "[W kg-1] default = 0.0
@@ -2496,7 +2568,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx2_3v2": 0.09
+            $OCN_GRID == "tx2_3v2": 0.06
     MEKE_KHTH_FAC:
         description: |
             "[nondim] default = 0.0
@@ -2795,7 +2867,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": 2.0
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": 3.5
     VISC_REM_BUG:
         description: |
             "[Boolean] default = True
@@ -3689,18 +3761,6 @@ Global:
         datatype: string
         value:
             "${CASE}.mom6.h.ocean_geometry.nc"
-    SKEB_NPASS:
-        description: |
-            "default = 3
-            number of passes of a 9-point smoother of the dissipation estimate."
-        datatype: integer
-        value: 10
-    SKEB_GM_COEF:
-        description: |
-            "[nondim] default = 0.0
-            Fraction of GM work that is added to backscatter rate."
-        datatype: real
-        value: 0.75
     RESTART_CHECKSUMS_REQUIRED:
         description: |
             "[Boolean] default = True
@@ -3719,6 +3779,16 @@ Global:
             added to the end of the file name. This parameter is ignored for non-ensemble runs."
         datatype: string
         value: ".mom6"
+CVMix_CONVECTION:
+    BV_SQR_CONV:
+        description: |
+            "[1/s^2] default = 0.0
+            Threshold for squared buoyancy frequency needed to trigger Brunt-Vaisala
+            parameterization."
+        datatype: real
+        units: 1/s^2
+        value:
+            $OCN_GRID == "tx2_3v2": -1.0E-08
 KPP:
     N_SMOOTH:
         description: |
@@ -3800,18 +3870,25 @@ KPP:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID == "tx2_3v2": 1.0
+            $OCN_GRID == "tx2_3v2": 1.8
+    ENHANCE_DIFFUSION:
+        description: |
+            "default = True
+            If True, adds enhanced diffusion at the based of the boundary layer."
+        datatype: logical
+        value:
+            $OCN_GRID == "tx2_3v2": False
     STOKES_MOST:
         description: |
-            default = False
-            If True, use Stokes Similarity package.
+            "default = False
+            If True, use Stokes Similarity package."
         datatype: logical
         value:
             $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "most": True
     COMPUTE_MONIN_OBUKHOV:
         description: |
-            default = False
-            If True, limit the OBL depth to be no deeper than Monin-Obukhov depth.
+            "default = False
+            If True, limit the OBL depth to be no deeper than Monin-Obukhov depth."
         datatype: logical
         units: Boolean
         value:
@@ -3824,6 +3901,45 @@ KPP:
         datatype: real
         value:
            $OCN_GRID == "tx2_3v2": 5.0
+    DO_SKEB:
+        description: |
+            "default = False
+            If true, then stochastically perturb the currents using the stochastic kinetic
+            energy backscatter scheme."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_USE_FRICT:
+        description: |
+            "default = False
+            If true, adds horizontal friction dissipation rate to the SKEBS amplitude."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_USE_GM:
+        description: |
+            "default = False
+            If true, adds GM work rate to the SKEBS amplitude."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_NPASS:
+        description: |
+            "[nondim] default = 0
+             number of passes of a 9-point smoother of the dissipation estimate."
+        datatype: integer
+        value:
+           $OCN_GRID == "tx2_3v2": 8
+    SKEB_GM_COEF:
+        description: |
+            "[nondim] default = 0.0
+            Fraction of GM work that is added to backscatter rate."
+        datatype: real
+        value:
+           $OCN_GRID == "tx2_3v2": 0.75
 MLE:
     USE_BODNER23:
         description: |
@@ -3834,6 +3950,14 @@ MLE:
         units: Boolean
         value:
             $OCN_GRID == "tx2_3v2": True
+    CR:
+        description: |
+           "[nondim] default = 0.0
+           The efficiency coefficient in eq 27 of Bodner et al., 2023."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 0.01
     USE_CR_GRID:
         description: |
             "[Boolean] default = False
@@ -3847,7 +3971,15 @@ MLE:
             "The path to the file containing the Cr fields."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "mle-cr-tx2_3v2-v10_20250426.nc"
+            $OCN_GRID == "tx2_3v2": "mle-cr-mask_20250627.nc"
+    WAVE_ENHANCED_USTAR:
+        description: |
+            "default = False
+            If true, enhance ustar using surface waves, following Eq. 28 in Bodner23."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
     MIN_WSTAR2:
         description: |
             "[m2 s-2] default = 1.0E-24
