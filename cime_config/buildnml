@@ -399,10 +399,13 @@ def prechecks(case, inst_suffixes):
                 f"Missing rpointer files in rundir. Expected files with pattern {rpointer_pattern}.",
             )
         
-    # check if the restart file is present in rundir
+    # check if the restart file is present in rundir for fresh branch or hybrid runs
     if run_type in ["branch", "hybrid"] and not continue_run and not get_refcase:
-        restart_file = os.path.join(rundir, f'./{run_refcase}.mom6.r.{run_refdate}-{run_reftod}.nc')
-        assert os.path.exists(restart_file), f"Missing restart file {run_refcase}.mom6.r.{run_refdate}-{run_reftod}.nc in rundir."
+        restart_file_pattern = run_refcase + r".mom6.*.r." + run_refdate + "-" + run_reftod + r".*nc$"
+        restart_files = [
+            f for f in os.listdir(rundir) if re.match(restart_file_pattern, f)
+        ]
+        assert len(restart_files) > 0, f"Missing restart file in rundir. Expected file matching pattern {restart_file_pattern}."
 
 def postchecks(case,  MOM_input_final):
     """Performs checks after input files are generated. To be called within prep_input() as a final step."""
