@@ -89,13 +89,6 @@ Global:
             $OCN_GRID == "tx2_3v2": 480
             $OCN_GRID == "tx0.25v1": 1080
             $OCN_GRID == "MISOMIP": 40
-    IO_LAYOUT:
-        description: |
-            "default = 0
-            The processor layout to be used, or 0,0 to automatically
-            set the io_layout to be the same as the layout."
-        datatype: string
-        value: 1, 1
     NK:
         description: |
             "[nondim]
@@ -295,7 +288,9 @@ Global:
             "default = WRIGHT_FULL
             EQN_OF_STATE determines which ocean equation of state should be used."
         datatype: string
-        value: "WRIGHT_FULL"
+        value: 
+            $OCN_GRID == "MISOMIP": "LINEAR"
+            else: "WRIGHT_FULL"
     DTFREEZE_DP:
         description: |
             "[deg C Pa-1] default = 0.0
@@ -2946,16 +2941,6 @@ Global:
         units: not defined
         value:
             $OCN_GRID == "MISOMIP": 1.0
-    EQN_OF_STATE:
-        description: |
-            "default = 'WRIGHT'
-            EQN_OF_STATE determines which ocean equation of state
-            should be used.  Currently, the valid choices are
-            'LINEAR', 'UNESCO', and 'WRIGHT'.
-            This is only used if USE_EOS is true."
-        datatype: string
-        value:
-            $OCN_GRID == "MISOMIP": "LINEAR"
     RHO_T0_S0:
         description: |
             "[kg m-3] default = 1000.0
@@ -3148,7 +3133,6 @@ Global:
              target density."
         datatype: logical
         units: Boolean
-        value:
         value:
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID == "tx2_3v2": True
     ISOMIP_TNUDG:
@@ -3737,8 +3721,8 @@ Global:
             be the same as the layout.
         datatype: list
         value:
-            $OCN_GRID == "tx0.25v1":
-              4, 3
+            $OCN_GRID == "tx0.25v1": 4, 3
+            else: 1, 1
     AUTO_MASKTABLE:
         description: |
             Turn on automatic mask table generation to eliminate land blocks

@@ -94,6 +94,23 @@ jobs:
       - name: Run the check_default_params script
         run: python tests/check_default_params.py
   
+  # Job to check if duplicate parameters exist in param template files
+  check_duplicate_params:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+      
+      # Run the test
+      - name: Run the check_duplicate_params script
+        run: |
+          python tests/check_duplicate_params.py param_templates/MOM_input.yaml
+          python tests/check_duplicate_params.py param_templates/input_data_list.yaml
+          python tests/check_duplicate_params.py param_templates/input_nml.yaml
+          python tests/check_duplicate_params.py param_templates/diag_table.yaml
+  
   # Job to run check_input_data_list script
   check_input_data_list:
     
