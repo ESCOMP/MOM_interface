@@ -15,7 +15,7 @@ import logging
 CIMEROOT = os.environ.get("CIMEROOT")
 if CIMEROOT is None:
     raise SystemExit("ERROR: must set CIMEROOT environment variable")
-sys.path.append(os.path.join(CIMEROOT, "scripts", "Tools"))
+sys.path.append(os.path.join(CIMEROOT, "CIME", "Tools"))
 
 # The scope of the following path expansion is limited to this script only,
 # and is needed to import MOM6 input file classes:
@@ -399,10 +399,13 @@ def prechecks(case, inst_suffixes):
                 f"Missing rpointer files in rundir. Expected files with pattern {rpointer_pattern}.",
             )
         
-    # check if the restart file is present in rundir
+    # check if the restart file is present in rundir for fresh branch or hybrid runs
     if run_type in ["branch", "hybrid"] and not continue_run and not get_refcase:
-        restart_file = os.path.join(rundir, f'./{run_refcase}.mom6.r.{run_refdate}-{run_reftod}.nc')
-        assert os.path.exists(restart_file), f"Missing restart file {run_refcase}.mom6.r.{run_refdate}-{run_reftod}.nc in rundir."
+        restart_file_pattern = run_refcase + r".mom6.*.r." + run_refdate + "-" + run_reftod + r".*nc$"
+        restart_files = [
+            f for f in os.listdir(rundir) if re.match(restart_file_pattern, f)
+        ]
+        assert len(restart_files) > 0, f"Missing restart file in rundir. Expected file matching pattern {restart_file_pattern}."
 
 def postchecks(case,  MOM_input_final):
     """Performs checks after input files are generated. To be called within prep_input() as a final step."""
@@ -433,7 +436,15 @@ def buildnml(case, caseroot, compname):
     # Build the component namelist
     if compname != "mom":
         raise AttributeError
-
+    # add the FMS library to the list of cesm support libraries for the case
+    # designed to be backward compatible in case cmeps does not define CASE_SUPPORT_LIBRARIES
+    try:
+        libs = case.get_values("CASE_SUPPORT_LIBRARIES")
+        if libs is not None and "FMS" not in libs:
+            libs.extend(["gptl","pio","csm_share","FMS"])
+            case.set_value("CASE_SUPPORT_LIBRARIES", ",".join(libs))
+    except:
+        pass
     ninst = case.get_value("NINST_OCN")
     inst_suffixes = (
         ["_{:04d}".format(i + 1) for i in range(ninst)] if ninst > 1 else [""]
@@ -460,7 +471,7 @@ def buildnml(case, caseroot, compname):
 def _main_func():
 
     caseroot = parse_input(sys.argv)
-    with Case(caseroot) as case:
+    with Case(caseroot, read_only=False) as case:
         buildnml(case, caseroot, "mom")
 
 

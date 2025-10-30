@@ -7,9 +7,15 @@
       "ALE_COORDINATE_CONFIG": {
          "$MOM6_VERTICAL_GRID == \"zstar_75L\"": "${INPUTDIR}/zstar_75layer_2.5m_248.4m-2024-03-29.nc",
          "$MOM6_VERTICAL_GRID == \"zstar_65L\"": "${INPUTDIR}/vgrid_65L_20200626.nc",
-         "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "${INPUTDIR}/hybrid_75layer_zstar2.50m-2020-11-23.nc",
+         "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID != \"tx0.25v1\"": "${INPUTDIR}/hybrid_75layer_zstar_2.50m-2025-09-12.nc",
          "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/hycom1_75_800m.nc",
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/hycom1_75_800m.nc"
+      },
+      "MAXIMUM_INT_DEPTH_CONFIG": {
+         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/lev-2025-09-12.nc"
+      },
+      "MAX_LAYER_THICKNESS_CONFIG": {
+         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/dz_max-2025-09-12.nc"
       },
       "DIAG_COORD_DEF_Z": {
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/interpolate_zgrid_40L.nc"
@@ -29,9 +35,6 @@
          "$OCN_GRID in [\"tx2_3v2\", \"tx0.25v1\"]": {
             "$INIT_LAYERS_FROM_Z_FILE == \"True\"": "${INPUTDIR}/${TEMP_SALT_Z_INIT_FILE}"
          }
-      },
-      "MAX_LAYER_THICKNESS_CONFIG": {
-         "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max_90th_quantile.nc"
       },
       "SURFACE_PRESSURE_FILE": {
          "$OCN_GRID == \"MISOMIP\"": "${INPUTDIR}/MISOMIP_181108.nc"
@@ -56,7 +59,7 @@
          "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/seawifs-clim-1997-2010-tx2_3v2.230416.nc"
       },
       "CR_FILE": {
-         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/mle-cr-tx2_3v2-v10_20250426.nc"
+         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/mle-cr-mask_20250627.nc"
       },
       "CFC_BC_FILE": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc",
       "DIAG_COORD_DEF_RHO2": {

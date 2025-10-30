@@ -90,6 +90,9 @@
          "KPP_OBLdepth:oml_max:max"
       ],
       [
+         "skeb_amp"
+      ],
+      [
          "tauuo",
          "tauvo",
          "friver",
@@ -168,7 +171,9 @@
          "sin_rot",
          "cos_rot",
          "C_P",
-         "Rho_0"
+         "Rho_0",
+         "skeb_taper_v",
+         "skeb_taper_u"
       ],
       [
          "volcello",
@@ -351,6 +356,9 @@
                         "KPP_OBLdepth:oml",
                         "KPP_OBLdepth:oml_min:min",
                         "KPP_OBLdepth:oml_max:max"
+                     ],
+                     [
+                        "skeb_amp"
                      ],
                      [
                         "tauuo",
@@ -691,7 +699,9 @@
                   "sin_rot",
                   "cos_rot",
                   "C_P",
-                  "Rho_0"
+                  "Rho_0",
+                  "skeb_taper_v",
+                  "skeb_taper_u"
                ]
             ],
             "lists2": {
