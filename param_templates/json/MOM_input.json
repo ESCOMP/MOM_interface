@@ -3059,6 +3059,44 @@
          "description": "\"default = ''\nThe prefix for the restart file appendix (i.e., ensemble id for ensemble\nruns). If this prefix is found in the restart file name, the appendix is added\nright after the first occurrence of the prefix. If not found, the appendix is\nadded to the end of the file name. This parameter is ignored for non-ensemble runs.\"\n",
          "datatype": "string",
          "value": ".mom6"
+      },
+      "DO_SKEB": {
+         "description": "\"default = False\nIf true, then stochastically perturb the currents using the stochastic kinetic\nenergy backscatter scheme.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "SKEB_USE_FRICT": {
+         "description": "\"default = False\nIf true, adds horizontal friction dissipation rate to the SKEBS amplitude.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "SKEB_USE_GM": {
+         "description": "\"default = False\nIf true, adds GM work rate to the SKEBS amplitude.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": true
+         }
+      },
+      "SKEB_NPASS": {
+         "description": "\"[nondim] default = 0\n number of passes of a 9-point smoother of the dissipation estimate.\"\n",
+         "datatype": "integer",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 8
+         }
+      },
+      "SKEB_GM_COEF": {
+         "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
+         "datatype": "real",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.75
+         }
       }
    },
    "CVMix_CONVECTION": {
@@ -3166,44 +3204,6 @@
          "datatype": "real",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 5.0
-         }
-      },
-      "DO_SKEB": {
-         "description": "\"default = False\nIf true, then stochastically perturb the currents using the stochastic kinetic\nenergy backscatter scheme.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
-         }
-      },
-      "SKEB_USE_FRICT": {
-         "description": "\"default = False\nIf true, adds horizontal friction dissipation rate to the SKEBS amplitude.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
-         }
-      },
-      "SKEB_USE_GM": {
-         "description": "\"default = False\nIf true, adds GM work rate to the SKEBS amplitude.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
-         }
-      },
-      "SKEB_NPASS": {
-         "description": "\"[nondim] default = 0\n number of passes of a 9-point smoother of the dissipation estimate.\"\n",
-         "datatype": "integer",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 8
-         }
-      },
-      "SKEB_GM_COEF": {
-         "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
-         "datatype": "real",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.75
          }
       }
    },
