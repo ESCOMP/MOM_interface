@@ -26,8 +26,6 @@ FieldLists:
 
     - &kpp_diags        ["KPP_OBLdepth:oml", "KPP_OBLdepth:oml_min:min", "KPP_OBLdepth:oml_max:max"]
 
-    - &stochastic_diags ["skeb_amp"]
-
     - &forcing_flds     ["tauuo", "tauvo", "friver", "prsn", "prlq", "evs", "hfsso", "rlntds",
                          "hfsnthermds", "sfdsi", "rsntds", "hfds", "ustar",
                          "hfsifrazil", "wfo", "vprec", "ficeberg", "fsitherm",
@@ -128,7 +126,6 @@ Files:
                     $OCN_DIAG_MODE not in ["spinup", "none"]:
                         [ *prognostic,
                           *kpp_diags,
-                          *stochastic_diags,
                           *forcing_flds,
                           *enthalpy_flds,
                           *surface_flds_common,
