@@ -3770,6 +3770,45 @@ Global:
             added to the end of the file name. This parameter is ignored for non-ensemble runs."
         datatype: string
         value: ".mom6"
+    DO_SKEB:
+        description: |
+            "default = False
+            If true, then stochastically perturb the currents using the stochastic kinetic
+            energy backscatter scheme."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_USE_FRICT:
+        description: |
+            "default = False
+            If true, adds horizontal friction dissipation rate to the SKEBS amplitude."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_USE_GM:
+        description: |
+            "default = False
+            If true, adds GM work rate to the SKEBS amplitude."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": True
+    SKEB_NPASS:
+        description: |
+            "[nondim] default = 0
+             number of passes of a 9-point smoother of the dissipation estimate."
+        datatype: integer
+        value:
+           $OCN_GRID == "tx2_3v2": 8
+    SKEB_GM_COEF:
+        description: |
+            "[nondim] default = 0.0
+            Fraction of GM work that is added to backscatter rate."
+        datatype: real
+        value:
+           $OCN_GRID == "tx2_3v2": 0.75
 CVMix_CONVECTION:
     BV_SQR_CONV:
         description: |
@@ -3892,45 +3931,7 @@ KPP:
         datatype: real
         value:
            $OCN_GRID == "tx2_3v2": 5.0
-    DO_SKEB:
-        description: |
-            "default = False
-            If true, then stochastically perturb the currents using the stochastic kinetic
-            energy backscatter scheme."
-        datatype: logical
-        units: Boolean
-        value:
-            $OCN_GRID == "tx2_3v2": True
-    SKEB_USE_FRICT:
-        description: |
-            "default = False
-            If true, adds horizontal friction dissipation rate to the SKEBS amplitude."
-        datatype: logical
-        units: Boolean
-        value:
-            $OCN_GRID == "tx2_3v2": True
-    SKEB_USE_GM:
-        description: |
-            "default = False
-            If true, adds GM work rate to the SKEBS amplitude."
-        datatype: logical
-        units: Boolean
-        value:
-            $OCN_GRID == "tx2_3v2": True
-    SKEB_NPASS:
-        description: |
-            "[nondim] default = 0
-             number of passes of a 9-point smoother of the dissipation estimate."
-        datatype: integer
-        value:
-           $OCN_GRID == "tx2_3v2": 8
-    SKEB_GM_COEF:
-        description: |
-            "[nondim] default = 0.0
-            Fraction of GM work that is added to backscatter rate."
-        datatype: real
-        value:
-           $OCN_GRID == "tx2_3v2": 0.75
+
 MLE:
     USE_BODNER23:
         description: |

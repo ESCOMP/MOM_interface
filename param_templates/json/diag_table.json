@@ -90,9 +90,6 @@
          "KPP_OBLdepth:oml_max:max"
       ],
       [
-         "skeb_amp"
-      ],
-      [
          "tauuo",
          "tauvo",
          "friver",
@@ -356,9 +353,6 @@
                         "KPP_OBLdepth:oml",
                         "KPP_OBLdepth:oml_min:min",
                         "KPP_OBLdepth:oml_max:max"
-                     ],
-                     [
-                        "skeb_amp"
                      ],
                      [
                         "tauuo",

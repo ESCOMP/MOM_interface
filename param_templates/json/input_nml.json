@@ -72,7 +72,7 @@
    "nam_stochy": {
       "stochini": {
          "values": {
-            "$CONTINUE_RUN == True": ".true.",
+            "$CONTINUE_RUN == True or $RUN_TYPE == \"branch\"": ".true.",
             "else": ".false."
          }
       },

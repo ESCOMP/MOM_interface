@@ -1,0 +1,3 @@
+DO_SKEB=False
+SKEB_USE_GM=False
+SKEB_USE_FRICT=False
