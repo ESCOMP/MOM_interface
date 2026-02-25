@@ -54,10 +54,10 @@ mom.input_data_list:
         $MARBL_CONFIG == "latest+4p2z": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
     MARBL_FESEDFLUX_FILE:
         '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS':
-            $OCN_GRID == "tx2_3v2": "${INPUTDIR}/fesedflux_2024algo_tx2_3v2.c250616.nc"
+            $OCN_GRID == "tx2_3v2": "${INPUTDIR}/fesedflux_2024algo_tx2_3v2.c251229.nc"
     MARBL_FESEDFLUXRED_FILE:
         '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS':
-            $OCN_GRID == "tx2_3v2": "${INPUTDIR}/fesedfluxRed_2024algo_tx2_3v2.c250616.nc"
+            $OCN_GRID == "tx2_3v2": "${INPUTDIR}/fesedfluxRed_2024algo_tx2_3v2.c251229.nc"
     MARBL_FEVENTFLUX_FILE:
         '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS':
             $OCN_GRID == "tx2_3v2": "${INPUTDIR}/feventflux_5gmol_tx2_3v2.c231205.nc"
