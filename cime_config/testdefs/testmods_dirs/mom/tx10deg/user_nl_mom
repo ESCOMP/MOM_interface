@@ -1,0 +1,8 @@
+NIGLOBAL = 36
+NJGLOBAL = 32
+GRID_FILE = "tx10deg/ocean_hgrid_tx10deg_20260219.nc"
+TOPO_FILE = "tx10deg/ocean_topog_tx10deg_20260219.nc"
+CHL_FILE = "tx10deg/seawifs-clim-1997-2010-tx10deg_20260219.nc"
+SALT_RESTORE_FILE = "tx10deg/state_restore_tx10deg_20260219.nc"
+TOPO_EDITS_FILE = ''
+AUTO_MASKTABLE=False

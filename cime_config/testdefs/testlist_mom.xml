@@ -173,4 +173,69 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
+  <!-- fast_mom: a test suite with coarse grids for fast feedback. -->
+  <test name="SMS_D" grid="TL319_t232" compset="G_JRA_RYF" testmods="mom/tx3deg">
+    <machines>
+      <machine name="derecho" compiler="gnu" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="SMS_D_Ld2" grid="T62_t232" compset="G" testmods="mom/tx10deg">
+    <machines>
+      <machine name="derecho" compiler="gnu" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="ERS_Ld5" grid="TL319_t232" compset="GW_JRA" testmods="mom/tx3deg">
+    <machines>
+      <machine name="derecho" compiler="intel" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="SMS_D_Ld1" grid="TL319_t232" compset="C_JRA" testmods="mom/no_stoch_physics--mom/tx3deg">
+    <machines>
+      <machine name="derecho" compiler="intel" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="ERI" grid="TL319_t232" compset="G_JRA" testmods="mom/debug--mom/tx10deg">
+    <machines>
+      <machine name="derecho" compiler="intel" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="PET" grid="TL319_t232" compset="C_JRA" testmods="mom/tx3deg">
+    <machines>
+      <machine name="derecho" compiler="intel" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="DIMCSL_Ld1" grid="TL319_t232" compset="C_JRA" testmods="mom/tx3deg">
+    <machines>
+      <machine name="derecho" compiler="intel" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <test name="MCC" grid="T62_t232" compset="C" testmods="mom/tx10deg">
+    <machines>
+      <machine name="derecho" compiler="gnu" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
 </testlist>

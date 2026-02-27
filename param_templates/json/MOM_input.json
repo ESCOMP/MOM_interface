@@ -2482,7 +2482,7 @@
          "description": "The name of the thickness file",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
+            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
          }
       },
       "SPONGE_CONFIG": {
@@ -2529,7 +2529,7 @@
          "description": "The initial condition file for the temperature and salinity.",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
+            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
          }
       },
       "TEMP_IC_VAR": {
@@ -2557,14 +2557,14 @@
          "description": "The name of the velocity initial condition file.",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
+            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
          }
       },
       "AGE_IC_FILE": {
          "description": "\"The file in which the age-tracer initial values can be found, or an empty\nstring for internal initialization.\"\n",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "= f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
+            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
          }
       },
       "T_REF": {
@@ -3055,7 +3055,7 @@
          "datatype": "logical",
          "value": "$TEST"
       },
-      "RESTARTFILE_APPENDIX_PREFIX": {
+      "ENSEMBLE_APPENDIX_PREFIX": {
          "description": "\"default = ''\nThe prefix for the restart file appendix (i.e., ensemble id for ensemble\nruns). If this prefix is found in the restart file name, the appendix is added\nright after the first occurrence of the prefix. If not found, the appendix is\nadded to the end of the file name. This parameter is ignored for non-ensemble runs.\"\n",
          "datatype": "string",
          "value": ".mom6"

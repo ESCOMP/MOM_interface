@@ -11,6 +11,7 @@
 
 import os, shutil, sys, re
 import logging
+from pathlib import Path
 
 CIMEROOT = os.environ.get("CIMEROOT")
 if CIMEROOT is None:
@@ -45,15 +46,15 @@ def prep_input(case, inst_suffixes):
     input.nml, and mom.input_data_list, inside the run directory. If any of these input files are provided
     in SourceMods, those versions will be copied to run directory instead."""
 
-    Buildconf = case.get_value("CASEBUILD")
-    comp_root_dir_ocn = case.get_value("COMP_ROOT_DIR_OCN")
-    caseroot = case.get_value("CASEROOT")
-    casename = case.get_value("CASE")
-    rundir = case.get_value("RUNDIR")
-    momconfdir = os.path.join(caseroot, "Buildconf", "momconf")
-    SourceMods_dir = os.path.join(caseroot, "SourceMods", "src.mom")
+    Buildconf = Path(case.get_value("CASEBUILD"))
+    comp_root_dir_ocn = Path(case.get_value("COMP_ROOT_DIR_OCN"))
+    caseroot = Path(case.get_value("CASEROOT"))
+    srcroot = Path(case.get_value("SRCROOT"))
+    rundir = Path(case.get_value("RUNDIR"))
+    momconfdir = caseroot / "Buildconf" / "momconf"
+    SourceMods_dir = caseroot / "SourceMods" / "src.mom"
     SourceMods_listdir = os.listdir(SourceMods_dir)
-    srcroot = case.get_value("SRCROOT")
+    casename = case.get_value("CASE")
     ocn_grid = case.get_value("OCN_GRID")
     run_type = case.get_value("RUN_TYPE")
     continue_run = case.get_value("CONTINUE_RUN")
@@ -69,46 +70,46 @@ def prep_input(case, inst_suffixes):
         )
 
     # Make sure that rundir and momconf directories exist. If not, make them:
-    if not os.path.exists(rundir):
+    if not rundir.exists():
         os.makedirs(rundir)
-    if not os.path.exists(momconfdir):
+    if not momconfdir.exists():
         os.makedirs(momconfdir)
 
     # Parse json files and create MOM6 input files in rundir
-    json_templates_dir = os.path.join(comp_root_dir_ocn, "param_templates", "json")
+    json_templates_dir = comp_root_dir_ocn / "param_templates" / "json"
 
     # 1. Create MOM_input:
-    MOM_input_template = os.path.join(json_templates_dir, "MOM_input.json")
-    MOM_input_rundir = os.path.join(rundir, f"MOM_input{inst_suffixes[0]}")
     if multi_instance:
         # don't allow separate MOM_input files for separate instances
         assert not any(
             [re.match("MOM_input_+\d", filename) for filename in SourceMods_listdir]
         ), "Cannot provide separate instances of MOM_input"
     if "MOM_input" in SourceMods_listdir:
-        shutil.copy(os.path.join(SourceMods_dir, "MOM_input"), MOM_input_rundir)
+        for inst_suffix in inst_suffixes:
+            shutil.copy(SourceMods_dir / "MOM_input", rundir / f"MOM_input{inst_suffix}")
     else:
-        # Create MOM_input in rundir using template
-        MOM_input = FType_MOM_params.from_json(MOM_input_template)
-        MOM_input.write(
-            output_path=MOM_input_rundir, output_format="MOM_input", case=case
-        )
-    # If multi-instance, create MOM_input copies for each instance
-    for inst_suffix in inst_suffixes[1:]:
-        shutil.copy(MOM_input_rundir, os.path.join(rundir, f"MOM_input{inst_suffix}"))
-
+        # Create MOM_input in rundir using the defaults template
+        for inst_suffix in inst_suffixes:
+            MOM_input = FType_MOM_params.from_json(json_templates_dir / "MOM_input.json")
+            MOM_input.write(
+               output_path = rundir / f"MOM_input{inst_suffix}",
+               output_format = "MOM_input", 
+               case = case, 
+               inst_suffix = inst_suffix
+            )
+            
     # 2. Create MOM_override:
     for inst_suffix in inst_suffixes:
         user_nl_mom = FType_MOM_params.from_MOM_input(
-            os.path.join(caseroot, f"user_nl_mom{inst_suffix}")
+            caseroot / f"user_nl_mom{inst_suffix}"
         )
         if f"MOM_override{inst_suffix}" in SourceMods_listdir:
             assert (
                 len(user_nl_mom.data) == 0
             ), "Cannot provide parameter changes via both SourceMods and user_nl_mom!"
             shutil.copy(
-                os.path.join(SourceMods_dir, f"MOM_override{inst_suffix}"),
-                os.path.join(rundir, f"MOM_override{inst_suffix}"),
+                SourceMods_dir / f"MOM_override{inst_suffix}",
+                rundir / f"MOM_override{inst_suffix}",
             )
         else:
             init_MOM_override(rundir, inst_suffix)
@@ -116,10 +117,8 @@ def prep_input(case, inst_suffixes):
 
     # 3. Read in final versions of MOM_input and MOM_override, so as to use them when inferring
     #    values of expandable variables in the templates of subsequent MOM6 input files.
-    MOM_input_final = FType_MOM_params.from_MOM_input(MOM_input_rundir)
-    MOM_override_final = FType_MOM_params.from_MOM_input(
-        os.path.join(rundir, f"MOM_override{inst_suffixes[0]}")
-    )
+    MOM_input_final = FType_MOM_params.from_MOM_input(rundir / f"MOM_input{inst_suffixes[0]}")
+    MOM_override_final = FType_MOM_params.from_MOM_input(rundir / f"MOM_override{inst_suffixes[0]}")
     MOM_input_final.append(MOM_override_final)
     # Need to know value of USE_MARBL_TRACERS from MOM_input
     if "USE_MARBL_TRACERS" in MOM_input_final._data["Global"]:
@@ -138,22 +137,16 @@ def prep_input(case, inst_suffixes):
         append_status(f"xmlchange via MOM buildnml: CPL_I2O_PER_CAT={CPL_I20_PER_CAT_new}",
                       "CaseStatus")
 
-
     # 4. Create input.nml:
-    input_nml_template = os.path.join(json_templates_dir, "input_nml.json")
-    input_nml_srcmod = os.path.join(SourceMods_dir, "input.nml")
-    input_nml_rundir = os.path.join(rundir, "input.nml")
     if "input.nml" in SourceMods_listdir:
-        shutil.copy(input_nml_srcmod, input_nml_rundir)
+        shutil.copy(SourceMods_dir / "input.nml", rundir / "input.nml")
     else:
-        input_nml = FType_input_nml.from_json(input_nml_template)
-        input_nml.write(input_nml_rundir, case)
+        input_nml = FType_input_nml.from_json(json_templates_dir / "input_nml.json")
+        input_nml.write(rundir / "input.nml", case)
 
     # 5. Create mom.input_data_list:
-    input_data_list_template = os.path.join(json_templates_dir, "input_data_list.json")
-    input_data_list_buildconf = os.path.join(Buildconf, "mom.input_data_list")
-    input_data_list = FType_input_data_list.from_json(input_data_list_template)
-    input_data_list.write(input_data_list_buildconf, case, MOM_input_final)
+    input_data_list = FType_input_data_list.from_json(json_templates_dir / "input_data_list.json")
+    input_data_list.write(Buildconf / "mom.input_data_list", case, MOM_input_final)
 
     # 6. Create marbl_in (if case is set up with ocean BGC)
     if  use_MARBL:
@@ -183,38 +176,35 @@ def prep_input(case, inst_suffixes):
         MARBL_dir = os.path.join(srcroot, "components", "mom", "externals", "MARBL")
         MARBL_settings = MARBL_settings_for_MOM(MARBL_dir, caseroot, base_bio_on, abio_dic_on,
                                                 ocn_grid, run_type, continue_run, marbl_config)
-        MARBL_settings.write_settings_file(os.path.join(rundir, "marbl_in"))
+        MARBL_settings.write_settings_file(rundir / "marbl_in")
 
     # 7. Create diag_table:
-    diag_table_rundir = os.path.join(rundir, "diag_table")
-    unresolved_diag_table_confdir = os.path.join(momconfdir, "diag_table.unresolved")
+    unresolved_diag_table_confdir = momconfdir / "diag_table.unresolved"
     if "diag_table" in SourceMods_listdir:
         # A resolved diag_table is provided in SourceMods. Directly copy it to rundir.
         expect(
             "diag_table.unresolved" not in SourceMods_listdir,
             "Cannot provide both resolved and unresolved diag_table in SourceMods!",
         )
-        diag_table_srcmod = os.path.join(SourceMods_dir, "diag_table")
-        shutil.copy(diag_table_srcmod, diag_table_rundir)
+        diag_table_srcmod = SourceMods_dir / "diag_table"
+        shutil.copy(diag_table_srcmod, rundir / "diag_table")
         # remove unresolved diag_table to avoid conflicting resolved and unresolved versions
-        if os.path.exists(unresolved_diag_table_confdir):
+        if unresolved_diag_table_confdir.exists():
             os.remove(unresolved_diag_table_confdir)
     else:
         if "diag_table.unresolved" in SourceMods_listdir:
             # An unresolved diag_table is provided in SourceMods. Directly copy it to momconf.
-            unresolved_diag_table_srcmod = os.path.join(
-                SourceMods_dir, "diag_table.unresolved"
-            )
+            unresolved_diag_table_srcmod = SourceMods_dir / "diag_table.unresolved"
             shutil.copy(unresolved_diag_table_srcmod, unresolved_diag_table_confdir)
         else:
             # Create an unresolved diag_table in momconf using the template
-            diag_table_template = os.path.join(json_templates_dir, "diag_table.json")
+            diag_table_template = json_templates_dir / "diag_table.json"
             unresolved_diag_table = FType_diag_table.from_json(diag_table_template)
             if use_MARBL:
                 # Make sure that momconfdir exists. If not, make it:
-                if not os.path.exists(momconfdir):
+                if not momconfdir.exists():
                     os.makedirs(momconfdir)
-                MARBL_diag_table_json = os.path.join(momconfdir, "diag_table_MARBL.json")
+                MARBL_diag_table_json = momconfdir / "diag_table_MARBL.json"
                 # For now, user has no control over lMARBL_output_all
                 # TODO: mimic what is done in POP and allow it via user_nl_mom?
                 lMARBL_output_all = case.get_value("TEST")
@@ -247,7 +237,7 @@ def prep_input(case, inst_suffixes):
             )
         # Resolve unresolved diag_table in momconf and write it to rundir
         FType_diag_table.resolve(
-            unresolved_diag_table_confdir, diag_table_rundir, casename
+            unresolved_diag_table_confdir, rundir / "diag_table", casename
         )
     
     # Sanity checks after all input files are generated.
@@ -256,7 +246,7 @@ def prep_input(case, inst_suffixes):
 
 def init_MOM_override(rundir, inst_suffix):
     # Create an empty MOM_override:
-    with open(os.path.join(rundir, f"MOM_override{inst_suffix}"), "w") as MOM_override:
+    with open(rundir / f"MOM_override{inst_suffix}", "w") as MOM_override:
         MOM_override.write(
             "! WARNING: DO NOT EDIT this file! Any user change made in this file will be\n"
             + "!          overriden. This file is automatically generated. MOM6 parameter\n"
@@ -267,31 +257,27 @@ def init_MOM_override(rundir, inst_suffix):
 
 def process_user_nl_mom(case, inst_suffix):
     """Calls the appropriate MOM_RPS functions to parse user_nl_mom and create MOM_override."""
-    caseroot = case.get_value("CASEROOT")
-    rundir = case.get_value("RUNDIR")
+    caseroot = Path(case.get_value("CASEROOT"))
+    rundir = Path(case.get_value("RUNDIR"))
 
-    user_nl_mom = FType_MOM_params.from_MOM_input(
-        os.path.join(caseroot, f"user_nl_mom{inst_suffix}")
-    )
+    user_nl_mom = FType_MOM_params.from_MOM_input(caseroot / f"user_nl_mom{inst_suffix}")
 
     # copy the user_nl_mom parameters into MOM_override:
     if len(user_nl_mom.data) > 0:
 
         # check if a copy of MOM_override is provided in SourceMods:
-        SourceMods_dir = os.path.join(caseroot, "SourceMods", "src.mom")
+        SourceMods_dir = caseroot / "SourceMods" / "src.mom"
         if f"MOM_override{inst_suffix}" in os.listdir(SourceMods_dir):
             raise SystemExit(
                 "ERROR: Cannot provide parameter changes via both SourceMods and user_nl_mom!"
             )
 
         # parse the MOM_input file staged in rundir:
-        MOM_input_rundir = FType_MOM_params.from_MOM_input(
-            os.path.join(rundir, f"MOM_input{inst_suffix}")
-        )
+        MOM_input_rundir = FType_MOM_params.from_MOM_input(rundir / f"MOM_input{inst_suffix}")
 
         # Write MOM_override (based on data from user_nl_mom)
         user_nl_mom.write(
-            output_path=os.path.join(rundir, f"MOM_override{inst_suffix}"),
+            output_path=rundir / f"MOM_override{inst_suffix}",
             output_format="MOM_override",
             def_params=MOM_input_rundir,
         )
@@ -299,18 +285,18 @@ def process_user_nl_mom(case, inst_suffix):
 
 def _copy_input_files(case, dest_dir, inst_suffixes):
     """Saves copies of MOM6 input files in momconf directory for the record."""
-    rundir = case.get_value("RUNDIR")
-    if not os.path.isdir(dest_dir):
-        os.makedirs(dest_dir)
+    rundir = Path(case.get_value("RUNDIR"))
+    if not dest_dir.exists():
+        dest_dir.mkdir(parents=True, exist_ok=True)
 
     for inst_suffix in inst_suffixes:
         for filename in ["MOM_input", "MOM_override"]:
-            shutil.copy(os.path.join(rundir, filename + inst_suffix), dest_dir)
+            shutil.copy(rundir / f"{filename}{inst_suffix}", dest_dir)
     for filename in [
         "diag_table",
         "input.nml",
     ]:
-        shutil.copy(os.path.join(rundir, filename), dest_dir)
+        shutil.copy(rundir / filename, dest_dir)
 
 def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfdir, MARBL_dir, MARBL_diag_table_json,
                               marbl_hist_vert_grid, lMARBL_output_all, lMARBL_output_alt_co2, ice_ncat, diag_mode):
@@ -322,8 +308,8 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
     (If MARBL_diagnostics is in SourceMods, use that version instead.)
     """
     # 1. Check for diag_table_MARBL.json in SourceMods
-    srcmods_version = os.path.join(SourceMods_dir, "diag_table_MARBL.json")
-    if os.path.isfile(srcmods_version):
+    srcmods_version = SourceMods_dir / "diag_table_MARBL.json"
+    if srcmods_version.is_file():
         shutil.copy(srcmods_version, MARBL_diag_table_json)
         return
 
@@ -336,9 +322,9 @@ def generate_diag_table_MARBL(caseroot, MARBL_settings, SourceMods_dir, momconfd
     MARBL_diagnostics = MARBL_diagnostics_for_MOM(MARBL_dir, caseroot, MARBL_settings)
 
     #    (b) Check for file in SourceMods, otherwise generate it
-    srcmods_version = os.path.join(SourceMods_dir, "MARBL_diagnostics")
-    MARBL_diags_buildconf = os.path.join(momconfdir, "MARBL_diagnostics")
-    if os.path.isfile(srcmods_version):
+    srcmods_version = SourceMods_dir / "MARBL_diagnostics"
+    MARBL_diags_buildconf = momconfdir / "MARBL_diagnostics"
+    if srcmods_version.is_file():
         shutil.copy(srcmods_version, MARBL_diags_buildconf)
     else:
         # (i) Create MARBL_diagnostics with MOM-generated diagnostics
@@ -457,12 +443,12 @@ def buildnml(case, caseroot, compname):
     prep_input(case, inst_suffixes)
 
     # save copies of input files in momconf
-    caseroot = case.get_value("CASEROOT")
-    momconfdir = os.path.join(caseroot, "Buildconf", "momconf")
+    caseroot = Path(case.get_value("CASEROOT"))
+    momconfdir = caseroot / "Buildconf" / "momconf"
     _copy_input_files(case, momconfdir, inst_suffixes)
 
     # save copies of input files in CaseDocs
-    casedocsdir = os.path.join(caseroot, "CaseDocs")
+    casedocsdir = caseroot / "CaseDocs"
     _copy_input_files(case, casedocsdir, inst_suffixes)
 
 

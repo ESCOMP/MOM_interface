@@ -1,0 +1,3 @@
+grid_format = "nc"
+grid_file  = "$DIN_LOC_ROOT/ocn/mom/tx2_3v2/tx3deg/cice_grid_tx3deg_20260219.nc"
+kmt_file  = "$DIN_LOC_ROOT/ocn/mom/tx2_3v2/tx3deg/cice_grid_tx3deg_20260219.nc"
