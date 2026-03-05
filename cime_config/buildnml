@@ -173,8 +173,8 @@ def prep_input(case, inst_suffixes):
         abio_dic_on = marbl_tracer_opt_dict.get("ABIO_DIC_ON", False)
 
         # Use MARBL-provided tool to generate marbl_in
-        MARBL_dir = os.path.join(srcroot, "components", "mom", "externals", "MARBL")
-        MARBL_settings = MARBL_settings_for_MOM(MARBL_dir, caseroot, base_bio_on, abio_dic_on,
+        MARBL_dir = srcroot / "components" / "mom" / "externals" / "MARBL"
+        MARBL_settings = MARBL_settings_for_MOM(str(MARBL_dir), caseroot, base_bio_on, abio_dic_on,
                                                 ocn_grid, run_type, continue_run, marbl_config)
         MARBL_settings.write_settings_file(rundir / "marbl_in")
 
