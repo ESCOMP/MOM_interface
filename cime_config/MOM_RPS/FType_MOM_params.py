@@ -102,22 +102,33 @@ class FType_MOM_params(ParamGen):
 
         return _data
 
-    def write(self, output_path, output_format, case=None, def_params=None):
+    def write(
+        self, output_path, output_format, case=None, def_params=None, inst_suffix=""
+    ):
         if output_format == "MOM_input":
             assert case != None, "Must provide a case object to write out MOM_input"
-            self._write_MOM_input(output_path, case)
+            self._write_MOM_input(output_path, case, inst_suffix)
         elif output_format == "MOM_override":
+            assert (
+                not inst_suffix
+            ), "MOM_override format does not support INST_SUFFIX argument"
             assert (
                 def_params != None
             ), "Must provide a def_params object to write out MOM_override"
             self._write_MOM_override(output_path, def_params)
 
-    def _write_MOM_input(self, output_path, case):
+    def _write_MOM_input(self, output_path, case, inst_suffix=""):
         """writes a MOM_input file from a given json or yaml parameter file in accordance with
         the guards and additional parameters that are passed."""
 
         # From the general template (MOM_input.yaml), reduce a custom MOM_input for this case
-        self.reduce(lambda varname: case.get_value(varname))
+        def expand_func(varname):
+            if varname == "INST_SUFFIX":
+                return inst_suffix
+            else:
+                return case.get_value(varname)
+
+        self.reduce(expand_func)
 
         # 2. Now, write MOM_input
 

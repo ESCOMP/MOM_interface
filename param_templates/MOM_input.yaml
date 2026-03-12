@@ -3114,7 +3114,7 @@ Global:
         datatype: string
         value:
             $RUN_TYPE == "hybrid":
-                = f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+                = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
     SPONGE_CONFIG:
         description: |
             "default = 'file'
@@ -3180,7 +3180,7 @@ Global:
         datatype: string
         value:
             $RUN_TYPE == "hybrid":
-                = f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+                = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
     TEMP_IC_VAR:
         description: "The initial condition variable for potential temperature"
         datatype: string
@@ -3201,7 +3201,7 @@ Global:
         datatype: string
         value:
             $RUN_TYPE == "hybrid":
-                = f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+                = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
     AGE_IC_FILE:
         description: |
             "The file in which the age-tracer initial values can be found, or an empty
@@ -3209,7 +3209,7 @@ Global:
         datatype: string
         value:
             $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False:
-                = f'./{$RUN_REFCASE}.mom6.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+                = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
     T_REF:
         description: |
             "[degC]
@@ -3761,7 +3761,7 @@ Global:
             checksums will not match and cause crash.
         datatype: logical
         value: $TEST
-    RESTARTFILE_APPENDIX_PREFIX:
+    ENSEMBLE_APPENDIX_PREFIX:
         description: |
             "default = ''
             The prefix for the restart file appendix (i.e., ensemble id for ensemble

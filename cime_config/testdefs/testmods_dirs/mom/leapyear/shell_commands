@@ -1,0 +1,2 @@
+./xmlchange CALENDAR=GREGORIAN
+./xmlchange RUN_STARTDATE=2008-02-29

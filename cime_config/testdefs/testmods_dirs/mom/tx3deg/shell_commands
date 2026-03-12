@@ -1,0 +1,13 @@
+./xmlchange OCN_DOMAIN_MESH='${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/tx3deg/ESMF_mesh_tx3deg_20260219.nc'
+./xmlchange ICE_DOMAIN_MESH='${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/tx3deg/ESMF_mesh_tx3deg_20260219.nc'
+./xmlchange MASK_MESH='${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/tx3deg/ESMF_mesh_tx3deg_20260219.nc'
+./xmlchange OCN_NX=108
+./xmlchange OCN_NY=96
+./xmlchange ICE_NX=108
+./xmlchange ICE_NY=96
+./xmlchange ROF2OCN_ICE_RMAPNAME=unset
+./xmlchange ROF2OCN_LIQ_RMAPNAME=unset
+./xmlchange ROOTPE=0
+./xmlchange NTASKS=32
+./xmlchange NTASKS_OCN=128
+./xmlchange NTASKS_WAV=75
