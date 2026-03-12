@@ -340,15 +340,22 @@ Global:
             for the MARBL tracer package."
         datatype: string
         value:
-            $MARBL_CONFIG == "latest": ecosys_jan_IC_omip_latlon_1x1_180W_c230331.nc
-            $MARBL_CONFIG == "latest+4p2z": ecosys_jan_IC_omip_latlon_1x1_180W_c231221.nc
+            $MARBL_CONFIG == "latest": ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
+            $MARBL_CONFIG == "latest+4p2z": ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
     MARBL_FESEDFLUX_FILE:
         description: |
             "Name of file containing iron sediment flux
              forcing field for the MARBL tracer package."
         datatype: string
         value:
-            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': fesedflux_total_reduce_oxic_tx2_3v2.c231205.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': fesedflux_2024algo_tx2_3v2.c251229.nc
+    MARBL_FESEDFLUXRED_FILE:
+        description: |
+            "Name of file containing iron reducing sediment flux
+             forcing field for the MARBL tracer package."
+        datatype: string
+        value:
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': fesedfluxRed_2024algo_tx2_3v2.c251229.nc
     MARBL_FEVENTFLUX_FILE:
         description: |
             "Name of file containing iron sediment flux
