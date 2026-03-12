@@ -182,6 +182,14 @@
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
+  <test name="ERI_cG_C2_Ld8" grid="T62_t232" compset="G" testmods="mom/tx10deg--mom/leapyear">
+    <machines>
+      <machine name="derecho" compiler="intel" category="fast_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
   <test name="SMS_D_Ld2" grid="T62_t232" compset="G" testmods="mom/tx10deg">
     <machines>
       <machine name="derecho" compiler="gnu" category="fast_mom"/>
