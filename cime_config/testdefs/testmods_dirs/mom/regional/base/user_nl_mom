@@ -1,0 +1,97 @@
+INPUTDIR = /glade/campaign/cesm/cesmdata/cseg/inputdata/ocn/mom/croc/testing_data/panama
+TRIPOLAR_N = False
+REENTRANT_X = False
+REENTRANT_Y = False
+NIGLOBAL = 60
+NJGLOBAL = 60
+GRID_CONFIG = mosaic
+GRID_FILE = ocean_hgrid_panama1_352fd1.nc
+TOPO_CONFIG = file
+TOPO_FILE = ocean_topog_panama1_352fd1.nc
+MAXIMUM_DEPTH = 3431.7499950346473
+MINIMUM_DEPTH = 9.5
+NK = 75
+COORD_CONFIG = none
+ALE_COORDINATE_CONFIG = FILE:ocean_vgrid_panama1_352fd1.nc
+REGRIDDING_COORDINATE_MODE = Z*
+
+! Timesteps (based on grid resolution)
+DT = 300.0
+DT_THERM = 900.0
+
+! Enable tidal forcing in MOM6
+TIDES = True
+
+! Enable M2 tidal constituent
+TIDE_M2 = True
+
+! Drag coefficient for tidal forcing
+CD_TIDES = 0.0018
+
+! Use equilibrium phase for tides
+TIDE_USE_EQ_PHASE = True
+
+! Reference date for tidal forcing
+TIDE_REF_DATE = 2000, 01, 01
+
+! Add equilibrium phase to OBC tides
+OBC_TIDE_ADD_EQ_PHASE = True
+
+! Number of tidal constituents
+OBC_TIDE_N_CONSTITUENTS = 1
+
+! List of tidal constituents
+OBC_TIDE_CONSTITUENTS = "M2"
+
+! Reference date for OBC tidal forcing
+OBC_TIDE_REF_DATE = 2000, 01, 01
+
+! Chlorophyll data file
+CHL_FILE = seawifs-clim-1997-2010-panama1.nc
+
+! Enable chlorophyll from file
+CHL_FROM_FILE = TRUE
+
+! Enable variable penetration for shortwave
+VAR_PEN_SW = TRUE
+
+! Number of shortwave penetration bands
+PEN_SW_NBANDS = 3
+
+! Initial conditions
+INIT_LAYERS_FROM_Z_FILE = True
+Z_INIT_ALE_REMAPPING = True
+TEMP_SALT_INIT_VERTICAL_REMAP_ONLY = True
+DEPRESS_INITIAL_SURFACE = True
+VELOCITY_CONFIG = file
+TEMP_SALT_Z_INIT_FILE = init_tracers.nc
+SURFACE_HEIGHT_IC_FILE = init_eta.nc
+VELOCITY_FILE = init_vel.nc
+Z_INIT_FILE_PTEMP_VAR = temp
+Z_INIT_FILE_SALT_VAR = salt
+SURFACE_HEIGHT_IC_VAR = eta_t
+U_IC_VAR = u
+V_IC_VAR = v
+
+! Open boundary conditions
+OBC_NUMBER_OF_SEGMENTS = 4
+OBC_FREESLIP_VORTICITY = False
+OBC_FREESLIP_STRAIN = False
+OBC_COMPUTED_VORTICITY = True
+OBC_COMPUTED_STRAIN = True
+OBC_ZERO_BIHARMONIC = True
+OBC_TRACER_RESERVOIR_LENGTH_SCALE_OUT = 3.0E+04
+OBC_TRACER_RESERVOIR_LENGTH_SCALE_IN = 3000.0
+BRUSHCUTTER_MODE = True
+OBC_SEGMENT_001 = "J=0,I=0:N,FLATHER,ORLANSKI,NUDGED,ORLANSKI_TAN,NUDGED_TAN"
+OBC_SEGMENT_001_VELOCITY_NUDGING_TIMESCALES = 0.3, 360.0
+OBC_SEGMENT_001_DATA = "U=file:forcing_obc_segment_001.nc(u),V=file:forcing_obc_segment_001.nc(v),SSH=file:forcing_obc_segment_001.nc(eta),TEMP=file:forcing_obc_segment_001.nc(temp),SALT=file:forcing_obc_segment_001.nc(salt),Uamp=file:tu_segment_001.nc(uamp),Uphase=file:tu_segment_001.nc(uphase),Vamp=file:tu_segment_001.nc(vamp),Vphase=file:tu_segment_001.nc(vphase),SSHamp=file:tz_segment_001.nc(zamp),SSHphase=file:tz_segment_001.nc(zphase)"
+OBC_SEGMENT_002 = "J=N,I=N:0,FLATHER,ORLANSKI,NUDGED,ORLANSKI_TAN,NUDGED_TAN"
+OBC_SEGMENT_002_VELOCITY_NUDGING_TIMESCALES = 0.3, 360.0
+OBC_SEGMENT_002_DATA = "U=file:forcing_obc_segment_002.nc(u),V=file:forcing_obc_segment_002.nc(v),SSH=file:forcing_obc_segment_002.nc(eta),TEMP=file:forcing_obc_segment_002.nc(temp),SALT=file:forcing_obc_segment_002.nc(salt),Uamp=file:tu_segment_002.nc(uamp),Uphase=file:tu_segment_002.nc(uphase),Vamp=file:tu_segment_002.nc(vamp),Vphase=file:tu_segment_002.nc(vphase),SSHamp=file:tz_segment_002.nc(zamp),SSHphase=file:tz_segment_002.nc(zphase)"
+OBC_SEGMENT_003 = "I=0,J=N:0,FLATHER,ORLANSKI,NUDGED,ORLANSKI_TAN,NUDGED_TAN"
+OBC_SEGMENT_003_VELOCITY_NUDGING_TIMESCALES = 0.3, 360.0
+OBC_SEGMENT_003_DATA = "U=file:forcing_obc_segment_003.nc(u),V=file:forcing_obc_segment_003.nc(v),SSH=file:forcing_obc_segment_003.nc(eta),TEMP=file:forcing_obc_segment_003.nc(temp),SALT=file:forcing_obc_segment_003.nc(salt),Uamp=file:tu_segment_003.nc(uamp),Uphase=file:tu_segment_003.nc(uphase),Vamp=file:tu_segment_003.nc(vamp),Vphase=file:tu_segment_003.nc(vphase),SSHamp=file:tz_segment_003.nc(zamp),SSHphase=file:tz_segment_003.nc(zphase)"
+OBC_SEGMENT_004 = "I=N,J=0:N,FLATHER,ORLANSKI,NUDGED,ORLANSKI_TAN,NUDGED_TAN"
+OBC_SEGMENT_004_VELOCITY_NUDGING_TIMESCALES = 0.3, 360.0
+OBC_SEGMENT_004_DATA = "U=file:forcing_obc_segment_004.nc(u),V=file:forcing_obc_segment_004.nc(v),SSH=file:forcing_obc_segment_004.nc(eta),TEMP=file:forcing_obc_segment_004.nc(temp),SALT=file:forcing_obc_segment_004.nc(salt),Uamp=file:tu_segment_004.nc(uamp),Uphase=file:tu_segment_004.nc(uphase),Vamp=file:tu_segment_004.nc(vamp),Vphase=file:tu_segment_004.nc(vphase),SSHamp=file:tz_segment_004.nc(zamp),SSHphase=file:tz_segment_004.nc(zphase)"
