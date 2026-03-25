@@ -3887,7 +3887,7 @@ Global:
         datatype: real
         value:
            $OCN_GRID == "tx2_3v2": 0.75
-        OBC_FREESLIP_VORTICITY:
+    OBC_FREESLIP_VORTICITY:
         description: | 
             "[Boolean] default = True
              If true, sets the normal gradient of tangential velocity to zero in the

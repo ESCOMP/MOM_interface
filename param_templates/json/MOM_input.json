@@ -3167,12 +3167,18 @@
          }
       },
       "SKEB_GM_COEF": {
+         "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
+         "datatype": "real",
+         "value": {
+            "$OCN_GRID == \"tx2_3v2\"": 0.75
+         }
+      },
+      "OBC_FREESLIP_VORTICITY": {
          "description": "\"[Boolean] default = True\n If true, sets the normal gradient of tangential velocity to zero in the\n relative vorticity on open boundaries. This cannot be true if another\n OBC_XXX_VORTICITY option is True.\n\"\n",
          "datatype": "logical",
          "value": {
             "$MOM6_DOMAIN_TYPE == \"REGIONAL\"": false
-         },
-         "OBC_FREESLIP_VORTICITY": null
+         }
       },
       "OBC_COMPUTED_VORTICITY": {
          "description": "\"[Boolean] default = False\n If true, uses the external values of tangential velocity in the relative\n vorticity on open boundaries. This cannot be true if another OBC_XXX_VORTICITY\n option is True.\n\"\n",
