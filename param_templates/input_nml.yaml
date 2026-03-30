@@ -74,4 +74,14 @@ nam_stochy:
         values: 20
     ntrunc:
         values: 192
+
+time_interp_external_nml:
+    max_fields:
+        values:
+          $MARBL_CONFIG != "off" and $MOM6_DOMAIN_TYPE == "REGIONAL": 200
+          else: 100
+    max_files:
+        values:
+          $MARBL_CONFIG != "off" and $MOM6_DOMAIN_TYPE == "REGIONAL": 200
+          else: 40
 ...
