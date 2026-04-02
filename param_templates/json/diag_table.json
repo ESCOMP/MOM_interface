@@ -105,21 +105,18 @@
          "ustar",
          "hfsifrazil",
          "wfo",
-         "vprec",
          "ficeberg",
          "fsitherm",
          "hflso",
          "pso",
          "seaice_melt_heat",
-         "Heat_PmE",
-         "salt_flux_added"
+         "Heat_PmE"
       ],
       [
          "heat_content_lrunoff",
          "heat_content_frunoff",
          "heat_content_lprec",
          "heat_content_fprec",
-         "heat_content_vprec",
          "heat_content_cond",
          "heat_content_evap"
       ],
@@ -130,7 +127,6 @@
          "heat_content_frunoff",
          "heat_content_lprec",
          "heat_content_fprec",
-         "heat_content_vprec",
          "heat_content_cond",
          "hfevapds",
          "heat_content_surfwater",
@@ -139,6 +135,14 @@
          "salt_flux_global_restoring_adjustment",
          "net_massout",
          "net_massin"
+      ],
+      [
+         "heat_content_frunoff_glc"
+      ],
+      [
+         "heat_content_vprec",
+         "vprec",
+         "salt_flux_added"
       ],
       [
          "diftrelo",
@@ -219,6 +223,39 @@
          "KPP_NLT_dSdt",
          "KPP_NLT_temp_budget",
          "KPP_NLT_saln_budget"
+      ],
+      [
+         "FrictWorkIntz",
+         "hfibthermds",
+         "mlotstsq",
+         "pbo",
+         "S_adx_2d",
+         "S_ady_2d",
+         "sob",
+         "sossq",
+         "tob",
+         "tossq",
+         "zos",
+         "zossq"
+      ],
+      [
+         "Khh",
+         "Ahh",
+         "KHTH_t",
+         "KHTR_h",
+         "diabatic_heat_tendency",
+         "T_advection_xy",
+         "Th_tendency",
+         "diabatic_salt_tendency",
+         "S_advection_xy",
+         "Sh_tendency",
+         "rsdoabsorb"
+      ],
+      [
+         "tossq",
+         "rsdo",
+         "T_adx_2d",
+         "T_ady_2d"
       ]
    ],
    "Files": {
@@ -370,21 +407,18 @@
                         "ustar",
                         "hfsifrazil",
                         "wfo",
-                        "vprec",
                         "ficeberg",
                         "fsitherm",
                         "hflso",
                         "pso",
                         "seaice_melt_heat",
-                        "Heat_PmE",
-                        "salt_flux_added"
+                        "Heat_PmE"
                      ],
                      [
                         "heat_content_lrunoff",
                         "heat_content_frunoff",
                         "heat_content_lprec",
                         "heat_content_fprec",
-                        "heat_content_vprec",
                         "heat_content_cond",
                         "heat_content_evap"
                      ],
@@ -410,6 +444,23 @@
                         "sss_global",
                         "SSH",
                         "mass_wt"
+                     ],
+                     [
+                        "FrictWorkIntz",
+                        "hfibthermds",
+                        "mlotstsq",
+                        "pbo",
+                        "S_adx_2d",
+                        "S_ady_2d",
+                        "sob",
+                        "sossq",
+                        "tob",
+                        "tossq",
+                        "zos",
+                        "zossq"
+                     ],
+                     [
+                        "skeb_amp"
                      ]
                   ]
                },
@@ -440,6 +491,20 @@
                         "KPP_NLT_dSdt",
                         "KPP_NLT_temp_budget",
                         "KPP_NLT_saln_budget"
+                     ]
+                  ]
+               },
+               "lists6": {
+                  "$COMP_ATM == \"cam\"": [
+                     [
+                        "heat_content_frunoff_glc"
+                     ]
+                  ],
+                  "else": [
+                     [
+                        "heat_content_vprec",
+                        "vprec",
+                        "salt_flux_added"
                      ]
                   ]
                }
@@ -492,6 +557,19 @@
                      "umo",
                      "uhGM",
                      "uhml"
+                  ],
+                  [
+                     "Khh",
+                     "Ahh",
+                     "KHTH_t",
+                     "KHTR_h",
+                     "diabatic_heat_tendency",
+                     "T_advection_xy",
+                     "Th_tendency",
+                     "diabatic_salt_tendency",
+                     "S_advection_xy",
+                     "Sh_tendency",
+                     "rsdoabsorb"
                   ]
                ],
                "lists2": {
@@ -553,6 +631,12 @@
                      "KPP_OBLdepth:oml",
                      "KPP_OBLdepth:oml_min:min",
                      "KPP_OBLdepth:oml_max:max"
+                  ],
+                  [
+                     "tossq",
+                     "rsdo",
+                     "T_adx_2d",
+                     "T_ady_2d"
                   ]
                ]
             }
@@ -597,14 +681,12 @@
                      "ustar",
                      "hfsifrazil",
                      "wfo",
-                     "vprec",
                      "ficeberg",
                      "fsitherm",
                      "hflso",
                      "pso",
                      "seaice_melt_heat",
-                     "Heat_PmE",
-                     "salt_flux_added"
+                     "Heat_PmE"
                   ],
                   [
                      "net_heat_coupler",
@@ -613,7 +695,6 @@
                      "heat_content_frunoff",
                      "heat_content_lprec",
                      "heat_content_fprec",
-                     "heat_content_vprec",
                      "heat_content_cond",
                      "hfevapds",
                      "heat_content_surfwater",
