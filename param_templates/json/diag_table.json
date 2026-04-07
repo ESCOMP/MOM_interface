@@ -236,13 +236,10 @@
          "tob",
          "tossq",
          "zos",
-         "zossq"
+         "zossq",
+         "BS_coeff_h"
       ],
       [
-         "Khh",
-         "Ahh",
-         "KHTH_t",
-         "KHTR_h",
          "diabatic_heat_tendency",
          "T_advection_xy",
          "Th_tendency",
@@ -457,7 +454,8 @@
                         "tob",
                         "tossq",
                         "zos",
-                        "zossq"
+                        "zossq",
+                        "BS_coeff_h"
                      ],
                      [
                         "skeb_amp"
@@ -559,10 +557,12 @@
                      "uhml"
                   ],
                   [
-                     "Khh",
-                     "Ahh",
-                     "KHTH_t",
-                     "KHTR_h",
+                     "diftrelo",
+                     "diftrblo",
+                     "difmxybo",
+                     "difmxylo"
+                  ],
+                  [
                      "diabatic_heat_tendency",
                      "T_advection_xy",
                      "Th_tendency",

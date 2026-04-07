@@ -74,10 +74,10 @@ FieldLists:
                 "KPP_NLT_saln_budget"]
 
     - &cmip7_native ["FrictWorkIntz", "hfibthermds", "mlotstsq", "pbo", "S_adx_2d", "S_ady_2d", "sob",
-                    "sossq", "tob", "tossq", "zos", "zossq"]
+                    "sossq", "tob", "tossq", "zos", "zossq", "BS_coeff_h"]
 
-    - &cmip7_z ["Khh", "Ahh", "KHTH_t", "KHTR_h", "diabatic_heat_tendency", "T_advection_xy",
-                "Th_tendency", "diabatic_salt_tendency", "S_advection_xy", "Sh_tendency", "rsdoabsorb"]
+    - &cmip7_z ["diabatic_heat_tendency", "T_advection_xy", "Th_tendency", "diabatic_salt_tendency",
+                "S_advection_xy", "Sh_tendency", "rsdoabsorb"]
 
     - &cmip7_sfc ["tossq", "rsdo", "T_adx_2d", "T_ady_2d"]
 
@@ -186,6 +186,7 @@ Files:
                 lists:
                     [ *prognostic_z,
                       *transports,
+                      *visc_flds,
                       *cmip7_z,
                     ]
                 lists2:
