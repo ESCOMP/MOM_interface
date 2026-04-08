@@ -79,8 +79,8 @@
          "zossq"
       ],
       [
-         "sst_global",
-         "sss_global",
+         "tosga",
+         "sosga",
          "SSH",
          "mass_wt"
       ],
@@ -171,8 +171,8 @@
          "areacello_bu",
          "sin_rot",
          "cos_rot",
-         "C_P",
-         "Rho_0",
+         "cpocean",
+         "rhozero",
          "skeb_taper_v",
          "skeb_taper_u"
       ],
@@ -225,7 +225,7 @@
          "KPP_NLT_saln_budget"
       ],
       [
-         "FrictWorkIntz",
+         "dispkexyfo",
          "hfibthermds",
          "mlotstsq",
          "pbo",
@@ -240,12 +240,12 @@
          "BS_coeff_h"
       ],
       [
-         "diabatic_heat_tendency",
+         "opottempdiff",
          "T_advection_xy",
-         "Th_tendency",
-         "diabatic_salt_tendency",
+         "opottemptend",
+         "osaltdiff",
          "S_advection_xy",
-         "Sh_tendency",
+         "osalttend",
          "rsdoabsorb"
       ],
       [
@@ -437,13 +437,13 @@
                         "mlotst:mlotst_max:max"
                      ],
                      [
-                        "sst_global",
-                        "sss_global",
+                        "tosga",
+                        "sosga",
                         "SSH",
                         "mass_wt"
                      ],
                      [
-                        "FrictWorkIntz",
+                        "dispkexyfo",
                         "hfibthermds",
                         "mlotstsq",
                         "pbo",
@@ -563,12 +563,12 @@
                      "difmxylo"
                   ],
                   [
-                     "diabatic_heat_tendency",
+                     "opottempdiff",
                      "T_advection_xy",
-                     "Th_tendency",
-                     "diabatic_salt_tendency",
+                     "opottemptend",
+                     "osaltdiff",
                      "S_advection_xy",
-                     "Sh_tendency",
+                     "osalttend",
                      "rsdoabsorb"
                   ]
                ],
@@ -773,8 +773,8 @@
                   "areacello_bu",
                   "sin_rot",
                   "cos_rot",
-                  "C_P",
-                  "Rho_0",
+                  "cpocean",
+                  "rhozero",
                   "skeb_taper_v",
                   "skeb_taper_u"
                ]

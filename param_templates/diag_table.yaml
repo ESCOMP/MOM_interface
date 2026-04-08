@@ -24,7 +24,7 @@ FieldLists:
 
     - &surface_flds_daily ["zos", "zossq"]
 
-    - &surface_flds_monthly ["sst_global", "sss_global", "SSH", "mass_wt"]
+    - &surface_flds_monthly ["tosga", "sosga", "SSH", "mass_wt"]
 
     - &kpp_diags        ["KPP_OBLdepth:oml", "KPP_OBLdepth:oml_min:min", "KPP_OBLdepth:oml_max:max"]
 
@@ -53,7 +53,7 @@ FieldLists:
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
                          "geolon_v", "geolat_v", "deptho", "wet", "wet_c", "wet_u",
                          "wet_v", "Coriolis", "areacello", "areacello_cu", "areacello_cv",
-                         "areacello_bu", "sin_rot", "cos_rot", "C_P", "Rho_0", "skeb_taper_v",
+                         "areacello_bu", "sin_rot", "cos_rot", "cpocean", "rhozero", "skeb_taper_v",
                          "skeb_taper_u"]
 
     - &transports       ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
@@ -73,11 +73,11 @@ FieldLists:
     - &kpp_test ["KPP_QminusSW", "KPP_netSalt", "KPP_NLT_dTdt", "KPP_NLT_dSdt", "KPP_NLT_temp_budget",
                 "KPP_NLT_saln_budget"]
 
-    - &cmip7_native ["FrictWorkIntz", "hfibthermds", "mlotstsq", "pbo", "S_adx_2d", "S_ady_2d", "sob",
+    - &cmip7_native ["dispkexyfo", "hfibthermds", "mlotstsq", "pbo", "S_adx_2d", "S_ady_2d", "sob",
                     "sossq", "tob", "tossq", "zos", "zossq", "BS_coeff_h"]
 
-    - &cmip7_z ["diabatic_heat_tendency", "T_advection_xy", "Th_tendency", "diabatic_salt_tendency",
-                "S_advection_xy", "Sh_tendency", "rsdoabsorb"]
+    - &cmip7_z ["opottempdiff", "T_advection_xy", "opottemptend", "osaltdiff",
+                "S_advection_xy", "osalttend", "rsdoabsorb"]
 
     - &cmip7_sfc ["tossq", "rsdo", "T_adx_2d", "T_ady_2d"]
 
