@@ -2359,14 +2359,14 @@ Global:
         datatype: real
         units: Pa
         value: 0.0004
-    FIX_USTAR_GUSTLESS_BUG:
+    USTAR_GUSTLESS_BUG:
         description: |
             "[Boolean] default = False
-            If true correct a bug in the time-averaging of the gustless wind
+            If true include a bug in the time-averaging of the gustless wind
             friction velocity."
         datatype: logical
         units: Boolean
-        value: True
+        value: False
     RESTART_CONTROL:
         description: |
             "default = 1
@@ -3881,7 +3881,7 @@ KPP:
                RW16     = Function of Langmuir number based on RW16
         datatype: string
         value:
-            $COMP_WAV == "ww3": VR12
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD == "legacy" : VR12
     KPP_LT_VT2_METHOD:
         description: |
             default = "CONSTANT"
@@ -3892,7 +3892,7 @@ KPP:
                LF17     = Function of Langmuir number based on LF17
         datatype: string
         value:
-            $COMP_WAV == "ww3": VR12
+            $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD =="legacy" : VR12
     KPP_CVt2:
         description: |
             "[nondim] default = 1.6
