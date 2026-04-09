@@ -1864,11 +1864,11 @@
          "units": "Pa",
          "value": 0.0004
       },
-      "FIX_USTAR_GUSTLESS_BUG": {
-         "description": "\"[Boolean] default = False\nIf true correct a bug in the time-averaging of the gustless wind\nfriction velocity.\"\n",
+      "USTAR_GUSTLESS_BUG": {
+         "description": "\"[Boolean] default = False\nIf true include a bug in the time-averaging of the gustless wind\nfriction velocity.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": true
+         "value": false
       },
       "RESTART_CONTROL": {
          "description": "\"default = 1\nAn integer whose bits encode which restart files are\nwritten. Add 2 (bit 1) for a time-stamped file, and odd\n(bit 0) for a non-time-stamped file. A non-time-stamped\nrestart file is saved at the end of the run segment\nfor any non-negative value.\"\n",
@@ -3166,14 +3166,14 @@
          "description": "default = \"CONSTANT\"\nMethod to enhance mixing coefficient in KPP. Valid options are:\n   CONSTANT = Constant value (KPP_K_ENH_FAC)\n   VR12     = Function of Langmuir number based on VR12\n   RW16     = Function of Langmuir number based on RW16\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\"": "VR12"
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"legacy\"": "VR12"
          }
       },
       "KPP_LT_VT2_METHOD": {
          "description": "default = \"CONSTANT\"\nMethod to enhance Vt2 in KPP. Valid options are:\n   CONSTANT = Constant value (KPP_VT2_ENH_FAC)\n   VR12     = Function of Langmuir number based on VR12\n   RW16     = Function of Langmuir number based on RW16\n   LF17     = Function of Langmuir number based on LF17\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\"": "VR12"
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD ==\"legacy\"": "VR12"
          }
       },
       "KPP_CVt2": {
