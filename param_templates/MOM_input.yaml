@@ -1587,27 +1587,6 @@ Global:
         units: kg/m3
         value:
             $OCN_GRID == "tx2_3v2": 0.02
-    FOX_KEMPER_ML_RESTRAT_COEF:
-        description: |
-            "[nondim] default = 0.0
-            A nondimensional coefficient that is proportional to
-            the ratio of the deformation radius to the dominant
-            lengthscale of the submesoscale mixed layer
-            instabilities, times the minimum of the ratio of the
-            mesoscale eddy kinetic energy to the large-scale
-            geostrophic kinetic energy or 1 plus the square of the
-            grid spacing over the deformation radius, as detailed
-            by Fox-Kemper et al. (2010)
-            The file that specifies the vertical grid for
-            depth-space diagnostics, or blank to disable
-            depth-space output.
-            The number of depth-space levels.  This is determined
-            from the size of the variable zw in the output grid file."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "tx2_3v2": 1.0
-            $OCN_GRID == "tx0.25v1": 1.0
     MLE_FRONT_LENGTH:
         description: |
             "[m] default = 0.0
@@ -1620,14 +1599,6 @@ Global:
         value:
             $OCN_GRID == "tx2_3v2": 1000.0
             $OCN_GRID == "tx0.25v1": 500.0
-    MLE_FRONT_LENGTH_FROM_FILE:
-        description: |
-            "[Boolean] default = False
-            If true, the MLE front-length scale is read from a file."
-        datatype: logical
-        units: Boolean
-        value:
-            $OCN_GRID == "tx2_3v2": False
     MLE_MLD_DECAY_TIME:
         description: |
             "[s] default = 0.0
@@ -2639,14 +2610,6 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx2_3v2": False
-    MEKE_RESTORING_TIMESCALE:
-        description: |
-            "[s] default = 1.0E+06
-            The timescale used to nudge MEKE toward its equilibrium value."
-        datatype: real
-        units: nondim
-        value:
-            $OCN_GRID == "tx2_3v2": 1.0E+07
     MEKE_ADVECTION_FACTOR:
         description: |
             "[nondim] default = 0.0
