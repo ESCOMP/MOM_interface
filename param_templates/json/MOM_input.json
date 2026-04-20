@@ -1213,15 +1213,6 @@
             "$OCN_GRID == \"tx2_3v2\"": 0.02
          }
       },
-      "FOX_KEMPER_ML_RESTRAT_COEF": {
-         "description": "\"[nondim] default = 0.0\nA nondimensional coefficient that is proportional to\nthe ratio of the deformation radius to the dominant\nlengthscale of the submesoscale mixed layer\ninstabilities, times the minimum of the ratio of the\nmesoscale eddy kinetic energy to the large-scale\ngeostrophic kinetic energy or 1 plus the square of the\ngrid spacing over the deformation radius, as detailed\nby Fox-Kemper et al. (2010)\nThe file that specifies the vertical grid for\ndepth-space diagnostics, or blank to disable\ndepth-space output.\nThe number of depth-space levels.  This is determined\nfrom the size of the variable zw in the output grid file.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
-            "$OCN_GRID == \"tx0.25v1\"": 1.0
-         }
-      },
       "MLE_FRONT_LENGTH": {
          "description": "\"[m] default = 0.0\nIf non-zero, is the frontal-length scale used to calculate the\nupscaling of buoyancy gradients that is otherwise represented\nby the parameter FOX_KEMPER_ML_RESTRAT_COEF. If MLE_FRONT_LENGTH is\nnon-zero, it is recommended to set FOX_KEMPER_ML_RESTRAT_COEF=1.\"\n",
          "datatype": "real",
@@ -1229,14 +1220,6 @@
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0
-         }
-      },
-      "MLE_FRONT_LENGTH_FROM_FILE": {
-         "description": "\"[Boolean] default = False\nIf true, the MLE front-length scale is read from a file.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
          }
       },
       "MLE_MLD_DECAY_TIME": {
@@ -2108,14 +2091,6 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": false
-         }
-      },
-      "MEKE_RESTORING_TIMESCALE": {
-         "description": "\"[s] default = 1.0E+06\nThe timescale used to nudge MEKE toward its equilibrium value.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 10000000.0
          }
       },
       "MEKE_ADVECTION_FACTOR": {
