@@ -4,9 +4,11 @@
 ###############################################################################
 ---
 FieldLists:
-    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "MEKE", "rhopot0", "rhopot2", "difvho", "difvso", "Kv_u", "Kv_v", "taux_bot", "tauy_bot"]
+    - &prognostic       ["uo", "vo", "h", "e", "thetao", "so", "KE", "MEKE", "rhopot0", "rhopot2",
+                        "difvho", "difvso", "Kv_u", "Kv_v", "taux_bot", "tauy_bot"]
 
-    - &prognostic_z     ["uo", "vo", "h", "thetao", "so", "agessc", "rhopot0", "N2_int", "rhopot2", "difvho", "difvso", "Kv_u", "Kv_v"]
+    - &prognostic_z     ["uo", "vo", "h", "thetao", "so", "agessc", "rhopot0", "N2_int", "rhopot2",
+                        "difvho", "difvso", "Kv_u", "Kv_v"]
 
     - &prognostic_rho2  ["thetao", "so", "agessc", "e"]
 
@@ -22,32 +24,36 @@ FieldLists:
 
     - &surface_flds_daily ["zos", "zossq"]
 
-    - &surface_flds_monthly ["sst_global", "sss_global", "SSH", "mass_wt"]
+    - &surface_flds_monthly ["tosga", "sosga", "SSH", "mass_wt"]
 
     - &kpp_diags        ["KPP_OBLdepth:oml", "KPP_OBLdepth:oml_min:min", "KPP_OBLdepth:oml_max:max"]
 
     - &forcing_flds     ["tauuo", "tauvo", "friver", "prsn", "prlq", "evs", "hfsso", "rlntds",
                          "hfsnthermds", "sfdsi", "rsntds", "hfds", "ustar",
-                         "hfsifrazil", "wfo", "vprec", "ficeberg", "fsitherm",
-                         "hflso", "pso", "seaice_melt_heat", "Heat_PmE", "salt_flux_added"]
+                         "hfsifrazil", "wfo", "ficeberg", "fsitherm",
+                         "hflso", "pso", "seaice_melt_heat", "Heat_PmE"]
 
-    - &enthalpy_flds    [ "heat_content_lrunoff", "heat_content_frunoff", "heat_content_lprec",
-                         "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
+    - &enthalpy_flds    ["heat_content_lrunoff", "heat_content_frunoff", "heat_content_lprec",
+                         "heat_content_fprec", "heat_content_cond",
                          "heat_content_evap"]
 
     - &forcing_flds_dev ["net_heat_coupler", "LwLatSens", "heat_content_lrunoff",
                          "heat_content_frunoff", "heat_content_lprec",
-                         "heat_content_fprec", "heat_content_vprec", "heat_content_cond",
+                         "heat_content_fprec", "heat_content_cond",
                          "hfevapds", "heat_content_surfwater",
                          "vprec_global_adjustment", "net_fresh_water_global_adjustment",
                          "salt_flux_global_restoring_adjustment", "net_massout", "net_massin"]
+
+    - &forcing_flds_b   ["heat_content_frunoff_glc"]
+
+    - &forcing_flds_cg  ["heat_content_vprec", "vprec", "salt_flux_added"]
 
     - &visc_flds        ["diftrelo", "diftrblo", "difmxybo", "difmxylo"]
 
     - &static_flds      ["geolon", "geolat", "geolon_c", "geolat_c", "geolon_u", "geolat_u",
                          "geolon_v", "geolat_v", "deptho", "wet", "wet_c", "wet_u",
                          "wet_v", "Coriolis", "areacello", "areacello_cu", "areacello_cv",
-                         "areacello_bu", "sin_rot", "cos_rot", "C_P", "Rho_0", "skeb_taper_v",
+                         "areacello_bu", "sin_rot", "cos_rot", "cpocean", "rhozero", "skeb_taper_v",
                          "skeb_taper_u"]
 
     - &transports       ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
@@ -64,7 +70,16 @@ FieldLists:
 
     - &glc_terms ["frunoff_glc", "lrunoff_glc"]
 
-    - &kpp_test ["KPP_QminusSW", "KPP_netSalt", "KPP_NLT_dTdt", "KPP_NLT_dSdt", "KPP_NLT_temp_budget", "KPP_NLT_saln_budget"]
+    - &kpp_test ["KPP_QminusSW", "KPP_netSalt", "KPP_NLT_dTdt", "KPP_NLT_dSdt", "KPP_NLT_temp_budget",
+                "KPP_NLT_saln_budget"]
+
+    - &cmip7_native ["dispkexyfo", "hfibthermds", "mlotstsq", "pbo", "S_adx_2d", "S_ady_2d", "sob",
+                    "sossq", "tob", "tossq", "zos", "zossq", "BS_coeff_h"]
+
+    - &cmip7_z ["opottempdiff", "T_advection_xy", "opottemptend", "osaltdiff",
+                "S_advection_xy", "osalttend", "rsdoabsorb"]
+
+    - &cmip7_sfc ["tossq", "rsdo", "T_adx_2d", "T_ady_2d"]
 
 ###############################################################################
 # Section 2: File lists:
@@ -129,7 +144,9 @@ Files:
                           *forcing_flds,
                           *enthalpy_flds,
                           *surface_flds_common,
-                          *surface_flds_monthly]
+                          *surface_flds_monthly,
+                          *cmip7_native,
+                          ["skeb_amp"]]
                 lists3:
                     $USE_CFC_CAP == "True":
                         [ *cfc_2d ]
@@ -139,6 +156,12 @@ Files:
                 lists5:
                     $TEST == True:
                         [ *kpp_test ]
+                lists6:
+                    $COMP_ATM == "cam":
+                        [ *forcing_flds_b ]
+                    else:
+                        [ *forcing_flds_cg ]
+
 
     # essential variable mapped to z_space
     hist_z_space:
@@ -162,7 +185,10 @@ Files:
                 packing: = 1 if $TEST else 2
                 lists:
                     [ *prognostic_z,
-                      *transports ]
+                      *transports,
+                      *visc_flds,
+                      *cmip7_z,
+                    ]
                 lists2:
                     $USE_CFC_CAP == "True":
                         [ *cfc_3d ]
@@ -188,7 +214,9 @@ Files:
                 packing: = 1 if $TEST else 2
                 lists:    [ *surface_flds_common,
                             *surface_flds_daily,
-                            *kpp_diags ]
+                            *kpp_diags,
+                            *cmip7_sfc
+                          ]
     forcing_avg:
         suffix:
             $TEST == True: "h.frc%4yr-%2mo-%2dy"
@@ -259,9 +287,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "20.1 20.1 -69.8 -34.6 -1 -1"
+            $OCN_GRID == "tx2_3v2": "20.1 20.1 -69.8 -34.6 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
@@ -275,9 +303,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-5.75 19.0  78.93 78.93 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-5.75 19.0  78.93 78.93 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -291,9 +319,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-174.5 -172.3 66.6 66.6 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-174.5 -172.3 66.6 66.6 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -307,9 +335,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "28.3 29.0 42.9 42.9 -1 -1"
+            $OCN_GRID == "tx2_3v2": "28.3 29.0 42.9 42.9 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -323,9 +351,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-53.1 -46.2 69.5 69.5 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-53.1 -46.2 69.5 69.5 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -339,9 +367,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-38.0 -22.5 65.0 65.0 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-38.0 -22.5 65.0 65.0 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -355,9 +383,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-67.0 -67.0 -67.2 -55.1 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-67.0 -67.0 -67.2 -55.1 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
@@ -371,9 +399,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-0.333 -0.333 51.1 51.7 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-0.333 -0.333 51.1 51.7 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
@@ -387,9 +415,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-21.0 -10.4 80.5 80.5 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-21.0 -10.4 80.5 80.5 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -403,7 +431,7 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-80.26 -78.24 25.5 25.5 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-80.26 -78.24 25.5 25.5 -1 -1"
         fields:
             $OCN_GRID = "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
@@ -419,9 +447,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-78.0 -72.0 24.5 24.5 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-78.0 -72.0 24.5 24.5 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -435,9 +463,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-80.75 -80.75 23.0 25.5 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-80.75 -80.75 23.0 25.5 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
@@ -451,9 +479,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-6.3 -6.3 35.7 36.4 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-6.3 -6.3 35.7 36.4 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
@@ -467,7 +495,7 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-17.0 1.5 65.0 65.0 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-17.0 1.5 65.0 65.0 -1 -1"
         fields:
             $OCN_GRID in = "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
@@ -483,9 +511,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-246.5 -220.8 -7.0 -7.0 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-246.5 -220.8 -7.0 -7.0 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -499,9 +527,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "39.9 44.7 -16.25 -16.25 -1 -1"
+            $OCN_GRID == "tx2_3v2": "39.9 44.7 -16.25 -16.25 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -515,7 +543,7 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-155.0 -155.0 -2.0 2.0 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-155.0 -155.0 -2.0 2.0 -1 -1"
         fields:
             $OCN_GRID "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
@@ -531,9 +559,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-34.8 -34.8 83.07 83.70 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-34.8 -34.8 83.07 83.70 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
@@ -547,9 +575,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-239.0 -239.0 18.5 22.45 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-239.0 -239.0 18.5 22.45 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_u ]
@@ -563,9 +591,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-74.35 -73.0 19.92 19.92 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-74.35 -73.0 19.92 19.92 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
@@ -579,9 +607,9 @@ Files:
         new_file_freq_units: "months"
         reduction_method: ".true."  # time average
         regional_section:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "-87.0 -85.0 21.785 21.785 -1 -1"
+            $OCN_GRID == "tx2_3v2": "-87.0 -85.0 21.785 21.785 -1 -1"
         fields:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST == False and $OCN_DIAG_SECTIONS == True:
+            $OCN_GRID == "tx2_3v2" and $TEST == False and $OCN_DIAG_SECTIONS == True:
                 module:   "ocean_model_z"  # z_space
                 packing: = 1 if $TEST else 2
                 lists:    [ *vert_sections_v ]
