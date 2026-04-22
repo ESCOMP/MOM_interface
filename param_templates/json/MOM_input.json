@@ -1217,15 +1217,6 @@
             "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.02
          }
       },
-      "FOX_KEMPER_ML_RESTRAT_COEF": {
-         "description": "\"[nondim] default = 0.0\nA nondimensional coefficient that is proportional to\nthe ratio of the deformation radius to the dominant\nlengthscale of the submesoscale mixed layer\ninstabilities, times the minimum of the ratio of the\nmesoscale eddy kinetic energy to the large-scale\ngeostrophic kinetic energy or 1 plus the square of the\ngrid spacing over the deformation radius, as detailed\nby Fox-Kemper et al. (2010)\nThe file that specifies the vertical grid for\ndepth-space diagnostics, or blank to disable\ndepth-space output.\nThe number of depth-space levels.  This is determined\nfrom the size of the variable zw in the output grid file.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0,
-            "$OCN_GRID == \"tx0.25v1\"": 1.0
-         }
-      },
       "MLE_FRONT_LENGTH": {
          "description": "\"[m] default = 0.0\nIf non-zero, is the frontal-length scale used to calculate the\nupscaling of buoyancy gradients that is otherwise represented\nby the parameter FOX_KEMPER_ML_RESTRAT_COEF. If MLE_FRONT_LENGTH is\nnon-zero, it is recommended to set FOX_KEMPER_ML_RESTRAT_COEF=1.\"\n",
          "datatype": "real",
@@ -1233,14 +1224,6 @@
          "value": {
             "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0
-         }
-      },
-      "MLE_FRONT_LENGTH_FROM_FILE": {
-         "description": "\"[Boolean] default = False\nIf true, the MLE front-length scale is read from a file.\"\n",
-         "datatype": "logical",
-         "units": "Boolean",
-         "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "MLE_MLD_DECAY_TIME": {
@@ -1871,11 +1854,11 @@
          "units": "Pa",
          "value": 0.0004
       },
-      "FIX_USTAR_GUSTLESS_BUG": {
-         "description": "\"[Boolean] default = False\nIf true correct a bug in the time-averaging of the gustless wind\nfriction velocity.\"\n",
+      "USTAR_GUSTLESS_BUG": {
+         "description": "\"[Boolean] default = False\nIf true include a bug in the time-averaging of the gustless wind\nfriction velocity.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": true
+         "value": false
       },
       "RESTART_CONTROL": {
          "description": "\"default = 1\nAn integer whose bits encode which restart files are\nwritten. Add 2 (bit 1) for a time-stamped file, and odd\n(bit 0) for a non-time-stamped file. A non-time-stamped\nrestart file is saved at the end of the run segment\nfor any non-negative value.\"\n",
@@ -2115,14 +2098,6 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
-         }
-      },
-      "MEKE_RESTORING_TIMESCALE": {
-         "description": "\"[s] default = 1.0E+06\nThe timescale used to nudge MEKE toward its equilibrium value.\"\n",
-         "datatype": "real",
-         "units": "nondim",
-         "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 10000000.0
          }
       },
       "MEKE_ADVECTION_FACTOR": {
@@ -3175,14 +3150,14 @@
          "description": "default = \"CONSTANT\"\nMethod to enhance mixing coefficient in KPP. Valid options are:\n   CONSTANT = Constant value (KPP_K_ENH_FAC)\n   VR12     = Function of Langmuir number based on VR12\n   RW16     = Function of Langmuir number based on RW16\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\"": "VR12"
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD == \"legacy\"": "VR12"
          }
       },
       "KPP_LT_VT2_METHOD": {
          "description": "default = \"CONSTANT\"\nMethod to enhance Vt2 in KPP. Valid options are:\n   CONSTANT = Constant value (KPP_VT2_ENH_FAC)\n   VR12     = Function of Langmuir number based on VR12\n   RW16     = Function of Langmuir number based on RW16\n   LF17     = Function of Langmuir number based on LF17\n",
          "datatype": "string",
          "value": {
-            "$COMP_WAV == \"ww3\"": "VR12"
+            "$COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD ==\"legacy\"": "VR12"
          }
       },
       "KPP_CVt2": {
