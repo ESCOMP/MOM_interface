@@ -752,8 +752,7 @@
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum interface depths.\nValid options are:\nNONE        - there are no maximum interface depths\nPARAM       - use the vector-parameter MAXIMUM_INTERFACE_DEPTHS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum depths for each interface.\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/lev-2025-09-12.nc,Z\"'\n",
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v3\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v3/lev-2025-09-12.nc,Z\"'\n",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/lev-2025-09-12.nc,Z\"'\n",
             "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx0.25v1\"": "\"FNC1:5,8000.0,1.0,.01\""
          }
       },
@@ -761,8 +760,7 @@
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum layer thicknesses.\nValid options are:\nNONE        - there are no maximum layer thicknesses\nPARAM       - use the vector-parameter MAX_LAYER_THICKNESS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum thickness for each layer.\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/dz_max-2025-09-12.nc,dz\"'\n",
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v3\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v3/dz_max-2025-09-12.nc,dz\"'\n",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max-2025-09-12.nc,dz\"'\n",
             "else": "\"FNC1:400,31000.0,0.1,.01\""
          }
       },

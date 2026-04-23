@@ -984,10 +984,8 @@ Global:
             The list of maximum depths for each interface."
         datatype: string
         value:
-            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]: |
-                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/lev-2025-09-12.nc,Z"'
-            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v3"]: |
-                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v3/lev-2025-09-12.nc,Z"'
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: |
+                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/lev-2025-09-12.nc,Z"'
             $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID == "tx0.25v1": '"FNC1:5,8000.0,1.0,.01"'
     MAX_LAYER_THICKNESS_CONFIG:
         description: |
@@ -1003,10 +1001,8 @@ Global:
             The list of maximum thickness for each layer."
         datatype: string
         value:
-            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2"]: |
-                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/dz_max-2025-09-12.nc,dz"'
-            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v3"]: |
-                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v3/dz_max-2025-09-12.nc,dz"'
+            $MOM6_VERTICAL_GRID == "hycom1" and $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: |
+                  '"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max-2025-09-12.nc,dz"'
             else: '"FNC1:400,31000.0,0.1,.01"'
     BOUND_CORIOLIS:
         description: |
