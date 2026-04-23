@@ -10,7 +10,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true,
             "else": false
          }
@@ -29,7 +29,7 @@
          "description": "\"The total number of thickness grid points in the\nx-direction in the physical domain. With STATIC_MEMORY_\nthis is set in MOM_memory.h at compile time.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 540,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 540,
             "$OCN_GRID == \"tx0.25v1\"": 1440,
             "$OCN_GRID == \"MISOMIP\"": 402
          }
@@ -38,7 +38,7 @@
          "description": "\"The total number of thickness grid points in the\ny-direction in the physical domain. With STATIC_MEMORY_\nthis is set in MOM_memory.h at compile time.\nThe number of processors in the x-direction. With\nSTATIC_MEMORY_ this is set in MOM_memory.h at compile time.\nThe number of processors in the x-direction. With\nSTATIC_MEMORY_ this is set in MOM_memory.h at compile time.\nThe processor layout that was acutally used.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 480,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 480,
             "$OCN_GRID == \"tx0.25v1\"": 1080,
             "$OCN_GRID == \"MISOMIP\"": 40
          }
@@ -58,7 +58,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "HREF_FOR_MLD": {
@@ -66,7 +66,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 10.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 10.0
          }
       },
       "USE_REGRIDDING": {
@@ -80,7 +80,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -89,7 +89,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -99,7 +99,7 @@
          "units": "s",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 900.0,
-            "$OCN_GRID == \"tx2_3v2\"": 1800,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1800,
             "$OCN_GRID == \"MISOMIP\"": 600.0
          }
       },
@@ -117,7 +117,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 10.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 10.0,
             "$OCN_GRID == \"tx0.25v1\"": 20.0
          }
       },
@@ -126,7 +126,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 7200.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 7200.0,
             "$OCN_GRID == \"tx0.25v1\"": 3600.0,
             "else": 0.0
          }
@@ -157,7 +157,7 @@
          "datatype": "real",
          "units": "J kg-1 K-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 3992.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 3992.0,
             "$OCN_GRID == \"tx0.25v1\"": 3992.0,
             "$OCN_GRID == \"MISOMIP\"": 3974.0
          }
@@ -173,7 +173,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -188,7 +188,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
       },
@@ -205,7 +205,7 @@
          "datatype": "real",
          "units": "deg C Pa-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": -7.75e-08,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": -7.75e-08,
             "$OCN_GRID == \"tx0.25v1\"": -7.75e-08,
             "$OCN_GRID == \"MISOMIP\"": -7.53e-08
          }
@@ -215,7 +215,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -417,6 +417,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": "ocean_hgrid_221123.nc",
+            "$OCN_GRID == \"tx2_3v3\"": "ocean_hgrid_250930.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_hgrid.nc"
          }
       },
@@ -425,7 +426,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
       },
@@ -448,6 +449,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": "ocean_topo_tx2_3v2_240501.nc",
+            "$OCN_GRID == \"tx2_3v3\"": "ocean_topo_tx2_3v3_260305.nc",
             "$OCN_GRID == \"tx0.25v1\"": "ocean_topog.nc"
          }
       },
@@ -464,7 +466,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 6000.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 6000.0,
             "$OCN_GRID == \"tx0.25v1\"": 6500.0,
             "$OCN_GRID == \"MISOMIP\"": 720.0
          }
@@ -474,7 +476,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 9.5,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 9.5,
             "$OCN_GRID == \"tx0.25v1\"": 9.5
          }
       },
@@ -483,7 +485,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.0
          }
       },
@@ -497,7 +499,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "REMAPPING_USE_OM4_SUBCELLS": {
@@ -505,7 +507,7 @@
          "datatype": "bool",
          "units": "none",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "INIT_LAYERS_FROM_Z_FILE": {
@@ -513,7 +515,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$RUN_TYPE != \"hybrid\" and $OCN_GRID in [\"tx2_3v2\", \"tx0.25v1\"]": true,
+            "$RUN_TYPE != \"hybrid\" and $OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\", \"tx0.25v1\"]": true,
             "else": false
          }
       },
@@ -521,7 +523,7 @@
          "description": "\"default = 'temp_salt_z.nc'\nThe name of the z-space input file used to initialize\nthe layer thicknesses, temperatures and salinities.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "woa18_04_initial_conditions.nc",
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "woa18_04_initial_conditions.nc",
             "$OCN_GRID == \"tx0.25v1\"": "MOM6_IC_TS.nc"
          }
       },
@@ -529,7 +531,7 @@
          "description": "\"default = 'ptemp'\nThe name of the potential temperature variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "theta0",
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "theta0",
             "$OCN_GRID == \"tx0.25v1\"": "temp"
          }
       },
@@ -537,7 +539,7 @@
          "description": "\"default = 'salt'\nThe name of the salinity variable in\nTEMP_SALT_Z_INIT_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "s_an"
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "s_an"
          }
       },
       "Z_INIT_REMAP_OLD_ALG": {
@@ -551,7 +553,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": true
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "USE_VARIABLE_MIXING": {
@@ -559,7 +561,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -568,7 +570,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -577,7 +579,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.01
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.01
          }
       },
       "DEPTH_SCALED_KHTH": {
@@ -585,7 +587,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
       },
@@ -594,7 +596,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 500.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 500.0
          }
       },
       "KHTR_SLOPE_CFF": {
@@ -610,7 +612,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "RESOLN_SCALED_KHTH": {
@@ -618,7 +620,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -627,7 +629,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "USE_GM_WORK_BUG": {
@@ -641,7 +643,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -650,7 +652,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "ETA_TOLERANCE": {
@@ -675,7 +677,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "NDIFF_INTERIOR_ONLY": {
@@ -683,7 +685,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "NDIFF_TAPERING": {
@@ -691,7 +693,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "USE_HORIZONTAL_BOUNDARY_DIFFUSION": {
@@ -699,7 +701,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "HBD_LINEAR_TRANSITION": {
@@ -707,7 +709,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "SIMPLE_TKE_TO_KD": {
@@ -715,7 +717,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -750,7 +752,7 @@
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum interface depths.\nValid options are:\nNONE        - there are no maximum interface depths\nPARAM       - use the vector-parameter MAXIMUM_INTERFACE_DEPTHS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum depths for each interface.\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/lev-2025-09-12.nc,Z\"'\n",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/lev-2025-09-12.nc,Z\"'\n",
             "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx0.25v1\"": "\"FNC1:5,8000.0,1.0,.01\""
          }
       },
@@ -758,7 +760,7 @@
          "description": "\"default = 'NONE'\nDetermines how to specify the maximum layer thicknesses.\nValid options are:\nNONE        - there are no maximum layer thicknesses\nPARAM       - use the vector-parameter MAX_LAYER_THICKNESS\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,Z\nFNC1:string - FNC1:dz_min,H_total,power,precision\nThe list of maximum thickness for each layer.\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/tx2_3v2/dz_max-2025-09-12.nc,dz\"'\n",
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "'\"FILE:${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max-2025-09-12.nc,dz\"'\n",
             "else": "\"FNC1:400,31000.0,0.1,.01\""
          }
       },
@@ -785,7 +787,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "LAPLACIAN": {
@@ -799,7 +801,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "SMAG_LAP_CONST": {
@@ -807,7 +809,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.15
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.15
          }
       },
       "KH": {
@@ -825,7 +827,7 @@
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 0.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.0,
-            "$OCN_GRID == \"tx2_3v2\"": 0.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0,
             "else": 0.01
          }
       },
@@ -834,7 +836,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0
          }
       },
       "BIHARMONIC": {
@@ -842,7 +844,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"MISOMIP\"": false
          }
       },
@@ -851,7 +853,7 @@
          "datatype": "real",
          "units": "m4 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1000000000000.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1000000000000.0
          }
       },
       "AH_VEL_SCALE": {
@@ -868,7 +870,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "LEITH_AH": {
@@ -876,7 +878,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "LEITH_BI_CONST": {
@@ -884,7 +886,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 75.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 75.0
          }
       },
       "LEITHY_CK": {
@@ -892,7 +894,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0
          }
       },
       "USE_LAND_MASK_FOR_HVISC": {
@@ -936,7 +938,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.25
          }
       },
@@ -964,7 +966,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 7200.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 7200.0
          }
       },
       "Z_INIT_ALE_REMAPPING": {
@@ -972,7 +974,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -980,7 +982,7 @@
          "description": "\" The number of diagnostic vertical coordinates to use.\nFor each coordinate, an entry in DIAG_COORDS must be provided.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 2,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 2,
             "$OCN_GRID == \"tx0.25v1\"": 1
          }
       },
@@ -988,7 +990,7 @@
          "description": "\"A list of string tuples associating diag_table modules to\na coordinate definition used for diagnostics. Each string\nis of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "\"z Z ZSTAR\", \"rho2 RHO2 RHO\"",
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "\"z Z ZSTAR\", \"rho2 RHO2 RHO\"",
             "$OCN_GRID == \"tx0.25v1\"": "\"z Z ZSTAR\""
          }
       },
@@ -1017,7 +1019,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -1026,7 +1028,7 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.1,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.1,
             "$OCN_GRID == \"tx0.25v1\"": 0.1
          }
       },
@@ -1056,7 +1058,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -1096,7 +1098,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0
          }
       },
       "MAX_P_SURF": {
@@ -1112,7 +1114,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0,
             "$OCN_GRID == \"MISOMIP\"": 0.0
          }
       },
@@ -1121,7 +1123,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 50.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 50.0
          }
       },
       "FULL_DEPTH_KHTH_MIN": {
@@ -1129,7 +1131,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "KHTH_MAX_CFL": {
@@ -1145,7 +1147,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "STANLEY_COEFF": {
@@ -1153,7 +1155,7 @@
          "datatype": "real",
          "units": "nondimensional",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.5
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.5
          }
       },
       "USE_KH_IN_MEKE": {
@@ -1161,7 +1163,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "KHTH_USE_FGNV_STREAMFUNCTION": {
@@ -1169,7 +1171,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "FGNV_C_MIN": {
@@ -1177,7 +1179,7 @@
          "datatype": "real",
          "units": "m s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.01
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.01
          }
       },
       "USE_STANLEY_GM": {
@@ -1185,7 +1187,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "MIXEDLAYER_RESTRAT": {
@@ -1202,7 +1204,7 @@
          "datatype": "bool",
          "units": "none",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MLE_DENSITY_DIFF": {
@@ -1210,7 +1212,7 @@
          "datatype": "real",
          "units": "kg/m3",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.02
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.02
          }
       },
       "MLE_FRONT_LENGTH": {
@@ -1218,7 +1220,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1000.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1000.0,
             "$OCN_GRID == \"tx0.25v1\"": 500.0
          }
       },
@@ -1227,7 +1229,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 345600.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 345600.0,
             "$OCN_GRID == \"tx0.25v1\"": 2592000.0
          }
       },
@@ -1236,7 +1238,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "USE_CVMix_CONVECTION": {
@@ -1244,7 +1246,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "BBL_MIXING_AS_MAX": {
@@ -1252,7 +1254,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false,
             "$OCN_GRID == \"tx0.25v1\"": false
          }
       },
@@ -1261,7 +1263,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -1270,7 +1272,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.1,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.1,
             "$OCN_GRID == \"tx0.25v1\"": 0.1
          }
       },
@@ -1279,7 +1281,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -1288,7 +1290,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1e-07,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1e-07,
             "$OCN_GRID == \"tx0.25v1\"": 1.5e-05,
             "$OCN_GRID == \"MISOMIP\"": 5e-05,
             "else": 2e-05
@@ -1315,7 +1317,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1e-07,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1e-07,
             "else": 2e-06
          }
       },
@@ -1378,7 +1380,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "USE_CVMix_TIDAL": {
@@ -1386,7 +1388,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "INT_TIDE_DISSIPATION": {
@@ -1394,7 +1396,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -1409,14 +1411,15 @@
          "description": "\"The path to the file containing tidal energy\ndissipation. Used with CVMix tidal mixing schemes.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "energy_new_tx2_3_conserve_230415_cdf5.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "energy_new_tx2_3_conserve_230415_cdf5.nc",
+            "$OCN_GRID == \"tx2_3v3\"": "tidal_energy_tx2_3v3_conserve_260306.nc"
          }
       },
       "TIDAL_ENERGY_TYPE": {
          "description": "\"The type of input tidal energy flux dataset. Valid values are   Jayne\nER03\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "Jayne"
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "Jayne"
          }
       },
       "USE_LMD94": {
@@ -1424,7 +1427,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "NU_ZERO": {
@@ -1432,7 +1435,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0025
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0025
          }
       },
       "RI_ZERO": {
@@ -1440,7 +1443,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.5
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.5
          }
       },
       "N_SMOOTH_RI": {
@@ -1448,7 +1451,7 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1
          }
       },
       "USE_CVMIX_DDIFF": {
@@ -1456,7 +1459,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MAX_ENT_IT": {
@@ -1472,7 +1475,7 @@
          "datatype": "real",
          "units": "m",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1e-05,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1e-05,
             "$OCN_GRID == \"MISOMIP\"": 1e-08
          }
       },
@@ -1491,7 +1494,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MSTAR_MODE": {
@@ -1668,7 +1671,7 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "CHL_FILE": {
@@ -1676,7 +1679,8 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "seawifs-clim-1997-2010.1440x1080.v20180328.nc",
-            "$OCN_GRID == \"tx2_3v2\"": "seawifs-clim-1997-2010-tx2_3v2.230416.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "seawifs-clim-1997-2010-tx2_3v2.230416.nc",
+            "$OCN_GRID == \"tx2_3v3\"": "seawifs-clim-1997-2010-tx2_3v3_260305.nc"
          }
       },
       "CHL_VARNAME": {
@@ -1691,21 +1695,21 @@
          "datatype": "integer",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 3,
-            "$OCN_GRID == \"tx2_3v2\"": 2
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 2
          }
       },
       "OPACITY_SCHEME": {
          "description": "\"default = 'MANIZZA_05'\nThis character string specifies how chlorophyll concentrations are translated\ninto opacities. Currently valid options include:\n       MANIZZA_05 - Use Manizza et al., GRL, 2005.\n       MOREL_88 - Use Morel, JGR, 1988.\n       OHLMANN_03 - Use Ohlmann, J Clim, 2003.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "OHLMANN_03"
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "OHLMANN_03"
          }
       },
       "TRACER_ADVECTION_SCHEME": {
          "description": "\"default = 'PLM'\nThe horizontal transport scheme for tracers:\nPLM    - Piecewise Linear Method\nPPM:H3 - Piecewise Parabolic Method (Huyhn 3rd order)\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "\"PPM:H3\"",
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "\"PPM:H3\"",
             "$OCN_GRID == \"tx0.25v1\"": "\"PPM:H3\""
          }
       },
@@ -1714,7 +1718,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "KHTR": {
@@ -1730,7 +1734,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 50.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 50.0
          }
       },
       "FULL_DEPTH_KHTR_MIN": {
@@ -1738,7 +1742,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "DEBUG": {
@@ -1752,7 +1756,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -1761,7 +1765,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 2.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 2.0
          }
       },
       "MAXTRUNC": {
@@ -1777,7 +1781,7 @@
          "description": "\"default = 'C'\nA case-insensitive character string to indicate the\nstaggering of the surface velocity field that is\nreturned to the coupler.  Valid values include\n'A', 'B', or 'C'.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "A",
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "A",
             "$OCN_GRID == \"tx0.25v1\"": "A"
          }
       },
@@ -1786,7 +1790,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\" and $COMP_ATM == \"datm\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"] and $COMP_ATM == \"datm\"": true,
             "else": false
          }
       },
@@ -1806,14 +1810,15 @@
          "datatype": "real",
          "units": "m day-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.1667
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.1667
          }
       },
       "SALT_RESTORE_FILE": {
          "description": "\"default = 'salt_restore.nc'\nA file in which to find the surface salinity to use for restoring.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "state_restore_tx2_3_20230416.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "state_restore_tx2_3_20230416.nc",
+            "$OCN_GRID == \"tx2_3v3\"": "state_restore_tx2_3v3_260305.nc"
          }
       },
       "ADJUST_NET_FRESH_WATER_TO_ZERO": {
@@ -1830,7 +1835,7 @@
          "datatype": "real",
          "units": "PSU or g kg-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 5.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 5.0
          }
       },
       "SRESTORE_AS_SFLUX": {
@@ -1838,7 +1843,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "GUST_CONST": {
@@ -1875,7 +1880,7 @@
          "datatype": "real",
          "units": "days",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 0.25,
             "$OCN_GRID == \"MISOMIP\"": 1.0
          }
@@ -1895,7 +1900,7 @@
          "units": "Boolean",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": true,
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MEKE_GMCOEFF": {
@@ -1904,7 +1909,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 0.25
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.25
          }
       },
       "MEKE_BGSRC": {
@@ -1921,7 +1926,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 1.0,
-            "$OCN_GRID == \"tx2_3v2\"": 0.75
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.75
          }
       },
       "MEKE_VISCOSITY_COEFF_KU": {
@@ -1929,7 +1934,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0
          }
       },
       "MEKE_MIN_LSCALE": {
@@ -1937,7 +1942,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MEKE_ALPHA_RHINES": {
@@ -1954,7 +1959,7 @@
          "units": "nondim",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 0.15,
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0
          }
       },
       "MEKE_FRCOEFF": {
@@ -1962,7 +1967,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.3
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.3
          }
       },
       "MEKE_CT": {
@@ -1970,7 +1975,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0
          }
       },
       "MEKE_POSITIVE": {
@@ -1978,7 +1983,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "USE_SIMPLER_EADY_GROWTH_RATE": {
@@ -1986,7 +1991,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "KH_RES_SCALE_COEF": {
@@ -1994,7 +1999,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.9
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.9
          }
       },
       "KH_RES_FN_POWER": {
@@ -2002,7 +2007,7 @@
          "datatype": "integer",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 6
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 6
          }
       },
       "VISC_RES_SCALE_COEF": {
@@ -2010,7 +2015,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.4
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.4
          }
       },
       "MEKE_GEOMETRIC": {
@@ -2018,7 +2023,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MEKE_GEOMETRIC_ALPHA": {
@@ -2026,7 +2031,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.06
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.06
          }
       },
       "MEKE_KHTH_FAC": {
@@ -2034,7 +2039,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0
          }
       },
       "MEKE_KHTR_FAC": {
@@ -2042,7 +2047,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0
          }
       },
       "MEKE_CB": {
@@ -2050,7 +2055,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 100.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 100.0
          }
       },
       "MEKE_CDRAG": {
@@ -2058,7 +2063,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.0025
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0025
          }
       },
       "MEKE_MIN_GAMMA2": {
@@ -2066,7 +2071,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1e-05
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1e-05
          }
       },
       "MEKE_EQUILIBRIUM_ALT": {
@@ -2074,7 +2079,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MEKE_VISC_DRAG": {
@@ -2082,7 +2087,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "MEKE_EQUILIBRIUM_RESTORING": {
@@ -2090,7 +2095,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "MEKE_ADVECTION_FACTOR": {
@@ -2098,7 +2103,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0
          }
       },
       "DIAG_COORD_DEF_Z": {
@@ -2121,7 +2126,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "list",
-            "$OCN_GRID == \"tx2_3v2\"": "list"
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "list"
          }
       },
       "CHANNEL_LIST_FILE": {
@@ -2129,7 +2134,8 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": "MOM_channels_global_025",
-            "$OCN_GRID == \"tx2_3v2\"": "channels_tx2_3v2_250107.txt"
+            "$OCN_GRID == \"tx2_3v2\"": "channels_tx2_3v2_250107.txt",
+            "$OCN_GRID == \"tx2_3v3\"": "channels_tx2_3v3_260304.txt"
          }
       },
       "SMAG_BI_CONST": {
@@ -2183,7 +2189,7 @@
          "datatype": "real",
          "units": "PPT",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\" or $COMP_ATM == \"cam\"": 75.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"] or $COMP_ATM == \"cam\"": 75.0
          }
       },
       "BAD_VAL_SST_MAX": {
@@ -2199,7 +2205,7 @@
          "datatype": "real",
          "units": "degC",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": -3.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": -3.0,
             "$OCN_GRID == \"tx0.25v1\"": -3.0
          }
       },
@@ -2238,7 +2244,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
             "$OCN_GRID == \"tx0.25v1\"": true,
             "else": false
          }
@@ -2487,7 +2493,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID == \"tx2_3v2\"": true
+            "$MOM6_VERTICAL_GRID == \"hycom1\" and $OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "ISOMIP_TNUDG": {
@@ -2617,7 +2623,7 @@
          "datatype": "real",
          "units": "m2 s-1",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1e-06,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1e-06,
             "else": 0.0001
          }
       },
@@ -2921,7 +2927,7 @@
          "datatype": "real",
          "units": "W m-2 or various",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0,
             "$OCN_GRID == \"tx0.25v1\"": 1.0
          }
       },
@@ -2930,6 +2936,7 @@
          "datatype": "string",
          "value": {
             "$OCN_GRID == \"tx2_3v2\"": "geothermal_davies2013_tx2_3_20240318_cdf5.nc",
+            "$OCN_GRID == \"tx2_3v3\"": "geothermal_davies2013_tx2_3v3_260305.nc",
             "$OCN_GRID == \"tx0.25v1\"": "geothermal_davies2013_v1.nc"
          }
       },
@@ -2937,7 +2944,7 @@
          "description": "\"default = 'geo_heat'\nThe name of the geothermal heating variable in\nGEOTHERMAL_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "geothermal_hf",
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "geothermal_hf",
             "$OCN_GRID == \"tx0.25v1\"": "geothermal_hf"
          }
       },
@@ -3016,14 +3023,14 @@
          "description": "Turn on automatic mask table generation to eliminate land blocks\n",
          "datatype": "list",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx0.25v1\"]": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\", \"tx0.25v1\"]": true
          }
       },
       "TARGET_IO_PES": {
          "description": "When AUTO_MASKTABLE is enabled, target number of IO PEs. If the given target\nnumber of IO PEs is not achievable, the target number of IO PEs is set to the\nnearest smaller number of PEs that is achievable.\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\" and $TEST": "= - ( - $NTASKS_OCN // 256)",
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"] and $TEST": "= - ( - $NTASKS_OCN // 256)",
             "$OCN_GRID == \"tx0.25v1\"": "= - ( - $NTASKS_OCN // 128)"
          }
       },
@@ -3047,7 +3054,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "SKEB_USE_FRICT": {
@@ -3055,7 +3062,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "SKEB_USE_GM": {
@@ -3063,21 +3070,21 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "SKEB_NPASS": {
          "description": "\"[nondim] default = 0\n number of passes of a 9-point smoother of the dissipation estimate.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 8
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 8
          }
       },
       "SKEB_GM_COEF": {
          "description": "\"[nondim] default = 0.0\nFraction of GM work that is added to backscatter rate.\"\n",
          "datatype": "real",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.75
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.75
          }
       }
    },
@@ -3087,7 +3094,7 @@
          "datatype": "real",
          "units": "1/s^2",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": -1e-08
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": -1e-08
          }
       }
    },
@@ -3096,21 +3103,21 @@
          "description": "\"default = 0\nThe number of times the 1-1-4-1-1 Laplacian filter is applied on\nOBL depth purely for diagnostic purposes.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 3
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 3
          }
       },
       "MATCH_TECHNIQUE": {
          "description": "\"default = 'SimpleShapes'\nCVMix method to set profile function for diffusivity and NLT,\nas well as matching across OBL base. Allowed values are:\nSimpleShapes      = sigma*(1-sigma)^2 for both diffusivity and NLT\nMatchGradient     = sigma*(1-sigma)^2 for NLT; diffusivity profile from matching\nMatchBoth         = match gradient for both diffusivity and NLT\nParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "MatchGradient"
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "MatchGradient"
          }
       },
       "INTERP_TYPE2": {
          "description": "\"Type of interpolation to compute diff and visc at OBL_depth\nAllowed types are: linear, quadratic, cubic or LMD94.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "LMD94"
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "LMD94"
          }
       },
       "KPP_IS_ADDITIVE": {
@@ -3118,7 +3125,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "USE_KPP_LT_K": {
@@ -3156,14 +3163,14 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1.8
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.8
          }
       },
       "ENHANCE_DIFFUSION": {
          "description": "\"default = True\nIf True, adds enhanced diffusion at the based of the boundary layer.\"\n",
          "datatype": "logical",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": false
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "STOKES_MOST": {
@@ -3178,14 +3185,14 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MINIMUM_OBL_DEPTH": {
          "description": "\"[m] default = 0.0\nIf non-zero, a minimum depth to use for KPP OBL depth. Independent of this\nparameter, the OBL depth is always at least as deep as the first layer.\"\n",
          "datatype": "real",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 5.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 5.0
          }
       }
    },
@@ -3195,7 +3202,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "CR": {
@@ -3203,7 +3210,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 0.01
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.01
          }
       },
       "USE_CR_GRID": {
@@ -3211,14 +3218,15 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "CR_FILE": {
          "description": "\"The path to the file containing the Cr fields.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-mask_20250627.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-mask_20250627.nc",
+            "$OCN_GRID == \"tx2_3v3\"": "mle_cr_labsea_mask_tx2_3v3_260306.nc"
          }
       },
       "WAVE_ENHANCED_USTAR": {
@@ -3226,7 +3234,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "MIN_WSTAR2": {
@@ -3234,7 +3242,7 @@
          "datatype": "real",
          "units": "m2 s-2",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 1e-09
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1e-09
          }
       },
       "BLD_DECAYING_TFILTER": {
@@ -3242,7 +3250,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 86400.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 86400.0
          }
       },
       "BLD_GROWING_TFILTER": {
@@ -3250,7 +3258,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 300.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 300.0
          }
       },
       "MLD_GROWING_TFILTER": {
@@ -3258,7 +3266,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 3600.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 3600.0
          }
       },
       "MLD_DECAYING_TFILTER": {
@@ -3266,7 +3274,7 @@
          "datatype": "real",
          "units": "s",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": 2592000.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 2592000.0
          }
       }
    }
