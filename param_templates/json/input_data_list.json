@@ -38,6 +38,10 @@
             "$INIT_LAYERS_FROM_Z_FILE == \"True\"": "${INPUTDIR}/${TEMP_SALT_Z_INIT_FILE}"
          }
       },
+      "KH_BG_2D": {
+         "$OCN_GRID == \"tx2_3v3\"": "${INPUTDIR}/KH_BG_2D_tx2_3v3_260306.nc",
+         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/KH_BG_2D_tx2_3v2_260306.nc"
+      },
       "SURFACE_PRESSURE_FILE": {
          "$OCN_GRID == \"MISOMIP\"": "${INPUTDIR}/MISOMIP_181108.nc"
       },
