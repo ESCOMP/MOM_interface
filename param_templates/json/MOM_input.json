@@ -570,7 +570,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false,
             "$OCN_GRID == \"tx0.25v1\"": true
          }
       },
@@ -801,7 +801,7 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": false
          }
       },
       "SMAG_LAP_CONST": {
@@ -886,7 +886,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 75.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 85.0
          }
       },
       "LEITHY_CK": {
@@ -894,7 +894,31 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.0
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1.0
+         }
+      },
+      "TAPER_LEITHY": {
+         "description": "\"[Boolean] default = False\nIf true, Leith+E c_K coefficient is tapered to zero below a threshold depth.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
+         }
+      },
+      "LEITHY_DEPTH": {
+         "description": "\"[m] default = 800.0\nLeith+E backscatter starts tapering below this depth.\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1000.0
+         }
+      },
+      "LEITHY_WIDTH": {
+         "description": "\"[m] default = 400.0\nLeith+E backscatter is zero below LEITHY_DEPTH+LEITHY_WIDTH.\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 500.0
          }
       },
       "USE_LAND_MASK_FOR_HVISC": {
@@ -902,6 +926,21 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": true
+      },
+      "USE_KH_BG_2D": {
+         "description": "\"[Boolean] default = False\nIf true, read a file containing 2-d background harmonic viscosities. The\nfinal viscosity is the maximum of the other terms and this background value.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
+         }
+      },
+      "KH_BG_2D_FILENAME": {
+         "description": "\"default = 'KH_background_2d.nc'\nThe filename containing a 2d map of Kh.\"\n",
+         "datatype": "string",
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "KH_BG_2D_tx2_3v3_260306.nc"
+         }
       },
       "FRICTWORK_BUG": {
          "description": "\"[Boolean] default = True\nIf true, retain an answer-changing bug in calculating the FrictWork, which\ncancels the h in thickness flux and the h at velocity point. This is not\nrecommended.\"\n",
@@ -925,6 +964,14 @@
          "value": {
             "$OCN_GRID == \"MISOMIP\"": false,
             "else": true
+         }
+      },
+      "CHANNEL_DRAG_MAX_BBL_THICK": {
+         "description": "\"[m] default = -1.0\nThe maximum bottom boundary layer thickness over which the channel drag is\nexerted, or a negative value for no fixed limit, instead basing the BBL\nthickness on the bottom stress, rotation and stratification.\"\n",
+         "datatype": "real",
+         "units": "m",
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 5.0
          }
       },
       "HBBL": {
@@ -1012,7 +1059,10 @@
          "description": "\"[Boolean] default = True\nIf true, interpolate the resolution function to the\nvelocity points from the thickness points; otherwise\ninterpolate the wave speed and calculate the resolution\nfunction independently at each point.\"\n",
          "datatype": "logical",
          "units": "Boolean",
-         "value": false
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true,
+            "else": false
+         }
       },
       "GILL_EQUATORIAL_LD": {
          "description": "\"[Boolean] default = False\nIf true, uses Gill's definition of the baroclinic\nequatorial deformation radius, otherwise, if false, use\nPedlosky's definition. These definitions differ by a factor\nof 2 infront of the beta term in the denominator. Gill'sis the more appropriate definition.\"\n",
@@ -1045,6 +1095,14 @@
          "value": {
             "$OCN_GRID == \"MISOMIP\"": 2.0,
             "else": 0.1
+         }
+      },
+      "CORRECT_BBL_BOUNDS": {
+         "description": "\"[Boolean] default = False\nIf true, uses the correct bounds on the BBL thickness and viscosity so that\nthe bottom layer feels the intended drag.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
          }
       },
       "BOUND_BT_CORRECTION": {
@@ -1774,6 +1832,7 @@
          "units": "truncations save_interval-1",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": 100000,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 1000000,
             "else": 0
          }
       },
@@ -1999,7 +2058,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.9
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.5
          }
       },
       "KH_RES_FN_POWER": {
@@ -2015,7 +2074,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.4
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.5
          }
       },
       "MEKE_GEOMETRIC": {
@@ -2031,7 +2090,7 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.06
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.07
          }
       },
       "MEKE_KHTH_FAC": {
@@ -2697,7 +2756,8 @@
          "datatype": "real",
          "units": "nondim",
          "value": {
-            "$OCN_GRID == \"MISOMIP\"": 0.0
+            "$OCN_GRID == \"MISOMIP\"": 0.0,
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.01
          }
       },
       "IGNORE_FLUXES_OVER_LAND": {
@@ -3218,7 +3278,8 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"] and $COMP_ATM == \"cam\"": true,
+            "else": false
          }
       },
       "CR_FILE": {
