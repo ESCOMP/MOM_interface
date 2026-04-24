@@ -942,6 +942,13 @@
             "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "KH_BG_2D_tx2_3v3_260306.nc"
          }
       },
+      "KH_BG_2D_VARNAME": {
+         "description": "\"default = 'Kh'\nThe name in the input file of the horizontal viscosity variable.\"\n",
+         "datatype": "string",
+         "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "KH"
+         }
+      },
       "FRICTWORK_BUG": {
          "description": "\"[Boolean] default = True\nIf true, retain an answer-changing bug in calculating the FrictWork, which\ncancels the h in thickness flux and the h at velocity point. This is not\nrecommended.\"\n",
          "datatype": "logical",
@@ -1263,14 +1270,6 @@
          "units": "none",
          "value": {
             "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": true
-         }
-      },
-      "MLE_DENSITY_DIFF": {
-         "description": "\"[kg/m3] default = 0.03\nDensity difference used to detect the mixed-layer depth for the\nmixed-layer eddy parameterization by Fox-Kemper et al. (2010).\"\n",
-         "datatype": "real",
-         "units": "kg/m3",
-         "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 0.02
          }
       },
       "MLE_FRONT_LENGTH": {

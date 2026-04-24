@@ -1211,6 +1211,13 @@ Global:
         datatype: string
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "KH_BG_2D_tx2_3v3_260306.nc"
+    KH_BG_2D_VARNAME:
+        description: |
+            "default = 'Kh'
+            The name in the input file of the horizontal viscosity variable."
+        datatype: string
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "KH"
     FRICTWORK_BUG:
         description: |
             "[Boolean] default = True
@@ -1641,15 +1648,6 @@ Global:
         units: none
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
-    MLE_DENSITY_DIFF:
-        description: |
-            "[kg/m3] default = 0.03
-            Density difference used to detect the mixed-layer depth for the
-            mixed-layer eddy parameterization by Fox-Kemper et al. (2010)."
-        datatype: real
-        units: kg/m3
-        value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.02
     MLE_FRONT_LENGTH:
         description: |
             "[m] default = 0.0
