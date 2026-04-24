@@ -3285,8 +3285,8 @@
          "description": "\"The path to the file containing the Cr fields.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "mle-cr-mask_20250627.nc",
-            "$OCN_GRID == \"tx2_3v3\"": "mle_cr_labsea_mask_tx2_3v3_260306.nc"
+            "$OCN_GRID == \"tx2_3v2\" and $COMP_ATM == \"cam\"": "mle-cr-mask_20250627.nc",
+            "$OCN_GRID == \"tx2_3v3\" and $COMP_ATM == \"cam\"": "mle_cr_labsea_mask_tx2_3v3_260306.nc"
          }
       },
       "WAVE_ENHANCED_USTAR": {
