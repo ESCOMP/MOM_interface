@@ -74,6 +74,7 @@
     <default_value>zstar_65L</default_value>
     <values>
       <value grid="oi%tx2_3v2">hycom1</value>
+      <value grid="oi%tx2_3v3">hycom1</value>
       <value grid="oi%tx0.25v1">hycom1</value>
       <value grid="oi%MISOMIP">sigma_shelf_zstar</value>
     </values>
@@ -94,7 +95,7 @@
     <group>run_component_mom</group>
     <file>env_run.xml</file>
     <desc> This variable determines the method used to couple MOM6 to WW3.
-           The method "most" corresponds to the newest coupling method 
+           The method "most" corresponds to the newest coupling method
            that turns on FPMix parameterization, Stokes_Bands coupling,
            and Stokes similarity package. The method "legacy" corresponds to
            the older coupling method based on receiving a Langmuir number from
