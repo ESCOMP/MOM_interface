@@ -1210,8 +1210,8 @@ Global:
             The filename containing a 2d map of Kh."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "KH_BG_2D_tx2_3v2_260306.nc"
-            $OCN_GRID == "tx2_3v3": "KH_BG_2D_tx2_3v3_260306.nc"
+            $OCN_GRID == "tx2_3v2": "KH_BG_2D_tx2_3v2_260427.nc"
+            $OCN_GRID == "tx2_3v3": "KH_BG_2D_tx2_3v3_260427.nc"
     KH_BG_2D_VARNAME:
         description: |
             "default = 'Kh'

@@ -39,8 +39,8 @@
          }
       },
       "KH_BG_2D": {
-         "$OCN_GRID == \"tx2_3v3\"": "${INPUTDIR}/KH_BG_2D_tx2_3v3_260306.nc",
-         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/KH_BG_2D_tx2_3v2_260306.nc"
+         "$OCN_GRID == \"tx2_3v3\"": "${INPUTDIR}/KH_BG_2D_tx2_3v3_260427.nc",
+         "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/KH_BG_2D_tx2_3v2_260427.nc"
       },
       "SURFACE_PRESSURE_FILE": {
          "$OCN_GRID == \"MISOMIP\"": "${INPUTDIR}/MISOMIP_181108.nc"
