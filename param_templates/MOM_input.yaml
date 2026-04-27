@@ -740,7 +740,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: False
             $OCN_GRID == "tx0.25v1": True
     KHTH_SLOPE_CFF:
         description: |
@@ -1055,7 +1055,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: False
     SMAG_LAP_CONST:
         description: |
             "[nondim] default = 0.0
@@ -1151,7 +1151,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 75.0
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 85.0
     LEITHY_CK:
         description: |
             "[nondim] default = 1.0
@@ -1159,7 +1159,31 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.0
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1.0
+    TAPER_LEITHY:
+        description: |
+            "[Boolean] default = False
+            If true, Leith+E c_K coefficient is tapered to zero below a threshold depth."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
+    LEITHY_DEPTH:
+        description: |
+            "[m] default = 800.0
+            Leith+E backscatter starts tapering below this depth."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1000.0
+    LEITHY_WIDTH:
+        description: |
+            "[m] default = 400.0
+            Leith+E backscatter is zero below LEITHY_DEPTH+LEITHY_WIDTH."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 500.0
     USE_LAND_MASK_FOR_HVISC:
         description: |
             "[Boolean] default = False
@@ -1171,6 +1195,30 @@ Global:
         datatype: logical
         units: Boolean
         value: True
+    USE_KH_BG_2D:
+        description: |
+            "[Boolean] default = False
+            If true, read a file containing 2-d background harmonic viscosities. The
+            final viscosity is the maximum of the other terms and this background value."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
+    KH_BG_2D_FILENAME:
+        description: |
+            "default = 'KH_background_2d.nc'
+            The filename containing a 2d map of Kh."
+        datatype: string
+        value:
+            $OCN_GRID == "tx2_3v2": "KH_BG_2D_tx2_3v2_260427.nc"
+            $OCN_GRID == "tx2_3v3": "KH_BG_2D_tx2_3v3_260427.nc"
+    KH_BG_2D_VARNAME:
+        description: |
+            "default = 'Kh'
+            The name in the input file of the horizontal viscosity variable."
+        datatype: string
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "KH"
     FRICTWORK_BUG:
         description: |
             "[Boolean] default = True
@@ -1202,6 +1250,16 @@ Global:
         value:
             $OCN_GRID == "MISOMIP": False
             else: True
+    CHANNEL_DRAG_MAX_BBL_THICK:
+        description: |
+            "[m] default = -1.0
+            The maximum bottom boundary layer thickness over which the channel drag is
+            exerted, or a negative value for no fixed limit, instead basing the BBL
+            thickness on the bottom stress, rotation and stratification."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 5.0
     HBBL:
         description: |
             "[m]
@@ -1319,7 +1377,9 @@ Global:
             function independently at each point."
         datatype: logical
         units: Boolean
-        value: False
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
+            else: False
     GILL_EQUATORIAL_LD:
         description: |
             "[Boolean] default = False
@@ -1366,6 +1426,15 @@ Global:
         value:
             $OCN_GRID == "MISOMIP": 2.0
             else: 0.1
+    CORRECT_BBL_BOUNDS:
+        description: |
+            "[Boolean] default = False
+            If true, uses the correct bounds on the BBL thickness and viscosity so that
+            the bottom layer feels the intended drag."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
     BOUND_BT_CORRECTION:
         description: |
             "[Boolean] default = False
@@ -1580,15 +1649,6 @@ Global:
         units: none
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
-    MLE_DENSITY_DIFF:
-        description: |
-            "[kg/m3] default = 0.03
-            Density difference used to detect the mixed-layer depth for the
-            mixed-layer eddy parameterization by Fox-Kemper et al. (2010)."
-        datatype: real
-        units: kg/m3
-        value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.02
     MLE_FRONT_LENGTH:
         description: |
             "[m] default = 0.0
@@ -2245,6 +2305,7 @@ Global:
         units: truncations save_interval-1
         value:
             $OCN_GRID == "tx0.25v1": 100000
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1000000
             else: 0
     OCEAN_SURFACE_STAGGER:
         description: |
@@ -2508,7 +2569,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.9
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.5
     KH_RES_FN_POWER:
         description: |
             "[nondim] default = 2
@@ -2528,7 +2589,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.4
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.5
     MEKE_GEOMETRIC:
         description: |
             "[Boolean] default = False
@@ -2546,7 +2607,7 @@ Global:
         datatype: real
         units: nondim
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.06
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.07
     MEKE_KHTH_FAC:
         description: |
             "[nondim] default = 0.0
@@ -3356,6 +3417,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "MISOMIP": 0.0
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.01
     IGNORE_FLUXES_OVER_LAND:
         description: |
             "[Boolean] default = False
@@ -3927,14 +3989,15 @@ MLE:
         datatype: logical
         units: Boolean
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $COMP_ATM == "cam": True
+            else: False
     CR_FILE:
         description: |
             "The path to the file containing the Cr fields."
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": "mle-cr-mask_20250627.nc"
-            $OCN_GRID == "tx2_3v3": "mle_cr_labsea_mask_tx2_3v3_260306.nc"
+            $OCN_GRID == "tx2_3v2" and $COMP_ATM == "cam": "mle-cr-mask_20250627.nc"
+            $OCN_GRID == "tx2_3v3" and $COMP_ATM == "cam": "mle_cr_labsea_mask_tx2_3v3_260306.nc"
     WAVE_ENHANCED_USTAR:
         description: |
             "default = False
