@@ -40,7 +40,7 @@
       </pes>
     </mach>
     <mach name="derecho">
-      <pes pesize="any" compset="_DATM.+_SICE.*_MOM6%REGIONAL(?!.*%MARBL-BIO).+_SWAV">
+      <pes pesize="any" compset="_DATM.+_SICE.*_MOM6%[^_]*REGIONAL(?!.*%MARBL-BIO).+_SWAV">
         <comment>Regional modeling configuration with SICE</comment>
         <ntasks>
           <ntasks_atm>128</ntasks_atm>
@@ -73,7 +73,7 @@
           <rootpe_glc>0</rootpe_glc>
         </rootpe>
       </pes>
-      <pes pesize="any" compset="_DATM.+_SICE.*_MOM6%REGIONAL[^_]*MARBL-BIO.+_SWAV">
+      <pes pesize="any" compset="_DATM.+_SICE.*_MOM6%([^_]*REGIONAL[^_]*MARBL-BIO|[^_]*MARBL-BIO[^_]*REGIONAL).+_SWAV">
         <comment>Regional modeling configuration with SICE and MARBL-BIO</comment>
         <ntasks>
           <ntasks_atm>128</ntasks_atm>
@@ -106,7 +106,7 @@
           <rootpe_glc>0</rootpe_glc>
         </rootpe>
       </pes>
-      <pes pesize="any" compset="_DATM.+_CICE.*_MOM6%REGIONAL(?!.*%MARBL-BIO).+_SWAV">
+      <pes pesize="any" compset="_DATM.+_CICE.*_MOM6%[^_]*REGIONAL(?!.*%MARBL-BIO).+_SWAV">
         <comment>Regional modeling configuration with CICE</comment>
         <ntasks>
           <ntasks_atm>128</ntasks_atm>
@@ -139,7 +139,7 @@
           <rootpe_glc>0</rootpe_glc>
         </rootpe>
       </pes>
-      <pes pesize="any" compset="_DATM.+_CICE.*_MOM6%REGIONAL[^_]*MARBL-BIO.+_SWAV">
+      <pes pesize="any" compset="_DATM.+_CICE.*_MOM6%([^_]*REGIONAL[^_]*MARBL-BIO|[^_]*MARBL-BIO[^_]*REGIONAL).+_SWAV">
         <comment>Regional modeling configuration with CICE and MARBL-BIO</comment>
         <ntasks>
           <ntasks_atm>128</ntasks_atm>
