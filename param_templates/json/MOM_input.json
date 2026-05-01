@@ -2992,7 +2992,7 @@
          }
       },
       "MLE_USE_PBL_MLD": {
-         "description": "\"TODO\n\n[Boolean] default = False\nIf true, the MLE parameterization will use the mixed-layer depth provided by\nthe active PBL parameterization. If false, MLE will estimate a MLD based on a\ndensity difference with the surface using the parameter MLE_DENSITY_DIFF.\"\n",
+         "description": "\"[Boolean] default = False\nIf true, the MLE parameterization will use the mixed-layer depth provided by\nthe active PBL parameterization. If false, MLE will estimate a MLD based on a\ndensity difference with the surface using the parameter MLE_DENSITY_DIFF.\"\n",
          "datatype": "logical",
          "value": {
             "$OCN_GRID == \"tx0.25v1\"": true,

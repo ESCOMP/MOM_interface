@@ -210,7 +210,7 @@
     <valid_values>REGIONAL,GLOBAL</valid_values>
     <default_value>GLOBAL</default_value>
     <values>
-      <value compset="_MOM6%REGIONAL">REGIONAL</value>
+      <value compset="_MOM6%[^_]*REGIONAL">REGIONAL</value>
     </values>
     <group>case_comp</group>
     <file>env_run.xml</file>
