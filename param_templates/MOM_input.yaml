@@ -107,6 +107,18 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            $OCN_GRID == "tx2_3v2": False
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
+    DIABATIC_FIRST:
+        description: |
+            "[Boolean] default = False
+            If true, apply diabatic and thermodynamic processes,
+            including buoyancy forcing and mass gain or loss,
+            before stepping the dynamics forward."
+        datatype: logical
+        units: Boolean
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: False
     HREF_FOR_MLD:
         description: |
@@ -247,6 +259,7 @@ Global:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 3992.0
             $OCN_GRID == "tx0.25v1": 3992.0
             $OCN_GRID == "MISOMIP": 3974.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 3992.0
     USE_PSURF_IN_EOS:
         description: |
             "[Boolean] default = True
@@ -264,6 +277,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     SAVE_INITIAL_CONDS:
         description: |
             "[Boolean] default = False
@@ -303,6 +317,7 @@ Global:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: -7.75E-08
             $OCN_GRID == "tx0.25v1": -7.75E-08
             $OCN_GRID == "MISOMIP": -7.53E-08
+            $MOM6_DOMAIN_TYPE == "REGIONAL": -7.75E-08
     USE_IDEAL_AGE_TRACER:
         description: |
             "[Boolean] default = False
@@ -489,6 +504,7 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": "file"
             $OCN_GRID == "MISOMIP": "linear"
+            $MOM6_DOMAIN_TYPE == "REGIONAL": "ALE"
     REMAP_UV_USING_OLD_ALG:
         description: |
             "[Boolean] default = True
@@ -640,7 +656,11 @@ Global:
             PQM_IH4IH3  (4th-order accurate)
             PQM_IH6IH5  (5th-order accurate)"
         datatype: string
-        value: "PPM_CW"
+        value: 
+            $MOM6_DOMAIN_TYPE == "REGIONAL":
+                "PPM_H4"
+            else:
+                "PPM_CW"
     REMAP_VEL_CONSERVE_KE:
         description: |
             "[Boolean] default = False
@@ -731,6 +751,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     RESOLN_SCALED_KH:
         description: |
             "[Boolean] default = False
@@ -829,6 +850,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     USE_STANLEY_ISO:
         description: |
             "[Boolean] default = False
@@ -937,6 +959,7 @@ Global:
             $MOM6_VERTICAL_GRID in ["zstar_65L", "zstar_75L"]: "Z*"
             $MOM6_VERTICAL_GRID == "hycom1": "HYCOM1"
             $MOM6_VERTICAL_GRID == "sigma_shelf_zstar": "SIGMA_SHELF_ZSTAR"
+            $MOM6_DOMAIN_TYPE == "REGIONAL": "Z*"
     ALE_COORDINATE_CONFIG:
         description: |
             "default = 'UNIFORM'
@@ -1125,6 +1148,7 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 0.01
             $OCN_GRID == "MISOMIP": 0.001
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 0.01
     USE_LEITHY:
         description: |
             "[Boolean] default = False
@@ -1238,6 +1262,7 @@ Global:
         units: m
         value:
             $OCN_GRID == "MISOMIP": 20.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 0.9
             else: 0.5
     CHANNEL_DRAG:
         description: |
@@ -1260,6 +1285,7 @@ Global:
         units: m
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 5.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 5.0
     HBBL:
         description: |
             "[m]
@@ -1280,6 +1306,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1.0
             $OCN_GRID == "tx0.25v1": 1.25
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 1.25
     U_TRUNC_FILE:
         description: |
             "default = ''
@@ -1461,6 +1488,17 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    BT_NONLIN_STRESS:
+        description: |
+            "[Boolean] default = False
+            If true, use the full depth of the ocean at the start of the barotropic step
+            when calculating the surface stress contribution to the barotropic
+            acclerations.  Otherwise use the depth based on bathyT."
+        datatype: logical
+        units: Boolean
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     BT_THICK_SCHEME:
         description: |
             "default = 'HYBRID'
@@ -1515,6 +1553,7 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": -0.9
             $OCN_GRID == "MISOMIP": -0.9
+            $MOM6_DOMAIN_TYPE == "REGIONAL": -0.9
             else: -0.95
     DEPTH_MIN_DYN_PSURF:
         description: |
@@ -1539,6 +1578,7 @@ Global:
         units: Pa
         value:
             $OCN_GRID == "tx0.25v1": 0.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 0.0
     KHTH:
         description: |
             "[m2 s-1] default = 0.0
@@ -1578,6 +1618,7 @@ Global:
         units: nondimensional
         value:
             $OCN_GRID == "tx0.25v1": 0.1
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 0.1
     STOCH_EOS:
         description:
             "[Boolean] default = False
@@ -1648,6 +1689,38 @@ Global:
         datatype: bool
         units: none
         value:
+            $OCN_GRID == "tx2_3v2": True
+    MLE_DENSITY_DIFF:
+        description: |
+            "[kg/m3] default = 0.03
+            Density difference used to detect the mixed-layer depth for the
+            mixed-layer eddy parameterization by Fox-Kemper et al. (2010)."
+        datatype: real
+        units: kg/m3
+        value:
+            $OCN_GRID == "tx2_3v2": 0.02
+    FOX_KEMPER_ML_RESTRAT_COEF:
+        description: |
+            "[nondim] default = 0.0
+            A nondimensional coefficient that is proportional to
+            the ratio of the deformation radius to the dominant
+            lengthscale of the submesoscale mixed layer
+            instabilities, times the minimum of the ratio of the
+            mesoscale eddy kinetic energy to the large-scale
+            geostrophic kinetic energy or 1 plus the square of the
+            grid spacing over the deformation radius, as detailed
+            by Fox-Kemper et al. (2010)
+            The file that specifies the vertical grid for
+            depth-space diagnostics, or blank to disable
+            depth-space output.
+            The number of depth-space levels.  This is determined
+            from the size of the variable zw in the output grid file."
+        datatype: real
+        units: nondim
+        value:
+            $OCN_GRID == "tx2_3v2": 1.0
+            $OCN_GRID == "tx0.25v1": 1.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 1.0
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
     MLE_FRONT_LENGTH:
         description: |
@@ -1661,6 +1734,15 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1000.0
             $OCN_GRID == "tx0.25v1": 500.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 1500.0
+    MLE_FRONT_LENGTH_FROM_FILE:
+        description: |
+            "[Boolean] default = False
+            If true, the MLE front-length scale is read from a file."
+        datatype: logical
+        units: Boolean
+        value:
+            $OCN_GRID == "tx2_3v2": False
     MLE_MLD_DECAY_TIME:
         description: |
             "[s] default = 0.0
@@ -1673,6 +1755,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 3.45600E+05
             $OCN_GRID == "tx0.25v1": 2.592E+06
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 2.592E+06
     USE_STANLEY_ML:
         description: |
             "[Boolean] default = False
@@ -1691,6 +1774,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
     BBL_MIXING_AS_MAX:
         description: |
@@ -1703,6 +1787,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: False
             $OCN_GRID == "tx0.25v1": False
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
     USE_LOTW_BBL_DIFFUSIVITY:
         description: |
             "[Boolean] default = False
@@ -1747,6 +1832,7 @@ Global:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1.0E-07
             $OCN_GRID == "tx0.25v1": 1.5E-05
             $OCN_GRID == "MISOMIP": 5.0E-05
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 1.0E-06
             else: 2.0E-05
     KDML:
         description: |
@@ -1777,6 +1863,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 2.0E-07
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]:  1.0E-07
             else: 2.0E-06
     INT_TIDE_DECAY_SCALE:
@@ -1813,6 +1900,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "tx0.25v1": 0.0018
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 0.0018
     USE_RIGID_SEA_ICE:
         description: |
             "[Boolean] default = False
@@ -1822,6 +1910,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     SEA_ICE_RIGID_MASS:
         description: |
             "[kg m-2] default = 1000.0
@@ -1831,6 +1920,7 @@ Global:
         units: kg m-2
         value:
             $OCN_GRID == "tx0.25v1": 100.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 100.0
     H2_FILE:
         description: |
             "The path to the file containing the sub-grid-scale
@@ -1846,6 +1936,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
     USE_CVMix_TIDAL:
         description: |
@@ -1901,6 +1992,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
     NU_ZERO:
         description: |
@@ -1927,6 +2019,7 @@ Global:
         datatype: integer
         units: nondim
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 1
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1
     USE_CVMIX_DDIFF:
         description: |
@@ -1937,6 +2030,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
     MAX_ENT_IT:
         description: |
@@ -1976,6 +2070,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
     MSTAR_MODE:
         description: |
@@ -2230,6 +2325,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"PPM:H3"'
             $OCN_GRID == "tx0.25v1": '"PPM:H3"'
+            $MOM6_DOMAIN_TYPE == "REGIONAL": '"PPM:H3"'
     KHTR_USE_EBT_STRUCT:
         description: |
             "[Boolean] default = False
@@ -2283,6 +2379,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     MAX_TR_DIFFUSION_CFL:
         description: |
             "[nondim] default = -1.0
@@ -2438,6 +2535,7 @@ Global:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1.0
             $OCN_GRID == "tx0.25v1": 0.25
             $OCN_GRID == "MISOMIP": 1.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 1.0
     ENERGETICS_SFC_PBL:
         description: |
             "[Boolean] default = False
@@ -2751,6 +2849,7 @@ Global:
         value:
             $OCN_GRID == "tx0.25v1": 0.06
             $OCN_GRID == "MISOMIP": 0.06
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 0.015
     USE_JACKSON_PARAM:
         description: |
             "[Boolean] default = False
@@ -2788,6 +2887,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     BAD_VAL_SSH_MAX:
         description: |
             "[m] default = 20.0
@@ -2797,6 +2897,7 @@ Global:
         units: m
         value:
             $OCN_GRID == "tx0.25v1": 50.0   # TODO
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 50.0
     BAD_VAL_SSS_MAX:
         description: |
             "default = 45.0
@@ -2815,6 +2916,7 @@ Global:
         units: deg C
         value:
             $OCN_GRID == "tx0.25v1": 65.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 65.0
     BAD_VAL_SST_MIN:
         description: |
             "default = -2.1
@@ -2825,6 +2927,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: -3.0
             $OCN_GRID == "tx0.25v1": -3.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": -3.0
     DEFAULT_ANSWER_DATE:
         description: |
             "[Boolean] default = True
@@ -2873,6 +2976,7 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
             else: False
     PARALLEL_RESTARTFILES:
         description: |
@@ -2883,6 +2987,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     FPMIX:
         description: |
             "[Boolean] default = False
@@ -2921,6 +3026,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
     RHO_0:
         description: |
             "[kg m-3] default = 1035.0
@@ -3163,6 +3269,7 @@ Global:
         units: m
         value:
             $OCN_GRID == "MISOMIP": 1.0E-12
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 1.0E-06
     HYCOM1_ONLY_IMPROVES:
         description: |
             "[Boolean] default = False
@@ -3319,6 +3426,7 @@ Global:
         datatype: real
         units: m2 s-1
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 1.0E-06
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 1.0E-06
             else: 1.0E-04
     KV_BBL_MIN:
@@ -3376,6 +3484,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     HARMONIC_BL_SCALE:
         description: |
             "[nondim] default = 0.0
@@ -3397,6 +3506,7 @@ Global:
         value:
             $OCN_GRID == "MISOMIP": True
             $OCN_GRID == "tx0.25v1": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     CORRECT_DENSITY:
         description: |
             "[Boolean] default = True
@@ -3417,6 +3527,7 @@ Global:
         units: nondim
         value:
             $OCN_GRID == "MISOMIP": 0.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL" : 0.0
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.01
     IGNORE_FLUXES_OVER_LAND:
         description: |
@@ -3608,6 +3719,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "MISOMIP": False
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
     DATE_STAMPED_STDOUT:
         description: |
             "[Boolean] default = True
@@ -3636,11 +3748,15 @@ Global:
             else: "PPM_CW"
     MLE_USE_PBL_MLD:
         description: |
-            "TODO"
+            "[Boolean] default = False
+            If true, the MLE parameterization will use the mixed-layer depth provided by
+            the active PBL parameterization. If false, MLE will estimate a MLD based on a
+            density difference with the surface using the parameter MLE_DENSITY_DIFF."
         datatype: logical
         value:
             $OCN_GRID == "tx0.25v1": True
             $OCN_GRID == "MISOMIP": True
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
     EPBL_IS_ADDITIVE:
         description: |
             "[Boolean] default = True
@@ -3651,6 +3767,7 @@ Global:
         units: Boolean
         value:
             $OCN_GRID == "tx0.25v1": False
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
     GEOTHERMAL_SCALE:
         description: |
             "[W m-2 or various] default = 0.0
@@ -3840,7 +3957,164 @@ Global:
             Fraction of GM work that is added to backscatter rate."
         datatype: real
         value:
-           $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.75
+           $OCN_GRID == "tx2_3v2": 0.75
+    OBC_FREESLIP_VORTICITY:
+        description: | 
+            "[Boolean] default = True
+             If true, sets the normal gradient of tangential velocity to zero in the
+             relative vorticity on open boundaries. This cannot be true if another
+             OBC_XXX_VORTICITY option is True.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
+    OBC_COMPUTED_VORTICITY:
+        description: | 
+            "[Boolean] default = False
+             If true, uses the external values of tangential velocity in the relative
+             vorticity on open boundaries. This cannot be true if another OBC_XXX_VORTICITY
+             option is True.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    OBC_FREESLIP_STRAIN:
+        description: | 
+            "[Boolean] default = True
+             If true, sets the normal gradient of tangential velocity to zero in the strain
+             use in the stress tensor on open boundaries. This cannot be true if another
+             OBC_XXX_STRAIN option is True.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
+    OBC_COMPUTED_STRAIN:
+        description: | 
+            "[Boolean] default = False
+              If true, sets the normal gradient of tangential velocity to zero in the strain
+              use in the stress tensor on open boundaries. This cannot be true if another
+              OBC_XXX_STRAIN option is True.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    OBC_ZERO_BIHARMONIC:
+        description: | 
+            "[Boolean] default = False
+             If true, zeros the Laplacian of flow on open boundaries in the biharmonic
+             viscosity term.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    OBC_RAMP_TIMESCALE:
+        description: | 
+            "[days] default = 1.0
+             If RAMP_OBCS is true, this sets the ramping timescale.
+            "
+        datatype: real
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 2.0
+    OBC_TRACER_RESERVOIR_LENGTH_SCALE_OUT:
+        description: | 
+            "[m] default = 0.0
+            An effective length scale for restoring the tracer concentration at the
+            boundaries to externally imposed values when the flow is exiting the domain.
+            "
+        datatype: real
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 9000.0
+    OBC_TRACER_RESERVOIR_LENGTH_SCALE_IN:
+        description: | 
+            "[m] default = 0.0
+            An effective length scale for restoring the tracer concentration at the
+            boundaries to values from the interior when the flow is entering the domain.
+            "
+        datatype: real
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 9000.0
+    OBC_TIDE_ADD_EQ_PHASE:
+        description: | 
+            "[Boolean] default = False
+             If true, add the equilibrium phase argument to the specified tidal phases.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    OBC_TIDE_ADD_NODAL:
+        description: | 
+            "[Boolean] default = False
+             If true, include 18.6 year nodal modulation in the boundary tidal forcing.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    DEPRESS_INITIAL_SURFACE:
+        description: | 
+            "[Boolean] default = False
+             If true,  depress the initial surface to avoid huge tsunamis when a large
+             surface pressure is applied.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    DIRECT_STRESS:
+        description: | 
+            "[Boolean] default = False
+            If true, the wind stress is distributed over the topmost HMIX_STRESS of fluid
+            (like in HYCOM), and an added mixed layer viscosity or a physically based
+            boundary layer turbulence parameterization is not needed for stability.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    SADOURNY:
+        description: | 
+            "[Boolean] default = True
+             If true, the Coriolis terms are discretized with the Sadourny (1975) energy
+             conserving scheme, otherwise the Arakawa & Hsu scheme is used.  If the
+             internal deformation radius is not resolved, the Sadourny scheme should
+             probably be used.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
+    BT_STRONG_DRAG:
+        description: | 
+            "[Boolean] default = False
+             If true, use a stronger estimate of the retarding effects of strong bottom
+             drag, by making it implicit with the barotropic time-step instead of implicit
+             with the baroclinic time-step and dividing by the number of barotropic steps.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": True
+    LINEARIZED_BT_CORIOLIS:
+        description: | 
+            "[Boolean] default = True
+            If true use the bottom depth instead of the total water column thickness in
+            the barotropic Coriolis term calculations.
+            "
+        datatype: logical
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
+    LATENT_HEAT_FUSION:
+        description: | 
+            "[J/kg] default = 3.337E+05
+             The latent heat of fusion.
+            "
+        datatype: real
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 3.34E+05
+    LATENT_HEAT_VAPORIZATION:
+        description: | 
+            "[J/kg] default = 2.501E+06
+            The latent heat of fusion.
+            "
+        datatype: real
+        value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 2.5E+06    
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.75
 CVMix_CONVECTION:
     BV_SQR_CONV:
         description: |
@@ -3859,6 +4133,7 @@ KPP:
             OBL depth purely for diagnostic purposes."
         datatype: integer
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 3
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 3
     MATCH_TECHNIQUE:
         description: |
@@ -3871,6 +4146,7 @@ KPP:
             ParabolicNonLocal = sigma*(1-sigma)^2 for diffusivity; (1-sigma)^2 for NLT"
         datatype: string
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": "MatchGradient"
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: "MatchGradient"
     INTERP_TYPE2:
         description: |
@@ -3887,6 +4163,7 @@ KPP:
         datatype: logical
         units: Boolean
         value:
+            $MOM6_DOMAIN_TYPE == "REGIONAL": False
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: False
     USE_KPP_LT_K:
         description: |
