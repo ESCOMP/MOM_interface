@@ -997,9 +997,11 @@
          }
       },
       "CHANNEL_DRAG_MAX_BBL_THICK": {
-         "description": "\"[m] default = -1.0\n The maximum bottom boundary layer thickness over which the channel drag is\n exerted, or a negative value for no fixed limit, instead basing the BBL\n thickness on the bottom stress, rotation and stratification.  The default is\n proportional to HBBL if USE_JACKSON_PARAM or DRAG_AS_BODY_FORCE is true.\n\"\n",
+         "description": "\"[m] default = -1.0\nThe maximum bottom boundary layer thickness over which the channel drag is\nexerted, or a negative value for no fixed limit, instead basing the BBL\nthickness on the bottom stress, rotation and stratification.\"\n",
          "datatype": "real",
+         "units": "m",
          "value": {
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 5.0,
             "$MOM6_DOMAIN_TYPE == \"REGIONAL\"": 5.0
          }
       },

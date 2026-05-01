@@ -1285,6 +1285,7 @@ Global:
         units: m
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 5.0
+            $MOM6_DOMAIN_TYPE == "REGIONAL": 5.0
     HBBL:
         description: |
             "[m]
@@ -4057,17 +4058,6 @@ Global:
         datatype: logical
         value:
             $MOM6_DOMAIN_TYPE == "REGIONAL": True
-    CHANNEL_DRAG_MAX_BBL_THICK:
-        description: | 
-            "[m] default = -1.0
-             The maximum bottom boundary layer thickness over which the channel drag is
-             exerted, or a negative value for no fixed limit, instead basing the BBL
-             thickness on the bottom stress, rotation and stratification.  The default is
-             proportional to HBBL if USE_JACKSON_PARAM or DRAG_AS_BODY_FORCE is true.
-            "
-        datatype: real
-        value:
-            $MOM6_DOMAIN_TYPE == "REGIONAL": 5.0
     DIRECT_STRESS:
         description: | 
             "[Boolean] default = False
