@@ -41,7 +41,7 @@
     </mach>
   </grid>
 
-  <grid name="a%(TL319|T62).+oi%tx2_3v2">
+  <grid name="a%(TL319|T62).+oi%tx2_3v[23]">
     <mach name="any">
       <pes pesize="any" compset="any">
         <comment>none</comment>
