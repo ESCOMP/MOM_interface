@@ -1,4 +1,4 @@
-INPUTDIR = "${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama-bgc"
+INPUTDIR = "$DIN_LOC_ROOT/ocn/mom/croc/testing_data/panama-bgc"
 TRIPOLAR_N = False
 REENTRANT_X = False
 REENTRANT_Y = False
@@ -50,7 +50,7 @@ OBC_TIDE_REF_DATE = 2000, 01, 01
 MAX_FIELDS = 400
 
 ! MARBL initial conditions file
-MARBL_TRACERS_IC_FILE = ecosys_jan_IC_omip_latlon_1x1_180W_c231221.nc
+MARBL_TRACERS_IC_FILE = ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
 
 ! MARBL sedimentary iron flux file
 MARBL_FESEDFLUX_FILE = fesedflux_total_reduce_oxic_panama1_5490e0.nc

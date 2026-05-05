@@ -1,4 +1,4 @@
-INPUTDIR = "${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama"
+INPUTDIR = "$DIN_LOC_ROOT/ocn/mom/croc/testing_data/panama"
 TRIPOLAR_N = False
 REENTRANT_X = False
 REENTRANT_Y = False
