@@ -1,16 +1,16 @@
 ./xmlchange OCN_NX=60
 ./xmlchange OCN_NY=60
-./xmlchange OCN_DOMAIN_MESH=/glade/campaign/cesm/cesmdata/cseg/inputdata/ocn/mom/croc/testing_data/panama/ESMF_mesh_panama1_352fd1.nc
-./xmlchange ICE_DOMAIN_MESH=/glade/campaign/cesm/cesmdata/cseg/inputdata/ocn/mom/croc/testing_data/panama/ESMF_mesh_panama1_352fd1.nc
-./xmlchange MASK_MESH=/glade/campaign/cesm/cesmdata/cseg/inputdata/ocn/mom/croc/testing_data/panama/ESMF_mesh_panama1_352fd1.nc
+./xmlchange OCN_DOMAIN_MESH=${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama/ESMF_mesh_panama1_352fd1.nc
+./xmlchange ICE_DOMAIN_MESH=${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama/ESMF_mesh_panama1_352fd1.nc
+./xmlchange MASK_MESH=${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama/ESMF_mesh_panama1_352fd1.nc
 ./xmlchange ATM_GRID=TL319
 ./xmlchange LND_GRID=TL319
-./xmlchange ATM_DOMAIN_MESH=/glade/campaign/cesm/cesmdata/cseg/inputdata/share/meshes/TL319_151007_ESMFmesh.nc
-./xmlchange LND_DOMAIN_MESH=/glade/campaign/cesm/cesmdata/cseg/inputdata/share/meshes/TL319_151007_ESMFmesh.nc
+./xmlchange ATM_DOMAIN_MESH=${DIN_LOC_ROOT}/share/meshes/TL319_151007_ESMFmesh.nc
+./xmlchange LND_DOMAIN_MESH=${DIN_LOC_ROOT}/share/meshes/TL319_151007_ESMFmesh.nc
 ./xmlchange MOM6_MEMORY_MODE=dynamic_symmetric
 ./xmlchange RUN_STARTDATE=2000-01-01
-./xmlchange ROF2OCN_LIQ_RMAPNAME=/glade/campaign/cesm/cesmdata/cseg/inputdata/ocn/mom/croc/testing_data/panama/GLOFAS_to_panama1_map_r20_f40_nnsm.nc
-./xmlchange ROF2OCN_ICE_RMAPNAME=/glade/campaign/cesm/cesmdata/cseg/inputdata/ocn/mom/croc/testing_data/panama/GLOFAS_to_panama1_map_r20_f40_nnsm.nc
+./xmlchange ROF2OCN_LIQ_RMAPNAME=${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama/GLOFAS_to_panama1_map_r20_f40_nnsm.nc
+./xmlchange ROF2OCN_ICE_RMAPNAME=${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama/GLOFAS_to_panama1_map_r20_f40_nnsm.nc
 
 # Set PE Layout
 ./xmlchange NTASKS_OCN=20
