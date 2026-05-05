@@ -65,7 +65,7 @@ MARBL_FESEDFLUXRED_FILE = feventfluxred_5gmol_panama1_5490e0.nc
 READ_RIV_FLUXES = True
 
 ! River nutrient flux file
-RIV_FLUX_FILE = river_nutrients_panama1_5490e0_nnsm.nc
+RIV_FLUX_FILE = riv_nutri.nc
 
 ! Initial conditions
 INIT_LAYERS_FROM_Z_FILE = True
