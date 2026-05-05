@@ -58,6 +58,9 @@ MARBL_FESEDFLUX_FILE = fesedflux_total_reduce_oxic_panama1_5490e0.nc
 ! MARBL event iron flux file
 MARBL_FEVENTFLUX_FILE = feventflux_5gmol_panama1_5490e0.nc
 
+! MARBL event iron flux reduced file
+MARBL_FESEDFLUXRED_FILE = feventfluxred_5gmol_panama1_5490e0.nc
+
 ! Enable river nutrient fluxes in MOM6
 READ_RIV_FLUXES = True
 
