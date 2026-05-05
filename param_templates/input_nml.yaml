@@ -36,11 +36,11 @@ diag_manager_nml:
     max_output_fields:
         values:
             $MARBL_CONFIG != "off" and $TEST != True:
-                900
+                1000
             $MARBL_CONFIG != "off" and $TEST == True:
-                1200
+                1300
             else:
-                300
+                400
     max_num_axis_sets:
         values:
             $MARBL_CONFIG != "off": 35

@@ -42,9 +42,9 @@
       },
       "max_output_fields": {
          "values": {
-            "$MARBL_CONFIG != \"off\" and $TEST != True": 900,
-            "$MARBL_CONFIG != \"off\" and $TEST == True": 1200,
-            "else": 300
+            "$MARBL_CONFIG != \"off\" and $TEST != True": 1000,
+            "$MARBL_CONFIG != \"off\" and $TEST == True": 1300,
+            "else": 400
          }
       },
       "max_num_axis_sets": {
