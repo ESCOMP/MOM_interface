@@ -1361,7 +1361,7 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
-            $OCN_GRID == "tx2_3v2": '"FILE:ocean_rho2_190917.nc,interfaces=rho2"'
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"FILE:ocean_rho2_190917.nc,interfaces=rho2"'
     DIAG_MISVAL:
         description: |
             "TODO"

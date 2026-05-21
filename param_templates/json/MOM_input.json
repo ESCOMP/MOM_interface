@@ -1053,7 +1053,7 @@
          "description": "\" default = 'WOA09'\nDetermines how to specify the coordinate resolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_RHO2\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID == \"tx2_3v2\"": "\"FILE:ocean_rho2_190917.nc,interfaces=rho2\""
+            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "\"FILE:ocean_rho2_190917.nc,interfaces=rho2\""
          }
       },
       "DIAG_MISVAL": {

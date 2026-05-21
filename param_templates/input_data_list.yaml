@@ -59,7 +59,7 @@ mom.input_data_list:
         $OCN_GRID == "tx2_3v3": "${INPUTDIR}/mle_cr_labsea_mask_tx2_3v3_260306.nc"
     CFC_BC_FILE: "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/cfc_atm_20230310.nc"
     DIAG_COORD_DEF_RHO2:
-        $OCN_GRID == "tx2_3v2":  "${INPUTDIR}/ocean_rho2_190917.nc"
+        $OCN_GRID in ["tx2_3v2", "tx2_3v3"]:  "${INPUTDIR}/ocean_rho2_190917.nc"
     MARBL_TRACERS_IC_FILE:
         $MARBL_CONFIG == "latest": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
         $MARBL_CONFIG == "latest+4p2z": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
