@@ -318,13 +318,6 @@
             "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": "$CCSM_CO2_PPMV"
          }
       },
-      "ATM_ALT_CO2_OPT": {
-         "description": "\"default comes from env_run.xml (OCN_CO2_TYPE)\n Source of atmospheric CO2 concentration for MARBL.\n valid values: constant, prognostic, diagnostic\"\n",
-         "datatype": "string",
-         "value": {
-            "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": "$OCN_CO2_TYPE"
-         }
-      },
       "ATM_ALT_CO2_CONST": {
          "description": "\"default comes from env_run.xml (CCSM_CO2_PPMV)\n Alternate atmospheric CO2 concentration for MARBL [ppm].\"\n",
          "datatype": "real",
