@@ -134,6 +134,7 @@
     <default_value>constant</default_value>
     <values>
       <value compset="_CAM">diagnostic</value>
+      <value compset="E_CAM70">prognostic</value>
       <value compset="_MOM6%[^_]*MARBL-BIO.*_BGC%BPRP">prognostic</value>
       <value compset="_MOM6%[^_]*MARBL-BIO.*_BGC%BDRD">diagnostic</value>
       <value compset="_DATM%CPLHIST.*_MOM6%[^_]*MARBL-BIO">diagnostic</value>
