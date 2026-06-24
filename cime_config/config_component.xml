@@ -75,6 +75,7 @@
     <values>
       <value grid="oi%tx2_3v2">hycom1</value>
       <value grid="oi%tx2_3v3">hycom1</value>
+      <value grid="oi%tx2_0v1">hycom1</value>
       <value grid="oi%tx0.25v1">hycom1</value>
       <value grid="oi%MISOMIP">sigma_shelf_zstar</value>
     </values>
