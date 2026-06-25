@@ -123,17 +123,22 @@ def get_input_data_list_files(input_data_list_yaml, MOM_input_files):
             varname, extract_values(input_data_list[varname])
         )
         if _files:
-            # Expand expandable variables in the input_data_list.yaml file
-            for i, _file in enumerate(_files):
+            # Expand expandable variables in the input_data_list.yaml file.
+            expanded_files = []
+            for _file in _files:
                 # Find all expandable variables in the file name:
                 expandable_vars = re.findall(r"\$\{.*\}|\b\$.*\b", _file)
+                replaced = False
                 for expandable_var in expandable_vars:
-                    if expandable_var.strip("${}") in MOM_input_files:
-                        # Replace the expandable variable with the corresponding file name from MOM_input.yaml
-                        _files.pop(i)
-                        _files.extend(MOM_input_files[expandable_var.strip("${}")])
+                    varkey = expandable_var.strip("${}")
+                    if varkey in MOM_input_files:
+                        # Replace the expandable variable with the corresponding file name(s) from MOM_input.yaml
+                        expanded_files.extend(MOM_input_files[varkey])
+                        replaced = True
+                if not replaced:
+                    expanded_files.append(_file)
 
-            files[varname] = _files
+            files[varname] = expanded_files
 
     return files
 
