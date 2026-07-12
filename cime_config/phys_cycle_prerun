@@ -65,25 +65,6 @@ def phys_cycle_prerun(caseroot):
         expect(mom6_phys_cycle_months_run_since_cycle_new <= mom6_phys_cycle_years_in_cycle * 12,
                "run will overshoot phys_cycle run length")
 
-        # -------------------------------------------------------------------------
-        # If this is the beginning of a physics cycle, store a copy of MOM6 rpointer
-        # files for resetting of model physics at beginning of next cycle. This
-        # is not necessary for startup runs, since MOM6 does not use restart files
-        # at the beginning of the physics cycle in that situation.
-        # -------------------------------------------------------------------------
-
-        if (run_type != "startup") and (mom6_phys_cycle_months_run_since_cycle == 0):
-            logger.info("Beginning of a physics cycle")
-            logger.info("Storing a copy of MOM6 rpointer files for resetting model physics")
-            rundir = case.get_value("RUNDIR")
-            caseroot = case.get_value("CASEROOT")
-
-            for rpointer_filename in [ "rpointer.ocn.restart", "rpointer.ocn.ovf" ]:
-                sfile = os.path.join(rundir, rpointer_filename)
-                dfile = os.path.join(caseroot, "Buildconf", "momconf", rpointer_filename+".orig")
-                expect(os.path.isfile(sfile), "required mom6 file %s is missing" % sfile)
-                shutil.copy(sfile, dfile)
-
 ###############################################################################
 
 if __name__ == "__main__":

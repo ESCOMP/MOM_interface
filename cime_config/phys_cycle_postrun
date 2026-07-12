@@ -57,7 +57,6 @@ def phys_cycle_postrun(caseroot):
         mom6_phys_cycle_months_in_cycle = mom6_phys_cycle_years_in_cycle * 12
         if mom6_phys_cycle_months_run_since_cycle_new < mom6_phys_cycle_months_in_cycle:
             case.set_value("CONTINUE_RUN", "TRUE")
-            case.set_value("MOM6_PASSIVE_TRACER_RESTART_OVERRIDE", "none")
             case.flush()
             return
 
@@ -73,9 +72,6 @@ def phys_cycle_postrun(caseroot):
         logger.info("resetting model physics")
         case.set_value("CONTINUE_RUN", "FALSE")
         case.set_value("MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE", 0)
-
-        with open(os.path.join(rundir, "rpointer.ocn.restart"),'r') as f:
-            case.set_value("MOM6_PASSIVE_TRACER_RESTART_OVERRIDE", os.path.join(rundir, f.readline()))
 
         # -------------------------------------------------------------------------
         # Compute new RUN_STARTDATE
@@ -98,17 +94,6 @@ def phys_cycle_postrun(caseroot):
                 case.set_value(align_varname, align_val)
 
         case.flush()
-
-        # -------------------------------------------------------------------------
-        # re-prestage MOM6 rpointer files if necessary
-        # -------------------------------------------------------------------------
-
-        if run_type != "startup":
-            for rpointer_filename in [ "rpointer.ocn.restart", "rpointer.ocn.ovf" ]:
-                sfile = os.path.join(caseroot, "Buildconf", "momconf", rpointer_filename+".orig")
-                dfile = os.path.join(rundir, rpointer_filename)
-                expect(os.path.isfile(sfile), "required mom6 file %s is missing" % sfile)
-                shutil.copy(sfile, dfile)
 
 ###############################################################################
 
