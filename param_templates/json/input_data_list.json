@@ -91,28 +91,21 @@
          "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "${INPUTDIR}/ocean_rho2_190917.nc"
       },
       "MARBL_TRACERS_IC_FILE": {
-         "$MARBL_CONFIG == \"latest\"": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc",
-         "$MARBL_CONFIG == \"latest+4p2z\"": "${INPUTDIR}/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
+         "$MARBL_CONFIG == \"latest\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc",
+         "$MARBL_CONFIG == \"latest+4p2z\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
       },
-      "MARBL_FESEDFLUX_FILE": {
+      "MARBL_FE_INTERIOR_SOURCE_FILE": {
          "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fesedflux_2024algo_tx2_3v2.c251229.nc"
-         }
-      },
-      "MARBL_FESEDFLUXRED_FILE": {
-         "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fesedfluxRed_2024algo_tx2_3v2.c251229.nc"
-         }
-      },
-      "MARBL_FEVENTFLUX_FILE": {
-         "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/feventflux_5gmol_tx2_3v2.c231205.nc"
+            "$OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/fe_sources_sed2024algo_tx2_3v2_20260711.nc",
+            "$OCN_GRID == \"tx2_3v3\"": "${INPUTDIR}/fe_sources_sed2024algo_vent2026algo_tx2_3v3.c260701.nc"
          }
       },
       "RIV_FLUX_FILE": {
          "\"BASE_BIO_ON=TRUE\" in $MARBL_TRACER_OPTS": {
-            "$ROF_GRID == \"JRA025\" and $OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/riv_nut.gnews_gnm.rJRA025_to_tx2_3v2_nnsm_e333r100_230415.20240202.nc",
-            "$ROF_GRID == \"r05\" and $OCN_GRID == \"tx2_3v2\"": "${INPUTDIR}/riv_nut.gnews_gnm.r05_to_tx2_3v2_nnsm_e250r250_230914.20240202.nc"
+            "$OCN_GRID == \"tx2_3v2\" and $ROF_GRID == \"JRA025\"": "${INPUTDIR}/riv_nut.gnews_gnm.rJRA025_to_tx2_3v2_nnsm_e333r100_230415.20240202.nc",
+            "$OCN_GRID == \"tx2_3v2\" and $ROF_GRID == \"r05\"": "${INPUTDIR}/riv_nut.gnews_gnm.r05_to_tx2_3v2_nnsm_e250r250_230914.20240202.nc",
+            "$OCN_GRID == \"tx2_3v3\" and $ROF_GRID == \"JRA025\"": "${INPUTDIR}/riv_nut.gnews_gnm.rJRA025_to_tx2_3v3_nnsm_e100r100_260306.20260424.nc",
+            "$OCN_GRID == \"tx2_3v3\" and $ROF_GRID == \"r05\"": "${INPUTDIR}/riv_nut.gnews_gnm.r05_to_tx2_3v3_nnsm_e100r100_260306.20260424.nc"
          }
       },
       "MARBL_D14C_FILE_1": {

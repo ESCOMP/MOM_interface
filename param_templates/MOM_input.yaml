@@ -355,29 +355,35 @@ Global:
             for the MARBL tracer package."
         datatype: string
         value:
-            $MARBL_CONFIG == "latest": ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
-            $MARBL_CONFIG == "latest+4p2z": ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
-    MARBL_FESEDFLUX_FILE:
+            $RUN_TYPE == "hybrid":
+                = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+            else:
+                $MARBL_CONFIG == "latest": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
+                $MARBL_CONFIG == "latest+4p2z": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
+    MARBL_TRACERS_IC_FILE_IS_Z:
         description: |
-            "Name of file containing iron sediment flux
-             forcing field for the MARBL tracer package."
+            "[Boolean] default = True
+            If true, MARBL_TRACERS_IC_FILE is in depth space, not layer space."
+        datatype: logical
+        units: Boolean
+        value:
+            $RUN_TYPE == "hybrid": False
+    MARBL_IC_MIN_VAL:
+        description: |
+            "Minimum value of tracer initial conditions
+             (when initializing from Z)"
+        datatype: real
+        units: conc units
+        value:
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $TEST': 1e-50
+    MARBL_FE_INTERIOR_SOURCE_FILE:
+        description: |
+            "Name of file containing iron sediment fluxes and vent
+             flux forcing fields for the MARBL tracer package."
         datatype: string
         value:
-            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': fesedflux_2024algo_tx2_3v2.c251229.nc
-    MARBL_FESEDFLUXRED_FILE:
-        description: |
-            "Name of file containing iron reducing sediment flux
-             forcing field for the MARBL tracer package."
-        datatype: string
-        value:
-            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': fesedfluxRed_2024algo_tx2_3v2.c251229.nc
-    MARBL_FEVENTFLUX_FILE:
-        description: |
-            "Name of file containing iron sediment flux
-             forcing field for the MARBL tracer package."
-        datatype: string
-        value:
-            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': feventflux_5gmol_tx2_3v2.c231205.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2"': fe_sources_sed2024algo_tx2_3v2_20260711.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v3"': fe_sources_sed2024algo_vent2026algo_tx2_3v3.c260701.nc
     READ_RIV_FLUXES:
         description: |
             "Use river fluxes provided by RIV_FLUX_FILE."
@@ -392,6 +398,8 @@ Global:
         value:
             '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2" and $ROF_GRID == "JRA025"': riv_nut.gnews_gnm.rJRA025_to_tx2_3v2_nnsm_e333r100_230415.20240202.nc
             '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v2" and $ROF_GRID == "r05"': riv_nut.gnews_gnm.r05_to_tx2_3v2_nnsm_e250r250_230914.20240202.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v3" and $ROF_GRID == "JRA025"': riv_nut.gnews_gnm.rJRA025_to_tx2_3v3_nnsm_e100r100_260306.20260424.nc
+            '"BASE_BIO_ON=TRUE" in $MARBL_TRACER_OPTS and $OCN_GRID == "tx2_3v3" and $ROF_GRID == "r05"': riv_nut.gnews_gnm.r05_to_tx2_3v3_nnsm_e100r100_260306.20260424.nc
     MARBL_D14C_FILE_1:
         description: |
             "Name of file containing D14C forcing from 30 N to 90 N."
