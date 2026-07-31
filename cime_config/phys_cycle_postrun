@@ -8,7 +8,7 @@ import os, shutil, sys
 _CIMEROOT = os.environ.get("CIMEROOT")
 if _CIMEROOT is None:
     raise SystemExit("ERROR: must set CIMEROOT environment variable")
-sys.path.append(os.path.join(_CIMEROOT, "scripts", "Tools"))
+sys.path.append(os.path.join(_CIMEROOT, "CIME", "Tools"))
 
 from standard_script_setup import *
 from CIME.case import Case
@@ -24,7 +24,7 @@ def phys_cycle_postrun(caseroot):
     ch.setLevel(logging.INFO)
     logger.addHandler(ch)
 
-    with Case(caseroot) as case:
+    with Case(caseroot, read_only=False) as case:
         mom6_phys_cycle_years_in_cycle = case.get_value("MOM6_PHYS_CYCLE_YEARS_IN_CYCLE")
         expect(mom6_phys_cycle_years_in_cycle is not None,
                "MOM6_PHYS_CYCLE_YEARS_IN_CYCLE should be defined when %s is called" % sys.argv[0])
@@ -84,14 +84,20 @@ def phys_cycle_postrun(caseroot):
         case.set_value("RUN_STARTDATE", run_startdate)
 
         # -------------------------------------------------------------------------
-        # Compute new _CPLHIST_YR_ALIGN variables
+        # Update CPLHIST ALIGN variables
         # -------------------------------------------------------------------------
 
-        for align_varname in [ "DATM_CPLHIST_YR_ALIGN", "DROF_CPLHIST_YR_ALIGN" ]:
-            align_val = case.get_value(align_varname)
-            if align_val is not None:
-                align_val = align_val + mom6_phys_cycle_years_in_cycle
-                case.set_value(align_varname, align_val)
+        varnames_dict = {
+            'DATM_MODE': 'DATM_CPLHIST_YR_ALIGN',
+            'DROF_MODE': 'DROF_CPLHIST_YR_ALIGN'
+        }
+        for mode_varname in varnames_dict:
+            if case.get_value(mode_varname) == "CPLHIST":
+                align_varname = varnames_dict[mode_varname]
+                align_val = case.get_value(align_varname)
+                if align_val is not None:
+                    align_val = align_val + mom6_phys_cycle_years_in_cycle
+                    case.set_value(align_varname, align_val)
 
         case.flush()
 

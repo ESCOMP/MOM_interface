@@ -355,11 +355,14 @@ Global:
             for the MARBL tracer package."
         datatype: string
         value:
-            $RUN_TYPE == "hybrid":
-                = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0:
+                = f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
             else:
-                $MARBL_CONFIG == "latest": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
-                $MARBL_CONFIG == "latest+4p2z": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
+                $RUN_TYPE == "hybrid":
+                    = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+                else:
+                    $MARBL_CONFIG == "latest": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
+                    $MARBL_CONFIG == "latest+4p2z": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
     MARBL_TRACERS_IC_FILE_IS_Z:
         description: |
             "[Boolean] default = True
@@ -367,7 +370,17 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $RUN_TYPE == "hybrid": False
+            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0: True
+            else:
+                $RUN_TYPE == "hybrid": False
+    MARBL_TRACERS_INIT_VERTICAL_REMAP_ONLY:
+        description: |
+            "[Boolean] default = False
+            If true, initial conditions are on the model horizontal grid."
+        datatype: logical
+        units: Boolean
+        value:
+            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0: True
     MARBL_IC_MIN_VAL:
         description: |
             "Minimum value of tracer initial conditions
@@ -1408,9 +1421,12 @@ Global:
             For each coordinate, an entry in DIAG_COORDS must be provided."
         datatype: integer
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 2
-            $OCN_GRID == "tx2_0v1": 1
-            $OCN_GRID == "tx0.25v1": 1
+            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0:
+                $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 3
+            else:
+                $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 2
+                $OCN_GRID == "tx2_0v1": 1
+                $OCN_GRID == "tx0.25v1": 1
     DIAG_COORDS:
         description: |
             "A list of string tuples associating diag_table modules to
@@ -1418,9 +1434,12 @@ Global:
             is of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME."
         datatype: string
         value:
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"z Z ZSTAR", "rho2 RHO2 RHO"'
-            $OCN_GRID == "tx2_0v1": '"z Z ZSTAR"'
-            $OCN_GRID == "tx0.25v1": '"z Z ZSTAR"'
+            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0:
+                $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"z Z ZSTAR", "rho2 RHO2 RHO", "z2023 Z2023 ZSTAR"'
+            else:
+                $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"z Z ZSTAR", "rho2 RHO2 RHO"'
+                $OCN_GRID == "tx2_0v1": '"z Z ZSTAR"'
+                $OCN_GRID == "tx0.25v1": '"z Z ZSTAR"'
     DIAG_COORD_DEF_RHO2:
         description: |
             " default = 'WOA09'
@@ -1432,6 +1451,8 @@ Global:
             by a comma or space, e.g. FILE:lev.nc,dz
             or FILE:lev.nc,interfaces=zw
             WOA09[:N]   - the WOA09 vertical grid (approximately)
+            WOA09INT[:N] - layers spanned by the WOA09 depths
+            WOA23INT[:N] - layers spanned by the WOA23 depths
             FNC1:string - FNC1:dz_min,H_total,power,precision
             HYBRID:string - read from a file. The string specifies
             the filename and two variable names, separated
@@ -1440,6 +1461,26 @@ Global:
         datatype: string
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"FILE:ocean_rho2_190917.nc,interfaces=rho2"'
+    DIAG_COORD_DEF_Z2023:
+        description: |
+            " default = 'WOA09'
+            Determines how to specify the coordinate resolution. Valid options are:
+            PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
+            UNIFORM[:N] - uniformly distributed
+            FILE:string - read from a file. The string specifies
+            the filename and variable name, separated
+            by a comma or space, e.g. FILE:lev.nc,dz
+            or FILE:lev.nc,interfaces=zw
+            WOA09[:N]   - the WOA09 vertical grid (approximately)
+            WOA09INT[:N] - layers spanned by the WOA09 depths
+            WOA23INT[:N] - layers spanned by the WOA23 depths
+            FNC1:string - FNC1:dz_min,H_total,power,precision
+            HYBRID:string - read from a file. The string specifies
+            the filename and two variable names, separated
+            by a comma or space, for sigma-2 and dz. e.g.
+            HYBRID:vgrid.nc,sigma2,dz"
+        datatype: string
+        value: WOA23INT
     DIAG_MISVAL:
         description: |
             "TODO"

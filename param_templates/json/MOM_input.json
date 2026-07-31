@@ -258,10 +258,13 @@
          "description": "\"Name of file containing initial conditions\nfor the MARBL tracer package.\"\n",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'",
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": "= f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'",
             "else": {
-               "$MARBL_CONFIG == \"latest\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc",
-               "$MARBL_CONFIG == \"latest+4p2z\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
+               "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'",
+               "else": {
+                  "$MARBL_CONFIG == \"latest\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc",
+                  "$MARBL_CONFIG == \"latest+4p2z\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
+               }
             }
          }
       },
@@ -270,7 +273,18 @@
          "datatype": "logical",
          "units": "Boolean",
          "value": {
-            "$RUN_TYPE == \"hybrid\"": false
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": true,
+            "else": {
+               "$RUN_TYPE == \"hybrid\"": false
+            }
+         }
+      },
+      "MARBL_TRACERS_INIT_VERTICAL_REMAP_ONLY": {
+         "description": "\"[Boolean] default = False\nIf true, initial conditions are on the model horizontal grid.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": true
          }
       },
       "MARBL_IC_MIN_VAL": {
@@ -1111,26 +1125,41 @@
          "description": "\" The number of diagnostic vertical coordinates to use.\nFor each coordinate, an entry in DIAG_COORDS must be provided.\"\n",
          "datatype": "integer",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 2,
-            "$OCN_GRID == \"tx2_0v1\"": 1,
-            "$OCN_GRID == \"tx0.25v1\"": 1
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": {
+               "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 3
+            },
+            "else": {
+               "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": 2,
+               "$OCN_GRID == \"tx2_0v1\"": 1,
+               "$OCN_GRID == \"tx0.25v1\"": 1
+            }
          }
       },
       "DIAG_COORDS": {
          "description": "\"A list of string tuples associating diag_table modules to\na coordinate definition used for diagnostics. Each string\nis of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME.\"\n",
          "datatype": "string",
          "value": {
-            "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "\"z Z ZSTAR\", \"rho2 RHO2 RHO\"",
-            "$OCN_GRID == \"tx2_0v1\"": "\"z Z ZSTAR\"",
-            "$OCN_GRID == \"tx0.25v1\"": "\"z Z ZSTAR\""
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": {
+               "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "\"z Z ZSTAR\", \"rho2 RHO2 RHO\", \"z2023 Z2023 ZSTAR\""
+            },
+            "else": {
+               "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "\"z Z ZSTAR\", \"rho2 RHO2 RHO\"",
+               "$OCN_GRID == \"tx2_0v1\"": "\"z Z ZSTAR\"",
+               "$OCN_GRID == \"tx0.25v1\"": "\"z Z ZSTAR\""
+            }
          }
       },
       "DIAG_COORD_DEF_RHO2": {
-         "description": "\" default = 'WOA09'\nDetermines how to specify the coordinate resolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_RHO2\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
+         "description": "\" default = 'WOA09'\nDetermines how to specify the coordinate resolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_RHO2\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nWOA09INT[:N] - layers spanned by the WOA09 depths\nWOA23INT[:N] - layers spanned by the WOA23 depths\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
             "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "\"FILE:ocean_rho2_190917.nc,interfaces=rho2\""
          }
+      },
+      "DIAG_COORD_DEF_Z2023": {
+         "description": "\" default = 'WOA09'\nDetermines how to specify the coordinate resolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_RHO2\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nWOA09INT[:N] - layers spanned by the WOA09 depths\nWOA23INT[:N] - layers spanned by the WOA23 depths\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
+         "datatype": "string",
+         "value": "WOA23INT"
       },
       "DIAG_MISVAL": {
          "description": "\"TODO\"\n",
