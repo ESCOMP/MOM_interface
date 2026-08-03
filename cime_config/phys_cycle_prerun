@@ -3,7 +3,9 @@
 """mom6 physics cycle prerun script
 """
 
-import os, shutil, sys
+import logging
+import os
+import sys
 
 _CIMEROOT = os.environ.get("CIMEROOT")
 if _CIMEROOT is None:
@@ -27,24 +29,23 @@ def phys_cycle_prerun(caseroot):
     with Case(caseroot, read_only=False) as case:
         mom6_phys_cycle_years_in_cycle = case.get_value("MOM6_PHYS_CYCLE_YEARS_IN_CYCLE")
         expect(mom6_phys_cycle_years_in_cycle is not None,
-               "MOM6_PHYS_CYCLE_YEARS_IN_CYCLE should be defined when %s is called" % sys.argv[0])
-        logger.info("mom6_phys_cycle_years_in_cycle is %d", mom6_phys_cycle_years_in_cycle)
-        if (mom6_phys_cycle_years_in_cycle <= 0):
+               f"MOM6_PHYS_CYCLE_YEARS_IN_CYCLE should be defined when {sys.argv[0]} is called")
+        logger.info("mom6_phys_cycle_years_in_cycle = %d", mom6_phys_cycle_years_in_cycle)
+        if mom6_phys_cycle_years_in_cycle <= 0:
             return
 
-        # run_type cannot be branch
-        run_type = case.get_value("RUN_TYPE")
-        expect(run_type != "branch",
+        # RUN_TYPE cannot be branch
+        expect(case.get_value("RUN_TYPE") != "branch",
                "RUN_TYPE set to branch not implemented for MOM6 physics cycling"
                " because RUN_STARTDATE cannot be incremented")
 
         # stop_option must be nmonth, nmonths, nyear or nyears
         stop_option = case.get_value("STOP_OPTION")
         expect((stop_option.find("nmonth") == 0) or (stop_option.find("nyear") == 0),
-               "STOP_OPTION=%s not implemented for MOM6 physics cycling" % stop_option)
+               f"STOP_OPTION={stop_option} not implemented for MOM6 physics cycling")
 
         # implementation currently requires DOUT_S=FALSE
-        expect(case.get_value("DOUT_S") == False,
+        expect(not case.get_value("DOUT_S"),
                "PHYS_CYCLE implementation assumes DOUT_S=FALSE, to locate MARBL_TRACERS_IC_FILE")
 
         # -------------------------------------------------------------------------
@@ -57,14 +58,20 @@ def phys_cycle_prerun(caseroot):
         # Ensure that the current run length will not overshoot the phys_cycle run length
         # -------------------------------------------------------------------------
 
-        mom6_phys_cycle_months_run_since_cycle = case.get_value("MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE")
+        mom6_phys_cycle_months_run_since_cycle = case.get_value(
+            "MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE"
+        )
         mom6_phys_cycle_years_in_cycle = case.get_value("MOM6_PHYS_CYCLE_YEARS_IN_CYCLE")
 
         stop_n = case.get_value("STOP_N")
         if stop_option.find("nmonth") == 0:
-            mom6_phys_cycle_months_run_since_cycle_new = mom6_phys_cycle_months_run_since_cycle + stop_n
+            mom6_phys_cycle_months_run_since_cycle_new = (
+                mom6_phys_cycle_months_run_since_cycle + stop_n
+            )
         elif stop_option.find("nyear") == 0:
-            mom6_phys_cycle_months_run_since_cycle_new = mom6_phys_cycle_months_run_since_cycle + stop_n * 12
+            mom6_phys_cycle_months_run_since_cycle_new = (
+                mom6_phys_cycle_months_run_since_cycle + stop_n * 12
+            )
 
         expect(mom6_phys_cycle_months_run_since_cycle_new <= mom6_phys_cycle_years_in_cycle * 12,
                "run will overshoot phys_cycle run length")
