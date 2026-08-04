@@ -44,10 +44,6 @@ def phys_cycle_prerun(caseroot):
         expect((stop_option.find("nmonth") == 0) or (stop_option.find("nyear") == 0),
                f"STOP_OPTION={stop_option} not implemented for MOM6 physics cycling")
 
-        # implementation currently requires DOUT_S=FALSE
-        expect(not case.get_value("DOUT_S"),
-               "PHYS_CYCLE implementation assumes DOUT_S=FALSE, to locate MARBL_TRACERS_IC_FILE")
-
         # -------------------------------------------------------------------------
         # Ensure that phys_cycle scripts are in charge of setting CONTINUE_RUN
         # -------------------------------------------------------------------------

@@ -356,7 +356,10 @@ Global:
         datatype: string
         value:
             $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0:
-                = f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
+                $DOUT_S:
+                    = f'${DOUT_S_ROOT}/ocn/hist/{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
+                else:
+                    = f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
             else:
                 $RUN_TYPE == "hybrid":
                     = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'

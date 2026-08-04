@@ -258,7 +258,10 @@
          "description": "\"Name of file containing initial conditions\nfor the MARBL tracer package.\"\n",
          "datatype": "string",
          "value": {
-            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": "= f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'",
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": {
+               "$DOUT_S": "= f'${DOUT_S_ROOT}/ocn/hist/{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'",
+               "else": "= f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'"
+            },
             "else": {
                "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'",
                "else": {
