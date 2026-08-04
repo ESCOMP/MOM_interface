@@ -104,7 +104,7 @@ def phys_cycle_postrun(caseroot):
                 if align_val is not None:
                     align_val = align_val + mom6_phys_cycle_years_in_cycle
                     case.set_value(align_varname, align_val)
-                    logger.info("%s incremented to %d", align_val, align_val)
+                    logger.info("%s incremented to %d", align_varname, align_val)
 
         case.flush()
 
