@@ -57,7 +57,7 @@ def phys_cycle_postrun(caseroot):
 
         case.set_value("MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE",
                        mom6_phys_cycle_months_run_since_cycle_new)
-        logger.info("mom6_phys_cycle_months_run_since_cycle_new = %d",
+        logger.info("MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE incremented to %d",
                     mom6_phys_cycle_months_run_since_cycle_new)
 
         mom6_phys_cycle_months_in_cycle = mom6_phys_cycle_years_in_cycle * 12
@@ -88,13 +88,14 @@ def phys_cycle_postrun(caseroot):
         yyyy = yyyy + mom6_phys_cycle_years_in_cycle
         run_startdate = f"{yyyy:04d}{run_startdate[4:]}"
         case.set_value("RUN_STARTDATE", run_startdate)
+        logger.info("RUN_STARTDATE incremented to %s", run_startdate)
 
         # -------------------------------------------------------------------------
         # Update CPLHIST ALIGN variables
         # -------------------------------------------------------------------------
 
         varnames_dict = {
-            'DATM_MODE': 'DATM_CPLHIST_YR_ALIGN',
+            'DATM_MODE': 'DATM_YR_ALIGN',
             'DROF_MODE': 'DROF_CPLHIST_YR_ALIGN'
         }
         for mode_varname, align_varname in varnames_dict.items():
@@ -103,6 +104,7 @@ def phys_cycle_postrun(caseroot):
                 if align_val is not None:
                     align_val = align_val + mom6_phys_cycle_years_in_cycle
                     case.set_value(align_varname, align_val)
+                    logger.info("%s incremented to %d", align_val, align_val)
 
         case.flush()
 
