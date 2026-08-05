@@ -356,10 +356,12 @@ Global:
         datatype: string
         value:
             $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0:
-                $DOUT_S:
-                    = f'${DOUT_S_ROOT}/ocn/hist/{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
+                $MOM6_PHYS_CYCLE_USE_MARBL_IC_FILE: $MOM6_PHYS_CYCLE_MARBL_IC_FILE
                 else:
-                    = f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
+                    $DOUT_S:
+                        = f'${DOUT_S_ROOT}/ocn/hist/{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
+                    else:
+                        = f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
             else:
                 $RUN_TYPE == "hybrid":
                     = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
@@ -373,7 +375,7 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0: True
+            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0: = not $MOM6_PHYS_CYCLE_USE_MARBL_IC_FILE
             else:
                 $RUN_TYPE == "hybrid": False
     MARBL_TRACERS_INIT_VERTICAL_REMAP_ONLY:

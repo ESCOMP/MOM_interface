@@ -34,6 +34,13 @@ def phys_cycle_postrun(caseroot):
             return
 
         # -------------------------------------------------------------------------
+        # Ensure MOM6_PHYS_CYCLE_MARBL_IC_FILE is only used in first PHYS_CYCLE cycle
+        # -------------------------------------------------------------------------
+
+        case.set_value("MOM6_PHYS_CYCLE_USE_MARBL_IC_FILE", "FALSE")
+        case.flush()
+
+        # -------------------------------------------------------------------------
         # Determine if model has run the length of MOM6 physics run cycle length
         # -------------------------------------------------------------------------
 
