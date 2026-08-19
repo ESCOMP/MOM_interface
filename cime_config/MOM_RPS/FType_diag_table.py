@@ -1,12 +1,26 @@
 import os
+from collections import OrderedDict
+
 from CIME.ParamGen.paramgen import ParamGen
+
+from diag_table_streams import (
+    CASENAME,
+    DiagTableError,
+    Field,
+    FieldGroup,
+    int_setting,
+    REQUIRED_SETTINGS,
+    Stream,
+    STREAM_SETTINGS,
+    write_diag_table,
+)
 
 
 class FType_diag_table(ParamGen):
     """Encapsulates data and read/write methods for MOM6 diag_table input file."""
 
-    @classmethod
-    def resolve(cls, unresolved_diag_table_path, resolved_diag_table_path, casename):
+    @staticmethod
+    def resolve(unresolved_diag_table_path, resolved_diag_table_path, casename):
         """Resolve the casename in an unresolved diag_table.
 
         Parameters
@@ -25,178 +39,171 @@ class FType_diag_table(ParamGen):
         with open(resolved_diag_table_path, "w") as resolved_diag_table:
             with open(unresolved_diag_table_path, "r") as diag_table_unresolved:
                 for line in diag_table_unresolved:
-                    resolved_diag_table.write(line.replace("${CASE}", casename))
+                    resolved_diag_table.write(line.replace(CASENAME, casename))
 
     def write(self, output_path, case, MOM_input_final):
-        def get_all_fields(fields_block):
-            """Given a fields block, returns a list of all fields."""
-            all_fields = []
-            if fields_block is not None:
-                all_fields = []
-                all_lists_blocks = [
-                    fields_block[lists_label]
-                    for lists_label in fields_block
-                    if lists_label.startswith("lists")
-                ]
-                for lists_block in all_lists_blocks:
-                    if lists_block is not None:
-                        all_fields.extend(sum(lists_block, []))
-            return all_fields
+        """Writes out the diag_table of a case.
 
-        def is_empty_file(file_block):
-            """Returns true if the fields list of file is empty."""
-            all_fields_blocks = [
-                file_block[fields_label]
-                for fields_label in file_block
-                if fields_label.startswith("fields")
-            ]
-            for fields_block in all_fields_blocks:
-                if fields_block is None:
-                    continue
-                all_lists_blocks = [
-                    fields_block[lists_label]
-                    for lists_label in fields_block
-                    if lists_label.startswith("lists")
-                ]
-                for lists_block in all_lists_blocks:
-                    if len(lists_block) > 0:
-                        return False
-            return True
+        Parameters
+        ----------
+        output_path : str
+            The path of the diag_table to be created. The case name is left
+            unresolved in it, to be substituted later by the resolve method.
+        case : CIME.case.Case
+            The case whose diag_table is to be written.
+        MOM_input_final : FType_MOM_params
+            The MOM6 parameters of the case, i.e., MOM_input updated with
+            MOM_override. Consulted for expandable variables that are MOM6
+            parameters rather than case variables.
+        """
 
         def expand_func(varname):
             val = case.get_value(varname)
             if val is None:
-                val = MOM_input_final.data["Global"][varname]["value"]
+                val = (
+                    MOM_input_final.data.get("Global", {}).get(varname, {}).get("value")
+                )
             if val is None:
-                raise RuntimeError("Cannot determine the value of variable: " + varname)
+                raise DiagTableError(
+                    "Cannot determine the value of the variable {} appearing in "
+                    "the diag_table template: it is neither a case variable nor a "
+                    "MOM6 parameter of this case.".format(varname)
+                )
             return val
 
-        # From the general template (diag_table.yaml), reduce a custom diag_table for this case
+        # From the general template (diag_table.yaml), reduce a custom diag_table
+        # for this case, and turn its file entries into streams.
         self.reduce(expand_func)
+        write_diag_table(list(self._streams().values()), output_path)
 
-        with open(os.path.join(output_path), "w") as diag_table:
-
-            # Print header:
-            casename = "${CASE}"
-            diag_table.write(
-                '"MOM6 diagnostic fields table for CESM case: ' + casename + '"\n'
+    def _streams(self):
+        """Returns the streams of this case, keyed and ordered by stream name."""
+        assert self.reduced, "May only collect streams from a reduced diag_table."
+        defaults = self.data.get("FileDefaults") or {}
+        _check_defaults(defaults)
+        if not self.data.get("Files"):
+            raise DiagTableError(
+                "The diag_table template has no Files section, and so describes "
+                "no output at all."
             )
-            diag_table.write("1 1 1 0 0 0\n")  # TODO
-            filename = lambda suffix: '"' + casename + ".mom6." + suffix + '"'
+        streams = OrderedDict()
+        for label, entry in self.data["Files"].items():
+            stream = _stream_from_entry(label, entry, defaults)
+            if stream.name in streams:
+                streams[stream.name].merge(stream)
+            else:
+                streams[stream.name] = stream
+        return streams
 
-            # max filename length:
-            mfl = (
-                max(
-                    [
-                        len(filename(self._data["Files"][file_block_name]["suffix"]))
-                        for file_block_name in self._data["Files"]
-                    ]
+
+def _check_defaults(defaults):
+    """Checks that the FileDefaults section only provides stream settings."""
+    unknown = [key for key in defaults if key not in STREAM_SETTINGS]
+    if unknown:
+        raise DiagTableError(
+            "Unknown setting(s) {} in the FileDefaults section of the diag_table "
+            "template. Only the settings of a file may be given a default: "
+            "{}.".format(", ".join(unknown), ", ".join(STREAM_SETTINGS))
+        )
+
+
+def _value_of(setting, entry, defaults, fallback=None):
+    """Returns the value of a setting: the entry's, else the default, else fallback."""
+    for source in (entry, defaults):
+        value = source.get(setting)
+        if value is not None:
+            return value
+    return fallback
+
+
+def _stream_from_entry(label, entry, defaults):
+    """Builds a Stream from one entry of the Files section of the template.
+
+    Parameters
+    ----------
+    label : str
+        The label of the entry, which is also the name of the stream unless the
+        entry provides an explicit, possibly configuration dependent, name.
+    entry : dict
+        The reduced entry, i.e., its settings and its fields blocks.
+    defaults : dict
+        The reduced FileDefaults section, providing the value of any setting that
+        the entry itself does not specify.
+    """
+    unknown = [
+        key
+        for key in entry
+        if key != "name" and key not in STREAM_SETTINGS and not key.startswith("fields")
+    ]
+    if unknown:
+        raise DiagTableError(
+            "Unknown setting(s) {} in diag_table template entry {}. Valid "
+            "settings are: {}, name, and fields blocks.".format(
+                ", ".join(unknown), label, ", ".join(STREAM_SETTINGS)
+            )
+        )
+    # A stream is named after its entry, unless the entry names itself. Only the
+    # MARBL entries do, in renaming their files to reflect the frequency of a
+    # spinup run, which a label cannot express because guards live in values.
+    stream = Stream(entry.get("name") or label, labels=[label])
+    for setting in REQUIRED_SETTINGS:
+        stream.settings[setting] = _value_of(setting, entry, defaults)
+
+    # A file that is written only once is never rolled over, and so has neither a
+    # new_file_freq nor a date template in its name. Otherwise a new file is
+    # started once per unit of the output frequency, unless said otherwise.
+    if int_setting(stream.settings["output_freq"], "output_freq", stream.source) > 0:
+        stream.settings["new_file_freq"] = _value_of(
+            "new_file_freq", entry, defaults, 1
+        )
+        stream.settings["new_file_freq_units"] = _value_of(
+            "new_file_freq_units",
+            entry,
+            defaults,
+            stream.settings["output_freq_units"],
+        )
+
+    for fields_label in [key for key in entry if key.startswith("fields")]:
+        fields_block = entry[fields_label]
+        if fields_block is None:  # the guards of this block are all false
+            continue
+        try:
+            unknown = [
+                key
+                for key in fields_block
+                if key != "module" and not key.startswith("lists")
+            ]
+            if unknown:
+                raise DiagTableError(
+                    "the {} block has unknown key(s) {}. A fields block may only "
+                    "have a module and lists of fields.".format(
+                        fields_label, ", ".join(unknown)
+                    )
                 )
-                + 4
-            )  # quotation marks and tabbing
-
-            # Section 1: File section
-            diag_table.write("### Section-1: File List\n")
-            diag_table.write("#========================\n")
-
-            for file_block_name in self._data["Files"]:
-                file_block = self._data["Files"][file_block_name]
-                fname = filename(file_block["suffix"])
-
-                # if the fields list(s) is empty, skip to the next file:
-                if is_empty_file(file_block):
-                    continue
-
-                file_descr_str = (
-                    "{fname:"
-                    + str(mfl)
-                    + "s} {output_freq:3s} {output_freq_units:9s} 1, "
-                    '{time_axis_units:9s} "time"'
-                ).format(
-                    fname=fname + ",",
-                    output_freq=str(file_block["output_freq"]) + ",",
-                    output_freq_units='"' + file_block["output_freq_units"] + '",',
-                    time_axis_units='"' + file_block["time_axis_units"] + '",',
+            if fields_block.get("module") is None:
+                raise DiagTableError(
+                    "the {} block has no module. Add one, naming the MOM6 "
+                    "diagnostics module that its fields come from.".format(fields_label)
                 )
-
-                if "new_file_freq" in file_block:
-                    file_descr_str += ", " + str(file_block["new_file_freq"]) + ", "
-                    if "time_axis_units" in file_block:
-                        file_descr_str += (
-                            '"' + str(file_block["new_file_freq_units"]) + '"'
-                        )
-                diag_table.write(file_descr_str + "\n")
-
-            diag_table.write("\n")
-
-            ## Field section (per file):
-            diag_table.write("### Section-2: Fields List\n")
-            diag_table.write("#=========================\n")
-            for file_block_name in self._data["Files"]:
-                file_block = self._data["Files"][file_block_name]
-                fname = filename(file_block["suffix"])
-
-                # if the fields list(s) is empty, skip to the next file:
-                if is_empty_file(file_block):
+            group = FieldGroup(fields_block["module"])
+            for lists_label in [key for key in fields_block if key.startswith("lists")]:
+                lists_block = fields_block[lists_label]
+                if lists_block is None:  # the guards of this block are all false
                     continue
-
-                # write the header for the fields list of this file block
-                diag_table.write("# {fname}\n".format(fname=fname))
-
-                # keep a record of all fields in this file to make sure no duplicate field exists
-                all_fields = []
-
-                # all of the fields blocks, i.e., blocks starting with "fields" prefix
-                all_fields_blocks = [
-                    file_block[fields_label]
-                    for fields_label in file_block
-                    if fields_label.startswith("fields")
-                ]
-
-                # Loop over fields blocks
-                for field_block in all_fields_blocks:
-                    module = field_block["module"]
-                    packing = field_block["packing"]
-                    field_list_1d = get_all_fields(field_block)
-
-                    # seperate field_name, alias, and reduction method
-                    # (the latter two are optional)
-                    field_list_1d_seperated = []
-                    for field in field_list_1d:
-                        field_split = field.split(":")
-                        field_name = field_split[0]
-                        alias = field_name
-                        reduction = file_block["reduction_method"]
-                        assert 1 <= len(field_split) <= 3, (
-                            "Invalid field format: " + field
-                        )
-                        if len(field_split) >= 2:
-                            alias = field_split[1]
-                        if len(field_split) >= 3:
-                            reduction = field_split[2]
-
-                        field_list_1d_seperated.append((field_name, alias, reduction))
-
-                    # check if there are any duplicate fields in the same file:
-                    field_set = set()
-                    for field_name, alias, reduction in field_list_1d_seperated:
-                        if alias in field_set:
-                            raise ValueError(
-                                'Field "'
-                                + alias
-                                + '" is listed more than once'
-                                + " in file: "
-                                + file_block["suffix"]
+                for field_list in lists_block:
+                    if not isinstance(field_list, list):
+                        raise DiagTableError(
+                            "the {} block holds {!r} where a list of fields was "
+                            "expected. Each element of a lists block is itself a "
+                            "list, so that field lists can be combined.".format(
+                                lists_label, field_list
                             )
-                        field_set.add(alias)
-
-                    mfnl = max([len(field) for field in field_list_1d]) + 3
-                    mfnl = min(16, mfnl)  # limit to 16
-                    w = lambda s: f'"{s}",'  # wrap string in quotes and add comma
-                    for field_name, alias, reduction in field_list_1d_seperated:
-                        diag_table.write(
-                            f'{w(module)} {w(field_name):{mfnl}}{w(alias):{mfnl}}{fname}, "all", '
-                            f'{w(reduction)} {w(file_block["regional_section"])} {packing}\n'
                         )
+                    group.fields.extend(Field(spec) for spec in field_list)
+            stream.groups.append(group)
+        except DiagTableError as error:
+            raise DiagTableError(
+                "Cannot write {}: {}".format(stream.source, error)
+            ) from error
 
-                diag_table.write("\n")
+    return stream

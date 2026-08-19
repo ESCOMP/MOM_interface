@@ -65,10 +65,10 @@ class DiagTableClass(object):
         # "medium" frequency should be treated like "mom6.h.native" stream -- annual in spinup runs, monthly otherwise
         # i. 2D vars
         new_file_freq_units = "days" if self._nstep_output else None
-        suffix_dict = {
-            '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual%4yr",
-            "$TEST == True": "h.bgc.native%4yr-%2mo-%2dy",
-            "else": "h.bgc.native%4yr-%2mo",
+        name_dict = {
+            '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual",
+            "$TEST == True": "h.bgc.native",
+            "else": "h.bgc.native",
         }
         output_freq_units_dict = {
             '$OCN_DIAG_MODE == "spinup"': "years",
@@ -77,32 +77,32 @@ class DiagTableClass(object):
             "else": "months",
         }
         self._diag_table_dict["medium"] = self._dict_template(
-            suffix_dict, output_freq_units_dict, new_file_freq_units=new_file_freq_units
+            name_dict, output_freq_units_dict, new_file_freq_units=new_file_freq_units
         )
         # ii. 3D vars on interpolated grid
         if vert_grid in ["interpolated", "both"]:
-            suffix_dict = {
-                '$OCN_DIAG_MODE == "spinup"': "h.bgc.z_annual%4yr",
-                "$TEST == True": "h.bgc.z%4yr-%2mo-%2dy",
-                f"{self._nstep_output} == True": "h.bgc.z_nstep%4yr-%2mo-%2dy",
-                "else": "h.bgc.z%4yr-%2mo",
+            name_dict = {
+                '$OCN_DIAG_MODE == "spinup"': "h.bgc.z_annual",
+                "$TEST == True": "h.bgc.z",
+                f"{self._nstep_output} == True": "h.bgc.z_nstep",
+                "else": "h.bgc.z",
             }
             self._diag_table_dict["medium_z"] = self._dict_template(
-                suffix_dict,
+                name_dict,
                 output_freq_units_dict,
                 new_file_freq_units=new_file_freq_units,
                 module="ocean_model_z",
             )
         # iii. 3D vars on native grid
         if vert_grid in ["native", "both"]:
-            suffix_dict = {
-                '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual%4yr",
-                "$TEST == True": "h.bgc.native%4yr-%2mo",
-                f"{self._nstep_output} == True": "h.bgc.native_nstep%4yr-%2mo-%2dy",
-                "else": "h.bgc.native%4yr-%2mo",
+            name_dict = {
+                '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual",
+                "$TEST == True": "h.bgc.native",
+                f"{self._nstep_output} == True": "h.bgc.native_nstep",
+                "else": "h.bgc.native",
             }
             self._diag_table_dict["medium_native_z"] = self._dict_template(
-                suffix_dict,
+                name_dict,
                 output_freq_units_dict,
                 new_file_freq_units=new_file_freq_units,
                 module="ocean_model",
@@ -111,9 +111,9 @@ class DiagTableClass(object):
         # "high" frequency should be treated like "mom6.h.sfc" stream -- 5-day averages in spinup, daily otherwise
         # unlike "sfc", this stream will write one file per month instead of per year (except in spinup)
         # i. 2D vars
-        suffix_dict = {
-            '$OCN_DIAG_MODE == "spinup"': "h.bgc.daily5%4yr",
-            "else": "h.bgc.daily%4yr-%2mo",
+        name_dict = {
+            '$OCN_DIAG_MODE == "spinup"': "h.bgc.daily5",
+            "else": "h.bgc.daily",
         }
         output_freq_dict = {'$OCN_DIAG_MODE == "spinup"': 5, "else": 1}
         new_file_freq_units_dict = {
@@ -121,16 +121,16 @@ class DiagTableClass(object):
             "else": "months",
         }
         self._diag_table_dict["high"] = self._dict_template(
-            suffix_dict, "days", new_file_freq_units_dict, output_freq_dict
+            name_dict, "days", new_file_freq_units_dict, output_freq_dict
         )
         # ii. 3D vars on interpolated grid
         if vert_grid in ["interpolated", "both"]:
-            suffix_dict = {
-                '$OCN_DIAG_MODE == "spinup"': "h.bgc.z_daily5%4yr",
-                "else": "h.bgc.z_daily%4yr-%2mo",
+            name_dict = {
+                '$OCN_DIAG_MODE == "spinup"': "h.bgc.z_daily5",
+                "else": "h.bgc.z_daily",
             }
             self._diag_table_dict["high_z"] = self._dict_template(
-                suffix_dict,
+                name_dict,
                 "days",
                 new_file_freq_units_dict,
                 output_freq_dict,
@@ -138,12 +138,8 @@ class DiagTableClass(object):
             )
         # iii. 3D vars on native grid
         if vert_grid in ["native", "both"]:
-            suffix_dict = {
-                '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_daily5%4yr",
-                "else": "h.bgc.native_daily5%4yr-%2mo",
-            }
             self._diag_table_dict["high_native_z"] = self._dict_template(
-                suffix_dict,
+                "h.bgc.native_daily5",
                 "days",
                 new_file_freq_units_dict,
                 output_freq_dict,
@@ -152,28 +148,28 @@ class DiagTableClass(object):
 
         # "low" frequency should be treated as annual averages
         # i. 2D vars
-        suffix_dict = {
-            '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual2%4yr",
-            "else": "h.bgc.native_annual%4yr",
+        name_dict = {
+            '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual2",
+            "else": "h.bgc.native_annual",
         }
-        self._diag_table_dict["low"] = self._dict_template(suffix_dict, "years")
+        self._diag_table_dict["low"] = self._dict_template(name_dict, "years")
         # ii. 3D vars on interpolated grid
         if vert_grid in ["interpolated", "both"]:
-            suffix_dict = {
-                '$OCN_DIAG_MODE == "spinup"': "h.bgc.z_annual2%4yr",
-                "else": "h.bgc.z_annual%4yr",
+            name_dict = {
+                '$OCN_DIAG_MODE == "spinup"': "h.bgc.z_annual2",
+                "else": "h.bgc.z_annual",
             }
             self._diag_table_dict["low_z"] = self._dict_template(
-                suffix_dict, "years", module="ocean_model_z"
+                name_dict, "years", module="ocean_model_z"
             )
         # iii. 3D vars on native grid
         if vert_grid in ["native", "both"]:
-            suffix_dict = {
-                '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual2%4yr",
-                "else": "h.bgc.native_annual%4yr",
+            name_dict = {
+                '$OCN_DIAG_MODE == "spinup"': "h.bgc.native_annual2",
+                "else": "h.bgc.native_annual",
             }
             self._diag_table_dict["low_native_z"] = self._dict_template(
-                suffix_dict, "years", module="ocean_model"
+                name_dict, "years", module="ocean_model"
             )
 
     def update(self, varname, frequency, is2D, lMARBL_output_all, vert_grid):
@@ -274,11 +270,10 @@ class DiagTableClass(object):
 
     def _dict_template(
         self,
-        suffix,
+        name,
         output_freq_units,
         new_file_freq_units=None,
-        output_freq=1,
-        new_file_freq=1,
+        output_freq=None,
         module="ocean_model",
     ):
         """
@@ -286,34 +281,30 @@ class DiagTableClass(object):
         Variables will be added to output file by appending to template["fields"]['$OCN_DIAG_MODE != "none"']["lists"][0]
 
         Parameters:
-            * suffix: string used to identify output file; could also be a dictionary
-                      where keys are logical evaluations
+            * name: name of the output stream, which is also the segment of the file
+                    name that follows the case name and the component name; could
+                    also be a dictionary where keys are logical evaluations
             * output_freq_units: units used to determine how often to output; similar
-                                 to suffix, this can also be a dictionary
+                                 to name, this can also be a dictionary
             * new_file_freq_units: units used to determine how often to generate new stream
                                    files; if None, will use output_freq_units (default: None)
-            * output_freq: how frequently to output (default: 1)
-            * new_file_freq: how frequently to create new files (default: 1)
+            * output_freq: how frequently to output; if None, the diag_table default
+                           of one output per output_freq_units is used (default: None)
             * module: string that determines vertical grid; "ocean_model_z" maps to Z space, "ocean_model" stays on native grid, "ocean_model_rho2" is sigma2
         """
         template = dict()
-        template["suffix"] = suffix
-        template["output_freq"] = output_freq
-        template["new_file_freq"] = new_file_freq
+        template["name"] = name
+        if output_freq is not None:
+            template["output_freq"] = output_freq
+        # Note that this cannot be left to the diag_table default, which orders
+        # its guards differently: a run that is both a test and a spinup run
+        # outputs daily here, but annually by default.
         template["output_freq_units"] = output_freq_units
         if new_file_freq_units:
             template["new_file_freq_units"] = new_file_freq_units
-        else:
-            template["new_file_freq_units"] = output_freq_units
-        template["time_axis_units"] = "days"
-        template["reduction_method"] = "mean"
-        template["regional_section"] = "none"
+        template["packing"] = "= 1 if $TEST or $MARBL_DIAG_MODE == 'test_suite' else 2"
         template["fields"] = {
-            '$OCN_DIAG_MODE != "none"': {
-                "module": module,
-                "packing": "= 1 if $TEST or $MARBL_DIAG_MODE == 'test_suite' else 2",
-                "lists": [[]],
-            }
+            '$OCN_DIAG_MODE != "none"': {"module": module, "lists": [[]]}
         }
         return template
 

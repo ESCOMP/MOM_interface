@@ -255,32 +255,23 @@
          "T_ady_2d"
       ]
    ],
+   "FileDefaults": {
+      "output_freq": 1,
+      "output_freq_units": {
+         "$TEST == True": "days",
+         "$OCN_DIAG_MODE == \"spinup\"": "years",
+         "else": "months"
+      },
+      "time_axis_units": "days",
+      "reduction_method": "mean",
+      "regional_section": "none",
+      "packing": "= 1 if $TEST else 2"
+   },
    "Files": {
-      "sigma2_hist": {
-         "suffix": {
-            "$TEST == True": "h.rho2%4yr-%2mo-%2dy",
-            "$OCN_DIAG_MODE == \"spinup\"": "h.rho2%4yr",
-            "else": "h.rho2%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$TEST == True": "days",
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$TEST == True": "days",
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": "mean",
-         "regional_section": "none",
+      "h.rho2": {
          "fields": {
             "$OCN_DIAG_MODE != \"none\"": {
                "module": "ocean_model_rho2",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -309,31 +300,10 @@
             }
          }
       },
-      "hist": {
-         "suffix": {
-            "$TEST == True": "h.native%4yr-%2mo-%2dy",
-            "$OCN_DIAG_MODE == \"spinup\"": "h.native%4yr",
-            "else": "h.native%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$TEST == True": "days",
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$TEST == True": "days",
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": "mean",
-         "regional_section": "none",
+      "h.native": {
          "fields": {
             "$OCN_DIAG_MODE != \"none\"": {
                "module": "ocean_model",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "soga",
@@ -594,31 +564,10 @@
             }
          }
       },
-      "hist_z_space": {
-         "suffix": {
-            "$TEST == True": "h.z%4yr-%2mo-%2dy",
-            "$OCN_DIAG_MODE == \"spinup\"": "h.z%4yr",
-            "else": "h.z%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$TEST == True": "days",
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$TEST == True": "days",
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": "mean",
-         "regional_section": "none",
+      "h.z": {
          "fields": {
             "$OCN_DIAG_MODE != \"none\"": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": {
                   "$OCN_DIAG_MODE == \"spinup\"": [
                      [
@@ -699,30 +648,20 @@
             }
          }
       },
-      "surface_avg": {
-         "suffix": {
-            "$TEST == True": "h.sfc%4yr-%2mo-%2dy",
-            "$OCN_DIAG_MODE == \"spinup\"": "h.sfc%4yr",
-            "else": "h.sfc%4yr-%2mo"
-         },
+      "h.sfc": {
          "output_freq": {
             "$OCN_DIAG_MODE == \"spinup\"": 5,
             "else": 1
          },
          "output_freq_units": "days",
-         "time_axis_units": "days",
-         "new_file_freq": 1,
          "new_file_freq_units": {
             "$TEST == True": "days",
             "$OCN_DIAG_MODE == \"spinup\"": "years",
             "else": "months"
          },
-         "reduction_method": "mean",
-         "regional_section": "none",
          "fields": {
             "$OCN_DIAG_MODE != \"none\"": {
                "module": "ocean_model",
-               "packing": "= 1 if $TEST else 2",
                "lists": {
                   "$OCN_DIAG_MODE == \"spinup\"": [
                      [
@@ -790,28 +729,10 @@
             }
          }
       },
-      "forcing_avg": {
-         "suffix": {
-            "$TEST == True": "h.frc%4yr-%2mo-%2dy",
-            "else": "h.frc%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$TEST == True": "days",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$TEST == True": "days",
-            "else": "months"
-         },
-         "reduction_method": "mean",
-         "regional_section": "none",
+      "h.frc": {
          "fields": {
             "$OCN_DIAG_MODE == \"development\"": {
                "module": "ocean_model",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "tauuo",
@@ -856,28 +777,10 @@
             }
          }
       },
-      "visc_and_diff_daily_avg": {
-         "suffix": {
-            "$TEST == True": "h.visc%4yr-%2mo",
-            "else": "h.visc%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$TEST == True": "days",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$TEST == True": "days",
-            "else": "months"
-         },
-         "reduction_method": "mean",
-         "regional_section": "none",
+      "h.visc": {
          "fields": {
             "$OCN_DIAG_MODE == \"development\"": {
                "module": "ocean_model",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "diftrelo",
@@ -889,16 +792,12 @@
             }
          }
       },
-      "static": {
-         "suffix": "h.static",
+      "h.static": {
          "output_freq": -1,
          "output_freq_units": "days",
-         "time_axis_units": "days",
          "reduction_method": ".false.",
-         "regional_section": "none",
          "fields": {
             "module": "ocean_model",
-            "packing": "= 1 if $TEST else 2",
             "lists": [
                [
                   "geolon",
@@ -936,30 +835,13 @@
             }
          }
       },
-      "Agulhas": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Agulhas_Section%4yr",
-            "else": "h.Agulhas_Section%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Agulhas_Section": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "20.1 20.1 -69.8 -34.6 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -972,30 +854,13 @@
             }
          }
       },
-      "Barents_Opening": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Barents_Opening%4yr",
-            "else": "h.Barents_Opening%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Barents_Opening": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-5.75 19.0  78.93 78.93 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1008,30 +873,13 @@
             }
          }
       },
-      "Bering_Strait": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Bering_Strait%4yr",
-            "else": "h.Bering_Strait%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Bering_Strait": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-174.5 -172.3 66.6 66.6 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1044,30 +892,13 @@
             }
          }
       },
-      "Bosphorus_Strait": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Bosphorus_Strait%4yr",
-            "else": "h.Bosphorus_Strait%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Bosphorus_Strait": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "28.3 29.0 42.9 42.9 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1080,30 +911,13 @@
             }
          }
       },
-      "Davis_Strait": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Davis_Strait%4yr",
-            "else": "h.Davis_Strait%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Davis_Strait": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-53.1 -46.2 69.5 69.5 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1116,30 +930,13 @@
             }
          }
       },
-      "Denmark_Strait": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Denmark_Strait%4yr",
-            "else": "h.Denmark_Strait%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Denmark_Strait": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-38.0 -22.5 65.0 65.0 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1152,30 +949,13 @@
             }
          }
       },
-      "Drake_Passage": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Drake_Passage%4yr",
-            "else": "h.Drake_Passage%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Drake_Passage": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-67.0 -67.0 -67.2 -55.1 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1188,30 +968,13 @@
             }
          }
       },
-      "English_Channel": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.English_Channel%4yr",
-            "else": "h.English_Channel%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.English_Channel": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-0.333 -0.333 51.1 51.7 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1224,30 +987,13 @@
             }
          }
       },
-      "Fram_Strait": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Fram_Strait%4yr",
-            "else": "h.Fram_Strait%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Fram_Strait": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-21.0 -10.4 80.5 80.5 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1260,30 +1006,13 @@
             }
          }
       },
-      "Florida_Bahamas": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Florida_Bahamas%4yr",
-            "else": "h.Florida_Bahamas%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Florida_Bahamas": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-80.26 -78.24 25.5 25.5 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1296,30 +1025,13 @@
             }
          }
       },
-      "Florida_Bahamas_extended": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Florida_Bahamas_extended%4yr",
-            "else": "h.Florida_Bahamas_extended%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Florida_Bahamas_extended": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-78.0 -72.0 24.5 24.5 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1332,30 +1044,13 @@
             }
          }
       },
-      "Florida_Cuba": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Florida_Cuba%4yr",
-            "else": "h.Florida_Cuba%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Florida_Cuba": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-80.75 -80.75 23.0 25.5 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1368,30 +1063,13 @@
             }
          }
       },
-      "Gibraltar_Strait": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Gibraltar_Strait%4yr",
-            "else": "h.Gibraltar_Strait%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Gibraltar_Strait": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-6.3 -6.3 35.7 36.4 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1404,30 +1082,13 @@
             }
          }
       },
-      "Iceland_Norway": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Iceland_Norway%4yr",
-            "else": "h.Iceland_Norway%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Iceland_Norway": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-17.0 1.5 65.0 65.0 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1440,30 +1101,13 @@
             }
          }
       },
-      "Indonesian_Throughflow": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Indonesian_Throughflow%4yr",
-            "else": "h.Indonesian_Throughflow%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Indonesian_Throughflow": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-246.5 -220.8 -7.0 -7.0 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1476,30 +1120,13 @@
             }
          }
       },
-      "Mozambique_Channel": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Mozambique_Channel%4yr",
-            "else": "h.Mozambique_Channel%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Mozambique_Channel": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "39.9 44.7 -16.25 -16.25 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1512,30 +1139,13 @@
             }
          }
       },
-      "Pacific_undercurrent": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Pacific_undercurrent%4yr",
-            "else": "h.Pacific_undercurrent%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Pacific_undercurrent": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-155.0 -155.0 -2.0 2.0 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1548,30 +1158,13 @@
             }
          }
       },
-      "Robeson_Channel": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Robeson_Channel%4yr",
-            "else": "h.Robeson_Channel%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Robeson_Channel": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-34.8 -34.8 83.07 83.70 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1584,30 +1177,13 @@
             }
          }
       },
-      "Taiwan_Luzon": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Taiwan_Luzon%4yr",
-            "else": "h.Taiwan_Luzon%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Taiwan_Luzon": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-239.0 -239.0 18.5 22.45 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1620,30 +1196,13 @@
             }
          }
       },
-      "Windward_Passage": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Windward_Passage%4yr",
-            "else": "h.Windward_Passage%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Windward_Passage": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-74.35 -73.0 19.92 19.92 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
@@ -1656,30 +1215,13 @@
             }
          }
       },
-      "Yucatan_Channel": {
-         "suffix": {
-            "$OCN_DIAG_MODE == \"spinup\"": "h.Yucatan_Channel%4yr",
-            "else": "h.Yucatan_Channel%4yr-%2mo"
-         },
-         "output_freq": 1,
-         "output_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "time_axis_units": "days",
-         "new_file_freq": 1,
-         "new_file_freq_units": {
-            "$OCN_DIAG_MODE == \"spinup\"": "years",
-            "else": "months"
-         },
-         "reduction_method": ".true.",
+      "h.Yucatan_Channel": {
          "regional_section": {
             "$OCN_GRID[:6] == \"tx2_3v\"": "-87.0 -85.0 21.785 21.785 -1 -1"
          },
          "fields": {
             "$OCN_GRID[:6] == \"tx2_3v\" and $TEST == False and $OCN_DIAG_SECTIONS == True": {
                "module": "ocean_model_z",
-               "packing": "= 1 if $TEST else 2",
                "lists": [
                   [
                      "volcello",
