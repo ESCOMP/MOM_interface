@@ -355,19 +355,17 @@ Global:
             for the MARBL tracer package."
         datatype: string
         value:
-            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0:
-                $MOM6_PHYS_CYCLE_USE_MARBL_IC_FILE: $MOM6_PHYS_CYCLE_MARBL_IC_FILE
-                else:
-                    $DOUT_S:
-                        = f'${DOUT_S_ROOT}/ocn/hist/{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
-                    else:
-                        = f'./{$CASE}.mom6{$INST_SUFFIX}.h.bgc.tracers.z.{$RUN_STARTDATE}.nc'
+            $MARBL_CONFIG == "latest": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
+            $MARBL_CONFIG == "latest+4p2z": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
+    MARBL_TRACERS_IC_FILE_OVERRIDE_POINTER:
+        description: |
+            "File containing tracer IC filenames overriding MARBL_TRACERS_IC_FILE."
+        datatype: string
+        value:
+            $MOM6_TRACER_IC_FILE_OVERRIDE_POINTER != "": $MOM6_TRACER_IC_FILE_OVERRIDE_POINTER
             else:
                 $RUN_TYPE == "hybrid":
-                    = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
-                else:
-                    $MARBL_CONFIG == "latest": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
-                    $MARBL_CONFIG == "latest+4p2z": ${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc
+                    = f'./rpointer.ocn.{$RUN_REFDATE}-{$RUN_REFTOD}'
     MARBL_TRACERS_IC_FILE_IS_Z:
         description: |
             "[Boolean] default = True
@@ -375,9 +373,15 @@ Global:
         datatype: logical
         units: Boolean
         value:
-            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0: = not $MOM6_PHYS_CYCLE_USE_MARBL_IC_FILE
-            else:
-                $RUN_TYPE == "hybrid": False
+            $RUN_TYPE == "hybrid": False
+    MARBL_ENFORCE_TRACER_ZINT:
+        description: |
+            "Rescale MARBL tracers so that their vertical integrals match
+             their vertical integrals computed from the IC file(s).
+             Value is determined by MARBL_ENFORCE_TRACER_ZINT in env_run.xml"
+        datatype: logical
+        units: Boolean
+        value: $MARBL_ENFORCE_TRACER_ZINT
     MARBL_TRACERS_INIT_VERTICAL_REMAP_ONLY:
         description: |
             "[Boolean] default = False
@@ -1426,12 +1430,9 @@ Global:
             For each coordinate, an entry in DIAG_COORDS must be provided."
         datatype: integer
         value:
-            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0:
-                $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 3
-            else:
-                $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 2
-                $OCN_GRID == "tx2_0v1": 1
-                $OCN_GRID == "tx0.25v1": 1
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 2
+            $OCN_GRID == "tx2_0v1": 1
+            $OCN_GRID == "tx0.25v1": 1
     DIAG_COORDS:
         description: |
             "A list of string tuples associating diag_table modules to
@@ -1439,12 +1440,9 @@ Global:
             is of the form MODULE_SUFFIX,PARAMETER_SUFFIX,COORDINATE_NAME."
         datatype: string
         value:
-            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0:
-                $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"z Z ZSTAR", "rho2 RHO2 RHO", "z2023 Z2023 ZSTAR"'
-            else:
-                $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"z Z ZSTAR", "rho2 RHO2 RHO"'
-                $OCN_GRID == "tx2_0v1": '"z Z ZSTAR"'
-                $OCN_GRID == "tx0.25v1": '"z Z ZSTAR"'
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"z Z ZSTAR", "rho2 RHO2 RHO"'
+            $OCN_GRID == "tx2_0v1": '"z Z ZSTAR"'
+            $OCN_GRID == "tx0.25v1": '"z Z ZSTAR"'
     DIAG_COORD_DEF_RHO2:
         description: |
             " default = 'WOA09'
@@ -1466,26 +1464,6 @@ Global:
         datatype: string
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: '"FILE:ocean_rho2_190917.nc,interfaces=rho2"'
-    DIAG_COORD_DEF_Z2023:
-        description: |
-            " default = 'WOA09'
-            Determines how to specify the coordinate resolution. Valid options are:
-            PARAM       - use the vector-parameter DIAG_COORD_RES_RHO2
-            UNIFORM[:N] - uniformly distributed
-            FILE:string - read from a file. The string specifies
-            the filename and variable name, separated
-            by a comma or space, e.g. FILE:lev.nc,dz
-            or FILE:lev.nc,interfaces=zw
-            WOA09[:N]   - the WOA09 vertical grid (approximately)
-            WOA09INT[:N] - layers spanned by the WOA09 depths
-            WOA23INT[:N] - layers spanned by the WOA23 depths
-            FNC1:string - FNC1:dz_min,H_total,power,precision
-            HYBRID:string - read from a file. The string specifies
-            the filename and two variable names, separated
-            by a comma or space, for sigma-2 and dz. e.g.
-            HYBRID:vgrid.nc,sigma2,dz"
-        datatype: string
-        value: WOA23INT
     DIAG_MISVAL:
         description: |
             "TODO"

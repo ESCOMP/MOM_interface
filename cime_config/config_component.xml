@@ -226,21 +226,23 @@
     <desc>number of months run since most recent cycling of MOM6 physics</desc>
   </entry>
 
-  <entry id="MOM6_PHYS_CYCLE_MARBL_IC_FILE">
+  <entry id="MOM6_TRACER_IC_FILE_OVERRIDE_POINTER">
     <type>char</type>
     <default_value></default_value>
     <group>run_component_mom</group>
     <file>env_run.xml</file>
-    <desc>Value to set MOM6's MARBL_TRACERS_IC_FILE to, typically in first PHYS_CYCLE cycle</desc>
+    <desc>File containing tracer IC filenames</desc>
   </entry>
 
-  <entry id="MOM6_PHYS_CYCLE_USE_MARBL_IC_FILE">
+  <entry id="MARBL_ENFORCE_TRACER_ZINT">
     <type>logical</type>
     <valid_values>TRUE,FALSE</valid_values>
-    <default_value>TRUE</default_value>
+    <default_value>FALSE</default_value>
     <group>run_component_mom</group>
     <file>env_run.xml</file>
-    <desc>Determine if MOM6's MARBL_TRACERS_IC_FILE is set to MOM6_PHYS_CYCLE_MARBL_IC_FILE</desc>
+    <desc>Rescale MARBL tracers so that their vertical integrals match
+          their vertical integrals computed from the IC file(s).
+    </desc>
   </entry>
 
   <help>

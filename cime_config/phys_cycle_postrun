@@ -34,14 +34,8 @@ def phys_cycle_postrun(caseroot):
             return
 
         # -------------------------------------------------------------------------
-        # Ensure MOM6_PHYS_CYCLE_MARBL_IC_FILE is only used in first PHYS_CYCLE cycle
-        # -------------------------------------------------------------------------
-
-        case.set_value("MOM6_PHYS_CYCLE_USE_MARBL_IC_FILE", "FALSE")
-        case.flush()
-
-        # -------------------------------------------------------------------------
         # Determine if model has run the length of MOM6 physics run cycle length
+        #     this assumes that STOP_ options have not been changed during the submission
         # -------------------------------------------------------------------------
 
         stop_option = case.get_value("STOP_OPTION")
@@ -67,19 +61,15 @@ def phys_cycle_postrun(caseroot):
         logger.info("MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE incremented to %d",
                     mom6_phys_cycle_months_run_since_cycle_new)
 
-        mom6_phys_cycle_months_in_cycle = mom6_phys_cycle_years_in_cycle * 12
-        if mom6_phys_cycle_months_run_since_cycle_new < mom6_phys_cycle_months_in_cycle:
+        if mom6_phys_cycle_months_run_since_cycle_new < mom6_phys_cycle_years_in_cycle * 12:
             case.set_value("CONTINUE_RUN", "TRUE")
+            case.set_value("MOM6_TRACER_IC_FILE_OVERRIDE_POINTER", "")
+            case.set_value("MARBL_ENFORCE_TRACER_ZINT", "FALSE")
             case.flush()
             return
 
-        expect(mom6_phys_cycle_months_run_since_cycle_new <= mom6_phys_cycle_months_in_cycle,
-               "MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE has overshot "
-               f"{mom6_phys_cycle_months_in_cycle = }")
-
         # -------------------------------------------------------------------------
-        # Model has run the length of MOM6 physics run cycle length
-        # Reset model physics, keeping restart file for tracers to continue to evolve
+        # Model has run the length of MOM6 physics run cycle length, reset model physics
         # -------------------------------------------------------------------------
 
         logger.info("resetting model physics")
@@ -96,6 +86,14 @@ def phys_cycle_postrun(caseroot):
         run_startdate = f"{yyyy:04d}{run_startdate[4:]}"
         case.set_value("RUN_STARTDATE", run_startdate)
         logger.info("RUN_STARTDATE incremented to %s", run_startdate)
+
+        # -------------------------------------------------------------------------
+        # Configure tracer module initialization for new PHYS_CYCLE cycle
+        # -------------------------------------------------------------------------
+
+        case.set_value("MOM6_TRACER_IC_FILE_OVERRIDE_POINTER",
+                       f"./rpointer.ocn.{run_startdate}-00000")
+        case.set_value("MARBL_ENFORCE_TRACER_ZINT", "TRUE")
 
         # -------------------------------------------------------------------------
         # Update CPLHIST ALIGN variables
