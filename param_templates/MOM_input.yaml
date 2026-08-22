@@ -3420,14 +3420,15 @@ Global:
         value:
             $RUN_TYPE == "hybrid":
                 = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
-    AGE_IC_FILE:
+    AGE_IC_FILE_OVERRIDE_POINTER:
         description: |
-            "The file in which the age-tracer initial values can be found, or an empty
-            string for internal initialization."
+            "File containing tracer IC filenames overriding AGE_IC_FILE."
         datatype: string
         value:
-            $RUN_TYPE == "hybrid" and $CONTINUE_RUN == False:
-                = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+            $MOM6_TRACER_IC_FILE_OVERRIDE_POINTER != "": $MOM6_TRACER_IC_FILE_OVERRIDE_POINTER
+            else:
+                $RUN_TYPE == "hybrid":
+                    = f'./rpointer.ocn.{$RUN_REFDATE}-{$RUN_REFTOD}'
     T_REF:
         description: |
             "[degC]
