@@ -1,8 +1,8 @@
 [submodule "MOM6"]
   path = MOM6
-  url = https://github.com/NCAR/MOM6.git
-  fxDONOTUSEurl = https://github.com/NCAR/MOM6.git
-    fxtag = dev/ncar_260713
+  url = https://github.com/CROCODILE-CESM/MOM6.git
+  fxDONOTUSEurl = https://github.com/CROCODILE-CESM/MOM6.git
+    fxtag = regional
     fxrequired = AlwaysRequired
 
 [submodule "stochastic_physics"]

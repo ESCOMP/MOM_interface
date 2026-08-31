@@ -73,6 +73,28 @@
     <lname>1850_DATM%JRA_SLND_DICE%SSMI_MOM6%MARBL-ABIO_DROF%JRA_SGLC_SWAV</lname>
   </compset>
 
+    <!-- C Regional compsets -->
+
+  <compset>
+    <alias>CR_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_SICE_MOM6%REGIONAL_SROF_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>CR1850MARBL_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_SICE_MOM6%REGIONAL%MARBL-BIO_SROF_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>CR_JRA_GLOFAS</alias>
+    <lname>1850_DATM%JRA_SLND_SICE_MOM6%REGIONAL_DROF%GLOFAS_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>CR1850MARBL_JRA_GLOFAS</alias>
+    <lname>1850_DATM%JRA_SLND_SICE_MOM6%REGIONAL%MARBL-BIO_DROF%GLOFAS_SGLC_SWAV</lname>
+  </compset>
+
   <!-- G compsets -->
 
   <compset>
@@ -120,4 +142,26 @@
     <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%MARBL-ABIO_DROF%JRA-1p5-2023_SGLC_WW3</lname>
   </compset>
 
+  <!-- G Regional compsets -->
+
+  <compset>
+    <alias>GR_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_CICE_MOM6%REGIONAL_SROF_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>GR1850MARBL_JRA</alias>
+    <lname>1850_DATM%JRA_SLND_CICE_MOM6%REGIONAL%MARBL-BIO_SROF_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>GR_JRA_GLOFAS</alias>
+    <lname>1850_DATM%JRA_SLND_CICE_MOM6%REGIONAL_DROF%GLOFAS_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>GR1850MARBL_JRA_GLOFAS</alias>
+    <lname>1850_DATM%JRA_SLND_CICE_MOM6%REGIONAL%MARBL-BIO_DROF%GLOFAS_SGLC_SWAV</lname>
+  </compset>
+  
 </compsets>
