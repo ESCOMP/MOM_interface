@@ -1,4 +1,3 @@
-import os
 from CIME.ParamGen.paramgen import ParamGen
 
 
