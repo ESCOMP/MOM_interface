@@ -459,14 +459,9 @@ def write_diag_table(streams, output_path):
             for group in stream.groups:
                 if not group.fields:
                     continue
-                # Width of the two field name columns
+                # Width of the two field name columns.
                 field_width = min(
-                    16,
-                    max(
-                        len(quoted(name))
-                        for field in group.fields
-                        for name in (field.name, field.output_name)
-                    ),
+                    16, max(len(field.spec) for field in group.fields) + 3
                 )
                 for field in group.fields:
                     diag_table.write(
