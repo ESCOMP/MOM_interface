@@ -26,7 +26,7 @@
          "so",
          "agessc",
          "rhopot0",
-         "N2_int",
+         "N2_int:obvfsq",
          "rhopot2",
          "difvho",
          "difvso",
@@ -64,8 +64,8 @@
          "sos",
          "sos:sos_min:min",
          "sos:sos_max:max",
-         "SSU",
-         "SSV",
+         "SSU:uos",
+         "SSV:vos",
          "opottempmint",
          "somint",
          "Rd_dx",
@@ -113,12 +113,12 @@
          "Heat_PmE"
       ],
       [
-         "heat_content_lrunoff",
+         "heat_content_lrunoff:hfrunoffds",
          "heat_content_frunoff",
-         "heat_content_lprec",
+         "heat_content_lprec:hfrainds",
          "heat_content_fprec",
          "heat_content_cond",
-         "heat_content_evap"
+         "heat_content_evap:hfevapds"
       ],
       [
          "net_heat_coupler",
@@ -174,7 +174,13 @@
          "cpocean",
          "rhozero",
          "skeb_taper_v",
-         "skeb_taper_u"
+         "skeb_taper_u",
+         "dxt:dxto",
+         "dxCu:dxuo",
+         "dxCv:dxvo",
+         "dyt:dyto",
+         "dyCu:dyuo",
+         "dyCv:dyvo"
       ],
       [
          "volcello",
@@ -210,11 +216,11 @@
          "u10_sqr"
       ],
       [
-         "Geo_heat"
+         "hfgeou"
       ],
       [
          "frunoff_glc",
-         "lrunoff_glc"
+         "lrunoff_glc:flandice"
       ],
       [
          "KPP_QminusSW",
@@ -227,14 +233,18 @@
       [
          "dispkexyfo",
          "hfibthermds",
+         "masso",
          "mlotstsq",
          "pbo",
          "S_adx_2d",
          "S_ady_2d",
          "sob",
          "sossq",
+         "t17d",
+         "t20d",
          "tob",
          "tossq",
+         "volo",
          "zos",
          "zossq",
          "BS_coeff_h"
@@ -252,7 +262,12 @@
          "tossq",
          "rsdo",
          "T_adx_2d",
-         "T_ady_2d"
+         "T_ady_2d",
+         "t20d"
+      ],
+      [
+         "surface_stokes_x:sduo",
+         "surface_stokes_y:sduv"
       ]
    ],
    "FileDefaults": {
@@ -388,12 +403,12 @@
                         "Heat_PmE"
                      ],
                      [
-                        "heat_content_lrunoff",
+                        "heat_content_lrunoff:hfrunoffds",
                         "heat_content_frunoff",
-                        "heat_content_lprec",
+                        "heat_content_lprec:hfrainds",
                         "heat_content_fprec",
                         "heat_content_cond",
-                        "heat_content_evap"
+                        "heat_content_evap:hfevapds"
                      ],
                      [
                         "tos",
@@ -402,8 +417,8 @@
                         "sos",
                         "sos:sos_min:min",
                         "sos:sos_max:max",
-                        "SSU",
-                        "SSV",
+                        "SSU:uos",
+                        "SSV:vos",
                         "opottempmint",
                         "somint",
                         "Rd_dx",
@@ -421,14 +436,18 @@
                      [
                         "dispkexyfo",
                         "hfibthermds",
+                        "masso",
                         "mlotstsq",
                         "pbo",
                         "S_adx_2d",
                         "S_ady_2d",
                         "sob",
                         "sossq",
+                        "t17d",
+                        "t20d",
                         "tob",
                         "tossq",
+                        "volo",
                         "zos",
                         "zossq",
                         "BS_coeff_h"
@@ -485,12 +504,12 @@
                         "Heat_PmE"
                      ],
                      [
-                        "heat_content_lrunoff",
+                        "heat_content_lrunoff:hfrunoffds",
                         "heat_content_frunoff",
-                        "heat_content_lprec",
+                        "heat_content_lprec:hfrainds",
                         "heat_content_fprec",
                         "heat_content_cond",
-                        "heat_content_evap"
+                        "heat_content_evap:hfevapds"
                      ],
                      [
                         "tos",
@@ -499,8 +518,8 @@
                         "sos",
                         "sos:sos_min:min",
                         "sos:sos_max:max",
-                        "SSU",
-                        "SSV",
+                        "SSU:uos",
+                        "SSV:vos",
                         "opottempmint",
                         "somint",
                         "Rd_dx",
@@ -531,7 +550,7 @@
                   "$COMP_ATM == \"cam\"": [
                      [
                         "frunoff_glc",
-                        "lrunoff_glc"
+                        "lrunoff_glc:flandice"
                      ]
                   ]
                },
@@ -560,6 +579,14 @@
                         "salt_flux_added"
                      ]
                   ]
+               },
+               "lists7": {
+                  "$OCN_DIAG_MODE not in [\"spinup\", \"none\"] and $COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD != \"none\"": [
+                     [
+                        "surface_stokes_x:sduo",
+                        "surface_stokes_y:sduv"
+                     ]
+                  ]
                }
             }
          }
@@ -578,7 +605,7 @@
                         "so",
                         "agessc",
                         "rhopot0",
-                        "N2_int",
+                        "N2_int:obvfsq",
                         "rhopot2",
                         "difvho",
                         "difvso",
@@ -604,7 +631,7 @@
                         "so",
                         "agessc",
                         "rhopot0",
-                        "N2_int",
+                        "N2_int:obvfsq",
                         "rhopot2",
                         "difvho",
                         "difvso",
@@ -671,8 +698,8 @@
                         "sos",
                         "sos:sos_min:min",
                         "sos:sos_max:max",
-                        "SSU",
-                        "SSV",
+                        "SSU:uos",
+                        "SSV:vos",
                         "opottempmint",
                         "somint",
                         "Rd_dx",
@@ -699,8 +726,8 @@
                         "sos",
                         "sos:sos_min:min",
                         "sos:sos_max:max",
-                        "SSU",
-                        "SSV",
+                        "SSU:uos",
+                        "SSV:vos",
                         "opottempmint",
                         "somint",
                         "Rd_dx",
@@ -722,7 +749,8 @@
                         "tossq",
                         "rsdo",
                         "T_adx_2d",
-                        "T_ady_2d"
+                        "T_ady_2d",
+                        "t20d"
                      ]
                   ]
                }
@@ -823,13 +851,19 @@
                   "cpocean",
                   "rhozero",
                   "skeb_taper_v",
-                  "skeb_taper_u"
+                  "skeb_taper_u",
+                  "dxt:dxto",
+                  "dxCu:dxuo",
+                  "dxCv:dxvo",
+                  "dyt:dyto",
+                  "dyCu:dyuo",
+                  "dyCv:dyvo"
                ]
             ],
             "lists2": {
                "$DO_GEOTHERMAL == \"True\"": [
                   [
-                     "Geo_heat"
+                     "hfgeou"
                   ]
                ]
             }
