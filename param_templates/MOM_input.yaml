@@ -2503,6 +2503,14 @@ Global:
         value:
             $COMP_ATM == "datm": True  # for C and G compsets
             else: False
+    ALLOW_GLC_RUNOFF_DIAGNOSTICS:
+        description: |
+            "[Boolean] default = False
+            If true, makes available diagnostics of separate glacier
+            runoff fluxes as seen by MOM6."
+        datatype: logical
+        units: Boolean
+        value: True
     MAX_DELTA_SRESTORE:
         description: |
             "[PSU or g kg-1] default = 999.0
@@ -3396,6 +3404,17 @@ Global:
         value:
             $RUN_TYPE == "hybrid":
                 = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+    REMAP_AFTER_INITIALIZATION:
+        description: |
+            "[Boolean] default = True
+            If true, applies regridding and remapping immediately after
+            initialization so that the state is ALE consistent. This is a
+            legacy step and should not be needed if the initialization is
+            consistent with the coordinate mode."
+        datatype: logical
+        units: Boolean
+        value:
+            $RUN_TYPE == "hybrid": False
     AGE_IC_FILE:
         description: |
             "The file in which the age-tracer initial values can be found, or an empty
@@ -3963,7 +3982,9 @@ Global:
             run with a different mask_table than the current run, in which case the
             checksums will not match and cause crash.
         datatype: logical
-        value: $TEST
+        value: 
+            $TEST: = $TESTCASE != "ERP"
+            else: False
     ENSEMBLE_APPENDIX_PREFIX:
         description: |
             "default = ''

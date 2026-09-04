@@ -2018,6 +2018,12 @@
             "else": false
          }
       },
+      "ALLOW_GLC_RUNOFF_DIAGNOSTICS": {
+         "description": "\"[Boolean] default = False\nIf true, makes available diagnostics of separate glacier\nrunoff fluxes as seen by MOM6.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": true
+      },
       "MAX_DELTA_SRESTORE": {
          "description": "\"[PSU or g kg-1] default = 999.0\nThe maximum salinity difference used in restoring terms.\"\n",
          "datatype": "real",
@@ -2769,6 +2775,14 @@
             "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
          }
       },
+      "REMAP_AFTER_INITIALIZATION": {
+         "description": "\"[Boolean] default = True\nIf true, applies regridding and remapping immediately after\ninitialization so that the state is ALE consistent. This is a\nlegacy step and should not be needed if the initialization is\nconsistent with the coordinate mode.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$RUN_TYPE == \"hybrid\"": false
+         }
+      },
       "AGE_IC_FILE": {
          "description": "\"The file in which the age-tracer initial values can be found, or an empty\nstring for internal initialization.\"\n",
          "datatype": "string",
@@ -3271,7 +3285,10 @@
       "RESTART_CHECKSUMS_REQUIRED": {
          "description": "\"[Boolean] default = True\nIf true, require the restart checksums to match and error out otherwise. Users\nmay want to avoid this comparison if for example the restarts are made from a\nrun with a different mask_table than the current run, in which case the\nchecksums will not match and cause crash.\n",
          "datatype": "logical",
-         "value": "$TEST"
+         "value": {
+            "$TEST": "= $TESTCASE != \"ERP\"",
+            "else": false
+         }
       },
       "ENSEMBLE_APPENDIX_PREFIX": {
          "description": "\"default = ''\nThe prefix for the restart file appendix (i.e., ensemble id for ensemble\nruns). If this prefix is found in the restart file name, the appendix is added\nright after the first occurrence of the prefix. If not found, the appendix is\nadded to the end of the file name. This parameter is ignored for non-ensemble runs.\"\n",
