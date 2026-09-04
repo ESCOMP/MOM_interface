@@ -280,6 +280,14 @@
             "$RUN_TYPE == \"hybrid\"": false
          }
       },
+      "MARBL_REMAP_NON_Z_IC": {
+         "description": "\"[Boolean] default = False\nIf true, and MARBL_IC_FILE_IS_Z is false,\nthen remap IC vals to current model thicknesses.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": true
+         }
+      },
       "MARBL_ENFORCE_TRACER_ZINT": {
          "description": "\"Rescale MARBL tracers so that their vertical integrals match\n their vertical integrals computed from the IC file(s).\n Value is determined by MARBL_ENFORCE_TRACER_ZINT in env_run.xml\"\n",
          "datatype": "logical",
@@ -2798,6 +2806,14 @@
             "else": {
                "$RUN_TYPE == \"hybrid\"": "= f'./rpointer.ocn.{$RUN_REFDATE}-{$RUN_REFTOD}'"
             }
+         }
+      },
+      "AGE_REMAP_NON_Z_IC": {
+         "description": "\"[Boolean] default = False\nIf true, and AGE_IC_FILE_IS_Z is false,\nthen remap IC vals to current model thicknesses.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": true
          }
       },
       "T_REF": {

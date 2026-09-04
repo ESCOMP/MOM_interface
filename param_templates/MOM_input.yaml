@@ -374,6 +374,15 @@ Global:
         units: Boolean
         value:
             $RUN_TYPE == "hybrid": False
+    MARBL_REMAP_NON_Z_IC:
+        description: |
+            "[Boolean] default = False
+            If true, and MARBL_IC_FILE_IS_Z is false,
+            then remap IC vals to current model thicknesses."
+        datatype: logical
+        units: Boolean
+        value:
+            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0: True
     MARBL_ENFORCE_TRACER_ZINT:
         description: |
             "Rescale MARBL tracers so that their vertical integrals match
@@ -3429,6 +3438,15 @@ Global:
             else:
                 $RUN_TYPE == "hybrid":
                     = f'./rpointer.ocn.{$RUN_REFDATE}-{$RUN_REFTOD}'
+    AGE_REMAP_NON_Z_IC:
+        description: |
+            "[Boolean] default = False
+            If true, and AGE_IC_FILE_IS_Z is false,
+            then remap IC vals to current model thicknesses."
+        datatype: logical
+        units: Boolean
+        value:
+            $MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0: True
     T_REF:
         description: |
             "[degC]
