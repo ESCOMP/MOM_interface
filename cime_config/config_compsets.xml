@@ -115,9 +115,50 @@
     <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%MARBL-BIO_DROF%JRA-1p5-2023_SGLC_WW3</lname>
   </compset>
 
+  <!-- PHYS_CYCLE configuration requires a cdeps/drof change to work with JRA
+  <compset>
+    <alias>GW1850MARBL_JRA_PHYS_CYCLE</alias>
+    <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%MARBL-BIO%PHYS-CYCLE_DROF%JRA-1p5-2023_SGLC_WW3</lname>
+  </compset>
+  -->
+
+  <compset>
+    <alias>GW1850MARBL_CPLHIST</alias>
+    <lname>1850_DATM%CPLHIST_SLND_CICE_MOM6%MARBL-BIO_DROF%CPLHIST_SGLC_WW3</lname>
+  </compset>
+
+  <compset>
+    <alias>GW1850MARBL_CPLHIST_PHYS_CYCLE</alias>
+    <lname>1850_DATM%CPLHIST_SLND_CICE_MOM6%MARBL-BIO%PHYS-CYCLE_DROF%CPLHIST_SGLC_WW3</lname>
+  </compset>
+
   <compset>
     <alias>GW1850ABIOMARBL_JRA</alias>
     <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%MARBL-ABIO_DROF%JRA-1p5-2023_SGLC_WW3</lname>
   </compset>
+
+  <!-- ENTRIES -->
+
+  <entries>
+
+    <entry id="PRERUN_SCRIPT">
+      <values>
+	<value compset="MOM6%[^_]*PHYS-CYCLE">$SRCROOT/components/mom/cime_config/phys_cycle_prerun</value>
+      </values>
+    </entry>
+
+    <entry id="POSTRUN_SCRIPT">
+      <values>
+	<value compset="MOM6%[^_]*PHYS-CYCLE">$SRCROOT/components/mom/cime_config/phys_cycle_postrun</value>
+      </values>
+    </entry>
+
+    <entry id="RESUBMIT_SETS_CONTINUE_RUN">
+      <values>
+	<value compset="MOM6%[^_]*PHYS-CYCLE">FALSE</value>
+      </values>
+    </entry>
+
+  </entries>
 
 </compsets>
