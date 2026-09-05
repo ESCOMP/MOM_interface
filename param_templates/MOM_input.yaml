@@ -3940,6 +3940,13 @@ Global:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"] and $TEST: = - ( - $NTASKS_OCN // 256)
             $OCN_GRID == "tx2_0v1" and $TEST: = - ( - $NTASKS_OCN // 256)
             $OCN_GRID == "tx0.25v1": = - ( - $NTASKS_OCN // 128)
+    MASKTABLE:
+        description: |
+            A text file to specify n_mask, layout and mask_list.
+        datatype: string
+        value:
+            $AUTO_MASKTABLE: = f'MOM_auto_mask_table{$INST_SUFFIX}'
+            else: MOM_mask_table
     GEOM_FILE:
         description: |
             default = ocean_geometry.nc

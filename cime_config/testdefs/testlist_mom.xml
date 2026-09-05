@@ -298,4 +298,22 @@
       <option name="wallclock">00:30:00</option>
     </options>
   </test>
+  <!-- Multi-Instance with Auto Masktable Enabled -->
+  <test name="SMS_C2" grid="T62_t232" compset="G">
+    <machines>
+      <machine name="derecho" compiler="intel" category="aux_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
+  <!-- Multi-Instance with Auto Masktable Disabled -->
+  <test name="SMS_C2" grid="T62_t232" compset="G" testmods="mom/tx10deg">
+    <machines>
+      <machine name="derecho" compiler="intel" category="aux_mom"/>
+    </machines>
+    <options>
+      <option name="wallclock">00:30:00</option>
+    </options>
+  </test>
 </testlist>

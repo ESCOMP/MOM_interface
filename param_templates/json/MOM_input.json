@@ -3255,6 +3255,14 @@
             "$OCN_GRID == \"tx0.25v1\"": "= - ( - $NTASKS_OCN // 128)"
          }
       },
+      "MASKTABLE": {
+         "description": "A text file to specify n_mask, layout and mask_list.\n",
+         "datatype": "string",
+         "value": {
+            "$AUTO_MASKTABLE": "= f'MOM_auto_mask_table{$INST_SUFFIX}'",
+            "else": "MOM_mask_table"
+         }
+      },
       "GEOM_FILE": {
          "description": "default = ocean_geometry.nc\nThe file into which to write the ocean geometry.\n",
          "datatype": "string",
