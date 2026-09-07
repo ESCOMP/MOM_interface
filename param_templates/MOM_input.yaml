@@ -1778,6 +1778,29 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
             $OCN_GRID == "tx2_0v1": True
+    MLE_TAPER_FN_DEPTH:
+        description: |
+            "[m] default = 0.0
+            Mixed layer (and mixing-layer) depths in the MLE restratification
+            schemes are replaced by H / (1 + (H/H0)**P) when
+            P=MLE_TAPER_FN_POWER > 0 and H0=MLE_TAPER_FN_DEPTH > 0."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 2000.0
+            $OCN_GRID == "tx2_0v1": 2000.0
+    MLE_TAPER_FN_POWER:
+        description: |
+            "[nondim] default = 0
+            The power of H/H0 in the MLE mixed-layer depth tapering.
+            Any positive integer may be used, but even integers are more
+            efficient to calculate. Very large values may lead to numerical
+            instabilities."
+        datatype: integer
+        units: nondim
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 4
+            $OCN_GRID == "tx2_0v1": 4
     USE_CVMix_CONVECTION:
         description: |
             "[Boolean] default = False
