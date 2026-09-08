@@ -26,7 +26,7 @@
          "so",
          "agessc",
          "rhopot0",
-         "N2_int:obvfsq",
+         "obvfsq",
          "rhopot2",
          "difvho",
          "difvso",
@@ -180,7 +180,8 @@
          "dxCv:dxvo",
          "dyt:dyto",
          "dyCu:dyuo",
-         "dyCv:dyvo"
+         "dyCv:dyvo",
+         "sftof"
       ],
       [
          "volcello",
@@ -242,6 +243,7 @@
          "sossq",
          "t17d",
          "t20d",
+         "tnkebto",
          "tob",
          "tossq",
          "volo",
@@ -267,7 +269,7 @@
       ],
       [
          "surface_stokes_x:sduo",
-         "surface_stokes_y:sduv"
+         "surface_stokes_y:sdvo"
       ]
    ],
    "FileDefaults": {
@@ -445,6 +447,7 @@
                         "sossq",
                         "t17d",
                         "t20d",
+                        "tnkebto",
                         "tob",
                         "tossq",
                         "volo",
@@ -581,12 +584,14 @@
                   ]
                },
                "lists7": {
-                  "$OCN_DIAG_MODE not in [\"spinup\", \"none\"] and $COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD != \"none\"": [
-                     [
-                        "surface_stokes_x:sduo",
-                        "surface_stokes_y:sduv"
+                  "$OCN_DIAG_MODE not in [\"spinup\", \"none\"] and $COMP_WAV == \"ww3\" and $MOM6_WW3_CPL_METHOD != \"none\"": {
+                     "$WAVE_METHOD == \"SURFACE_BANDS\"": [
+                        [
+                           "surface_stokes_x:sduo",
+                           "surface_stokes_y:sdvo"
+                        ]
                      ]
-                  ]
+                  }
                }
             }
          }
@@ -605,7 +610,7 @@
                         "so",
                         "agessc",
                         "rhopot0",
-                        "N2_int:obvfsq",
+                        "obvfsq",
                         "rhopot2",
                         "difvho",
                         "difvso",
@@ -631,7 +636,7 @@
                         "so",
                         "agessc",
                         "rhopot0",
-                        "N2_int:obvfsq",
+                        "obvfsq",
                         "rhopot2",
                         "difvho",
                         "difvso",
@@ -857,7 +862,8 @@
                   "dxCv:dxvo",
                   "dyt:dyto",
                   "dyCu:dyuo",
-                  "dyCv:dyvo"
+                  "dyCv:dyvo",
+                  "sftof"
                ]
             ],
             "lists2": {
