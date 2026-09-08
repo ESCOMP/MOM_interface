@@ -76,7 +76,8 @@ FieldLists:
 
     - &cmip7_native ["dispkexyfo", "hfibthermds", "masso", "mlotstsq", "pbo",
                      "S_adx_2d", "S_ady_2d", "sob", "sossq", "t17d", "t20d",
-                     "tob", "tossq", "volo", "zos", "zossq", "BS_coeff_h"]
+                     "tnkebto", "tob", "tossq", "volo", "zos", "zossq",
+                     "BS_coeff_h"]
 
     - &cmip7_z ["opottempdiff", "T_advection_xy", "opottemptend", "osaltdiff",
                 "S_advection_xy", "osalttend", "rsdoabsorb"]
