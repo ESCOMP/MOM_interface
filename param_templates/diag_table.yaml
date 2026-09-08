@@ -168,7 +168,8 @@ Files:
                         [ *forcing_flds_cg ]
                 lists7:
                     $OCN_DIAG_MODE not in ["spinup", "none"] and $COMP_WAV == "ww3" and $MOM6_WW3_CPL_METHOD != "none":
-                        [ *cmip7_wave ]
+                        $WAVE_METHOD == "SURFACE_BANDS":
+                            [ *cmip7_wave ]
 
     # essential variables mapped to z space
     h.z:
