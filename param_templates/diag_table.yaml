@@ -55,7 +55,7 @@ FieldLists:
                          "wet_v", "Coriolis", "areacello", "areacello_cu", "areacello_cv",
                          "areacello_bu", "sin_rot", "cos_rot", "cpocean", "rhozero", "skeb_taper_v",
                          "skeb_taper_u", "dxt:dxto", "dxCu:dxuo", "dxCv:dxvo",
-                         "dyt:dyto", "dyCu:dyuo", "dyCv:dyvo"]
+                         "dyt:dyto", "dyCu:dyuo", "dyCv:dyvo", "sftof"]
 
     - &transports       ["volcello", "vmo", "vhGM", "vhml", "umo", "uhGM", "uhml"]
 
