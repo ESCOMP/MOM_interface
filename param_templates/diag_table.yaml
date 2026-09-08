@@ -83,7 +83,7 @@ FieldLists:
 
     - &cmip7_sfc ["tossq", "rsdo", "T_adx_2d", "T_ady_2d", "t20d"]
 
-    - &cmip7_wave ["surface_stokes_x:sduo", "surface_stokes_y:sduv"]
+    - &cmip7_wave ["surface_stokes_x:sduo", "surface_stokes_y:sdvo"]
 
 ###############################################################################
 # Section 2: Defaults for all files, unless overridden in the file entry.
