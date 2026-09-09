@@ -258,10 +258,17 @@
          "description": "\"Name of file containing initial conditions\nfor the MARBL tracer package.\"\n",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\"": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'",
+            "$MARBL_CONFIG == \"latest\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc",
+            "$MARBL_CONFIG == \"latest+4p2z\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
+         }
+      },
+      "MARBL_TRACERS_IC_FILE_OVERRIDE_POINTER": {
+         "description": "\"File containing tracer IC filenames overriding MARBL_TRACERS_IC_FILE.\"\n",
+         "datatype": "string",
+         "value": {
+            "$MOM6_TRACER_IC_FILE_OVERRIDE_POINTER != \"\"": "$MOM6_TRACER_IC_FILE_OVERRIDE_POINTER",
             "else": {
-               "$MARBL_CONFIG == \"latest\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc",
-               "$MARBL_CONFIG == \"latest+4p2z\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/ecosys_jan_IC_omip_latlon_1x1_180W_c250613.nc"
+               "$RUN_TYPE == \"hybrid\"": "= f'./rpointer.ocn.{$RUN_REFDATE}-{$RUN_REFTOD}'"
             }
          }
       },
@@ -271,6 +278,28 @@
          "units": "Boolean",
          "value": {
             "$RUN_TYPE == \"hybrid\"": false
+         }
+      },
+      "MARBL_REMAP_NON_Z_IC": {
+         "description": "\"[Boolean] default = False\nIf true, and MARBL_IC_FILE_IS_Z is false,\nthen remap IC vals to current model thicknesses.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": true
+         }
+      },
+      "MARBL_ENFORCE_TRACER_ZINT": {
+         "description": "\"Rescale MARBL tracers so that their vertical integrals match\n their vertical integrals computed from the IC file(s).\n Value is determined by MARBL_ENFORCE_TRACER_ZINT in env_run.xml\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": "$MARBL_ENFORCE_TRACER_ZINT"
+      },
+      "MARBL_TRACERS_INIT_VERTICAL_REMAP_ONLY": {
+         "description": "\"[Boolean] default = False\nIf true, initial conditions are on the model horizontal grid.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": true
          }
       },
       "MARBL_IC_MIN_VAL": {
@@ -1126,7 +1155,7 @@
          }
       },
       "DIAG_COORD_DEF_RHO2": {
-         "description": "\" default = 'WOA09'\nDetermines how to specify the coordinate resolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_RHO2\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
+         "description": "\" default = 'WOA09'\nDetermines how to specify the coordinate resolution. Valid options are:\nPARAM       - use the vector-parameter DIAG_COORD_RES_RHO2\nUNIFORM[:N] - uniformly distributed\nFILE:string - read from a file. The string specifies\nthe filename and variable name, separated\nby a comma or space, e.g. FILE:lev.nc,dz\nor FILE:lev.nc,interfaces=zw\nWOA09[:N]   - the WOA09 vertical grid (approximately)\nWOA09INT[:N] - layers spanned by the WOA09 depths\nWOA23INT[:N] - layers spanned by the WOA23 depths\nFNC1:string - FNC1:dz_min,H_total,power,precision\nHYBRID:string - read from a file. The string specifies\nthe filename and two variable names, separated\nby a comma or space, for sigma-2 and dz. e.g.\nHYBRID:vgrid.nc,sigma2,dz\"\n",
          "datatype": "string",
          "value": {
             "$OCN_GRID in [\"tx2_3v2\", \"tx2_3v3\"]": "\"FILE:ocean_rho2_190917.nc,interfaces=rho2\""
@@ -2801,11 +2830,22 @@
             "$RUN_TYPE == \"hybrid\"": false
          }
       },
-      "AGE_IC_FILE": {
-         "description": "\"The file in which the age-tracer initial values can be found, or an empty\nstring for internal initialization.\"\n",
+      "AGE_IC_FILE_OVERRIDE_POINTER": {
+         "description": "\"File containing tracer IC filenames overriding AGE_IC_FILE.\"\n",
          "datatype": "string",
          "value": {
-            "$RUN_TYPE == \"hybrid\" and $CONTINUE_RUN == False": "= f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'"
+            "$MOM6_TRACER_IC_FILE_OVERRIDE_POINTER != \"\"": "$MOM6_TRACER_IC_FILE_OVERRIDE_POINTER",
+            "else": {
+               "$RUN_TYPE == \"hybrid\"": "= f'./rpointer.ocn.{$RUN_REFDATE}-{$RUN_REFTOD}'"
+            }
+         }
+      },
+      "AGE_REMAP_NON_Z_IC": {
+         "description": "\"[Boolean] default = False\nIf true, and AGE_IC_FILE_IS_Z is false,\nthen remap IC vals to current model thicknesses.\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$MOM6_PHYS_CYCLE_YEARS_IN_CYCLE > 0": true
          }
       },
       "T_REF": {

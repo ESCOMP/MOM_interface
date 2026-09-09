@@ -5,9 +5,10 @@
 <entry_id version="3.0">
 
   <description>
-    <desc ocn="MOM6[%MARBL-BIO][%MARBL-ABIO]">MOM6 OCEAN </desc>
+    <desc ocn="MOM6[%MARBL-BIO][%MARBL-ABIO][%PHYS-CYCLE]">MOM6 OCEAN </desc>
     <desc option="MARBL-BIO">MARBL Biogeochemistry Tracer Library base biotic tracers</desc>
     <desc option="MARBL-ABIO">MARBL Biogeochemistry Tracer Library abiotic DIC tracers</desc>
+    <desc option="PHYS-CYCLE">phys cycle option</desc>
   </description>
 
   <entry id="COMP_OCN">
@@ -203,6 +204,44 @@
           "native" will output on whatever levels MOM is using (e.g. z*); stream will be mom6.h.bgc.native.*
           "interpolated" will output will be interpolated to static z levels; stream will be mom6.h.bgc.z.*
           "both" will write both h.bgc.native and h.bgc.z files
+    </desc>
+  </entry>
+
+  <entry id="MOM6_PHYS_CYCLE_YEARS_IN_CYCLE">
+    <type>integer</type>
+    <default_value>0</default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>number of years to run before cycling MOM6 physics
+    MOM6 physics cycling only occurs if MOM6_PHYS_CYCLE_YEARS_IN_CYCLE>0
+    and pre- and post-run scripts are specified in env vars
+    PRERUN_SCRIPT and POSTRUN_SCRIPT</desc>
+  </entry>
+
+  <entry id="MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE">
+    <type>integer</type>
+    <default_value>0</default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>number of months run since most recent cycling of MOM6 physics</desc>
+  </entry>
+
+  <entry id="MOM6_TRACER_IC_FILE_OVERRIDE_POINTER">
+    <type>char</type>
+    <default_value></default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>File containing tracer IC filenames</desc>
+  </entry>
+
+  <entry id="MARBL_ENFORCE_TRACER_ZINT">
+    <type>logical</type>
+    <valid_values>TRUE,FALSE</valid_values>
+    <default_value>FALSE</default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Rescale MARBL tracers so that their vertical integrals match
+          their vertical integrals computed from the IC file(s).
     </desc>
   </entry>
 
