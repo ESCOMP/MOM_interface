@@ -1811,6 +1811,29 @@ Global:
         value:
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: True
             $OCN_GRID == "tx2_0v1": True
+    MLE_TAPER_FN_DEPTH:
+        description: |
+            "[m] default = 0.0
+            Mixed layer (and mixing-layer) depths in the MLE restratification
+            schemes are replaced by H / (1 + (H/H0)**P) when
+            P=MLE_TAPER_FN_POWER > 0 and H0=MLE_TAPER_FN_DEPTH > 0."
+        datatype: real
+        units: m
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 2000.0
+            $OCN_GRID == "tx2_0v1": 2000.0
+    MLE_TAPER_FN_POWER:
+        description: |
+            "[nondim] default = 0
+            The power of H/H0 in the MLE mixed-layer depth tapering.
+            Any positive integer may be used, but even integers are more
+            efficient to calculate. Very large values may lead to numerical
+            instabilities."
+        datatype: integer
+        units: nondim
+        value:
+            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 4
+            $OCN_GRID == "tx2_0v1": 4
     USE_CVMix_CONVECTION:
         description: |
             "[Boolean] default = False
@@ -2536,6 +2559,14 @@ Global:
         value:
             $COMP_ATM == "datm": True  # for C and G compsets
             else: False
+    ALLOW_GLC_RUNOFF_DIAGNOSTICS:
+        description: |
+            "[Boolean] default = False
+            If true, makes available diagnostics of separate glacier
+            runoff fluxes as seen by MOM6."
+        datatype: logical
+        units: Boolean
+        value: True
     MAX_DELTA_SRESTORE:
         description: |
             "[PSU or g kg-1] default = 999.0
@@ -3429,6 +3460,17 @@ Global:
         value:
             $RUN_TYPE == "hybrid":
                 = f'./{$RUN_REFCASE}.mom6{$INST_SUFFIX}.r.{$RUN_REFDATE}-{$RUN_REFTOD}.nc'
+    REMAP_AFTER_INITIALIZATION:
+        description: |
+            "[Boolean] default = True
+            If true, applies regridding and remapping immediately after
+            initialization so that the state is ALE consistent. This is a
+            legacy step and should not be needed if the initialization is
+            consistent with the coordinate mode."
+        datatype: logical
+        units: Boolean
+        value:
+            $RUN_TYPE == "hybrid": False
     AGE_IC_FILE_OVERRIDE_POINTER:
         description: |
             "File containing tracer IC filenames overriding AGE_IC_FILE."
@@ -4006,7 +4048,9 @@ Global:
             run with a different mask_table than the current run, in which case the
             checksums will not match and cause crash.
         datatype: logical
-        value: $TEST
+        value: 
+            $TEST: = $TESTCASE != "ERP"
+            else: False
     ENSEMBLE_APPENDIX_PREFIX:
         description: |
             "default = ''
