@@ -83,7 +83,7 @@ class FType_MOM_params(ParamGen):
                                         "ERROR: "
                                         + varname
                                         + " listed more than once in "
-                                        + input_path
+                                        + str(input_path)
                                     )
 
                                 # enter the parameter in the dictionary:
