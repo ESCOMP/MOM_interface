@@ -147,7 +147,7 @@ jobs:
       - uses: actions/checkout@v4
       
       # Run black check
-      - uses: psf/black@24.1.0
+      - uses: psf/black@26.3.0
         with:
           options: "--check --verbose"
           src: "./cime_config"
