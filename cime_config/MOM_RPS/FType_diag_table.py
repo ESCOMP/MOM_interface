@@ -32,9 +32,9 @@ class FType_diag_table(ParamGen):
         casename : str
             The casename to be resolved.
         """
-        assert os.path.exists(unresolved_diag_table_path), (
-            "Unresolved diag_table file not found: " + unresolved_diag_table_path
-        )
+        assert os.path.exists(
+            unresolved_diag_table_path
+        ), f"Unresolved diag_table file not found: {unresolved_diag_table_path}"
 
         with open(resolved_diag_table_path, "w") as resolved_diag_table:
             with open(unresolved_diag_table_path, "r") as diag_table_unresolved:

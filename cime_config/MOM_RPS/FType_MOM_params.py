@@ -67,11 +67,8 @@ class FType_MOM_params(ParamGen):
                             if re.search("^\s*\w*\s*=\s*[^ \t\n\r\f\v!]+", line_j):
                                 eq_ix = line_j.index("=")
                                 varname = line_j[:eq_ix].strip()
-                                val_str = line_j[eq_ix + 1 :].strip()
-                                if "!" in val_str:
-                                    val_str = val_str.split("!")[
-                                        0
-                                    ]  # discard the comment in val str, if there is
+                                # discard the comment in val str, if there is
+                                val_str = line_j[eq_ix + 1 :].split("!")[0].strip()
 
                                 # add this module if not added before:
                                 if not curr_module in _data:
@@ -83,14 +80,16 @@ class FType_MOM_params(ParamGen):
                                         "ERROR: "
                                         + varname
                                         + " listed more than once in "
-                                        + input_path
+                                        + str(input_path)
                                     )
 
                                 # enter the parameter in the dictionary:
                                 _data[curr_module][varname] = {"value": val_str}
                             else:
                                 raise SystemExit(
-                                    "ERROR: Cannot parse the following line in user_nl_mom: "
+                                    "ERROR: Cannot parse the following line in "
+                                    + str(input_path)
+                                    + ": "
                                     + line
                                 )
 
