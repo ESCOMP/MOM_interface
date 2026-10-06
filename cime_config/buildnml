@@ -121,8 +121,8 @@ def prep_input(case, inst_suffixes):
     MOM_override_final = FType_MOM_params.from_MOM_input(rundir / f"MOM_override{inst_suffixes[0]}")
     MOM_input_final.append(MOM_override_final)
     # Need to know value of USE_MARBL_TRACERS from MOM_input
-    if "USE_MARBL_TRACERS" in MOM_input_final._data["Global"]:
-        use_MARBL = (MOM_input_final._data["Global"]["USE_MARBL_TRACERS"]["value"].strip().lower() == "true")
+    if MOM_input_final.get_value("USE_MARBL_TRACERS") is not None:
+        use_MARBL = MOM_input_final.get_value("USE_MARBL_TRACERS") == "True"
     else:
         print("NOTE: could not find USE_MARBL_TRACERS in MOM_input_final")
         use_MARBL = False
@@ -210,16 +210,13 @@ def prep_input(case, inst_suffixes):
                 lMARBL_output_all = case.get_value("TEST")
                 # Include ALT_CO2 diagnostics if atm_co2_opt and atm_alt_co2_opt differ
                 # (or if they are both "constant" but atm_co2_const != atm_alt_co2_const)
-                if "ATM_CO2_OPT" in MOM_input_final._data["Global"]:
-                    atm_co2_opt = MOM_input_final._data["Global"]["ATM_CO2_OPT"]["value"].strip().lower().replace('"', "")
-                    try:
-                        atm_alt_co2_opt = MOM_input_final._data["Global"]["ATM_ALT_CO2_OPT"]["value"].strip().lower().replace('"', "")
-                    except:
-                        atm_alt_co2_opt = "constant"
+                if MOM_input_final.get_value("ATM_CO2_OPT") is not None:
+                    atm_co2_opt = MOM_input_final.get_value("ATM_CO2_OPT").lower()
+                    atm_alt_co2_opt = (MOM_input_final.get_value("ATM_ALT_CO2_OPT") or "constant").lower()
                     if (atm_co2_opt == atm_alt_co2_opt):
                         if atm_co2_opt == "constant":
-                            lMARBL_output_alt_co2 = (MOM_input_final._data["Global"]["ATM_CO2_CONST"]["value"] !=
-                                                    MOM_input_final._data["Global"]["ATM_ALT_CO2_CONST"]["value"])
+                            lMARBL_output_alt_co2 = (MOM_input_final.get_value("ATM_CO2_CONST") !=
+                                                     MOM_input_final.get_value("ATM_ALT_CO2_CONST"))
                         else:
                             lMARBL_output_alt_co2 = False
                     else:
@@ -397,8 +394,8 @@ def postchecks(case,  MOM_input_final):
     """Performs checks after input files are generated. To be called within prep_input() as a final step."""
 
     ntasks_ocn = case.get_value("NTASKS_OCN")
-    niglobal = int(MOM_input_final._data["Global"]["NIGLOBAL"]['value'])
-    njglobal = int(MOM_input_final._data["Global"]["NJGLOBAL"]['value'])
+    niglobal = int(MOM_input_final.get_value("NIGLOBAL"))
+    njglobal = int(MOM_input_final.get_value("NJGLOBAL"))
 
     # Check whether given NTASKS_OCN is feasible by attempting to compute domain decomposition
     niproc, njproc = MOM_define_layout(niglobal, njglobal, ntasks_ocn)

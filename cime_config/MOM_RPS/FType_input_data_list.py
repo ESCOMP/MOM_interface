@@ -9,7 +9,7 @@ class FType_input_data_list(ParamGen):
         def expand_func(varname):
             val = case.get_value(varname)
             if val is None:
-                val = MOM_input_final.data["Global"][varname]["value"]
+                val = MOM_input_final.get_value(varname)
             if val is None:
                 raise RuntimeError("Cannot determine the value of variable: " + varname)
             return val

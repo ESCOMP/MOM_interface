@@ -126,6 +126,41 @@ class FType_MOM_params(ParamGen):
 
         return _data
 
+    def get_value(self, varname, module="Global"):
+        """Returns the value of a parameter, or None if the parameter is not set.
+
+        The value is returned bare, like that of a case variable, so that $VAR and
+        ${VAR} in templates expand it as they would a case variable: stripped of
+        enclosing quotes, and, if it is a logical, as the string "True" or "False",
+        however it is spelled in the parameter file (MOM6 also accepts T, .true.,
+        etc.)
+
+        Parameters
+        ----------
+        varname: str
+            Name of the parameter.
+        module: str
+            Name of the parameter block that the parameter belongs to, if any.
+
+        Example
+        -------
+        >>> params = FType_MOM_params({"Global": {"A": {"value": '"x"'}, "B": {"value": ".false."}}})
+        >>> params.get_value("A"), params.get_value("B"), params.get_value("C")
+        ('x', 'False', None)
+        >>> FType_MOM_params({"KPP": {"N_SMOOTH": {"value": "2"}}}).get_value("N_SMOOTH", "KPP")
+        '2'
+        """
+        value = self._data.get(module, {}).get(varname, {}).get("value")
+        if value is None:
+            return None
+        value = str(value).strip()
+        if value[:1] in ("'", '"') and value.find(value[0], 1) == len(value) - 1:
+            value = value[1:-1]
+        logical = re.fullmatch(r"\.?(t|true|f|false)\.?", value, re.IGNORECASE)
+        if logical:
+            value = "True" if logical.group(1).lower() in ("t", "true") else "False"
+        return value
+
     def write(
         self, output_path, output_format, case=None, def_params=None, inst_suffix=""
     ):

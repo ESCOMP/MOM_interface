@@ -60,9 +60,7 @@ class FType_diag_table(ParamGen):
         def expand_func(varname):
             val = case.get_value(varname)
             if val is None:
-                val = (
-                    MOM_input_final.data.get("Global", {}).get(varname, {}).get("value")
-                )
+                val = MOM_input_final.get_value(varname)
             if val is None:
                 raise DiagTableError(
                     "Cannot determine the value of the variable {} appearing in "
