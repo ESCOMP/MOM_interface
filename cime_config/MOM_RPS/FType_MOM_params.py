@@ -37,67 +37,92 @@ class FType_MOM_params(ParamGen):
             within_comment_block = False
             curr_module = "Global"
             for line in param_file:
-                line = line.strip()
-                if len(line) > 1:
-                    line_s = line.split()
+                # a comment starts at the first !, // or /*, and a comment block
+                # (/* ... */) may only be opened on a line that has nothing but a
+                # comment on it (as per MOM6 behavior)
+                if within_comment_block:
+                    within_comment_block = "*/" not in line
+                    continue
+                line_s = re.split(r"!|//|/\*", line, maxsplit=1)[0].split()
+                if not line_s:
+                    opening = line.find("/*")
+                    within_comment_block = (
+                        opening >= 0 and "*/" not in line[opening + 2 :]
+                    )
+                    continue
+                line = " ".join(line_s)
 
-                    # check if within comment block.
-                    if (not within_comment_block) and line.strip()[0:2] == "/*":
-                        within_comment_block = True
+                # check format:
+                if line[0] == "%":  # closes a parameter block, by name or not
+                    if curr_module == "Global":
+                        raise SystemExit(
+                            f"ERROR: {line} in {input_path} closes a parameter block "
+                            "that is not open."
+                        )
+                    if line[1:].strip() not in ("", curr_module):
+                        raise SystemExit(
+                            f"ERROR: {line} in {input_path} does not close the open "
+                            f"parameter block, {curr_module}%."
+                        )
+                    curr_module = "Global"
+                elif line[-1] == "%":  # opens a parameter block
+                    if curr_module != "Global":
+                        raise SystemExit(
+                            f"ERROR: {line} in {input_path} opens a parameter block "
+                            f"within {curr_module}%, but nested blocks are not supported."
+                        )
+                    curr_module = line[:-1].strip()
+                    if not re.fullmatch(r"\w+", curr_module):
+                        raise SystemExit(
+                            f"ERROR: {line} in {input_path} does not open a parameter "
+                            "block: block names may contain letters, digits and "
+                            "underscores only."
+                        )
+                else:
+                    # discard override keyword if provided:
+                    if line_s[0] == "#override" and len(line_s) > 1:
+                        line_s = line_s[1:]
+                    line_j = " ".join(line_s)
 
-                    if within_comment_block and line.strip()[-2:] == "*/":
-                        within_comment_block = False
-                        continue
+                    # now parse the line:
+                    if re.search(r"^\w+\s*=\s*\S", line_j):
+                        eq_ix = line_j.index("=")
+                        varname = line_j[:eq_ix].strip()
+                        val_str = line_j[eq_ix + 1 :].strip()
 
-                    if (
-                        not within_comment_block and line_s[0][0] != "!"
-                    ):  # not a single comment line either
-                        # check format:
-                        if (curr_module == "Global") and line.strip()[-1] == "%":
-                            curr_module = line.strip()[:-1]
-                        elif curr_module != "Global" and line.strip()[0] == "%":
-                            curr_module = "Global"
-                        else:
-                            # discard override keyword if provided:
-                            if line_s[0] == "#override" and len(line_s) > 1:
-                                line_s = line_s[1:]
-                            line_j = " ".join(line_s)
+                        # add this module if not added before:
+                        if not curr_module in _data:
+                            _data[curr_module] = dict()
 
-                            # now parse the line:
-                            if re.search("^\s*\w*\s*=\s*[^ \t\n\r\f\v!]+", line_j):
-                                eq_ix = line_j.index("=")
-                                varname = line_j[:eq_ix].strip()
-                                # discard the comment in val str, if there is
-                                val_str = line_j[eq_ix + 1 :].split("!")[0].strip()
+                        # check if param already provided:
+                        if varname in _data[curr_module]:
+                            raise SystemExit(
+                                "ERROR: "
+                                + varname
+                                + " listed more than once in "
+                                + str(input_path)
+                            )
 
-                                # add this module if not added before:
-                                if not curr_module in _data:
-                                    _data[curr_module] = dict()
-
-                                # check if param already provided:
-                                if varname in _data[curr_module]:
-                                    raise SystemExit(
-                                        "ERROR: "
-                                        + varname
-                                        + " listed more than once in "
-                                        + str(input_path)
-                                    )
-
-                                # enter the parameter in the dictionary:
-                                _data[curr_module][varname] = {"value": val_str}
-                            else:
-                                raise SystemExit(
-                                    "ERROR: Cannot parse the following line in "
-                                    + str(input_path)
-                                    + ": "
-                                    + line
-                                )
+                        # enter the parameter in the dictionary:
+                        _data[curr_module][varname] = {"value": val_str}
+                    else:
+                        raise SystemExit(
+                            "ERROR: Cannot parse the following line in "
+                            + str(input_path)
+                            + ": "
+                            + line
+                        )
 
             # Check if there is unclosed block:
             if within_comment_block:
-                raise SystemExit("ERROR: faulty comment block!")
+                raise SystemExit(
+                    f"ERROR: A comment block (/* ... */) is not closed in {input_path}."
+                )
             if curr_module != "Global":
-                raise SystemExit("ERROR: faulty module block!")
+                raise SystemExit(
+                    f"ERROR: The parameter block {curr_module}% is not closed in "
+                    f"{input_path}."
+                )
 
         return _data
 
