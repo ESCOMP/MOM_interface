@@ -85,17 +85,29 @@ class FType_MOM_params(ParamGen):
                     line_j = " ".join(line_s)
 
                     # now parse the line:
-                    if re.search(r"^\w+\s*=\s*\S", line_j):
+                    if re.search(r"^(\w+%)*\w+\s*=\s*\S", line_j):
                         eq_ix = line_j.index("=")
                         varname = line_j[:eq_ix].strip()
                         val_str = line_j[eq_ix + 1 :].strip()
 
+                        # a parameter may be prefixed by its block, e.g., KPP%N_SMOOTH,
+                        # in which case that is its block, whether a block is open or not.
+                        module = curr_module
+                        if "%" in varname:
+                            module, _, varname = varname.rpartition("%")
+                            if "%" in module:
+                                raise SystemExit(
+                                    f"ERROR: {line} in {input_path} sets a parameter "
+                                    f"within the nested block {module}%, but nested "
+                                    "blocks are not supported."
+                                )
+
                         # add this module if not added before:
-                        if not curr_module in _data:
-                            _data[curr_module] = dict()
+                        if not module in _data:
+                            _data[module] = dict()
 
                         # check if param already provided:
-                        if varname in _data[curr_module]:
+                        if varname in _data[module]:
                             raise SystemExit(
                                 "ERROR: "
                                 + varname
@@ -104,7 +116,7 @@ class FType_MOM_params(ParamGen):
                             )
 
                         # enter the parameter in the dictionary:
-                        _data[curr_module][varname] = {"value": val_str}
+                        _data[module][varname] = {"value": val_str}
                     else:
                         raise SystemExit(
                             "ERROR: Cannot parse the following line in "
