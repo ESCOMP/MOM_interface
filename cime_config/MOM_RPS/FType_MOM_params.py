@@ -258,6 +258,29 @@ class FType_MOM_params(ParamGen):
         MOM6 parameter changes may be made via SourceMods or user_nl_mom
         within CASEROOT.*/\n"""
 
+        # MOM6 reads a parameter only where it expects it, i.e., outside of any block
+        # or within a particular block, and ignores it elsewhere. So a parameter that
+        # MOM_input sets elsewhere than user_nl_mom does would be silently ignored.
+        def scope(module):
+            if module == "Global":
+                return "outside of any block"
+            return f"within the {module}% block"
+
+        for module in self._data:
+            for var, entry in self._data[module].items():
+                if var in def_params.data.get(module, {}):
+                    continue
+                expected = [m for m in def_params.data if var in def_params.data[m]]
+                if expected:
+                    fix = f"{var} = {entry['value']} {scope('Global')}"
+                    if expected[0] != "Global":
+                        fix = f"{expected[0]}%{var} = {entry['value']}"
+                    raise SystemExit(
+                        f"ERROR: {var} is set {scope(module)} in user_nl_mom, but MOM6 "
+                        f"expects it {scope(expected[0])}, as in MOM_input, and so "
+                        f"would ignore it. Set it as {fix} instead."
+                    )
+
         with open(os.path.join(output_path), "w") as MOM_override:
 
             MOM_override.write(MOM_override_header)
