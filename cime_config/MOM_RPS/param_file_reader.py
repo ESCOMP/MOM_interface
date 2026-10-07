@@ -9,8 +9,35 @@ from collections import OrderedDict
 
 def read_MOM_params(input_path):
     """Reads in a parameter file in MOM_input syntax, e.g., MOM_input or MOM_override."""
+    return _read(input_path, user_nl=False)[0]
+
+
+def read_user_nl_mom(input_path):
+    """Reads in a user_nl_mom file, which holds changes to MOM6 parameters, in
+    MOM_input syntax, and changes to the diag_table, given on lines of the form
+
+        diag_table%<stream>%<key> <operator> <value>
+
+    (see diag_table_streams.StreamEdit). Returns the parameters, as read_MOM_params
+    does, and the diag_table changes, as a list of (stream, key, operator, value).
+    """
+    return _read(input_path, user_nl=True)
+
+
+# A diag_table line of user_nl_mom, e.g., diag_table%h.native%fields += SSH
+_DIAG_TABLE_LINE = re.compile(
+    r"^diag_table%(?P<stream>[^%\s]+)%(?P<key>\w+)\s*(?P<operator>\+=|-=|=)\s*"
+    r"(?P<value>\S.*)$"
+)
+
+
+def _read(input_path, user_nl):
+    """Reads in a parameter file, i.e., MOM_input, MOM_override or, if user_nl,
+    user_nl_mom, which may also hold diag_table lines. Returns the parameters and
+    the diag_table changes."""
 
     _data = OrderedDict()
+    changes = []  # the diag_table changes
     with open(input_path, "r") as param_file:
         within_comment_block = False
         curr_module = "Global"
@@ -29,7 +56,21 @@ def read_MOM_params(input_path):
             line = " ".join(line_s)
 
             # check format:
-            if line[0] == "%":  # closes a parameter block, by name or not
+            if user_nl and line.startswith("diag_table%"):  # changes the diag_table
+                if curr_module != "Global":
+                    raise SystemExit(
+                        f"ERROR: {line} in {input_path} is within the parameter "
+                        f"block {curr_module}%, but diag_table lines may not be."
+                    )
+                match = _DIAG_TABLE_LINE.match(line)
+                if not match:
+                    raise SystemExit(
+                        f"ERROR: {line} in {input_path} is not of the form "
+                        "diag_table%<stream>%<key> <operator> <value>, where the "
+                        "operator is =, += or -=."
+                    )
+                changes.append(match.group("stream", "key", "operator", "value"))
+            elif line[0] == "%":  # closes a parameter block, by name or not
                 if curr_module == "Global":
                     raise SystemExit(
                         f"ERROR: {line} in {input_path} closes a parameter block "
@@ -112,4 +153,4 @@ def read_MOM_params(input_path):
                 f"{input_path}."
             )
 
-    return _data
+    return _data, changes
