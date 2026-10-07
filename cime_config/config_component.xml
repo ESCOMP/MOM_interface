@@ -115,8 +115,9 @@
     <desc> This variable is used to choose from a set of predefined ocean diagnostics configurations.
            Each configuration corresponds to a different combination of frequency, precision, and field lists.
            Configuration ordered in increasing scope/frequency: "spinup", "production", "development".
-           Further customization of diagnostics may be done by copying an edited version of
-           diag_table file in SourceMods/src.mom/
+           Further customization of diagnostics may be done via diag_table lines in user_nl_mom
+           (see the comments in user_nl_mom), or by copying an edited version of diag_table file
+           in SourceMods/src.mom/
     </desc>
   </entry>
 
