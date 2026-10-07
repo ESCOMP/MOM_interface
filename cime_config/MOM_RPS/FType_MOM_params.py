@@ -1,8 +1,9 @@
 import os
 import re
-from collections import OrderedDict
 
 from CIME.ParamGen.paramgen import ParamGen
+
+from param_file_reader import read_MOM_params
 
 
 class FType_MOM_params(ParamGen):
@@ -23,84 +24,43 @@ class FType_MOM_params(ParamGen):
             Path to MOM_input file to read in and generate a FType_MOM_params object.
         """
 
-        _data = FType_MOM_params._read_MOM_input(input_path)
+        _data = read_MOM_params(input_path)
         return FType_MOM_params(_data)
 
-    @staticmethod
-    def _read_MOM_input(input_path):
-        """Reads in input files in MOM_input syntax. Note that this method may be used to
-        read in MOM_override and user_nl_mom too, since the syntax is the same, but
-        write methods for MOM_input and MOM_override are different."""
+    def get_value(self, varname, module="Global"):
+        """Returns the value of a parameter, or None if the parameter is not set.
 
-        _data = OrderedDict()
-        with open(input_path, "r") as param_file:
-            within_comment_block = False
-            curr_module = "Global"
-            for line in param_file:
-                line = line.strip()
-                if len(line) > 1:
-                    line_s = line.split()
+        The value is returned bare, like that of a case variable, so that $VAR and
+        ${VAR} in templates expand it as they would a case variable: stripped of
+        enclosing quotes, and, if it is a logical, as the string "True" or "False",
+        however it is spelled in the parameter file (MOM6 also accepts T, .true.,
+        etc.)
 
-                    # check if within comment block.
-                    if (not within_comment_block) and line.strip()[0:2] == "/*":
-                        within_comment_block = True
+        Parameters
+        ----------
+        varname: str
+            Name of the parameter.
+        module: str
+            Name of the parameter block that the parameter belongs to, if any.
 
-                    if within_comment_block and line.strip()[-2:] == "*/":
-                        within_comment_block = False
-                        continue
-
-                    if (
-                        not within_comment_block and line_s[0][0] != "!"
-                    ):  # not a single comment line either
-                        # check format:
-                        if (curr_module == "Global") and line.strip()[-1] == "%":
-                            curr_module = line.strip()[:-1]
-                        elif curr_module != "Global" and line.strip()[0] == "%":
-                            curr_module = "Global"
-                        else:
-                            # discard override keyword if provided:
-                            if line_s[0] == "#override" and len(line_s) > 1:
-                                line_s = line_s[1:]
-                            line_j = " ".join(line_s)
-
-                            # now parse the line:
-                            if re.search("^\s*\w*\s*=\s*[^ \t\n\r\f\v!]+", line_j):
-                                eq_ix = line_j.index("=")
-                                varname = line_j[:eq_ix].strip()
-                                val_str = line_j[eq_ix + 1 :].strip()
-                                if "!" in val_str:
-                                    val_str = val_str.split("!")[
-                                        0
-                                    ]  # discard the comment in val str, if there is
-
-                                # add this module if not added before:
-                                if not curr_module in _data:
-                                    _data[curr_module] = dict()
-
-                                # check if param already provided:
-                                if varname in _data[curr_module]:
-                                    raise SystemExit(
-                                        "ERROR: "
-                                        + varname
-                                        + " listed more than once in "
-                                        + input_path
-                                    )
-
-                                # enter the parameter in the dictionary:
-                                _data[curr_module][varname] = {"value": val_str}
-                            else:
-                                raise SystemExit(
-                                    "ERROR: Cannot parse the following line in user_nl_mom: "
-                                    + line
-                                )
-
-            # Check if there is unclosed block:
-            if within_comment_block:
-                raise SystemExit("ERROR: faulty comment block!")
-            if curr_module != "Global":
-                raise SystemExit("ERROR: faulty module block!")
-
-        return _data
+        Example
+        -------
+        >>> params = FType_MOM_params({"Global": {"A": {"value": '"x"'}, "B": {"value": ".false."}}})
+        >>> params.get_value("A"), params.get_value("B"), params.get_value("C")
+        ('x', 'False', None)
+        >>> FType_MOM_params({"KPP": {"N_SMOOTH": {"value": "2"}}}).get_value("N_SMOOTH", "KPP")
+        '2'
+        """
+        value = self._data.get(module, {}).get(varname, {}).get("value")
+        if value is None:
+            return None
+        value = str(value).strip()
+        if value[:1] in ("'", '"') and value.find(value[0], 1) == len(value) - 1:
+            value = value[1:-1]
+        logical = re.fullmatch(r"\.?(t|true|f|false)\.?", value, re.IGNORECASE)
+        if logical:
+            value = "True" if logical.group(1).lower() in ("t", "true") else "False"
+        return value
 
     def write(
         self, output_path, output_format, case=None, def_params=None, inst_suffix=""
@@ -183,9 +143,32 @@ class FType_MOM_params(ParamGen):
     def _write_MOM_override(self, output_path, def_params):
 
         MOM_override_header = """/* WARNING: DO NOT EDIT this file! Any user changes made in files
-        in RUNDIR will be overriden. This file is automatically generated.
-        MOM6 parameter changes may ve made via SourceMods or user_nl_mom
+        in RUNDIR will be overridden. This file is automatically generated.
+        MOM6 parameter changes may be made via SourceMods or user_nl_mom
         within CASEROOT.*/\n"""
+
+        # MOM6 reads a parameter only where it expects it, i.e., outside of any block
+        # or within a particular block, and ignores it elsewhere. So a parameter that
+        # MOM_input sets elsewhere than user_nl_mom does would be silently ignored.
+        def scope(module):
+            if module == "Global":
+                return "outside of any block"
+            return f"within the {module}% block"
+
+        for module in self._data:
+            for var, entry in self._data[module].items():
+                if var in def_params.data.get(module, {}):
+                    continue
+                expected = [m for m in def_params.data if var in def_params.data[m]]
+                if expected:
+                    fix = f"{var} = {entry['value']} {scope('Global')}"
+                    if expected[0] != "Global":
+                        fix = f"{expected[0]}%{var} = {entry['value']}"
+                    raise SystemExit(
+                        f"ERROR: {var} is set {scope(module)} in user_nl_mom, but MOM6 "
+                        f"expects it {scope(expected[0])}, as in MOM_input, and so "
+                        f"would ignore it. Set it as {fix} instead."
+                    )
 
         with open(os.path.join(output_path), "w") as MOM_override:
 

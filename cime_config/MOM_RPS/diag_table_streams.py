@@ -89,6 +89,13 @@ REQUIRED_SETTINGS = (
 _FIELD_NAME = re.compile(r"^\w+$")
 _REGIONAL_SECTION = re.compile(r"^\s*(-?[\d.]+\s+){5}-?[\d.]+\s*$")
 
+# Stream settings that are whole numbers.
+_INT_SETTINGS = ("output_freq", "new_file_freq", "packing")
+
+# Names that streams added via user_nl_mom may have: the h.<name> form of the file
+# name segment that CESM short term archiving recognizes (see config_archive.xml).
+_NEW_STREAM_NAME = re.compile(r"^h\.\w+$")
+
 
 class DiagTableError(Exception):
     """Raised when a diag_table cannot be generated as specified."""
@@ -240,6 +247,8 @@ class Stream:
     labels: list of str
         Labels of the diag_table template entries that this stream was built
         from. Used in error messages only.
+    edited: bool
+        Whether user_nl_mom changes this stream. Used in error messages only.
     """
 
     def __init__(self, name, settings=None, groups=None, labels=None):
@@ -247,13 +256,18 @@ class Stream:
         self.settings = dict(settings) if settings else {}
         self.groups = list(groups) if groups else []
         self.labels = list(labels) if labels else []
+        self.edited = False
 
     @property
     def source(self):
         """Describes this stream and its origin, for error messages."""
-        return 'stream "{}" (from template entry {})'.format(
-            self.name, " and ".join(self.labels) or "(unknown)"
-        )
+        if not self.labels:
+            origin = "user_nl_mom" if self.edited else "(unknown)"
+        else:
+            origin = "template entry " + " and ".join(self.labels)
+            if self.edited:
+                origin += ", as changed via user_nl_mom"
+        return 'stream "{}" (from {})'.format(self.name, origin)
 
     @property
     def date_template(self):
@@ -392,6 +406,171 @@ class Stream:
 
     def __repr__(self):
         return "Stream({!r}, {} fields)".format(self.name, len(self.output_names()))
+
+
+class StreamEdit:
+    """The changes that user_nl_mom makes to one stream, each given on a line of the
+    form diag_table%<stream>%<key> <operator> <value>, where the key is one of:
+
+    - fields: with +=, the fields to add; with -=, the fields to remove, by output
+      name; with =, the fields to replace all fields of the stream with, or none.
+    - module: the diagnostics module of the fields to add, if the stream does not
+      have exactly one module already, e.g., if the stream is new.
+    - a stream setting (see STREAM_SETTINGS), with =.
+
+    Fields are given as in the diag_table template, i.e., as
+    name[:output_name[:reduction]], separated by commas. The settings are to be
+    applied as if given in the template entry of the stream, so that the settings
+    derived from them follow: e.g., a stream changed to daily output also starts a
+    new file daily, unless its new_file_freq_units is changed too. The field changes
+    are applied in order, once the stream is built.
+
+    Example
+    -------
+    >>> edit = StreamEdit("h.sfc")
+    >>> edit.add("fields", "+=", "SSH, tos:tos_max:max")
+    >>> edit.add("fields", "-=", "sos")
+    >>> edit.add("output_freq", "=", "5")
+    >>> edit.settings
+    {'output_freq': 5}
+    >>> group = FieldGroup("ocean_model", [Field("tos"), Field("sos")])
+    >>> stream = Stream("h.sfc", groups=[group])
+    >>> edit.apply_fields(stream)
+    >>> stream.output_names()
+    ['tos', 'SSH', 'tos_max']
+    """
+
+    def __init__(self, name):
+        self.name = name
+        self.settings = {}
+        self.module = None
+        self.field_changes = []  # (operator, fields, line), in the order given
+
+    def add(self, key, operator, value):
+        """Records one diag_table%<stream>%<key> <operator> <value> change."""
+        line = "diag_table%{}%{} {} {}".format(self.name, key, operator, value)
+        try:
+            if key != "fields" and key != "module" and key not in STREAM_SETTINGS:
+                raise DiagTableError(
+                    "{} is not one of: fields, module, {}".format(
+                        key, ", ".join(STREAM_SETTINGS)
+                    )
+                )
+            operators = ("=", "+=", "-=") if key == "fields" else ("=",)
+            if operator not in operators:
+                raise DiagTableError(
+                    "{} may only be given with {}".format(key, " or ".join(operators))
+                )
+            if key == "fields":
+                specs = [spec.strip().strip("'\"") for spec in value.split(",")]
+                if operator == "=" and specs == ["none"]:
+                    fields = []
+                else:
+                    fields = [Field(spec) for spec in specs]
+                self.field_changes.append((operator, fields, line))
+                return
+            value = value.strip().strip("'\"")
+            if key in self.settings or (key == "module" and self.module):
+                raise DiagTableError("{} is given more than once".format(key))
+            if key == "module":
+                if value not in MODULES:
+                    raise DiagTableError(
+                        'the module "{}" is not one of: {}'.format(
+                            value, ", ".join(MODULES)
+                        )
+                    )
+                self.module = value
+            elif key in _INT_SETTINGS:
+                if not re.match(r"^-?\d+$", value):
+                    raise DiagTableError('"{}" is not a whole number'.format(value))
+                self.settings[key] = int(value)
+            else:
+                self.settings[key] = value
+        except DiagTableError as error:
+            raise DiagTableError(
+                "Cannot apply {} from user_nl_mom: {}.".format(
+                    line, str(error).rstrip(".")
+                )
+            ) from error
+
+    def check_new(self, stream_names):
+        """Checks that this edit may add its stream, which is not among the streams
+        of the case, i.e., stream_names."""
+        problem = None
+        if not _NEW_STREAM_NAME.match(self.name):
+            problem = "the names of new streams must be of the form h.<name>"
+        elif self.module is None:
+            problem = (
+                "adding a stream requires the module of its fields, given as "
+                "diag_table%{}%module = <one of: {}>".format(
+                    self.name, ", ".join(MODULES)
+                )
+            )
+        if problem:
+            raise DiagTableError(
+                'Cannot add the stream "{}" via user_nl_mom: {}. (If you meant to '
+                "change an existing stream, the streams of this case are: "
+                "{}.)".format(self.name, problem, ", ".join(stream_names))
+            )
+
+    def apply_fields(self, stream):
+        """Applies the field changes to the stream that this edit is for."""
+        stream.edited = True
+        for operator, fields, line in self.field_changes:
+            try:
+                if operator == "-=":
+                    for field in fields:
+                        if field.output_name not in stream.output_names():
+                            raise DiagTableError(
+                                'it has no field "{}"'.format(field.output_name)
+                            )
+                        for group in stream.groups:
+                            group.fields = [
+                                f
+                                for f in group.fields
+                                if f.output_name != field.output_name
+                            ]
+                    continue
+                if operator == "=":
+                    module = self._module(stream) if fields else None
+                    stream.groups = []
+                    if not fields:
+                        continue
+                else:
+                    module = self._module(stream)
+                group = stream.group_for(module)
+                for field in fields:
+                    if field.output_name in stream.output_names():
+                        raise DiagTableError(
+                            'it already has a field "{}"'.format(field.output_name)
+                        )
+                    group.fields.append(field)
+            except DiagTableError as error:
+                raise DiagTableError(
+                    "Cannot apply {} from user_nl_mom to {}: {}.".format(
+                        line, stream.source, str(error).rstrip(".")
+                    )
+                ) from error
+
+    def _module(self, stream):
+        """Returns the diagnostics module of the fields to add to the stream."""
+        if self.module:
+            return self.module
+        modules = sorted({group.module for group in stream.groups})
+        if len(modules) != 1:
+            raise DiagTableError(
+                "{}, so give the module of the fields to add as "
+                "diag_table%{}%module = <one of: {}>".format(
+                    (
+                        "it has fields from " + ", ".join(modules)
+                        if modules
+                        else "it has no fields"
+                    ),
+                    self.name,
+                    ", ".join(MODULES),
+                )
+            )
+        return modules[0]
 
 
 def write_diag_table(streams, output_path):
