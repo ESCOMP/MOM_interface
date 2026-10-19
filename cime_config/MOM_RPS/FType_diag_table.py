@@ -11,6 +11,7 @@ from diag_table_streams import (
     int_setting,
     REQUIRED_SETTINGS,
     Stream,
+    StreamEdit,
     STREAM_SETTINGS,
     write_diag_table,
 )
@@ -32,16 +33,16 @@ class FType_diag_table(ParamGen):
         casename : str
             The casename to be resolved.
         """
-        assert os.path.exists(unresolved_diag_table_path), (
-            "Unresolved diag_table file not found: " + unresolved_diag_table_path
-        )
+        assert os.path.exists(
+            unresolved_diag_table_path
+        ), f"Unresolved diag_table file not found: {unresolved_diag_table_path}"
 
         with open(resolved_diag_table_path, "w") as resolved_diag_table:
             with open(unresolved_diag_table_path, "r") as diag_table_unresolved:
                 for line in diag_table_unresolved:
                     resolved_diag_table.write(line.replace(CASENAME, casename))
 
-    def write(self, output_path, case, MOM_input_final):
+    def write(self, output_path, case, MOM_input_final, changes=()):
         """Writes out the diag_table of a case.
 
         Parameters
@@ -55,14 +56,14 @@ class FType_diag_table(ParamGen):
             The MOM6 parameters of the case, i.e., MOM_input updated with
             MOM_override. Consulted for expandable variables that are MOM6
             parameters rather than case variables.
+        changes : list of (stream, key, operator, value), optional
+            The diag_table lines of user_nl_mom (see diag_table_streams.StreamEdit).
         """
 
         def expand_func(varname):
             val = case.get_value(varname)
             if val is None:
-                val = (
-                    MOM_input_final.data.get("Global", {}).get(varname, {}).get("value")
-                )
+                val = MOM_input_final.get_value(varname)
             if val is None:
                 raise DiagTableError(
                     "Cannot determine the value of the variable {} appearing in "
@@ -71,13 +72,20 @@ class FType_diag_table(ParamGen):
                 )
             return val
 
+        edits = OrderedDict()  # the changes from user_nl_mom, by stream
+        for stream, key, operator, value in changes:
+            if stream not in edits:
+                edits[stream] = StreamEdit(stream)
+            edits[stream].add(key, operator, value)
+
         # From the general template (diag_table.yaml), reduce a custom diag_table
         # for this case, and turn its file entries into streams.
         self.reduce(expand_func)
-        write_diag_table(list(self._streams().values()), output_path)
+        write_diag_table(list(self._streams(edits).values()), output_path)
 
-    def _streams(self):
-        """Returns the streams of this case, keyed and ordered by stream name."""
+    def _streams(self, edits):
+        """Returns the streams of this case, as changed by the StreamEdits of
+        user_nl_mom, keyed and ordered by stream name."""
         assert self.reduced, "May only collect streams from a reduced diag_table."
         defaults = self.data.get("FileDefaults") or {}
         _check_defaults(defaults)
@@ -88,11 +96,20 @@ class FType_diag_table(ParamGen):
             )
         streams = OrderedDict()
         for label, entry in self.data["Files"].items():
+            edit = edits.get(entry.get("name") or label)
+            if edit:  # the settings of an edit apply as if given in the entry
+                entry = dict(entry, **edit.settings)
             stream = _stream_from_entry(label, entry, defaults)
             if stream.name in streams:
                 streams[stream.name].merge(stream)
             else:
                 streams[stream.name] = stream
+        for name, edit in edits.items():
+            if name not in streams:  # a stream that user_nl_mom adds
+                edit.check_new(list(streams))
+                streams[name] = _stream_from_entry(name, edit.settings, defaults)
+                streams[name].labels = []
+            edit.apply_fields(streams[name])
         return streams
 
 
