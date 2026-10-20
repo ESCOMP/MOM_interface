@@ -21,7 +21,7 @@ def write_MARBL_diagnostics_file(
     # each subsequent diag_mode is a superset of the previous mode; if we have a list of valid modes
     # then we can use integer comparison with the .index() function to determine if a variable should
     # be included.
-    valid_diag_modes = ["none", "minimal", "full", "test_suite"]
+    valid_diag_modes = ["none", "minimal", "cmip7", "full", "test_suite"]
     # For now we hard-code the tracers we want included in the output when diag_mode = 'minimal'
     # (and for the Jint_100m diagnostics)
     # If we expand the minimal set, we may need to change how we track what is included
@@ -100,21 +100,24 @@ def write_MARBL_diagnostics_file(
         fout.write(f"ATM_BLACK_CARBON_FLUX_CPL : {freq_op}\n")
         fout.write(f"SEAICE_BLACK_CARBON_FLUX_CPL : {freq_op}\n")
         fout.write("#\n# temperature and salinity\n#\n")
-        fout.write(
-            f"so: {freq_op}\n"
-        )  # so should be included when diag_mode = "minimal"
-
         if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("full"):
             freq_op = "medium_average"
         else:
             freq_op = "never_average"
         fout.write(
+            f"so: {freq_op}\n"
+        )  # so should not be included when diag_mode < "full"
+        fout.write(
             f"thetao: {freq_op}\n"
-        )  # thetao should not be included when diag_mode = "minimal"
+        )  # thetao should not be included when diag_mode < "full"
         fout.write("#\n# Bottom Flux to Tendency Conversion\n#\n")
         fout.write(f"BOT_FLUX_TO_TEND : {freq_op}\n")
 
         if ice_ncat > 0:
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                freq_op = "medium_average"
+            else:
+                freq_op = "never_average"
             fout.write("#\n# per-category forcings\n#\n")
             for m in range(ice_ncat + 1):
                 fout.write(f"FRACR_CAT_{m+1}: {freq_op}\n")
@@ -152,7 +155,7 @@ def write_MARBL_diagnostics_file(
                 freq_op = "never_average"
             per_tracer_dict["diags"] = {}
             # Tracers themselves and Jint_100m diags  have different defaults than the rest
-            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("full") or (
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7") or (
                 valid_diag_modes.index(diag_mode) == valid_diag_modes.index("minimal")
                 and tracer_short_name in tracers_in_minimal_diag_output
             ):
@@ -175,7 +178,7 @@ def write_MARBL_diagnostics_file(
 
             # Set up dictionary for tracking the Jint_100m_{tracer} freq_ops
             if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("full") or (
-                valid_diag_modes.index(diag_mode) == valid_diag_modes.index("minimal")
+                valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("minimal")
                 and tracer_short_name in Jint_100m_in_minimal_diag_output
             ):
                 Jint_100m_freq_op[tracer_short_name] = "medium_average"
@@ -186,7 +189,6 @@ def write_MARBL_diagnostics_file(
         # 2. Update dictionary for tracers that don't just rely on default diagnostic output
         #    This is organized per-tracer, and specific blocks are ignored if MARBL is not
         #    configured to run with that particular tracer
-        # PO4
         if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("full"):
             freq_op = "medium_average"
             low_freq_op = "low_average"
@@ -195,22 +197,31 @@ def write_MARBL_diagnostics_file(
             freq_op = "never_average"
             low_freq_op = "never_average"
             high_freq_op = "never_average"
+        if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+            riv_flux_op = "medium_average"
+        else:
+            riv_flux_op = "never_average"
+        # PO4
         if "PO4" in full_diag_dict.keys():
-            full_diag_dict["PO4"]["diags"]["PO4_RIV_FLUX"] = freq_op
+            full_diag_dict["PO4"]["diags"]["PO4_RIV_FLUX"] = riv_flux_op
             full_diag_dict["PO4"]["diags"]["J_PO4"] = low_freq_op
             full_diag_dict["PO4"]["diags"]["Jint_100m_PO4"] = Jint_100m_freq_op["PO4"]
             # full_diag_dict['PO4']['diags']['tend_zint_100m_PO4'] = freq_op
             full_diag_dict["PO4"]["properties"]["has surface flux"] = True
         # NO3
         if "NO3" in full_diag_dict.keys():
-            full_diag_dict["NO3"]["diags"]["NO3_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["NO3"]["diags"]["NO3_SURF"] = "medium_average"
+            full_diag_dict["NO3"]["diags"]["NO3_RIV_FLUX"] = riv_flux_op
             full_diag_dict["NO3"]["diags"]["J_NO3"] = low_freq_op
             full_diag_dict["NO3"]["diags"]["Jint_100m_NO3"] = Jint_100m_freq_op["NO3"]
             # full_diag_dict['NO3']['diags']['tend_zint_100m_NO3'] = freq_op
             full_diag_dict["NO3"]["properties"]["has surface flux"] = True
         # SiO3
         if "SiO3" in full_diag_dict.keys():
-            full_diag_dict["SiO3"]["diags"]["SiO3_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["SiO3"]["diags"]["SiO3_SURF"] = "medium_average"
+            full_diag_dict["SiO3"]["diags"]["SiO3_RIV_FLUX"] = riv_flux_op
             full_diag_dict["SiO3"]["diags"]["J_SiO3"] = low_freq_op
             full_diag_dict["SiO3"]["diags"]["Jint_100m_SiO3"] = Jint_100m_freq_op[
                 "SiO3"
@@ -219,13 +230,17 @@ def write_MARBL_diagnostics_file(
             full_diag_dict["SiO3"]["properties"]["has surface flux"] = True
         # NH4
         if "NH4" in full_diag_dict.keys():
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["NH4"]["diags"]["NH4_SURF"] = "medium_average"
             full_diag_dict["NH4"]["diags"]["J_NH4"] = low_freq_op
             full_diag_dict["NH4"]["diags"]["Jint_100m_NH4"] = Jint_100m_freq_op["NH4"]
             # full_diag_dict['NH4']['diags']['tend_zint_100m_NH4'] = freq_op
             full_diag_dict["NH4"]["properties"]["has surface flux"] = True
         # Fe
         if "Fe" in full_diag_dict.keys():
-            full_diag_dict["Fe"]["diags"]["Fe_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["Fe"]["diags"]["Fe_SURF"] = "medium_average"
+            full_diag_dict["Fe"]["diags"]["Fe_RIV_FLUX"] = riv_flux_op
             full_diag_dict["Fe"]["diags"]["J_Fe"] = low_freq_op
             full_diag_dict["Fe"]["diags"]["Jint_100m_Fe"] = Jint_100m_freq_op["Fe"]
             # full_diag_dict['Fe']['diags']['tend_zint_100m_Fe'] = freq_op
@@ -241,16 +256,23 @@ def write_MARBL_diagnostics_file(
                 full_diag_dict["O2"]["diags"]["STF_O2"] = "medium_average, high_average"
             else:
                 full_diag_dict["O2"]["diags"]["STF_O2"] = "never_average"
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["O2"]["diags"]["O2_SURF"] = "medium_average, high_average"
             full_diag_dict["O2"]["diags"]["Jint_100m_O2"] = Jint_100m_freq_op["O2"]
             # full_diag_dict['O2']['diags']['tend_zint_100m_O2'] = freq_op
             full_diag_dict["O2"]["properties"]["include budget terms"] = True
             full_diag_dict["O2"]["properties"]["has surface flux"] = True
         # DIC
         if "DIC" in full_diag_dict.keys():
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["DIC"]["diags"]["DIC_SURF"] = "medium_average"
+                full_diag_dict["DIC"]["diags"]["DIC_zint"] = "medium_average"
+            else:
+                full_diag_dict["DIC"]["diags"]["DIC_zint"] = freq_op
             # STF_SALT_DIC is special case
             if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("minimal"):
                 full_diag_dict["DIC"]["diags"]["STF_SALT_DIC"] = "medium_average"
-            full_diag_dict["DIC"]["diags"]["DIC_RIV_FLUX"] = freq_op
+            full_diag_dict["DIC"]["diags"]["DIC_RIV_FLUX"] = riv_flux_op
             full_diag_dict["DIC"]["diags"]["J_DIC"] = freq_op
             full_diag_dict["DIC"]["diags"]["Jint_100m_DIC"] = Jint_100m_freq_op["DIC"]
             # full_diag_dict['DIC']['diags']['tend_zint_100m_DIC'] = freq_op
@@ -258,11 +280,12 @@ def write_MARBL_diagnostics_file(
             full_diag_dict["DIC"]["properties"]["has surface flux"] = True
         # DIC_ALT_CO2
         if "DIC_ALT_CO2" in full_diag_dict.keys():
-            full_diag_dict["DIC_ALT_CO2"]["diags"]["DIC_ALT_CO2_RIV_FLUX"] = freq_op
+            # full_diag_dict["DIC_ALT_CO2"]["diags"]["DIC_ALT_CO2_RIV_FLUX"] = riv_flux_op
             full_diag_dict["DIC_ALT_CO2"]["diags"]["J_DIC_ALT_CO2"] = freq_op
             full_diag_dict["DIC_ALT_CO2"]["diags"]["Jint_100m_DIC_ALT_CO2"] = (
                 Jint_100m_freq_op["DIC_ALT_CO2"]
             )
+            full_diag_dict["DIC_ALT_CO2"]["diags"]["DIC_ALT_CO2_zint"] = freq_op
             # full_diag_dict['DIC_ALT_CO2']['diags']['tend_zint_100m_DIC_ALT_CO2'] = freq_op
             full_diag_dict["DIC_ALT_CO2"]["properties"]["include budget terms"] = True
             full_diag_dict["DIC_ALT_CO2"]["properties"]["has surface flux"] = True
@@ -271,7 +294,7 @@ def write_MARBL_diagnostics_file(
             # STF_SALT_ALK is special case
             if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("minimal"):
                 full_diag_dict["ALK"]["diags"]["STF_SALT_ALK"] = "medium_average"
-            full_diag_dict["ALK"]["diags"]["ALK_RIV_FLUX"] = freq_op
+            full_diag_dict["ALK"]["diags"]["ALK_RIV_FLUX"] = riv_flux_op
             full_diag_dict["ALK"]["diags"]["STF_ALK"] = freq_op
             full_diag_dict["ALK"]["diags"]["J_ALK"] = low_freq_op
             full_diag_dict["ALK"]["diags"]["Jint_100m_ALK"] = Jint_100m_freq_op["ALK"]
@@ -279,7 +302,7 @@ def write_MARBL_diagnostics_file(
             full_diag_dict["ALK"]["properties"]["has surface flux"] = True
         # ALK_ALT_CO2
         if "ALK_ALT_CO2" in full_diag_dict.keys():
-            full_diag_dict["ALK_ALT_CO2"]["diags"]["ALK_ALT_CO2_RIV_FLUX"] = freq_op
+            # full_diag_dict["ALK_ALT_CO2"]["diags"]["ALK_ALT_CO2_RIV_FLUX"] = riv_flux_op
             full_diag_dict["ALK_ALT_CO2"]["diags"]["STF_ALK_ALT_CO2"] = freq_op
             full_diag_dict["ALK_ALT_CO2"]["diags"]["J_ALK_ALT_CO2"] = low_freq_op
             full_diag_dict["ALK_ALT_CO2"]["diags"]["Jint_100m_ALK_ALT_CO2"] = (
@@ -289,7 +312,11 @@ def write_MARBL_diagnostics_file(
             full_diag_dict["ALK_ALT_CO2"]["properties"]["has surface flux"] = True
         # DOC
         if "DOC" in full_diag_dict.keys():
-            full_diag_dict["DOC"]["diags"]["DOC_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["DOC"]["diags"]["DOC_zint"] = "medium_average"
+            else:
+                full_diag_dict["DOC"]["diags"]["DOC_zint"] = freq_op
+            full_diag_dict["DOC"]["diags"]["DOC_RIV_FLUX"] = riv_flux_op
             full_diag_dict["DOC"]["diags"]["Jint_100m_DOC"] = Jint_100m_freq_op["DOC"]
             # full_diag_dict['DOC']['diags']['tend_zint_100m_DOC'] = freq_op
             full_diag_dict["DOC"]["properties"]["include budget terms"] = True
@@ -298,23 +325,49 @@ def write_MARBL_diagnostics_file(
             ] = False  # this should be True if EBM is off
         # DON
         if "DON" in full_diag_dict.keys():
-            full_diag_dict["DON"]["diags"]["DON_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["DON"]["diags"]["DON_zint"] = "low_average"
+            else:
+                full_diag_dict["DON"]["diags"]["DON_zint"] = freq_op
+            full_diag_dict["DON"]["diags"]["DON_RIV_FLUX"] = riv_flux_op
             full_diag_dict["DON"]["properties"]["has surface flux"] = True
         # DOP
         if "DOP" in full_diag_dict.keys():
-            full_diag_dict["DOP"]["diags"]["DOP_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["DOP"]["diags"]["DOP_zint"] = "low_average"
+            else:
+                full_diag_dict["DOP"]["diags"]["DOP_zint"] = freq_op
+            full_diag_dict["DOP"]["diags"]["DOP_RIV_FLUX"] = riv_flux_op
             full_diag_dict["DOP"]["properties"]["has surface flux"] = True
         # DOPr
         if "DOPr" in full_diag_dict.keys():
-            full_diag_dict["DOPr"]["diags"]["DOPr_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["DOPr"]["diags"]["DOPr_zint"] = "low_average"
+                full_diag_dict["DOPr"]["diags"]["Jint_DOPr"] = "low_average"
+            else:
+                full_diag_dict["DOPr"]["diags"]["DOPr_zint"] = freq_op
+                full_diag_dict["DOPr"]["diags"]["Jint_DOPr"] = freq_op
+            full_diag_dict["DOPr"]["diags"]["DOPr_RIV_FLUX"] = riv_flux_op
             full_diag_dict["DOPr"]["properties"]["has surface flux"] = True
         # DONr
         if "DONr" in full_diag_dict.keys():
-            full_diag_dict["DONr"]["diags"]["DONr_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["DONr"]["diags"]["DONr_zint"] = "low_average"
+                full_diag_dict["DONr"]["diags"]["Jint_DONr"] = "low_average"
+            else:
+                full_diag_dict["DONr"]["diags"]["DONr_zint"] = freq_op
+                full_diag_dict["DONr"]["diags"]["Jint_DONr"] = freq_op
+            full_diag_dict["DONr"]["diags"]["DONr_RIV_FLUX"] = riv_flux_op
             full_diag_dict["DONr"]["properties"]["has surface flux"] = True
         # DOCr
         if "DOCr" in full_diag_dict.keys():
-            full_diag_dict["DOCr"]["diags"]["DOCr_RIV_FLUX"] = freq_op
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["DOCr"]["diags"]["DOCr_zint"] = "medium_average"
+                full_diag_dict["DOCr"]["diags"]["Jint_DOCr"] = "low_average"
+            else:
+                full_diag_dict["DOCr"]["diags"]["DOCr_zint"] = freq_op
+                full_diag_dict["DOCr"]["diags"]["Jint_DOCr"] = freq_op
+            full_diag_dict["DOCr"]["diags"]["DOCr_RIV_FLUX"] = riv_flux_op
             full_diag_dict["DOCr"]["diags"]["Jint_100m_DOCr"] = Jint_100m_freq_op[
                 "DOCr"
             ]
@@ -371,6 +424,8 @@ def write_MARBL_diagnostics_file(
             full_diag_dict["ABIO_DIC"]["properties"]["has surface flux"] = True
         # DI14C
         if "ABIO_DI14C" in full_diag_dict.keys():
+            if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                full_diag_dict["ABIO_DI14C"]["diags"]["ABIO_DI14C_SURF"] = "medium_average"
             # full_diag_dict['ABIO_DI14C']['diags']['J_ABIO_DI14C'] = freq_op
             full_diag_dict["ABIO_DI14C"]["diags"]["STF_ABIO_DI14C"] = freq_op
             full_diag_dict["ABIO_DI14C"]["diags"]["Jint_ABIO_DI14C"] = freq_op
@@ -382,19 +437,28 @@ def write_MARBL_diagnostics_file(
         for autotroph_name in autotroph_list:
             tracer_short_name = autotroph_name + "C"
             if tracer_short_name in full_diag_dict.keys():
-                full_diag_dict[tracer_short_name]["diags"][
-                    "%s_zint_100m" % tracer_short_name
-                ] = high_freq_op
+                if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                    full_diag_dict[tracer_short_name]["diags"][
+                        "%s_SURF" % tracer_short_name
+                    ] = "high_average, medium_average"
+                    full_diag_dict[tracer_short_name]["diags"][
+                        "%s_zint_100m" % tracer_short_name
+                    ] = "medium_average"
             tracer_short_name = autotroph_name + "CaCO3"
             if tracer_short_name in full_diag_dict.keys():
-                full_diag_dict[tracer_short_name]["diags"][
-                    "%s_zint_100m" % tracer_short_name
-                ] = high_freq_op
+                if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                    full_diag_dict[tracer_short_name]["diags"][
+                        "%s_SURF" % tracer_short_name
+                    ] = "medium_average"
+                    full_diag_dict[tracer_short_name]["diags"][
+                        "%s_zint_100m" % tracer_short_name
+                    ] = "medium_average"
             tracer_short_name = autotroph_name + "Chl"
             if tracer_short_name in full_diag_dict.keys():
-                full_diag_dict[tracer_short_name]["diags"][
-                    "%s_SURF" % tracer_short_name
-                ] = high_freq_op
+                if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                    full_diag_dict[tracer_short_name]["diags"][
+                        "%s_SURF" % tracer_short_name
+                    ] = "high_average, medium_average"
 
         # 4. Per-zooplankton diagnostics
         for zooplankton_name in zooplankton_list:
@@ -403,6 +467,10 @@ def write_MARBL_diagnostics_file(
                 full_diag_dict[tracer_short_name]["diags"][
                     "%s_zint_100m" % tracer_short_name
                 ] = high_freq_op
+                if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
+                    full_diag_dict[tracer_short_name]["diags"][
+                        "%s_SURF" % tracer_short_name
+                    ] = "medium_average"
 
         # 5. Write tracer-specific diagnostics to file
         for tracer_short_name in full_diag_dict.keys():
@@ -496,6 +564,7 @@ def _2D_varcheck(varname):
         or varname.endswith("_FLUX_CPL")
         or varname.endswith("_RIV_FLUX")
         or varname.endswith("_SURF")
+        or varname.endswith("_zint")
         or varname.endswith("_zint_100m")
         or "_CAT_" in varname
     )
