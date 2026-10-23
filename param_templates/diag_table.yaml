@@ -106,7 +106,7 @@ FileDefaults:
 #   The files, i.e., the output streams, to be added to the diag_table. The
 #   label of each entry is the name of the stream: it ends up in the file name
 #   as ${CASE}.mom6.<label>.<date>.nc, and it is the name that users refer to
-#   when adding or removing fields via the diag_table block of user_nl_mom.
+#   when changing the stream via diag_table%<label>%... lines in user_nl_mom.
 #   Labels must therefore follow the h.<name> convention that CESM short term
 #   archiving expects (see config_archive.xml). The <date> part of the file name
 #   is not specified here: it is derived from how often a new file is started.

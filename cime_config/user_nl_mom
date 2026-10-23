@@ -3,19 +3,38 @@
 ! these comments as follows:
 !   parameter_name = new_parameter_value
 !
-! If the parameter belongs to a module, enter the parameter in MOM6
-! runtime parameter format ,e.g., change N_SMOOTH parameter within the
-! KPP module as follows:
+! If the parameter belongs to a parameter block, enter it within the
+! block, or prefixed with the block name, e.g., change N_SMOOTH within
+! the KPP block as follows:
 !   KPP%
 !   N_SMOOTH = 3
 !   %KPP
+! or:
+!   KPP%N_SMOOTH = 3
 !
 ! Note: The parameter changes added to this file will automatically be
 !       applied to:
 !   $RUNDIR/MOM_override
 !
+! The diag_table may be changed via lines of the form
+!   diag_table%<stream>%<key> <operator> <value>
+! where <stream> is the name of an output file, e.g., h.native for the
+! files ${CASE}.mom6.h.native.*.nc, and <key> is fields, module, or a
+! file setting (see param_templates/diag_table.yaml), e.g.:
+!   diag_table%h.native%fields += MLD_0125, Kd_heat:Kd_heat_max:max
+!   diag_table%h.native%fields -= KE
+!   diag_table%h.sfc%output_freq = 5
+!   diag_table%h.z%fields = none
+! Fields are given as name[:output_name[:reduction]], and are removed
+! by output name. A new stream also needs the diagnostics module of its
+! fields (ocean_model, ocean_model_z or ocean_model_rho2), e.g.:
+!   diag_table%h.mine%module = ocean_model_z
+!   diag_table%h.mine%fields = thetao, so
+!
 ! WARNING: If a MOM_override file is placed in SourceMods/src.mom/,
-! any additional parameter changes in this file will trigger an error.
+! any additional parameter changes in this file will trigger an error,
+! and so will diag_table changes if a diag_table (or
+! diag_table.unresolved) file is placed there.
 !
 ! Parameters:
 !---------------------------------------------------------------------
