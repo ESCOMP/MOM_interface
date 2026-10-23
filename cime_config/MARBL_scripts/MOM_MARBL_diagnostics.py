@@ -47,8 +47,6 @@ def write_MARBL_diagnostics_file(
         "diatChl",
         "diazChl",
         "coccoChl",
-        "microzooC",
-        "mesozooC",
     ]
     Jint_100m_in_minimal_diag_output = ["ALK", "DIC"]
 
@@ -99,17 +97,16 @@ def write_MARBL_diagnostics_file(
         fout.write(f"SEAICE_DUST_FLUX_CPL : {freq_op}\n")
         fout.write(f"ATM_BLACK_CARBON_FLUX_CPL : {freq_op}\n")
         fout.write(f"SEAICE_BLACK_CARBON_FLUX_CPL : {freq_op}\n")
+
         fout.write("#\n# temperature and salinity\n#\n")
-        if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("full"):
+        if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
             freq_op = "medium_average"
         else:
             freq_op = "never_average"
         fout.write(
-            f"so: {freq_op}\n"
-        )  # so should not be included when diag_mode < "full"
-        fout.write(
-            f"thetao: {freq_op}\n"
-        )  # thetao should not be included when diag_mode < "full"
+            f"T_mean_150m: {freq_op}\n"
+        )  # T_mean_150m should not be included when diag_mode < "cmip7"
+
         fout.write("#\n# Bottom Flux to Tendency Conversion\n#\n")
         fout.write(f"BOT_FLUX_TO_TEND : {freq_op}\n")
 
@@ -471,6 +468,9 @@ def write_MARBL_diagnostics_file(
                     full_diag_dict[tracer_short_name]["diags"][
                         "%s_SURF" % tracer_short_name
                     ] = "medium_average"
+                    full_diag_dict[tracer_short_name]["diags"][
+                        "%s_zint_150m" % tracer_short_name
+                    ] = "medium_average"
 
         # 5. Write tracer-specific diagnostics to file
         for tracer_short_name in full_diag_dict.keys():
@@ -566,5 +566,7 @@ def _2D_varcheck(varname):
         or varname.endswith("_SURF")
         or varname.endswith("_zint")
         or varname.endswith("_zint_100m")
+        or varname.endswith("_zint_150m")
+        or varname.endswith("_mean_150m")
         or "_CAT_" in varname
     )
