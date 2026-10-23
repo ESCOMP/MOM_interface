@@ -1,0 +1,23 @@
+./xmlchange OCN_GRID=panama1
+./xmlchange OCN_NX=60
+./xmlchange OCN_NY=60
+./xmlchange OCN_DOMAIN_MESH='${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama-bgc/ESMF_mesh_panama1_1c3aac.nc'
+./xmlchange ICE_GRID=panama1
+./xmlchange ICE_NX=60
+./xmlchange ICE_NY=60
+./xmlchange ICE_DOMAIN_MESH='${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama-bgc/ESMF_mesh_panama1_1c3aac.nc'
+./xmlchange MASK_MESH='${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama-bgc/ESMF_mesh_panama1_1c3aac.nc'
+./xmlchange ATM_GRID=TL319
+./xmlchange LND_GRID=TL319
+./xmlchange ATM_DOMAIN_MESH='${DIN_LOC_ROOT}/share/meshes/TL319_151007_ESMFmesh.nc'
+./xmlchange LND_DOMAIN_MESH='${DIN_LOC_ROOT}/share/meshes/TL319_151007_ESMFmesh.nc'
+./xmlchange ROF_GRID=GLOFAS
+./xmlchange ROF_DOMAIN_MESH='${DIN_LOC_ROOT}/lnd/dlnd7/GLOFAS/GLOFAS.v4.dis24.ESMFmesh_20260501.nc'
+./xmlchange MOM6_MEMORY_MODE=dynamic_symmetric
+./xmlchange ROF2OCN_LIQ_RMAPNAME='${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama-bgc/GLOFAS_to_panama1_map_r20_f40_nnsm.nc'
+./xmlchange ROF2OCN_ICE_RMAPNAME='${DIN_LOC_ROOT}/ocn/mom/croc/testing_data/panama-bgc/GLOFAS_to_panama1_map_r20_f40_nnsm.nc'
+./xmlchange CALENDAR=GREGORIAN
+./xmlchange RUN_STARTDATE=2000-01-01
+
+# Set PE Layout
+./xmlchange NTASKS_OCN=30
