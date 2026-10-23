@@ -5,10 +5,11 @@
 <entry_id version="3.0">
 
   <description>
-    <desc ocn="MOM6[%REGIONAL][%MARBL-BIO][%MARBL-ABIO]">MOM6 OCEAN </desc>
+    <desc ocn="MOM6[%REGIONAL][%MARBL-BIO][%MARBL-ABIO][%PHYS-CYCLE]">MOM6 OCEAN </desc>
     <desc option="MARBL-BIO">MARBL Biogeochemistry Tracer Library base biotic tracers</desc>
     <desc option="MARBL-ABIO">MARBL Biogeochemistry Tracer Library abiotic DIC tracers</desc>
     <desc option="REGIONAL">Regional Setup</desc>
+    <desc option="PHYS-CYCLE">phys cycle option</desc>
   </description>
 
   <entry id="COMP_OCN">
@@ -115,8 +116,9 @@
     <desc> This variable is used to choose from a set of predefined ocean diagnostics configurations.
            Each configuration corresponds to a different combination of frequency, precision, and field lists.
            Configuration ordered in increasing scope/frequency: "spinup", "production", "development".
-           Further customization of diagnostics may be done by copying an edited version of
-           diag_table file in SourceMods/src.mom/
+           Further customization of diagnostics may be done via diag_table lines in user_nl_mom
+           (see the comments in user_nl_mom), or by copying an edited version of diag_table file
+           in SourceMods/src.mom/
     </desc>
   </entry>
 
@@ -217,6 +219,43 @@
     <group>case_comp</group>
     <file>env_run.xml</file>
     <desc> Flag to turn on/off the regional/global defaults for MOM_input
+        </desc>
+  </entry>
+  <entry id="MOM6_PHYS_CYCLE_YEARS_IN_CYCLE">
+    <type>integer</type>
+    <default_value>0</default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>number of years to run before cycling MOM6 physics
+    MOM6 physics cycling only occurs if MOM6_PHYS_CYCLE_YEARS_IN_CYCLE>0
+    and pre- and post-run scripts are specified in env vars
+    PRERUN_SCRIPT and POSTRUN_SCRIPT</desc>
+  </entry>
+
+  <entry id="MOM6_PHYS_CYCLE_MONTHS_RUN_SINCE_CYCLE">
+    <type>integer</type>
+    <default_value>0</default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>number of months run since most recent cycling of MOM6 physics</desc>
+  </entry>
+
+  <entry id="MOM6_TRACER_IC_FILE_OVERRIDE_POINTER">
+    <type>char</type>
+    <default_value></default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>File containing tracer IC filenames</desc>
+  </entry>
+
+  <entry id="MARBL_ENFORCE_TRACER_ZINT">
+    <type>logical</type>
+    <valid_values>TRUE,FALSE</valid_values>
+    <default_value>FALSE</default_value>
+    <group>run_component_mom</group>
+    <file>env_run.xml</file>
+    <desc>Rescale MARBL tracers so that their vertical integrals match
+          their vertical integrals computed from the IC file(s).
     </desc>
   </entry>
 
