@@ -254,7 +254,9 @@ def write_MARBL_diagnostics_file(
             else:
                 full_diag_dict["O2"]["diags"]["STF_O2"] = "never_average"
             if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
-                full_diag_dict["O2"]["diags"]["O2_SURF"] = "medium_average, high_average"
+                full_diag_dict["O2"]["diags"][
+                    "O2_SURF"
+                ] = "medium_average, high_average"
             full_diag_dict["O2"]["diags"]["Jint_100m_O2"] = Jint_100m_freq_op["O2"]
             # full_diag_dict['O2']['diags']['tend_zint_100m_O2'] = freq_op
             full_diag_dict["O2"]["properties"]["include budget terms"] = True
@@ -422,7 +424,9 @@ def write_MARBL_diagnostics_file(
         # DI14C
         if "ABIO_DI14C" in full_diag_dict.keys():
             if valid_diag_modes.index(diag_mode) >= valid_diag_modes.index("cmip7"):
-                full_diag_dict["ABIO_DI14C"]["diags"]["ABIO_DI14C_SURF"] = "medium_average"
+                full_diag_dict["ABIO_DI14C"]["diags"][
+                    "ABIO_DI14C_SURF"
+                ] = "medium_average"
             # full_diag_dict['ABIO_DI14C']['diags']['J_ABIO_DI14C'] = freq_op
             full_diag_dict["ABIO_DI14C"]["diags"]["STF_ABIO_DI14C"] = freq_op
             full_diag_dict["ABIO_DI14C"]["diags"]["Jint_ABIO_DI14C"] = freq_op
