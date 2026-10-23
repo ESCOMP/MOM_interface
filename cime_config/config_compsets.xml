@@ -77,55 +77,34 @@
 
   <compset>
     <alias>CR_JRA</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL_SROF_SGLC_SWAV</lname>
-  </compset>
-
-  <compset>
-    <alias>CWR_JRA</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL_SROF_SGLC_WW3</lname>
-  </compset>
-
-  <compset>
-    <alias>CR_JRA_RYF</alias>
-    <lname>2000_DATM%JRA-RYF9091_SLND_DICE%SSMI_MOM6%REGIONAL_SROF_SGLC_SWAV</lname>
-  </compset>
-
- <compset>
-    <alias>CWR_JRA_RYF</alias>
-    <lname>2000_DATM%JRA-RYF9091_SLND_DICE%SSMI_MOM6%REGIONAL_SROF_SGLC_WW3</lname>
-  </compset>
-
-  <compset>
-    <alias>CR1850MARBL_JRA</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL%MARBL-BIO_SROF_SGLC_SWAV</lname>
-  </compset>
-
-  <compset>
-    <alias>CR_JRA_GLOFAS</alias>
     <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL_DROF%GLOFAS_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>CR1850MARBL_JRA_GLOFAS</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL%MARBL-BIO_DROF%GLOFAS_SGLC_SWAV</lname>
-  </compset>
-
-  <!-- C Regional compsets with active waves (WW3) -->
-
-  <compset>
-    <alias>CWR1850MARBL_JRA</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL%MARBL-BIO_SROF_SGLC_WW3</lname>
-  </compset>
-
-  <compset>
-    <alias>CWR_JRA_GLOFAS</alias>
+    <alias>CWR_JRA</alias>
     <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL_DROF%GLOFAS_SGLC_WW3</lname>
   </compset>
 
   <compset>
-    <alias>CWR1850MARBL_JRA_GLOFAS</alias>
+    <alias>CR_JRA_RYF</alias>
+    <lname>2000_DATM%JRA-RYF9091_SLND_DICE%SSMI_MOM6%REGIONAL_DROF%GLOFAS_SGLC_SWAV</lname>
+  </compset>
+
+ <compset>
+    <alias>CWR_JRA_RYF</alias>
+    <lname>2000_DATM%JRA-RYF9091_SLND_DICE%SSMI_MOM6%REGIONAL_DROF%GLOFAS_SGLC_WW3</lname>
+  </compset>
+
+  <compset>
+    <alias>CR1850MARBL_JRA</alias>
+    <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL%MARBL-BIO_DROF%GLOFAS_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>CWR1850MARBL_JRA</alias>
     <lname>1850_DATM%JRA-1p5-2023_SLND_DICE%SSMI_MOM6%REGIONAL%MARBL-BIO_DROF%GLOFAS_SGLC_WW3</lname>
   </compset>
+
 
   <!-- G compsets -->
 
@@ -195,45 +174,25 @@
 
   <compset>
     <alias>GR_JRA</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL_SROF_SGLC_SWAV</lname>
-  </compset>
-
-  <compset>
-    <alias>GWR_JRA</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL_SROF_SGLC_WW3</lname>
-  </compset>
-
-  <compset>
-    <alias>GR1850MARBL_JRA</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL%MARBL-BIO_SROF_SGLC_SWAV</lname>
-  </compset>
-
-  <compset>
-    <alias>GR_JRA_GLOFAS</alias>
     <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL_DROF%GLOFAS_SGLC_SWAV</lname>
   </compset>
 
   <compset>
-    <alias>GR1850MARBL_JRA_GLOFAS</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL%MARBL-BIO_DROF%GLOFAS_SGLC_SWAV</lname>
-  </compset>
-  
-  <!-- G Regional compsets with active waves (WW3) -->
-
-  <compset>
-    <alias>GWR1850MARBL_JRA</alias>
-    <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL%MARBL-BIO_SROF_SGLC_WW3</lname>
-  </compset>
-
-  <compset>
-    <alias>GWR_JRA_GLOFAS</alias>
+    <alias>GWR_JRA</alias>
     <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL_DROF%GLOFAS_SGLC_WW3</lname>
   </compset>
 
   <compset>
-    <alias>GWR1850MARBL_JRA_GLOFAS</alias>
+    <alias>GR1850MARBL_JRA</alias>
+    <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL%MARBL-BIO_DROF%GLOFAS_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>GWR1850MARBL_JRA</alias>
     <lname>1850_DATM%JRA-1p5-2023_SLND_CICE_MOM6%REGIONAL%MARBL-BIO_DROF%GLOFAS_SGLC_WW3</lname>
   </compset>
+
+
   <!-- ENTRIES -->
 
   <entries>

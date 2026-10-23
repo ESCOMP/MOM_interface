@@ -4381,7 +4381,6 @@ Global:
         value:
             $MOM6_DOMAIN_TYPE == "REGIONAL": 2.5E+06    
             $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.75
-            $OCN_GRID in ["tx2_3v2", "tx2_3v3"]: 0.75
             $OCN_GRID == "tx2_0v1": 0.75
 CVMix_CONVECTION:
     BV_SQR_CONV:
