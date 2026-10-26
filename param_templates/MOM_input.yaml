@@ -2927,6 +2927,7 @@ Global:
             HYBRID:vgrid.nc,sigma2,dz"
         datatype: string
         value:
+            $OCN_GRID == "tx2_3v3": '"FILE:vgrid_65L_20200626.nc,dz"'
             $OCN_GRID == "tx0.25v1": '"FILE:interpolate_zgrid_40L.nc,interfaces=zw"'
     MAX_RINO_IT:
         description: |
@@ -4048,7 +4049,7 @@ Global:
             run with a different mask_table than the current run, in which case the
             checksums will not match and cause crash.
         datatype: logical
-        value: 
+        value:
             $TEST: = $TESTCASE != "ERP"
             else: False
     ENSEMBLE_APPENDIX_PREFIX:
