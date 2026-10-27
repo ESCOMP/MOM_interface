@@ -47,6 +47,11 @@
             "else": 400
          }
       },
+      "max_files": {
+         "values": {
+            "$MARBL_CONFIG != \"off\"": 32
+         }
+      },
       "max_num_axis_sets": {
          "values": {
             "$MARBL_CONFIG != \"off\"": 35,
