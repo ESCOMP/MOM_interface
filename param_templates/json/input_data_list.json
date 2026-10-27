@@ -22,7 +22,8 @@
          "$OCN_GRID == \"tx2_0v1\"": "${DIN_LOC_ROOT}/ocn/mom/grid_indpt/dz_max-2025-09-12.nc"
       },
       "DIAG_COORD_DEF_Z": {
-         "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/interpolate_zgrid_40L.nc"
+         "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/interpolate_zgrid_40L.nc",
+         "$OCN_GRID == \"tx2_3v3\"": "${INPUTDIR}/vgrid_65L_20200626.nc"
       },
       "COORD_FILE": {
          "$OCN_GRID == \"tx0.25v1\"": "${INPUTDIR}/layer_coord.nc"
