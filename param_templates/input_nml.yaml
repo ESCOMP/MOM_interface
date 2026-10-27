@@ -30,7 +30,7 @@ diag_manager_nml:
     max_input_fields:
         values:
             $MARBL_CONFIG != "off" and $TEST == True:
-                1200
+                1500
             else:
                 900
     max_output_fields:

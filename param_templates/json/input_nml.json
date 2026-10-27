@@ -36,7 +36,7 @@
       },
       "max_input_fields": {
          "values": {
-            "$MARBL_CONFIG != \"off\" and $TEST == True": 1200,
+            "$MARBL_CONFIG != \"off\" and $TEST == True": 1500,
             "else": 900
          }
       },
