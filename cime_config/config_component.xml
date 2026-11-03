@@ -108,7 +108,7 @@
 
   <entry id="OCN_DIAG_MODE">
     <type>char</type>
-    <valid_values>spinup,production,development,none</valid_values>
+    <valid_values>spinup,production,development,cmip7,none</valid_values>
     <default_value>production</default_value>
     <group>run_component_mom</group>
     <file>env_run.xml</file>

@@ -252,6 +252,25 @@
          "BS_coeff_h"
       ],
       [
+         "dispkexyfo",
+         "hfibthermds",
+         "masso",
+         "mlotstsq",
+         "tnkebto",
+         "pbo",
+         "sob",
+         "tob",
+         "t17d",
+         "volo",
+         "soga",
+         "thetaoga",
+         "tosga",
+         "sosga",
+         "SSH",
+         "T_diffy_2d",
+         "T_hbd_diffy_2d"
+      ],
+      [
          "opottempdiff",
          "T_advection_xy",
          "opottemptend",
@@ -261,6 +280,14 @@
          "rsdoabsorb"
       ],
       [
+         "opottempdiff",
+         "opottemptend",
+         "osaltdiff",
+         "osalttend",
+         "rsdoabsorb",
+         "BS_coeff_h"
+      ],
+      [
          "tossq",
          "rsdo",
          "T_adx_2d",
@@ -268,8 +295,65 @@
          "t20d"
       ],
       [
+         "tos",
+         "tossq",
+         "sos",
+         "sossq",
+         "zos",
+         "zossq",
+         "SSU:uos",
+         "SSV:vos",
+         "opottempmint",
+         "somint",
+         "speed",
+         "mlotst",
+         "mlotst:mlotst_min:min",
+         "mlotst:mlotst_max:max",
+         "KPP_OBLdepth:oml",
+         "rsdo",
+         "T_ady_2d",
+         "t20d"
+      ],
+      [
          "surface_stokes_x:sduo",
          "surface_stokes_y:sdvo"
+      ],
+      [
+         "uo",
+         "vo",
+         "h",
+         "thetao",
+         "so",
+         "agessc",
+         "obvfsq",
+         "difvho",
+         "difvso"
+      ],
+      [
+         "volcello",
+         "vmo",
+         "vhGM",
+         "vhml",
+         "umo"
+      ],
+      [
+         "tauuo",
+         "tauvo",
+         "ficeberg",
+         "friver",
+         "fsitherm",
+         "hfds",
+         "hflso",
+         "hfsnthermds",
+         "rsntds",
+         "sfdsi",
+         "pso",
+         "wfo",
+         "seaice_melt_heat",
+         "Heat_PmE",
+         "heat_content_lrunoff:hfrunoffds",
+         "heat_content_lprec:hfrainds",
+         "heat_content_evap:hfevapds"
       ]
    ],
    "FileDefaults": {
@@ -289,23 +373,40 @@
          "fields": {
             "$OCN_DIAG_MODE != \"none\"": {
                "module": "ocean_model_rho2",
-               "lists": [
-                  [
-                     "volcello",
-                     "vmo",
-                     "vhGM",
-                     "vhml",
-                     "umo",
-                     "uhGM",
-                     "uhml"
+               "lists": {
+                  "$OCN_DIAG_MODE == \"cmip7\"": [
+                     [
+                        "volcello",
+                        "vmo",
+                        "vhGM",
+                        "vhml",
+                        "umo"
+                     ],
+                     [
+                        "thetao",
+                        "so",
+                        "agessc",
+                        "e"
+                     ]
                   ],
-                  [
-                     "thetao",
-                     "so",
-                     "agessc",
-                     "e"
+                  "else": [
+                     [
+                        "volcello",
+                        "vmo",
+                        "vhGM",
+                        "vhml",
+                        "umo",
+                        "uhGM",
+                        "uhml"
+                     ],
+                     [
+                        "thetao",
+                        "so",
+                        "agessc",
+                        "e"
+                     ]
                   ]
-               ],
+               },
                "lists2": {
                   "$USE_CFC_CAP == \"True\"": [
                      [
@@ -321,43 +422,105 @@
          "fields": {
             "$OCN_DIAG_MODE != \"none\"": {
                "module": "ocean_model",
-               "lists": [
-                  [
-                     "soga",
-                     "thetaoga",
-                     "uh",
-                     "vh",
-                     "vhbt",
-                     "uhbt",
-                     "rsdo"
+               "lists": {
+                  "$OCN_DIAG_MODE == \"cmip7\"": [
+                     [
+                        "tos",
+                        "tossq",
+                        "sos",
+                        "sossq",
+                        "zos",
+                        "zossq",
+                        "SSU:uos",
+                        "SSV:vos",
+                        "opottempmint",
+                        "somint",
+                        "speed",
+                        "mlotst",
+                        "mlotst:mlotst_min:min",
+                        "mlotst:mlotst_max:max",
+                        "KPP_OBLdepth:oml",
+                        "rsdo",
+                        "T_ady_2d",
+                        "t20d"
+                     ],
+                     [
+                        "dispkexyfo",
+                        "hfibthermds",
+                        "masso",
+                        "mlotstsq",
+                        "tnkebto",
+                        "pbo",
+                        "sob",
+                        "tob",
+                        "t17d",
+                        "volo",
+                        "soga",
+                        "thetaoga",
+                        "tosga",
+                        "sosga",
+                        "SSH",
+                        "T_diffy_2d",
+                        "T_hbd_diffy_2d"
+                     ],
+                     [
+                        "tauuo",
+                        "tauvo",
+                        "ficeberg",
+                        "friver",
+                        "fsitherm",
+                        "hfds",
+                        "hflso",
+                        "hfsnthermds",
+                        "rsntds",
+                        "sfdsi",
+                        "pso",
+                        "wfo",
+                        "seaice_melt_heat",
+                        "Heat_PmE",
+                        "heat_content_lrunoff:hfrunoffds",
+                        "heat_content_lprec:hfrainds",
+                        "heat_content_evap:hfevapds"
+                     ]
                   ],
-                  [
-                     "agessc",
-                     "T_ady_2d",
-                     "T_adx_2d",
-                     "T_diffy_2d",
-                     "T_diffx_2d",
-                     "T_hbd_diffx_2d",
-                     "T_hbd_diffy_2d"
-                  ],
-                  [
-                     "diftrelo",
-                     "diftrblo",
-                     "difmxybo",
-                     "difmxylo"
-                  ],
-                  [
-                     "volcello",
-                     "vmo",
-                     "vhGM",
-                     "vhml",
-                     "umo",
-                     "uhGM",
-                     "uhml"
+                  "else": [
+                     [
+                        "soga",
+                        "thetaoga",
+                        "uh",
+                        "vh",
+                        "vhbt",
+                        "uhbt",
+                        "rsdo"
+                     ],
+                     [
+                        "agessc",
+                        "T_ady_2d",
+                        "T_adx_2d",
+                        "T_diffy_2d",
+                        "T_diffx_2d",
+                        "T_hbd_diffx_2d",
+                        "T_hbd_diffy_2d"
+                     ],
+                     [
+                        "diftrelo",
+                        "diftrblo",
+                        "difmxybo",
+                        "difmxylo"
+                     ],
+                     [
+                        "volcello",
+                        "vmo",
+                        "vhGM",
+                        "vhml",
+                        "umo",
+                        "uhGM",
+                        "uhml"
+                     ]
                   ]
-               ],
+               },
                "lists2": {
-                  "$OCN_DIAG_MODE not in [\"spinup\", \"none\"]": [
+                  "$OCN_DIAG_MODE not in [\"spinup\", \"cmip7\", \"none\"]": [
                      [
                         "uo",
                         "vo",
@@ -627,6 +790,40 @@
                         "uhml"
                      ]
                   ],
+                  "$OCN_DIAG_MODE == \"cmip7\"": [
+                     [
+                        "uo",
+                        "vo",
+                        "h",
+                        "thetao",
+                        "so",
+                        "agessc",
+                        "obvfsq",
+                        "difvho",
+                        "difvso"
+                     ],
+                     [
+                        "volcello",
+                        "vmo",
+                        "vhGM",
+                        "vhml",
+                        "umo"
+                     ],
+                     [
+                        "opottempdiff",
+                        "opottemptend",
+                        "osaltdiff",
+                        "osalttend",
+                        "rsdoabsorb",
+                        "BS_coeff_h"
+                     ],
+                     [
+                        "diftrelo",
+                        "diftrblo",
+                        "difmxybo",
+                        "difmxylo"
+                     ]
+                  ],
                   "else": [
                      [
                         "uo",
@@ -721,6 +918,28 @@
                         "KPP_OBLdepth:oml",
                         "KPP_OBLdepth:oml_min:min",
                         "KPP_OBLdepth:oml_max:max"
+                     ]
+                  ],
+                  "$OCN_DIAG_MODE == \"cmip7\"": [
+                     [
+                        "tos",
+                        "tossq",
+                        "sos",
+                        "sossq",
+                        "zos",
+                        "zossq",
+                        "SSU:uos",
+                        "SSV:vos",
+                        "opottempmint",
+                        "somint",
+                        "speed",
+                        "mlotst",
+                        "mlotst:mlotst_min:min",
+                        "mlotst:mlotst_max:max",
+                        "KPP_OBLdepth:oml",
+                        "rsdo",
+                        "T_ady_2d",
+                        "t20d"
                      ]
                   ],
                   "else": [
