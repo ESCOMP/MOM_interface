@@ -2232,6 +2232,21 @@
             "$OCN_GRID == \"tx2_0v1\"": true
          }
       },
+      "MEKE_IC_override_pointer": {
+         "description": "\"default = ''\nFile containing filenames (e.g. restart files), one of which should contain MEKE.\"\n",
+         "datatype": "string",
+         "value": {
+            "$RUN_TYPE == \"hybrid\"": "= f'./rpointer.ocn.{$RUN_REFDATE}-{$RUN_REFTOD}'"
+         }
+      },
+      "MEKE_IC_override_must_have_MEKE": {
+         "description": "\"[Boolean] default = True\nIf True, abort if no file in MEKE_IC_override_pointer contains MEKE\"\n",
+         "datatype": "logical",
+         "units": "Boolean",
+         "value": {
+            "$RUN_TYPE == \"hybrid\"": false
+         }
+      },
       "USE_SIMPLER_EADY_GROWTH_RATE": {
          "description": "\"[Boolean] default = False\nIf true, use a simpler method to calculate the Eady growth rate that avoids\ndivision by layer thickness. Recommended.\"\n",
          "datatype": "logical",
