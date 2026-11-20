@@ -87,14 +87,14 @@ FieldLists:
                 "S_advection_xy", "osalttend", "rsdoabsorb"]
 
     - &cmip7_z_3d ["opottempdiff", "opottemptend", "osaltdiff",
-                   "osalttend", "rsdoabsorb", "BS_coeff_h"]
+                   "osalttend", "rsdo", "rsdoabsorb", "BS_coeff_h"]
 
-    - &cmip7_sfc ["tossq", "rsdo", "T_adx_2d", "T_ady_2d", "t20d"]
+    - &cmip7_sfc ["tossq", "T_adx_2d", "T_ady_2d", "t20d"]
 
     - &cmip7_sfc_common ["tos", "tossq", "sos", "sossq", "zos", "zossq",
                          "SSU:uos", "SSV:vos", "opottempmint", "somint", "speed",
                          "mlotst", "mlotst:mlotst_min:min", "mlotst:mlotst_max:max",
-                         "KPP_OBLdepth:oml", "rsdo", "T_ady_2d", "t20d"]
+                         "KPP_OBLdepth:oml", "T_ady_2d", "t20d"]
 
     - &cmip7_wave ["surface_stokes_x:sduo", "surface_stokes_y:sdvo"]
 

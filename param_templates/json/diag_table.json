@@ -284,12 +284,12 @@
          "opottemptend",
          "osaltdiff",
          "osalttend",
+         "rsdo",
          "rsdoabsorb",
          "BS_coeff_h"
       ],
       [
          "tossq",
-         "rsdo",
          "T_adx_2d",
          "T_ady_2d",
          "t20d"
@@ -310,7 +310,6 @@
          "mlotst:mlotst_min:min",
          "mlotst:mlotst_max:max",
          "KPP_OBLdepth:oml",
-         "rsdo",
          "T_ady_2d",
          "t20d"
       ],
@@ -440,7 +439,6 @@
                         "mlotst:mlotst_min:min",
                         "mlotst:mlotst_max:max",
                         "KPP_OBLdepth:oml",
-                        "rsdo",
                         "T_ady_2d",
                         "t20d"
                      ],
@@ -814,6 +812,7 @@
                         "opottemptend",
                         "osaltdiff",
                         "osalttend",
+                        "rsdo",
                         "rsdoabsorb",
                         "BS_coeff_h"
                      ],
@@ -937,7 +936,6 @@
                         "mlotst:mlotst_min:min",
                         "mlotst:mlotst_max:max",
                         "KPP_OBLdepth:oml",
-                        "rsdo",
                         "T_ady_2d",
                         "t20d"
                      ]
@@ -971,7 +969,6 @@
                      ],
                      [
                         "tossq",
-                        "rsdo",
                         "T_adx_2d",
                         "T_ady_2d",
                         "t20d"
